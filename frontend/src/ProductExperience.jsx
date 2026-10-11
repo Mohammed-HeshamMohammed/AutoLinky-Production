@@ -104,13 +104,17 @@ export function WorkflowStory({ lang }) {
   useEffect(() => {
     const section = root.current;
     const desktop = window.matchMedia('(min-width: 940px)');
-    if (!section || !('IntersectionObserver' in window)) return;
-    let frame = 0, visible = false;
+    if (!section) return;
+    let frame = 0;
     const update = () => {
       frame = 0;
-      if (!visible || !desktop.matches) return;
+      if (!desktop.matches) return;
+      // Read visibility with the current scroll position. An asynchronous observer
+      // must not decide whether a scroll update is allowed to run.
+      const bounds = section.getBoundingClientRect();
+      if (bounds.bottom < 0 || bounds.top > window.innerHeight) return;
       const anchors = [...section.querySelectorAll('.journey-step > div')].map(step => step.getBoundingClientRect().top);
-      const target = window.innerHeight * .48;
+      const target = window.innerHeight * .45;
       const progress = Math.min(1, Math.max(0, (target - anchors[0]) / (anchors[2] - anchors[0])));
       section.style.setProperty('--journey-progress', progress);
       // Keep a manual selection until the user deliberately continues scrolling.
@@ -118,20 +122,23 @@ export function WorkflowStory({ lang }) {
         if (Math.abs(window.scrollY - manualScrollPosition.current) < 60) return;
         manualScrollPosition.current = null;
       }
-      let next = 0;
-      anchors.forEach((top, index) => { if (top <= target) next = index; });
+      // Follow the nearest narrative step, including one approaching the center.
+      // Waiting for its top to cross the center leaves the previous preview on
+      // screen while the next heading is already the main visible content.
+      const distances = anchors.map(top => Math.abs(top - target));
+      const next = distances.indexOf(Math.min(...distances));
       const current = activeStage.current;
-      // A small dead zone prevents flicker when scrolling around a stage boundary.
-      if (next > current && anchors[next] > target - 24) return;
-      if (next < current && anchors[current] < target + 24) return;
+      // Require a clear lead to avoid flicker when two steps are equally close.
+      if (next !== current && distances[current] - distances[next] < 24) return;
       if (next !== current) { activeStage.current = next; setActive(next); }
     };
-    const schedule = () => { if (visible && desktop.matches && !frame) frame = requestAnimationFrame(update); };
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) schedule(); });
-    observer.observe(section);
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    schedule();
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule, { passive: true });
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); };
+    window.addEventListener('pageshow', schedule);
+    desktop.addEventListener('change', schedule);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); window.removeEventListener('pageshow', schedule); desktop.removeEventListener('change', schedule); };
   }, []);
   return <section className="journey section" id="auto-apply" ref={root}>
     <div className="container"><header className="journey-heading reveal"><p className="eyebrow">{t.eyebrow}</p><h2>{t.heading.split('\n').map((line, i) => <span key={line}>{line}{i === 0 ? ' ' : ''}</span>)}</h2><p>{t.intro}</p></header><div className="journey-layout"><div className="journey-board"><ProductPreview lang={lang} active={active} onChange={chooseStage} id="journey-product" /><div className="journey-board-meta"><span>0{active + 1} / 03</span><span>{t.methods}</span></div></div><div className="journey-steps">{t.steps.map(([heading, body], i) => <article className={`journey-step${active === i ? ' is-active' : ''}`} key={heading}><span className="journey-number">0{i + 1}</span><div><span className="journey-step-label">{t.tabs[i]}</span><h3>{heading}</h3><p>{body}</p>{i === 2 && <a className="link-arrow" href={`${lang === 'ar' ? '/ar' : ''}/auto-apply/`}>{t.cta}<ProductIcon name="arrow" /></a>}</div></article>)}</div></div></div>

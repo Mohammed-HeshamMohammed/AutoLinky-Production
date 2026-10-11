@@ -29,9 +29,9 @@ Set the following on the Autolinky frontend service:
 | Docker Build Stage | Leave empty (final production stage) |
 | Domain Container Port | `80` |
 
-In **Environment → Build Time Arguments**, paste the four public `VITE_*` values from `.env.example`. The required values have no Docker defaults, so a missing site URL, WhatsApp number, or download URL fails the build with a clear message. The release API URL may be empty. Setting only runtime environment variables does not configure the compiled React frontend. Local `.env` files, dependencies, build output, and screenshots are excluded from the Docker context.
+In **Environment → Build Time Arguments**, paste the public `VITE_*` values from `.env.example`. A missing site URL or WhatsApp number fails the build with a clear message. The releases repository and the download switch are optional. Setting only runtime environment variables does not configure the compiled React frontend. Local `.env` files, dependencies, build output, and screenshots are excluded from the Docker context.
 
-The image serves the frontend only. Configure the existing backend separately for `/download` and `/api/latest`, or set public absolute URLs for these endpoints before building. Do not map host port `80:80` for this container when Dokploy is already managing ports 80/443.
+The image serves the frontend only. The download buttons need no backend: the browser reads the newest release of the public GitHub repository `VITE_RELEASES_REPO` (default `AMamdouh3/Autolinky-releases`) and links straight to its `.apk`. Do not map host port `80:80` for this container when Dokploy is already managing ports 80/443.
 
 Local Docker build from the repository root:
 
@@ -52,8 +52,8 @@ Copy `.env.example` to `.env` and edit it before running the development server 
 | --- | --- |
 | `VITE_SITE_URL` | Public origin used for canonical URLs, language alternates, social previews, structured data, sitemap, robots, legal copy, and QR downloads. |
 | `VITE_WHATSAPP_NUMBER` | Public contact number, with country code and digits only. |
-| `VITE_DOWNLOAD_URL` | Root-relative download route or full public HTTP(S) download URL. |
-| `VITE_RELEASE_API_URL` | Public release metadata endpoint; leave empty to disable the request. |
+| `VITE_RELEASES_REPO` | Public GitHub `owner/repository` whose newest release (with an `.apk`) the download buttons use. Optional. |
+| `VITE_DOWNLOAD_ENABLED` | `false` turns the download buttons off; anything else leaves them on. |
 
 The production prerender and verifier load the same production environment as Vite, including `.env.production` overrides. Rebuild after changing these values; setting environment variables on a static server after building does not change the existing files. The download QR code is regenerated during the build. Update the Nginx example separately if you change its host, paths, or upstream. An API on another origin must allow the site's origin through CORS.
 

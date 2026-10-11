@@ -20,6 +20,31 @@ function initialLanguage() {
   return /^ar\b/i.test(navigator.languages?.[0] || navigator.language || '') ? 'ar' : 'en';
 }
 
+// Newest release straight from GitHub: { version, size, publishedAt, url } or null (no .apk / GitHub unreachable).
+let apkUrl = '';
+let releasePromise = null;
+function loadRelease() {
+  if (!RELEASE_API_URL || !DOWNLOAD_ENABLED) return Promise.resolve(null);
+  releasePromise ||= fetch(RELEASE_API_URL, { headers: { Accept: 'application/vnd.github+json' } })
+    .then(response => response.ok ? response.json() : null)
+    .then(data => {
+      const asset = (data?.assets || []).find(a => /\.apk$/i.test(a.name) && (a.state || 'uploaded') === 'uploaded');
+      if (!asset) return null;
+      apkUrl = asset.browser_download_url;
+      return { version: String(data.tag_name || '').replace(/^[^0-9]*/, '').split('+')[0], size: asset.size || null, publishedAt: data.published_at || asset.updated_at || null, url: apkUrl };
+    })
+    .catch(() => null); // The download link still opens the releases page.
+  return releasePromise;
+}
+if (typeof document !== 'undefined') {
+  loadRelease();
+  // Every download link, on any page, goes straight to the newest APK once it is known.
+  document.addEventListener('click', event => {
+    const link = event.target instanceof Element && event.target.closest('a[data-download]');
+    if (link && apkUrl) link.href = apkUrl;
+  }, true);
+}
+
 function platform() {
   if (/android/i.test(navigator.userAgent)) return 'android';
   if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
@@ -42,13 +67,9 @@ function LandingPage() {
   }, [lang]);
 
   useEffect(() => {
-    if (!RELEASE_API_URL || !DOWNLOAD_ENABLED) return;
-    const controller = new AbortController();
-    fetch(RELEASE_API_URL, { headers: { Accept: 'application/json' }, signal: controller.signal })
-      .then(response => response.ok ? response.json() : null)
-      .then(data => { if (data?.version) setRelease(data); })
-      .catch(() => {}); // The download link remains usable if release metadata is unavailable.
-    return () => controller.abort();
+    let alive = true;
+    loadRelease().then(data => { if (alive && data) setRelease(data); });
+    return () => { alive = false; };
   }, []);
 
   useEffect(() => {

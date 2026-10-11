@@ -13,17 +13,12 @@ export const SITE_URL = site.origin;
 export const SITE_HOST = site.host;
 export const WHATSAPP_NUMBER = required('VITE_WHATSAPP_NUMBER');
 if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) throw new Error('VITE_WHATSAPP_NUMBER must contain 8–15 digits including the country code, without + or spaces.');
-function endpoint(name, optional = false) {
-  const value = optional ? env[name]?.trim() || '' : required(name);
-  if (!value && optional) return '';
-  const url = new URL(value, SITE_URL);
-  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.hash || (!value.startsWith('/') && !/^https?:\/\//.test(value)) || value.startsWith('//')) {
-    throw new Error(`${name} must be a root-relative path or an HTTP(S) URL without credentials or a fragment.`);
-  }
-  return value;
-}
-export const DOWNLOAD_URL = endpoint('VITE_DOWNLOAD_URL');
-export const RELEASE_API_URL = endpoint('VITE_RELEASE_API_URL', true);
+// Releases are published in a public GitHub repository; the browser reads the newest one straight from GitHub.
+const repo = env.VITE_RELEASES_REPO?.trim() || 'AMamdouh3/Autolinky-releases';
+if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) throw new Error('VITE_RELEASES_REPO must look like owner/repository.');
+// Fallback link (the releases page) used until, or unless, the newest APK address is known.
+export const DOWNLOAD_URL = `https://github.com/${repo}/releases/latest`;
+export const RELEASE_API_URL = `https://api.github.com/repos/${repo}/releases/latest`;
 
 export function directDownloadUrl(origin) {
   const url = new URL(DOWNLOAD_URL, origin);
@@ -31,8 +26,8 @@ export function directDownloadUrl(origin) {
   return url;
 }
 
-// Set VITE_DOWNLOAD_ENABLED=true to turn the download buttons back on.
-export const DOWNLOAD_ENABLED = env.VITE_DOWNLOAD_ENABLED?.trim() === 'true';
+// Set VITE_DOWNLOAD_ENABLED=false to turn the download buttons off.
+export const DOWNLOAD_ENABLED = env.VITE_DOWNLOAD_ENABLED?.trim() !== 'false';
 // Spread onto every download link: a live link when enabled, an inert placeholder otherwise.
 export const downloadLinkProps = DOWNLOAD_ENABLED
   ? { href: DOWNLOAD_URL, 'data-download': '' }

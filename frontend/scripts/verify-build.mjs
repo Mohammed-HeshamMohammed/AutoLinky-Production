@@ -1,7 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { SITE_URL, PAGES } from '../src/pageContent.js';
-import { LEGAL_NAV } from '../src/legalContent.js';
+import { createServer } from 'vite';
+
+const server = await createServer({ mode: 'production', server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
+const { SITE_URL, PAGES } = await server.ssrLoadModule('/src/pageContent.js');
+const { LEGAL_NAV } = await server.ssrLoadModule('/src/legalContent.js');
+const { DOWNLOAD_URL, RELEASE_API_URL } = await server.ssrLoadModule('/src/config.js');
+await server.close();
 
 const root = path.resolve('dist');
 const site = SITE_URL;
@@ -36,7 +41,7 @@ for (const lang of ['en', 'ar']) for (const slug of slugs) {
 for (const { route, html } of pages) {
   for (const match of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const value = match[1];
-    if (value === '/download' || value === '/api/latest') continue;
+    if ([DOWNLOAD_URL, RELEASE_API_URL].filter(Boolean).some(endpoint => value === endpoint.split(/[?#]/)[0])) continue;
     const target = path.join(root, value.slice(1));
     const exists = fs.existsSync(target) && (fs.statSync(target).isFile() || fs.existsSync(path.join(target, 'index.html')));
     assert(exists, `Broken internal URL ${value} on ${route}`);

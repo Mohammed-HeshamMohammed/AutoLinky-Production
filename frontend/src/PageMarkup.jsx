@@ -3,6 +3,7 @@ import { AR, MESSAGES, WHATSAPP } from './content';
 import { LEGAL_NAV } from './legalContent';
 import { HeroExperience, WorkflowStory } from './ProductExperience';
 import WhatsAppIcon from './WhatsAppIcon';
+import { DOWNLOAD_URL } from './config';
 
 function releaseText(release, lang) {
   if (!release?.version) return lang === 'ar' ? 'دائمًا أحدث نسخة' : 'Always the newest release';
@@ -76,7 +77,7 @@ localize(<div onClick={onClick}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx={12} cy={12} r="9.25" /><path d="M2.75 12h18.5M12 2.75c2.6 2.6 3.9 5.7 3.9 9.25s-1.3 6.65-3.9 9.25c-2.6-2.6-3.9-5.7-3.9-9.25S9.4 5.35 12 2.75Z" /></svg>
           <span data-lang-label>العربية</span>
         </a>
-        <a className="btn btn-ghost btn-sm nav-contact" aria-label={lang === 'ar' ? 'تواصل معنا على واتساب' : 'Contact us on WhatsApp'} data-wa="contact" href="https://wa.me/201060933358?text=Hello%2C%20I%20want%20to%20know%20more%20about%20the%20Autolinky%20application." target="_blank" rel="noopener">
+        <a className="btn btn-ghost btn-sm nav-contact" aria-label={lang === 'ar' ? 'تواصل معنا على واتساب' : 'Contact us on WhatsApp'} data-wa="contact" href="#" target="_blank" rel="noopener">
           <WhatsAppIcon />
           <span data-i18n="contact">Contact us</span>
         </a>
@@ -107,7 +108,7 @@ localize(<div onClick={onClick}>
         <h1 className="hero-title reveal" data-i18n="heroTitle">Your next job.<br /><span className="grad">A smarter search.</span></h1>
         <p className="hero-sub reveal" data-i18n="heroSub">Autolinky searches for jobs, matches them to your CV with AI, and can <strong>auto-apply to eligible email jobs</strong> from your own Gmail with a tailored cover letter.</p>
         <div className="cta-block reveal" id="download">
-          <a className="btn-download" href="/download" data-download>
+          <a className="btn-download" href={DOWNLOAD_URL} data-download>
             <span className="btn-download-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><use href="#i-android" /></svg>
             </span>
@@ -123,7 +124,7 @@ localize(<div onClick={onClick}>
             <span className="pill-live"><span /><span data-i18n="latest">Latest version</span></span>
             <span data-release-text>Always the newest release</span>
           </p>
-          <a className="btn btn-whatsapp" data-wa="contact" href="https://wa.me/201060933358?text=Hello%2C%20I%20want%20to%20know%20more%20about%20the%20Autolinky%20application." target="_blank" rel="noopener">
+          <a className="btn btn-whatsapp" data-wa="contact" href="#" target="_blank" rel="noopener">
             <WhatsAppIcon />
             <span data-i18n="talkWhatsapp">Talk to us on WhatsApp</span>
           </a>
@@ -236,7 +237,7 @@ localize(<div onClick={onClick}>
               <li data-i18n="pf3">Auto Apply and AI cover letters</li>
               <li data-i18n="pf4">Applied tracker and notifications</li>
             </ul>
-            <a className="btn btn-primary btn-block" href="/download" data-download>
+            <a className="btn btn-primary btn-block" href={DOWNLOAD_URL} data-download>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14" /></svg>
               <span data-i18n="pFreeCta">Download free</span>
             </a>
@@ -251,7 +252,7 @@ localize(<div onClick={onClick}>
               <li data-i18n="pp3">Auto Apply that never stops at 20</li>
               <li data-i18n="pp4">Upgrade with one WhatsApp message</li>
             </ul>
-            <a className="btn btn-whatsapp btn-block" data-wa="plans" href="https://wa.me/201060933358?text=Hello%2C%20I%27d%20like%20to%20know%20about%20the%20Autolinky%20plans." target="_blank" rel="noopener">
+            <a className="btn btn-whatsapp btn-block" data-wa="plans" href="#" target="_blank" rel="noopener">
               <WhatsAppIcon />
               <span data-i18n="pProCta">Ask about plans</span>
             </a>
@@ -283,11 +284,11 @@ localize(<div onClick={onClick}>
           <h2 data-i18n="finalTitle">Your next job is already posted.<br />Let Autolinky find it.</h2>
           <p data-i18n="finalSub">Download free, upload your CV, and let AI do the searching and the applying.</p>
           <div className="final-actions">
-            <a className="btn-download btn-download-sm" href="/download" data-download>
+            <a className="btn-download btn-download-sm" href={DOWNLOAD_URL} data-download>
               <span className="btn-download-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-android" /></svg></span>
               <span className="btn-download-text"><small data-i18n="dlSmall">Free download for</small><strong data-i18n="dlBig">Android</strong></span>
             </a>
-            <a className="btn btn-ghost" data-wa="contact" href="https://wa.me/201060933358?text=Hello%2C%20I%20want%20to%20know%20more%20about%20the%20Autolinky%20application." target="_blank" rel="noopener">
+            <a className="btn btn-ghost" data-wa="contact" href="#" target="_blank" rel="noopener">
               <WhatsAppIcon />
               <span data-i18n="contact">Contact us</span>
             </a>
@@ -307,7 +308,7 @@ localize(<div onClick={onClick}>
           <a href="/features/" data-page-link="features" data-i18n="navFeatures">Features</a>
           <a href="/pricing/" data-page-link="pricing" data-i18n="navPricing">Pricing</a>
           <a href="/faq/" data-page-link="faq" data-i18n="navFaq">FAQ</a>
-          <a data-wa="contact" href="https://wa.me/201060933358?text=Hello%2C%20I%20want%20to%20know%20more%20about%20the%20Autolinky%20application." target="_blank" rel="noopener" data-i18n="contact">Contact us</a>
+          <a data-wa="contact" href="#" target="_blank" rel="noopener" data-i18n="contact">Contact us</a>
         </nav>
         <nav className="footer-links footer-legal" aria-label={lang === 'ar' ? 'السياسات والشروط' : 'Policies and terms'}>
           {LEGAL_NAV.map(([key, en, ar]) => <a href={`${lang === 'ar' ? '/ar' : ''}/${key}/`} key={key}>{lang === 'ar' ? ar : en}</a>)}
@@ -322,9 +323,9 @@ localize(<div onClick={onClick}>
   <div className="sticky-cta" data-sticky-cta>
     <img src="/assets/logo.svg" alt="" width={36} height={36} />
     <div><b>Autolinky</b><small data-i18n="stickySub">Free · Android</small></div>
-    <a className="btn btn-primary btn-sm" href="/download" data-download data-i18n="stickyCta">Download</a>
+    <a className="btn btn-primary btn-sm" href={DOWNLOAD_URL} data-download data-i18n="stickyCta">Download</a>
   </div>
-  <a className="wa-float" data-wa="contact" href="https://wa.me/201060933358?text=Hello%2C%20I%20want%20to%20know%20more%20about%20the%20Autolinky%20application." target="_blank" rel="noopener" aria-label="WhatsApp" data-i18n-attr="aria-label:waAria">
+  <a className="wa-float" data-wa="contact" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" data-i18n-attr="aria-label:waAria">
     <WhatsAppIcon />
   </a>
   <dialog className="modal" data-modal="started">
@@ -341,7 +342,7 @@ localize(<div onClick={onClick}>
       <img src="/assets/qr-download.svg" alt={lang === 'ar' ? 'رمز تحميل Autolinky لأندرويد' : 'QR code to download Autolinky for Android'} width={132} height={132} />
       <p data-i18n="mdQr">On a computer? Scan this with your Android phone to download it there.</p>
     </div>
-    <p className="modal-foot"><span data-i18n="mdRetry">Didn't start?</span> <a href="/download" data-i18n="mdRetryLink">Try again</a></p>
+    <p className="modal-foot"><span data-i18n="mdRetry">Didn't start?</span> <a href={DOWNLOAD_URL} data-i18n="mdRetryLink">Try again</a></p>
   </dialog>
   <dialog className="modal" data-modal="ios">
     <button className="modal-x" type="button" data-close aria-label="Close">×</button>
@@ -349,8 +350,8 @@ localize(<div onClick={onClick}>
     <h3 data-i18n="iosTitle">Autolinky is on Android for now</h3>
     <p className="muted" data-i18n="iosBody">The iPhone version is on its way. Message us and we'll tell you the moment it's ready, or download the Android app on an Android phone.</p>
     <div className="modal-actions">
-      <a className="btn btn-whatsapp btn-block" data-wa="ios" href="https://wa.me/201060933358?text=Hello%2C%20I%20want%20to%20know%20more%20about%20the%20Autolinky%20application." target="_blank" rel="noopener"><WhatsAppIcon /><span data-i18n="iosCta">Notify me on WhatsApp</span></a>
-      <a className="btn btn-ghost btn-block" href="/download" data-i18n="iosAnyway">Download the Android file anyway</a>
+      <a className="btn btn-whatsapp btn-block" data-wa="ios" href="#" target="_blank" rel="noopener"><WhatsAppIcon /><span data-i18n="iosCta">Notify me on WhatsApp</span></a>
+      <a className="btn btn-ghost btn-block" href={DOWNLOAD_URL} data-i18n="iosAnyway">Download the Android file anyway</a>
     </div>
   </dialog>
 </div>, { lang, release, sticky })

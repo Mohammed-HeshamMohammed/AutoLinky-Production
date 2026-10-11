@@ -1,4 +1,5 @@
-  export const WHATSAPP = '201060933358';
+  import { WHATSAPP_NUMBER } from './config';
+  export const WHATSAPP = WHATSAPP_NUMBER;
   export const MESSAGES = {
     contact: {
       en: 'Hello, I want to know more about the Autolinky application.',

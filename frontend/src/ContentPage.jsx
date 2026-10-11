@@ -5,7 +5,7 @@ import { LEGAL_NAV } from './legalContent';
 import { ProductPreview } from './ProductExperience';
 import { useSiteMotion } from './useSiteMotion';
 import WhatsAppIcon from './WhatsAppIcon';
-import { DOWNLOAD_URL } from './config';
+import { downloadLinkProps } from './config';
 
 function Icon({ name }) {
   const paths = {
@@ -58,7 +58,7 @@ export default function ContentPage({ slug, lang }) {
           <p className="eyebrow">{page.eyebrow}</p>
           <h1>{page.heading}</h1>
           <p className="content-lead">{page.intro}</p>
-          {isLegal ? <div className="legal-meta"><span>{isArabic ? 'آخر تحديث:' : 'Last updated:'} {page.updated}</span><a href={contact} target="_blank" rel="noopener noreferrer">{isArabic ? 'تواصل معنا بشأن هذه الصفحة' : 'Contact us about this page'} <Icon name="arrow" /></a></div> : <div className="content-actions"><a className="btn btn-primary" href={DOWNLOAD_URL}><Icon name="download" />{isArabic ? 'حمّل Autolinky لأندرويد' : 'Download Autolinky for Android'}</a><a className="btn btn-ghost" href={contact} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />{isArabic ? 'اسألنا على واتساب' : 'Ask us on WhatsApp'}</a></div>}
+          {isLegal ? <div className="legal-meta"><span>{isArabic ? 'آخر تحديث:' : 'Last updated:'} {page.updated}</span><a href={contact} target="_blank" rel="noopener noreferrer">{isArabic ? 'تواصل معنا بشأن هذه الصفحة' : 'Contact us about this page'} <Icon name="arrow" /></a></div> : <div className="content-actions"><a className="btn btn-primary" {...downloadLinkProps}><Icon name="download" />{isArabic ? 'حمّل Autolinky لأندرويد' : 'Download Autolinky for Android'}</a><a className="btn btn-ghost" href={contact} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />{isArabic ? 'اسألنا على واتساب' : 'Ask us on WhatsApp'}</a></div>}
           </div>
           {hasPreview && <ProductPreview lang={lang} id={`${slug}-product`} />}
         </div>

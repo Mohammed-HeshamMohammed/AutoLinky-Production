@@ -30,3 +30,10 @@ export function directDownloadUrl(origin) {
   url.searchParams.set('direct', '1');
   return url;
 }
+
+// Set VITE_DOWNLOAD_ENABLED=true to turn the download buttons back on.
+export const DOWNLOAD_ENABLED = env.VITE_DOWNLOAD_ENABLED?.trim() === 'true';
+// Spread onto every download link: a live link when enabled, an inert placeholder otherwise.
+export const downloadLinkProps = DOWNLOAD_ENABLED
+  ? { href: DOWNLOAD_URL, 'data-download': '' }
+  : { href: '#download', 'aria-disabled': 'true', tabIndex: -1, 'data-disabled': '' };

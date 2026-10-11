@@ -13,6 +13,37 @@ npm run build
 
 Serve `frontend/dist/` from the VPS. The build writes 22 indexable pages, `/open/` (noindex), `robots.txt`, `sitemap.xml`, `llms.txt`, a web manifest, a 404 page, and the static artwork. `nginx.conf.example` shows the intended routes and canonical-host redirects; adjust its paths, certificate, and backend port. Serve real 404 responses for unknown URLs rather than a SPA fallback.
 
+## Dokploy Docker deployment
+
+The repository contains `frontend/Dockerfile`. It builds and verifies all pre-rendered pages with Node 22, then serves only `dist/` using Nginx on internal port 80. Dokploy/Traefik handles domain routing and HTTPS. The container uses `nginx.container.conf`; the standalone VPS `nginx.conf.example` is a separate configuration.
+
+Set the following on the Autolinky frontend service:
+
+| Dokploy field | Value |
+| --- | --- |
+| Branch | `frontend-production` |
+| Git Build Path | `/` |
+| Build Type | Dockerfile |
+| Dockerfile Path | `frontend/Dockerfile` |
+| Docker Context Path | `./frontend` |
+| Docker Build Stage | Leave empty (final production stage) |
+| Domain Container Port | `80` |
+
+In **Environment → Build Time Arguments**, paste the four public `VITE_*` values from `.env.example`. The required values have no Docker defaults, so a missing site URL, WhatsApp number, or download URL fails the build with a clear message. The release API URL may be empty. Setting only runtime environment variables does not configure the compiled React frontend. Local `.env` files, dependencies, build output, and screenshots are excluded from the Docker context.
+
+The image serves the frontend only. Configure the existing backend separately for `/download` and `/api/latest`, or set public absolute URLs for these endpoints before building. Do not map host port `80:80` for this container when Dokploy is already managing ports 80/443.
+
+Local Docker build from the repository root:
+
+```bash
+docker build -f frontend/Dockerfile \
+  --build-arg VITE_SITE_URL=https://auto-linky.com \
+  --build-arg VITE_WHATSAPP_NUMBER=201060933358 \
+  --build-arg VITE_DOWNLOAD_URL=/download \
+  --build-arg VITE_RELEASE_API_URL=/api/latest \
+  -t autolinky-frontend frontend
+```
+
 ## Environment configuration
 
 Copy `.env.example` to `.env` and edit it before running the development server or production build. `.env` and local/production overrides are ignored by Git; `.env.example` is tracked. On PowerShell, use `Copy-Item .env.example .env` instead of `cp`.

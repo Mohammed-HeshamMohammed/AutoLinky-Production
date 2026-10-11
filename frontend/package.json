@@ -1,0 +1,19 @@
+{
+  "name": "autolinky-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build && node scripts/prerender.mjs",
+    "check": "npm run build && node scripts/verify-build.mjs",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  },
+  "private": true
+}

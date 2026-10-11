@@ -8,7 +8,7 @@ import './styles.css';
 import './experience.css';
 import { useSiteMotion } from './useSiteMotion';
 import { usePageNavigation } from './usePageNavigation';
-import { RELEASE_API_URL, directDownloadUrl } from './config';
+import { RELEASE_API_URL, DOWNLOAD_ENABLED, directDownloadUrl } from './config';
 
 function initialLanguage() {
   const asked = new URLSearchParams(location.search).get('lang');
@@ -42,7 +42,7 @@ function LandingPage() {
   }, [lang]);
 
   useEffect(() => {
-    if (!RELEASE_API_URL) return;
+    if (!RELEASE_API_URL || !DOWNLOAD_ENABLED) return;
     const controller = new AbortController();
     fetch(RELEASE_API_URL, { headers: { Accept: 'application/json' }, signal: controller.signal })
       .then(response => response.ok ? response.json() : null)

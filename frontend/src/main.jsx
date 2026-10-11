@@ -8,6 +8,7 @@ import './styles.css';
 import './experience.css';
 import { useSiteMotion } from './useSiteMotion';
 import { usePageNavigation } from './usePageNavigation';
+import { RELEASE_API_URL, directDownloadUrl } from './config';
 
 function initialLanguage() {
   const asked = new URLSearchParams(location.search).get('lang');
@@ -41,8 +42,9 @@ function LandingPage() {
   }, [lang]);
 
   useEffect(() => {
+    if (!RELEASE_API_URL) return;
     const controller = new AbortController();
-    fetch('/api/latest', { headers: { Accept: 'application/json' }, signal: controller.signal })
+    fetch(RELEASE_API_URL, { headers: { Accept: 'application/json' }, signal: controller.signal })
       .then(response => response.ok ? response.json() : null)
       .then(data => { if (data?.version) setRelease(data); })
       .catch(() => {}); // The download link remains usable if release metadata is unavailable.
@@ -102,8 +104,9 @@ function OpenPage() {
   const [lang] = useState(initialLanguage);
   const [note, setNote] = useState('');
   const t = OPEN_TEXT[lang];
-  const direct = `${location.origin}/download?direct=1`;
-  const chrome = `intent://${location.host}/download?direct=1#Intent;scheme=${location.protocol.slice(0, -1)};package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(direct)};end`;
+  const directUrl = directDownloadUrl(location.origin);
+  const direct = directUrl.href;
+  const chrome = `intent://${directUrl.host}${directUrl.pathname}${directUrl.search}#Intent;scheme=${directUrl.protocol.slice(0, -1)};package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(direct)};end`;
   useLayoutEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -122,7 +125,7 @@ function OpenPage() {
     <div className="open-actions">
       <a className="btn btn-primary" href={chrome}>{t.chrome}</a>
       <button className="btn btn-ghost" type="button" onClick={copy}>{t.copy}</button>
-      <a className="btn btn-ghost" href="/download?direct=1">{t.anyway}</a>
+      <a className="btn btn-ghost" href={direct}>{t.anyway}</a>
     </div>
     <p className="open-note" role="status">{note}</p>
     <ol className="open-steps">{t.steps.map((step, index) => <li key={index}><b>{lang === 'ar' ? ['١.', '٢.', '٣.'][index] : `${index + 1}.`}</b> {step}</li>)}</ol>

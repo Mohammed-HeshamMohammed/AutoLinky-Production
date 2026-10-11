@@ -2,7 +2,7 @@
 // X:/Autolinky-with-serverbased. Keep both languages in sync when features change.
 import { LEGAL_PAGES } from './legalContent.js';
 
-export const SITE_URL = 'https://auto-linky.com';
+export { SITE_URL } from './config';
 
 export const NAV = [
   ['features', 'Features', 'المميزات'],

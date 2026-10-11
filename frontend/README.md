@@ -6,11 +6,27 @@ React/Vite frontend for `https://auto-linky.com`. The production build pre-rende
 
 ```bash
 cd frontend
+cp .env.example .env
 npm ci
 npm run build
 ```
 
 Serve `frontend/dist/` from the VPS. The build writes 22 indexable pages, `/open/` (noindex), `robots.txt`, `sitemap.xml`, `llms.txt`, a web manifest, a 404 page, and the static artwork. `nginx.conf.example` shows the intended routes and canonical-host redirects; adjust its paths, certificate, and backend port. Serve real 404 responses for unknown URLs rather than a SPA fallback.
+
+## Environment configuration
+
+Copy `.env.example` to `.env` and edit it before running the development server or production build. `.env` and local/production overrides are ignored by Git; `.env.example` is tracked. On PowerShell, use `Copy-Item .env.example .env` instead of `cp`.
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_SITE_URL` | Public origin used for canonical URLs, language alternates, social previews, structured data, sitemap, robots, legal copy, and QR downloads. |
+| `VITE_WHATSAPP_NUMBER` | Public contact number, with country code and digits only. |
+| `VITE_DOWNLOAD_URL` | Root-relative download route or full public HTTP(S) download URL. |
+| `VITE_RELEASE_API_URL` | Public release metadata endpoint; leave empty to disable the request. |
+
+The production prerender and verifier load the same production environment as Vite, including `.env.production` overrides. Rebuild after changing these values; setting environment variables on a static server after building does not change the existing files. The download QR code is regenerated during the build. Update the Nginx example separately if you change its host, paths, or upstream. An API on another origin must allow the site's origin through CORS.
+
+All `VITE_` values are visible in the browser bundle. This frontend contains no private credentials. Put GitHub tokens, database/service-role keys, encryption keys, and mail credentials only in the backend's `.env`; never prefix those keys with `VITE_` or add them to this frontend.
 
 The Privacy Policy, Terms of Use, Billing & Refunds, Website Storage, and Data Requests pages are in `src/legalContent.js`. They reflect the current app and backend. Before public launch, confirm the legal operator identity and contact details, the actual data-retention schedule, third-party providers, and the price, term, cancellation, and refund details offered to Pro customers. Update the bilingual text when these facts change. The current pages use the site's WhatsApp contact because no legal entity name or support email has been supplied.
 

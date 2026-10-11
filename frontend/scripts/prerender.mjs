@@ -3,10 +3,11 @@ import path from 'node:path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createServer } from 'vite';
+import QRCode from 'qrcode';
 
 const dist = path.resolve('dist');
 const shell = await fs.readFile(path.join(dist, 'index.html'), 'utf8');
-const server = await createServer({ server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
+const server = await createServer({ mode: 'production', server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
 const [{ default: PageMarkup }, { default: ContentPage }, { META }, { SITE_URL: site, PAGES, pagePath }, { schemaFor }] = await Promise.all([
   server.ssrLoadModule('/src/PageMarkup.jsx'),
   server.ssrLoadModule('/src/ContentPage.jsx'),
@@ -14,6 +15,8 @@ const [{ default: PageMarkup }, { default: ContentPage }, { META }, { SITE_URL: 
   server.ssrLoadModule('/src/pageContent.js'),
   server.ssrLoadModule('/src/pageMetadata.js'),
 ]);
+const { DOWNLOAD_URL } = await server.ssrLoadModule('/src/config.js');
+await fs.writeFile(path.join(dist, 'assets', 'qr-download.svg'), await QRCode.toString(new URL(DOWNLOAD_URL, site).href, { type: 'svg', margin: 2 }));
 
 function esc(value) {
   return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);

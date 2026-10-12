@@ -63,7 +63,7 @@ export const PAGES = {
       intro: 'Auto Apply keeps working while the app is closed. For job posts with an application email address, the server selects eligible matches and sends your CV one application at a time after you enable it and connect Gmail.',
       sections: [
         { heading: 'You choose the limits', paragraphs: ['Set a minimum match and a daily number of CVs. Autolinky prioritizes stronger matches, uses recent jobs, and spaces out messages. It avoids jobs you already applied to and avoids emailing the same address again within 30 days.', 'The app shows the count sent today, the next planned send, and jobs waiting. You can stop Auto Apply whenever you want.'] },
-        { heading: 'Sent from your Gmail', paragraphs: ['Autolinky uses a separate Google app password to connect to your Gmail account. It checks the connection and stores the app password encrypted on the server. It does not ask for your normal Google password. Applications appear in your Sent folder, and recruiter replies come to you.', 'The cover letter is based on your CV and the job. If AI is unavailable, the server uses a shorter template letter so an eligible email application can still be prepared.'] },
+        { heading: 'Sent from your Gmail', paragraphs: ['Autolinky connects to your Gmail with a separate, revocable access key. It checks the connection and stores the key encrypted on the server. It does not ask for your normal Google password. Applications appear in your Sent folder, and recruiter replies come to you.', 'The cover letter is based on your CV and the job. If AI is unavailable, the server uses a shorter template letter so an eligible email application can still be prepared.'] },
         { heading: 'What Auto Apply does not send', paragraphs: ['Auto Apply sends only email applications with a usable address. WhatsApp, Easy Apply, application forms, company sites, messages, and comments stay as manual actions in the app.', 'If a Gmail limit or connection problem stops sending, the app reports the issue. The free plan also stops email sends after its 20 included applications until a Pro subscription is active.'] },
       ],
       answerHeading: 'Can Auto Apply run when my phone is off?',
@@ -78,7 +78,7 @@ export const PAGES = {
       intro: 'يواصل التقديم التلقائي عمله بعد إغلاق التطبيق. في الوظائف التي تتضمن بريدًا إلكترونيًا للتقديم، يختار الخادم الوظائف المؤهلة ويرسل سيرتك طلبًا واحدًا في كل مرة بعد تفعيله وربط Gmail.',
       sections: [
         { heading: 'أنت تحدد الحدود', paragraphs: ['اختر أقل درجة مطابقة وعدد السير الذاتية يوميًا. يعطي Autolinky الأولوية للوظائف الأقرب لك، ويستخدم الإعلانات الحديثة، ويترك وقتًا بين الرسائل. كما يتجنب الوظائف التي تقدمت إليها وإعادة الإرسال إلى البريد نفسه خلال 30 يومًا.', 'يعرض التطبيق عدد الرسائل المرسلة اليوم وموعد الإرسال التالي والوظائف المنتظرة. ويمكنك إيقاف التقديم التلقائي في أي وقت.'] },
-        { heading: 'الإرسال من Gmail الخاص بك', paragraphs: ['يستخدم Autolinky كلمة مرور تطبيق منفصلة من Google لربط Gmail. يتحقق من الاتصال ويخزن كلمة مرور التطبيق مشفرة على الخادم، ولا يطلب كلمة مرور حساب Google المعتادة. تظهر الطلبات في البريد المرسل وتصل ردود أصحاب العمل إليك.', 'يعتمد خطاب التقديم على سيرتك الذاتية والوظيفة. إذا لم تتوفر خدمة الذكاء الاصطناعي، يستخدم الخادم خطابًا مختصرًا جاهزًا.'] },
+        { heading: 'الإرسال من Gmail الخاص بك', paragraphs: ['يربط Autolinky حساب Gmail بمفتاح وصول منفصل يمكن إلغاؤه. يتحقق من الاتصال ويخزن المفتاح مشفرًا على الخادم، ولا يطلب كلمة مرور حساب Google المعتادة. تظهر الطلبات في البريد المرسل وتصل ردود أصحاب العمل إليك.', 'يعتمد خطاب التقديم على سيرتك الذاتية والوظيفة. إذا لم تتوفر خدمة الذكاء الاصطناعي، يستخدم الخادم خطابًا مختصرًا جاهزًا.'] },
         { heading: 'ما الذي لا يرسله التقديم التلقائي؟', paragraphs: ['يرسل التقديم التلقائي طلبات البريد فقط عندما يتوفر عنوان صالح. تبقى طرق واتساب وEasy Apply والنماذج ومواقع الشركات والرسائل والتعليقات خطوات يدوية داخل التطبيق.', 'إذا أوقف الإرسال حد Gmail أو مشكلة في الاتصال، يوضح التطبيق السبب. وتتوقف رسائل الخطة المجانية بعد 20 طلبًا مشمولًا حتى تفعيل اشتراك Pro.'] },
       ],
       answerHeading: 'هل يعمل التقديم التلقائي والهاتف مغلق؟',
@@ -96,7 +96,7 @@ export const PAGES = {
       sections: [
         { heading: '1. Install and sign in', paragraphs: ['Download the current Android APK and continue with Google to create or access your account. The app asks for the permissions it needs when a feature uses them.'] },
         { heading: '2. Upload your CV and review matches', paragraphs: ['Add a PDF or Word CV. Autolinky reads your experience and skills, then compares your profile with collected job posts. Review the match explanation and the original job details before acting.'] },
-        { heading: '3. Connect Gmail for email applications', paragraphs: ['If you want to send CVs by email, create a Google app password and connect the Gmail address you want recruiters to see. Autolinky checks the connection. You can disconnect it later in Settings.'] },
+        { heading: '3. Connect Gmail for email applications', paragraphs: ['If you want to send CVs by email, connect the Gmail address you want recruiters to see, following the in-app steps. Autolinky checks the connection. You can disconnect it later in Settings.'] },
         { heading: '4. Apply manually or turn on Auto Apply', paragraphs: ['Use Send my CV to inspect and edit a cover letter before sending an email application. For other methods, open the WhatsApp chat, form, or site and complete the application there. Auto Apply can send eligible email applications on the server within the limits you choose.'] },
       ],
       answerHeading: 'Do I have to connect Gmail to use Autolinky?',
@@ -112,7 +112,7 @@ export const PAGES = {
       sections: [
         { heading: '1. ثبّت التطبيق وسجّل الدخول', paragraphs: ['حمّل ملف أندرويد الحالي وتابع باستخدام Google لإنشاء حسابك أو الدخول إليه. يطلب التطبيق الأذونات اللازمة عندما تحتاج إليها إحدى المميزات.'] },
         { heading: '2. ارفع سيرتك وراجع الوظائف', paragraphs: ['أضف سيرة ذاتية PDF أو Word. يقرأ Autolinky خبرتك ومهاراتك ويقارن ملفك بإعلانات الوظائف التي جُمعت. راجع شرح المطابقة وتفاصيل الإعلان الأصلي قبل اتخاذ القرار.'] },
-        { heading: '3. اربط Gmail للتقديم بالبريد', paragraphs: ['إذا أردت إرسال السير الذاتية بالبريد، أنشئ كلمة مرور تطبيق من Google واربط عنوان Gmail الذي تريد أن يراه أصحاب العمل. يتحقق Autolinky من الاتصال، ويمكنك فصله لاحقًا من الإعدادات.'] },
+        { heading: '3. اربط Gmail للتقديم بالبريد', paragraphs: ['إذا أردت إرسال السير الذاتية بالبريد، اربط عنوان Gmail الذي تريد أن يراه أصحاب العمل باتباع الخطوات داخل التطبيق. يتحقق Autolinky من الاتصال، ويمكنك فصله لاحقًا من الإعدادات.'] },
         { heading: '4. قدّم بنفسك أو فعّل التقديم التلقائي', paragraphs: ['استخدم «أرسل سيرتي» لمراجعة خطاب التقديم وتعديله قبل إرسال البريد. وللطرق الأخرى افتح واتساب أو النموذج أو الموقع وأكمل التقديم هناك. ويمكن للتقديم التلقائي إرسال طلبات البريد المؤهلة على الخادم ضمن الحدود التي تختارها.'] },
       ],
       answerHeading: 'هل يجب ربط Gmail لاستخدام Autolinky؟',
@@ -155,14 +155,14 @@ export const PAGES = {
   faq: {
     en: {
       title: 'Autolinky FAQ: Gmail, Auto Apply, Android and pricing',
-      description: 'Answers to common Autolinky questions about the free plan, Gmail app passwords, automatic applications, Android downloads, and iPhone availability.',
+      description: 'Answers to common Autolinky questions about the free plan, Gmail connection, automatic applications, Android downloads, and iPhone availability.',
       eyebrow: 'FAQ',
       heading: 'Answers before you download.',
       intro: 'These answers explain what Autolinky does, what stays under your control, and what you need to start applying from the Android app.',
       questions: [
         ['Is Autolinky free?', 'Yes. The free plan includes 20 email applications in total, sent manually or through Auto Apply. Ask about Pro if you need more.'],
         ['Do I need Gmail to find jobs?', 'No. You can review matched jobs and use non-email application routes without Gmail. Connecting Gmail is required to send a CV by email or enable email Auto Apply.'],
-        ['Does Autolinky ask for my Google password?', 'No. Email sending uses a separate Google app password. The server encrypts it, and you can revoke it in your Google account or disconnect Gmail in the app.'],
+        ['Does Autolinky ask for my Google password?', 'No. Email sending uses a separate, revocable access key. The server encrypts it, and you can revoke it in your Google account or disconnect Gmail in the app.'],
         ['Does Auto Apply send every job automatically?', 'No. It sends only eligible email jobs that meet your selected match and daily limits. WhatsApp, Easy Apply, forms, and company sites require your action.'],
         ['Can I edit a cover letter?', 'Yes. For a manual Send my CV application, you can review and edit the letter before sending. Auto Apply uses the prepared letter without that per-job review.'],
         ['How do I install and update the Android app?', 'Use the download button for the current APK, open the file, and allow installation if Android asks. The app can apply downloaded improvements when you next open it.'],
@@ -172,14 +172,14 @@ export const PAGES = {
     },
     ar: {
       title: 'أسئلة Autolinky: Gmail والتقديم التلقائي وأندرويد والأسعار',
-      description: 'إجابات عن الخطة المجانية وكلمة مرور تطبيق Gmail والتقديم التلقائي وتحميل أندرويد وتوفر نسخة آيفون.',
+      description: 'إجابات عن الخطة المجانية وربط Gmail والتقديم التلقائي وتحميل أندرويد وتوفر نسخة آيفون.',
       eyebrow: 'الأسئلة الشائعة',
       heading: 'إجابات مهمة قبل التحميل.',
       intro: 'توضح هذه الإجابات ما يفعله Autolinky، وما يبقى تحت تحكمك، وما تحتاجه لتبدأ التقديم من تطبيق أندرويد.',
       questions: [
         ['هل Autolinky مجاني؟', 'نعم. تشمل الخطة المجانية 20 طلب تقديم بالبريد إجمالًا، يدويًا أو عبر التقديم التلقائي. اسأل عن Pro إذا احتجت إلى المزيد.'],
         ['هل أحتاج إلى Gmail للعثور على الوظائف؟', 'لا. يمكنك مراجعة الوظائف المناسبة واستخدام طرق التقديم غير البريدية دون Gmail. يلزم ربط Gmail لإرسال السيرة بالبريد أو تفعيل التقديم التلقائي بالبريد.'],
-        ['هل يطلب Autolinky كلمة مرور حساب Google؟', 'لا. يستخدم الإرسال كلمة مرور تطبيق منفصلة من Google. يخزنها الخادم مشفرة، ويمكنك إلغاؤها من حساب Google أو فصل Gmail من التطبيق.'],
+        ['هل يطلب Autolinky كلمة مرور حساب Google؟', 'لا. يستخدم الإرسال مفتاح وصول منفصلًا يمكن إلغاؤه. يخزنه الخادم مشفرًا، ويمكنك إلغاؤه من حساب Google أو فصل Gmail من التطبيق.'],
         ['هل يرسل التقديم التلقائي لكل الوظائف؟', 'لا. يرسل فقط لوظائف البريد المؤهلة التي تستوفي درجة المطابقة والحد اليومي اللذين اخترتهما. وتتطلب واتساب وEasy Apply والنماذج ومواقع الشركات تدخلك.'],
         ['هل يمكنني تعديل خطاب التقديم؟', 'نعم. عند استخدام «أرسل سيرتي» يدويًا، يمكنك مراجعة الخطاب وتعديله قبل الإرسال. يستخدم التقديم التلقائي الخطاب الجاهز دون مراجعة كل وظيفة على حدة.'],
         ['كيف أثبت تطبيق أندرويد وأحصل على التحديثات؟', 'استخدم زر التحميل للحصول على ملف APK الحالي، وافتحه واسمح بالتثبيت إذا طلب أندرويد. يستطيع التطبيق تطبيق التحسينات المحمّلة عند فتحه لاحقًا.'],

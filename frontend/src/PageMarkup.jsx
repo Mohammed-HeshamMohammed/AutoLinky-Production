@@ -185,7 +185,7 @@ localize(<div onClick={onClick}>
           <article className="card reveal">
             <div className="card-icon blue"><svg viewBox="0 0 24 24"><path d="M3 7.5 12 13l9-5.5M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5Z" /></svg></div>
             <h3 data-i18n="f4Title">Sent from your own Gmail</h3>
-            <p data-i18n="f4Body">Recruiters reply straight to you, and every email sits in your Sent folder. Secured with a Google app password you can revoke any time, never your real password.</p>
+            <p data-i18n="f4Body">Recruiters reply straight to you, and every email sits in your Sent folder. Connected through a secure, revocable link that you control.</p>
           </article>
           <article className="card reveal">
             <div className="card-icon mint"><svg viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.36 0l3-3a4.5 4.5 0 0 0-6.36-6.36l-1 1M14 10a4.5 4.5 0 0 0-6.36 0l-3 3a4.5 4.5 0 0 0 6.36 6.36l1-1" /></svg></div>
@@ -215,7 +215,7 @@ localize(<div onClick={onClick}>
         <ol className="steps">
           <li className="step reveal"><span className="step-n">1</span><h3 data-i18n="h1Title">Download &amp; sign in</h3><p data-i18n="h1Body">Install the app and continue with Google in seconds.</p></li>
           <li className="step reveal"><span className="step-n">2</span><h3 data-i18n="h2Title">Upload your CV</h3><p data-i18n="h2Body">PDF or Word. AI reads your skills, title and experience.</p></li>
-          <li className="step reveal"><span className="step-n">3</span><h3 data-i18n="h3Title">Connect Gmail once</h3><p data-i18n="h3Body">A two-minute setup with a Google app password.</p></li>
+          <li className="step reveal"><span className="step-n">3</span><h3 data-i18n="h3Title">Connect Gmail once</h3><p data-i18n="h3Body">A quick two-minute setup, only if you want email applications.</p></li>
           <li className="step reveal"><span className="step-n">4</span><h3 data-i18n="h4Title">Turn on Auto Apply</h3><p data-i18n="h4Body">Watch matches roll in and applications go out.</p></li>
         </ol>
       </div>
@@ -269,7 +269,7 @@ localize(<div onClick={onClick}>
         <div className="faq">
           <details className="reveal"><summary data-i18n="q1">Is Autolinky free?</summary><p data-i18n="a1">Yes. Matching, browsing jobs, and your first 20 email applications in total are free. Ask us on WhatsApp about the current Pro plan.</p></details>
           <details className="reveal"><summary data-i18n="q2">How do I install the app?</summary><p data-i18n="a2">Tap the download button, open the file when it finishes, and allow installing from your browser if Android asks. Then continue with Google and upload your CV.</p></details>
-          <details className="reveal"><summary data-i18n="q3">Do you get my Gmail password?</summary><p data-i18n="a3">Never. Autolinky uses a Google app password: a separate 16-letter key made for Autolinky only. It's stored encrypted, and you can delete it from your Google account any time.</p></details>
+          <details className="reveal"><summary data-i18n="q3">Is my email account safe?</summary><p data-i18n="a3">Autolinky never asks for your normal Google password. Email sending uses a separate, revocable access key that is stored encrypted, and you can disconnect it any time. See the Privacy page for details.</p></details>
           <details className="reveal"><summary data-i18n="q4">Will Auto Apply spam recruiters?</summary><p data-i18n="a4">No. It only sends to jobs that match you, one at a time, never to the same recruiter twice in a month, and within Gmail's safe sending limits.</p></details>
           <details className="reveal"><summary data-i18n="q5">How do I get updates?</summary><p data-i18n="a5">Automatically. Improvements download in the background and apply the next time you open the app. And this page always gives you the newest version.</p></details>
           <details className="reveal"><summary data-i18n="q6">Is there an iPhone version?</summary><p data-i18n="a6">Autolinky is on Android today. Message us on WhatsApp and we'll let you know as soon as the iPhone version is ready.</p></details>

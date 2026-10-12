@@ -185,6 +185,7 @@
     waAria: 'تواصل معنا على واتساب',
 
     mdTitle: 'بدأ التحميل',
+    mdStep0: 'إذا ظهرت رسالة «Download from this site؟» في Chrome، اضغط <b>Download</b>.',
     mdStep1: 'افتح ملف Autolinky من الإشعارات أو مجلد التنزيلات.',
     mdStep2: 'إذا طلب أندرويد، وافق على التثبيت من المتصفح.',
     mdStep3: 'افتح Autolinky، وسجّل الدخول بحساب Google، وارفع سيرتك الذاتية.',

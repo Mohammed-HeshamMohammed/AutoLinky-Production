@@ -359,6 +359,7 @@ localize(<div onClick={onClick}>
     <h3 data-i18n="mdTitle">Your download has started</h3>
     <p className="muted" data-release-name />
     <ol className="modal-steps">
+      <li data-i18n="mdStep0">If Chrome asks &quot;Download from this site?&quot;, tap <b>Download</b>.</li>
       <li data-i18n="mdStep1">Open the Autolinky file from your notifications or Downloads.</li>
       <li data-i18n="mdStep2">If Android asks, allow installing from your browser.</li>
       <li data-i18n="mdStep3">Open Autolinky, continue with Google and upload your CV.</li>

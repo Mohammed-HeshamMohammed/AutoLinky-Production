@@ -206,6 +206,29 @@ localize(<div onClick={onClick}>
       </div>
     </section>
     <WorkflowStory lang={lang} />
+    <section className="section" id="screens">
+      <div className="container">
+        <header className="section-head reveal">
+          <p className="eyebrow" data-i18n="scrEyebrow">Inside the app</p>
+          <h2 data-i18n="scrTitle">See Autolinky in action</h2>
+          <p data-i18n="scrSub">Matches, auto apply, search, and your profile. Sample data shown for illustration.</p>
+        </header>
+        <ul className="shots">
+          {[
+            ['for-you', 'scr1', 'Jobs matched to your CV', 'Every job comes with a match score and the reasons behind it.', 'Autolinky jobs screen with match scores', 'شاشة الوظائف في Autolinky مع نسب التطابق'],
+            ['auto-apply', 'scr2', 'Auto apply, on your terms', 'Choose the minimum match, the daily limit, and the pace.', 'Autolinky auto apply settings screen', 'شاشة إعدادات التقديم التلقائي في Autolinky'],
+            ['explore', 'scr3', 'Explore every new job', 'Search by title, company, or skill, and filter by how to apply.', 'Autolinky explore and search screen', 'شاشة الاستكشاف والبحث في Autolinky'],
+            ['profile', 'scr4', 'Your profile and CV', 'Your preferences and CV in one place, under your control.', 'Autolinky profile and CV screen', 'شاشة الملف الشخصي والسيرة الذاتية في Autolinky'],
+          ].map(([file, key, title, body, altEn, altAr]) => (
+            <li className="shot reveal" key={file}>
+              <img src={`/assets/app/${file}.webp`} alt={lang === 'ar' ? altAr : altEn} width={786} height={1704} loading="lazy" decoding="async" />
+              <h3 data-i18n={key + 'Title'}>{title}</h3>
+              <p data-i18n={key + 'Body'}>{body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
     <section className="section" id="how">
       <div className="container">
         <header className="section-head reveal">

@@ -737,3 +737,14 @@ html[dir='rtl'] .motion-preview-steps li { animation-name: motion-step-rtl; }
 @media (prefers-reduced-motion: reduce) {
   .hero .showcase:hover .phone, .card:hover, .step:hover, .plan:hover, .content-section:hover .content-section-number, .faq-answer:hover, .related-card:hover, .related-card:hover svg { transform: none; }
 }
+
+/* App screenshots */
+.shots { list-style: none; margin: 0; padding: 4px 20px 12px; display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.shot { flex: 0 0 min(72vw, 270px); scroll-snap-align: center; text-align: center; }
+.shot img { width: 100%; height: auto; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 24px 60px -28px rgba(0, 0, 0, .55); background: var(--surface); }
+.shot h3 { margin: 18px 0 6px; font-size: 18px; }
+.shot p { color: var(--muted); font-size: 15px; }
+@media (min-width: 900px) {
+  .shots { overflow: visible; padding-inline: 0; justify-content: center; }
+  .shot { flex: 1 1 0; }
+}

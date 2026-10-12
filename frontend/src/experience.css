@@ -314,3 +314,26 @@ main:focus { outline: none; }
 
 /* Download temporarily disabled (VITE_DOWNLOAD_ENABLED is not "true") */
 a[data-disabled] { opacity: .5; filter: grayscale(.6); cursor: not-allowed; pointer-events: none; box-shadow: none; }
+
+/* App screenshots: staggered entrance, slow float, hover lift, soft glow */
+#screens { overflow: hidden; }
+#screens::before { content: ''; position: absolute; inset: 18% 10% auto; height: 60%; background: radial-gradient(ellipse at 30% 40%, rgba(102, 233, 187, .13), transparent 60%), radial-gradient(ellipse at 75% 55%, rgba(76, 110, 255, .16), transparent 62%); filter: blur(30px); opacity: 0; pointer-events: none; transition: opacity 1.4s ease; }
+#screens:has(.shot.in)::before { opacity: 1; }
+#screens .container { position: relative; }
+html[class*="on-"] .shot.reveal:not(.in) { opacity: 0; }
+.shot.reveal.in { animation: shot-in .95s var(--motion-ease) calc(var(--i, 0) * .13s) both; }
+.shot.reveal.in h3, .shot.reveal.in p { animation: shot-text .7s var(--motion-ease) calc(.45s + var(--i, 0) * .13s) both; }
+.shot-frame { transform-origin: 50% 100%; }
+.shot.in .shot-frame { animation: shot-float 7s ease-in-out calc(1.4s + var(--i, 0) * .7s) infinite; }
+.shot:hover .shot-frame { animation-play-state: paused; }
+.shot img { transition: transform .45s var(--motion-ease), box-shadow .45s var(--motion-ease), border-color .3s; }
+@media (hover: hover) and (pointer: fine) {
+  .shot:hover img { transform: translateY(-10px) scale(1.025); border-color: rgba(102, 233, 187, .45); box-shadow: 0 34px 70px -26px rgba(76, 110, 255, .55), 0 0 0 1px rgba(102, 233, 187, .18); }
+}
+@keyframes shot-in { from { opacity: 0; transform: translateY(64px) scale(.92) rotate(var(--tilt, 0deg)); } to { opacity: 1; transform: none; } }
+@keyframes shot-text { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes shot-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@media (prefers-reduced-motion: reduce) {
+  html[class*="on-"] .shot.reveal:not(.in) { opacity: 1; }
+  .shot:hover img { transform: none; }
+}

@@ -219,9 +219,11 @@ localize(<div onClick={onClick}>
             ['auto-apply', 'scr2', 'Auto apply, on your terms', 'Choose the minimum match, the daily limit, and the pace.', 'Autolinky auto apply settings screen', 'شاشة إعدادات التقديم التلقائي في Autolinky'],
             ['explore', 'scr3', 'Explore every new job', 'Search by title, company, or skill, and filter by how to apply.', 'Autolinky explore and search screen', 'شاشة الاستكشاف والبحث في Autolinky'],
             ['profile', 'scr4', 'Your profile and CV', 'Your preferences and CV in one place, under your control.', 'Autolinky profile and CV screen', 'شاشة الملف الشخصي والسيرة الذاتية في Autolinky'],
-          ].map(([file, key, title, body, altEn, altAr]) => (
-            <li className="shot reveal" key={file}>
-              <img src={`/assets/app/${file}.webp`} alt={lang === 'ar' ? altAr : altEn} width={786} height={1704} loading="lazy" decoding="async" />
+          ].map(([file, key, title, body, altEn, altAr], i) => (
+            <li className="shot reveal" key={file} style={{ '--i': i, '--tilt': i % 2 ? '3deg' : '-3deg' }}>
+              <div className="shot-frame">
+                <img src={`/assets/app/${file}.webp`} alt={lang === 'ar' ? altAr : altEn} width={786} height={1704} loading="lazy" decoding="async" />
+              </div>
               <h3 data-i18n={key + 'Title'}>{title}</h3>
               <p data-i18n={key + 'Body'}>{body}</p>
             </li>

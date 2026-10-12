@@ -316,7 +316,7 @@ localize(<div onClick={onClick}>
       </div>
     </div>
     <div className="container footer-bottom">
-      <p>© <span data-year>2026</span> Autolinky. <span data-i18n="rights">All rights reserved.</span></p>
+      <p>© <span data-year>2026</span> Autolinky. <span data-i18n="rights">All rights reserved. The content, design, and software of this site and app are protected by copyright. Third-party names and trademarks belong to their respective owners.</span></p>
       <p className="muted" data-i18n="disclaimer">Autolinky is not affiliated with Google or any job platform.</p>
     </div>
   </footer>

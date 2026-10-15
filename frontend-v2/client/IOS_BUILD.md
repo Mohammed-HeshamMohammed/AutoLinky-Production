@@ -8,7 +8,11 @@ Firebase Core 4.15.0 and Auth 6.7.0 pin the native Firebase SDK to 12.19.0. This
 
 ## Current verification
 
+The [GitHub macOS build passed](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776) on 2026-10-16 (Cairo), using Xcode 26.6. Source commit: `11d6794b1a99146393ba464374e3e92f688ba454`. The [simulator artifact](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776/artifacts/12009462026) contains version 1.0.1 (2), `com.autolinky.ios`, and arm64/x86_64 binaries. Downloaded ZIP CRC and embedded Firebase identity checks passed. The artifact expires after seven days; the reproducible workflow remains available.
+
 On Windows, the public simulator profile was generated from the supplied iOS Firebase file. Nine configuration contract tests, plist/XML checks, shell syntax checks and Flutter analysis passed. The build script correctly refuses native compilation on Windows.
+
+After pinning compatible Firebase packages, all 152 client tests and the JavaScript web release build passed again.
 
 Native compilation runs in the GitHub macOS job. Its result and downloadable artifact establish whether the Swift host and Flutter iOS code compiled. Simulator launch, device sign-in, signed IPA export and TestFlight upload are separate checks; the CI job does not perform them.
 
@@ -72,6 +76,6 @@ Provider sign-in and device acceptance remain separate checks from successful co
 
 The `ios` job in `.github/workflows/ios-v2.yml` runs on `macos-26`. It installs the pinned Flutter commit, runs the configuration tests, compiles the simulator app, verifies the compiled bundle ID, and uploads `AutoLinky-iOS-simulator` for seven days. The ZIP preserves the application bundle. It is a simulator artifact, not an installable device IPA.
 
-The workflow also supports manual dispatch once it is committed and pushed. It has read-only repository permissions and performs no Apple upload, backend call or data import. Use the completed run result to verify Xcode compilation; configuration checks alone do not establish a successful native build.
+Pushes to `codex/ios-build` run the workflow automatically. Manual dispatch becomes available after the workflow is also present on the default branch. It has read-only repository permissions and performs no Apple upload, backend call or data import. Use the completed run result to verify Xcode compilation; configuration checks alone do not establish a successful native build.
 
 References: [Flutter iOS builds](https://docs.flutter.dev/deployment/ios), [Swift Package Manager integration](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers), [Firebase federated authentication](https://firebase.google.com/docs/auth/flutter/federated-auth).

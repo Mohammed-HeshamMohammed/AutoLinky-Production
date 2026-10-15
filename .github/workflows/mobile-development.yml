@@ -1,0 +1,156 @@
+name: Mobile development release
+on:
+  workflow_dispatch:
+    inputs:
+      api_base_url:
+        description: Optional reachable HTTPS development API origin
+        required: false
+        type: string
+  push:
+    branches: ['codex/ios-build']
+    paths: ['frontend-v2/client/**', '.github/workflows/mobile-development.yml', '!frontend-v2/client/**/*.md']
+permissions:
+  contents: read
+concurrency:
+  group: mobile-development-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  FLUTTER_SUPPRESS_ANALYTICS: 'true'
+  DART_SUPPRESS_ANALYTICS: 'true'
+  MOBILE_API_BASE_URL: ${{ inputs.api_base_url || vars.MOBILE_API_BASE_URL }}
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: frontend-v2/client
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install pinned Flutter
+        run: |
+          git clone --depth 1 --branch 3.47.7 --single-branch https://github.com/flutter/flutter.git "$RUNNER_TEMP/autolinky-flutter"
+          test "$(git -C "$RUNNER_TEMP/autolinky-flutter" rev-parse HEAD)" = abaf9c523780a608bd46686fd5e53740a07077f8
+          echo "$RUNNER_TEMP/autolinky-flutter/bin" >> "$GITHUB_PATH"
+      - name: Prepare common version and platform settings
+        id: release
+        run: |
+          python3 -m unittest discover -s tool -p 'test_*.py'
+          python3 tool/mobile_release.py prepare
+      - name: Restore persistent development signing key
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_DEV_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_DEV_KEYSTORE_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          path=Path(os.environ['RUNNER_TEMP'])/'autolinky-development.p12'
+          path.write_bytes(base64.b64decode(os.environ['KEYSTORE'],validate=True))
+          path.chmod(0o600)
+          password=os.environ['KEYSTORE_PASSWORD']
+          if not password: raise SystemExit('Android development signing secrets are missing.')
+          Path('android/key.properties').write_text('storeType=PKCS12\nstoreFile='+str(path)+'\nstorePassword='+password+'\nkeyAlias=autolinky-development\nkeyPassword='+password+'\n')
+          PY
+      - name: Build Android release APK
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+          BUILD_NUMBER: ${{ steps.release.outputs.build_number }}
+        run: |
+          flutter --version
+          flutter pub get --enforce-lockfile
+          flutter build apk --release --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=.runtime/mobile/android.json
+      - name: Verify APK identity and development certificate
+        env:
+          ANDROID_DEV_CERT_SHA256: ${{ vars.ANDROID_DEV_CERT_SHA256 }}
+        run: |
+          tools=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)
+          "$tools" verify --verbose --print-certs build/app/outputs/flutter-apk/app-release.apk > .runtime/mobile/android-signature.txt
+          "$(dirname "$tools")/aapt" dump badging build/app/outputs/flutter-apk/app-release.apk > .runtime/mobile/android-badging.txt
+          python3 tool/mobile_release.py verify-android
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: AutoLinky-Android-development
+          path: frontend-v2/client/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 7
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: frontend-v2/client
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Install pinned Flutter
+        run: |
+          git clone --depth 1 --branch 3.47.7 --single-branch https://github.com/flutter/flutter.git "$RUNNER_TEMP/autolinky-flutter"
+          test "$(git -C "$RUNNER_TEMP/autolinky-flutter" rev-parse HEAD)" = abaf9c523780a608bd46686fd5e53740a07077f8
+          echo "$RUNNER_TEMP/autolinky-flutter/bin" >> "$GITHUB_PATH"
+      - name: Prepare common version and platform settings
+        id: release
+        run: python3 tool/mobile_release.py prepare
+      - name: Build unsigned iPhone device app
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+          BUILD_NUMBER: ${{ steps.release.outputs.build_number }}
+          FLUTTER_SWIFT_PACKAGE_MANAGER: 'true'
+        run: |
+          flutter --version
+          flutter pub get --enforce-lockfile
+          flutter build ios --release --no-codesign --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=.runtime/mobile/ios.json
+      - name: Package unsigned device IPA
+        run: |
+          mkdir -p .runtime/mobile/package/Payload build/mobile-unsigned
+          ditto build/ios/iphoneos/Runner.app .runtime/mobile/package/Payload/Runner.app
+          ditto -c -k --sequesterRsrc --keepParent .runtime/mobile/package/Payload build/mobile-unsigned/AutoLinky-unsigned.ipa
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: AutoLinky-iOS-unsigned
+          path: frontend-v2/client/build/mobile-unsigned/AutoLinky-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 7
+  release:
+    needs: [android, ios]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: frontend-v2/client
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Prepare identical release contract
+        id: release
+        run: python3 tool/mobile_release.py prepare
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: AutoLinky-*
+          path: frontend-v2/client/.runtime/mobile/downloads
+      - name: Verify both packages and create shared manifest
+        run: python3 tool/mobile_release.py assemble
+      - name: Publish development prerelease with both installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          if gh release view "$TAG" --json isDraft > .runtime/mobile/existing-release.json 2>/dev/null; then
+            python3 -c 'import json; assert json.load(open(".runtime/mobile/existing-release.json"))["isDraft"], "Refusing to replace an already published release"'
+          else
+            gh release create "$TAG" --draft --prerelease --latest=false --target "$GITHUB_SHA" --title "AutoLinky development $TAG" --notes-file .runtime/mobile/release-notes.md
+          fi
+          gh release upload "$TAG" build/mobile-release/* --clobber
+          gh release view "$TAG" --json assets > .runtime/mobile/published-assets.json
+          python3 -c 'import json; assert len(json.load(open(".runtime/mobile/published-assets.json"))["assets"]) == 4, "Both installers, manifest and checksums are required"'
+          gh release edit "$TAG" --draft=false --prerelease --latest=false

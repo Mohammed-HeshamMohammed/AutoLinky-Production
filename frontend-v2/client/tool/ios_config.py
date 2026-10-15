@@ -38,7 +38,7 @@ def firebase_settings(client):
     return native
 
 
-def public_settings(native, supplied, *, mode="simulator", api_url=None, validate=True):
+def public_settings(native, supplied, *, mode="simulator", api_url=None, validate=True, allow_missing_api=False):
     if not isinstance(supplied, dict):
         raise ValueError("The define file must contain a JSON object of public client settings.")
     unknown = set(supplied) - PUBLIC_KEYS
@@ -68,7 +68,7 @@ def public_settings(native, supplied, *, mode="simulator", api_url=None, validat
             raise ValueError(key + " must match the registered iOS Firebase plist.")
     if api_url is not None:
         settings["API_BASE_URL"] = api_url
-    elif not settings["API_BASE_URL"] and mode == "simulator":
+    elif not settings["API_BASE_URL"] and mode == "simulator" and "API_BASE_URL" not in supplied:
         settings["API_BASE_URL"] = "http://localhost:4100"
     for key in ("EMAIL_SIGN_IN", "APPLE_SIGN_IN"):
         if settings[key] not in ("true", "false"):
@@ -86,7 +86,8 @@ def public_settings(native, supplied, *, mode="simulator", api_url=None, validat
     if validate:
         api = urlparse(settings["API_BASE_URL"])
         local_http = mode == "simulator" and api.scheme == "http" and api.hostname in ("localhost", "127.0.0.1", "::1")
-        if not api.hostname or api.username or api.password or api.query or api.fragment or not (api.scheme == "https" or local_http):
+        missing_development_api = allow_missing_api and settings["API_BASE_URL"] == ""
+        if not missing_development_api and (not api.hostname or api.username or api.password or api.query or api.fragment or not (api.scheme == "https" or local_http)):
             raise ValueError("Set an HTTPS API_BASE_URL; only the simulator may use HTTP localhost.")
         if mode != "simulator" and api.hostname in ("localhost", "127.0.0.1", "::1"):
             raise ValueError("A physical iPhone needs a reachable HTTPS API, outside localhost.")

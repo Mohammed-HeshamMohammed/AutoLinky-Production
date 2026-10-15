@@ -7,11 +7,14 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Release signing: android/key.properties (never committed) names the upload keystore. Without it, release builds
-// are signed with the debug key (fine on a phone, refused by Google Play). See mobile/README.md.
+// Local/CI signing settings are never committed. Development CI reuses one private key.
 val keyProperties = Properties().apply {
     val file = rootProject.file("key.properties")
     if (file.exists()) file.inputStream().use { load(it) }
+}
+if (gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) } &&
+    !listOf("storeFile", "storePassword", "keyAlias", "keyPassword").all { keyProperties.containsKey(it) }) {
+    throw GradleException("Release APK signing requires android/key.properties; see MOBILE_RELEASES.md.")
 }
 
 android {
@@ -46,13 +49,14 @@ android {
                 storePassword = keyProperties.getProperty("storePassword")
                 keyAlias = keyProperties.getProperty("keyAlias")
                 keyPassword = keyProperties.getProperty("keyPassword")
+                storeType = keyProperties.getProperty("storeType", "PKCS12")
             }
         }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
         }

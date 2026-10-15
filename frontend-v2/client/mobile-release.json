@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "channel": "development",
+  "repository": "Mohammed-HeshamMohammed/AutoLinky-Production",
+  "flutter_version": "3.47.7",
+  "version_source": "pubspec.yaml",
+  "updates": {
+    "provider": "shorebird",
+    "config": "shorebird.yaml",
+    "track": "stable",
+    "development_engine": "flutter",
+    "ota_active": false
+  }
+}

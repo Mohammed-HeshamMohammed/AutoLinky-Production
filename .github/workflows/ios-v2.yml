@@ -1,9 +1,6 @@
 name: iOS v2 build
 on:
   workflow_dispatch:
-  push:
-    branches: ['codex/ios-build']
-    paths: ['frontend-v2/client/**', '.github/workflows/ios-v2.yml', '!frontend-v2/client/**/*.md']
   pull_request:
     paths: ['frontend-v2/client/**', '.github/workflows/ios-v2.yml', '!frontend-v2/client/**/*.md']
 permissions:

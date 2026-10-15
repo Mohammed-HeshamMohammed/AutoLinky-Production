@@ -4,6 +4,8 @@ The iOS app uses the existing Swift `AppDelegate` and `SceneDelegate` with the s
 
 All changes are inside the new client and the new CI workflow. The original app and production folders are preserved. No user data import is needed.
 
+For the current paired Android APK and **unsigned iOS device IPA** development release, use [MOBILE_RELEASES.md](MOBILE_RELEASES.md). Apple signing is deferred; it does not block generating the unsigned development package.
+
 Firebase Core 4.15.0 and Auth 6.7.0 pin the native Firebase SDK to 12.19.0. This matches the Google Sign-In 9.x package used by the Flutter plugin. Firebase 13 and Google Sign-In 9 have incompatible `GTMSessionFetcher` constraints, so this build uses the compatible published FlutterFire versions rather than patching downloaded SDKs.
 
 ## Current verification
@@ -76,6 +78,6 @@ Provider sign-in and device acceptance remain separate checks from successful co
 
 The `ios` job in `.github/workflows/ios-v2.yml` runs on `macos-26`. It installs the pinned Flutter commit, runs the configuration tests, compiles the simulator app, verifies the compiled bundle ID, and uploads `AutoLinky-iOS-simulator` for seven days. The ZIP preserves the application bundle. It is a simulator artifact, not an installable device IPA.
 
-Pushes to `codex/ios-build` run the workflow automatically. Manual dispatch becomes available after the workflow is also present on the default branch. It has read-only repository permissions and performs no Apple upload, backend call or data import. Use the completed run result to verify Xcode compilation; configuration checks alone do not establish a successful native build.
+The simulator workflow is available for pull requests and manual dispatch after it is present on the default branch. Pushes to `codex/ios-build` now run the paired mobile development workflow instead. The simulator job has read-only repository permissions and performs no Apple upload, backend call or data import. Use the completed run result to verify Xcode compilation; configuration checks alone do not establish a successful native build.
 
 References: [Flutter iOS builds](https://docs.flutter.dev/deployment/ios), [Swift Package Manager integration](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers), [Firebase federated authentication](https://firebase.google.com/docs/auth/flutter/federated-auth).

@@ -42,6 +42,8 @@ command -v "$flutter_bin" >/dev/null || { echo 'Install Flutter 3.47.7 or set AU
 command -v python3 >/dev/null || { echo 'Python 3 is required to prepare public iOS settings.' >&2; exit 1; }
 xcodebuild -version
 xcrun --find swiftc >/dev/null
+# Bootstrap a fresh SDK before asking for machine-readable version output.
+"$flutter_bin" --version
 "$flutter_bin" --version --machine | python3 -c 'import json,sys; version=json.load(sys.stdin)["frameworkVersion"]; sys.exit(0 if version == "3.47.7" else "Use the pinned Flutter 3.47.7; found " + version)'
 python3 tool/ios_config.py "${config_args[@]}"
 export FLUTTER_SWIFT_PACKAGE_MANAGER=true

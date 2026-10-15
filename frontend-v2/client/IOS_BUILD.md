@@ -4,6 +4,8 @@ The iOS app uses the existing Swift `AppDelegate` and `SceneDelegate` with the s
 
 All changes are inside the new client and the new CI workflow. The original app and production folders are preserved. No user data import is needed.
 
+Firebase Core 4.15.0 and Auth 6.7.0 pin the native Firebase SDK to 12.19.0. This matches the Google Sign-In 9.x package used by the Flutter plugin. Firebase 13 and Google Sign-In 9 have incompatible `GTMSessionFetcher` constraints, so this build uses the compatible published FlutterFire versions rather than patching downloaded SDKs.
+
 ## Current verification
 
 On Windows, the public simulator profile was generated from the supplied iOS Firebase file. Nine configuration contract tests, plist/XML checks, shell syntax checks and Flutter analysis passed. The build script correctly refuses native compilation on Windows.

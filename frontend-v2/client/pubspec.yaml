@@ -15,8 +15,9 @@ dependencies:
   flutter_riverpod: ^3.4.3
   go_router: ^18.0.2
   dio: ^5.11.1
-  firebase_core: 5.0.0
-  firebase_auth: 7.0.0
+  # Firebase iOS 12.19 is compatible with the Google Sign-In 9.x Swift package.
+  firebase_core: 4.15.0
+  firebase_auth: 6.7.0
   app_links: 7.2.2
   google_sign_in: ^7.2.0
   flutter_secure_storage: ^11.2.0

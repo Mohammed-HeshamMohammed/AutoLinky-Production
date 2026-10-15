@@ -1,0 +1,50 @@
+name: iOS v2 build
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/ios-build']
+    paths: ['frontend-v2/client/**', '.github/workflows/ios-v2.yml', '!frontend-v2/client/**/*.md']
+  pull_request:
+    paths: ['frontend-v2/client/**', '.github/workflows/ios-v2.yml', '!frontend-v2/client/**/*.md']
+permissions:
+  contents: read
+concurrency:
+  group: ios-v2-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: frontend-v2/client
+    env:
+      FLUTTER_SUPPRESS_ANALYTICS: 'true'
+      DART_SUPPRESS_ANALYTICS: 'true'
+      PUB_CACHE: ${{ github.workspace }}/frontend-v2/client/.runtime/pub-cache
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - name: Install pinned Flutter SDK
+        run: |
+          git clone --depth 1 --branch 3.47.7 --single-branch https://github.com/flutter/flutter.git "$RUNNER_TEMP/autolinky-flutter"
+          test "$(git -C "$RUNNER_TEMP/autolinky-flutter" rev-parse HEAD)" = abaf9c523780a608bd46686fd5e53740a07077f8
+          echo "$RUNNER_TEMP/autolinky-flutter/bin" >> "$GITHUB_PATH"
+      - name: Check native configuration contracts
+        run: python3 -m unittest discover -s tool -p 'test_ios_config.py'
+      - name: Build Swift host and Flutter iOS simulator app
+        run: bash tool/build_ios.sh simulator
+      - name: Verify bundle identity and package simulator app
+        run: |
+          test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' build/ios/iphonesimulator/Runner.app/Info.plist)" = com.autolinky.ios
+          ditto -c -k --sequesterRsrc --keepParent build/ios/iphonesimulator/Runner.app build/ios/AutoLinky-simulator.zip
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: AutoLinky-iOS-simulator
+          path: frontend-v2/client/build/ios/AutoLinky-simulator.zip
+          if-no-files-found: error
+          retention-days: 7

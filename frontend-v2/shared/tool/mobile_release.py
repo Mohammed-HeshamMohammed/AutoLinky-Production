@@ -12,6 +12,7 @@ import sys
 import zipfile
 
 import ios_config
+import mobile_apps
 
 CLIENT = Path(__file__).resolve().parents[1]
 RUNTIME = CLIENT / ".runtime/mobile"
@@ -34,8 +35,8 @@ def prepare(run_number, commit, api_url="", client=CLIENT):
     build = max(1000, int(version[2])) + run_number
     if build > 2_100_000_000:
         raise ValueError("Android version code limit exceeded.")
-    ios = ios_config.public_settings(ios_config.firebase_settings(client), {"API_BASE_URL": api_url}, mode="device", allow_missing_api=True)
-    google = json.loads((client / "android/app/google-services.json").read_text())
+    ios = ios_config.public_settings(ios_config.firebase_settings(), {"API_BASE_URL": api_url}, mode="device", allow_missing_api=True)
+    google = json.loads((mobile_apps.APPS["android"] / "android/app/google-services.json").read_text())
     android = next(entry for entry in google["client"] if entry["client_info"]["android_client_info"]["package_name"] == "com.autolinky.app")
     if google["project_info"]["project_id"] != ios["FIREBASE_PROJECT_ID"]:
         raise ValueError("Android and iOS must use the same Firebase project.")
@@ -73,6 +74,7 @@ def main():
     try:
         RUNTIME.mkdir(parents=True, exist_ok=True)
         if args.command == "prepare":
+            mobile_apps.prepare_apps()
             plan, android, ios = prepare(int(os.environ["GITHUB_RUN_NUMBER"]), os.environ["GITHUB_SHA"], os.environ.get("MOBILE_API_BASE_URL", ""))
             for name, data in (("plan", plan), ("android", android), ("ios", ios)):
                 (RUNTIME / (name + ".json")).write_text(json.dumps(data, indent=2) + "\n")

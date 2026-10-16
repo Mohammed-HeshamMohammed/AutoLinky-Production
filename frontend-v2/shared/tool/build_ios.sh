@@ -23,7 +23,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --export-options-plist)
       [[ $# -ge 2 && -f "$2" ]] || { echo 'Provide an existing Xcode ExportOptions.plist.' >&2; exit 1; }
-      export_options="$2"
+      export_options="$(cd "$(dirname "$2")" && pwd)/$(basename "$2")"
       shift 2
       ;;
     *) echo "Unknown option: $1" >&2; exit 1 ;;
@@ -46,9 +46,12 @@ xcrun --find swiftc >/dev/null
 "$flutter_bin" --version
 "$flutter_bin" --version --machine | python3 -c 'import json,sys; version=json.load(sys.stdin)["frameworkVersion"]; sys.exit(0 if version == "3.47.7" else "Use the pinned Flutter 3.47.7; found " + version)'
 python3 tool/ios_config.py "${config_args[@]}"
+python3 tool/mobile_apps.py
+shared="$PWD"
+cd "../IOS app"
 export FLUTTER_SWIFT_PACKAGE_MANAGER=true
 "$flutter_bin" pub get --enforce-lockfile
-defines='--dart-define-from-file=.runtime/ios/defines.json'
+defines="--dart-define-from-file=$shared/.runtime/ios/defines.json"
 case "$mode" in
   simulator)
     "$flutter_bin" build ios --debug --simulator --no-codesign "$defines"

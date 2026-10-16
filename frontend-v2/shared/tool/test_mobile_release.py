@@ -27,7 +27,7 @@ class MobileReleaseTests(unittest.TestCase):
         self.assertGreater(second["build_number"], first["build_number"])
 
     def test_real_device_release_still_rejects_missing_api_by_default(self):
-        native = ios_config.firebase_settings(mobile_release.CLIENT)
+        native = ios_config.firebase_settings()
         with self.assertRaises(ValueError):
             ios_config.public_settings(native, {"API_BASE_URL": ""}, mode="device")
         settings = ios_config.public_settings(native, {"API_BASE_URL": ""}, mode="device", allow_missing_api=True)

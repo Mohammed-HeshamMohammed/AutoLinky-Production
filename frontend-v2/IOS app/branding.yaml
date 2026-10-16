@@ -1,0 +1,15 @@
+flutter_launcher_icons:
+  android: false
+  ios: true
+  remove_alpha_ios: true
+  image_path: assets/brand/icon.png
+flutter_native_splash:
+  android: false
+  ios: true
+  web: false
+  color: "#F7F8FC"
+  color_dark: "#0B1020"
+  image: assets/brand/splash.png
+# Run from this app folder after preparing the shared brand assets.
+# dart run flutter_launcher_icons -f branding.yaml
+# dart run flutter_native_splash:create --path=branding.yaml

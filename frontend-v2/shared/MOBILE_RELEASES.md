@@ -6,6 +6,8 @@ Verified on 2026-10-16: [development release 1.0.1 (1001)](https://github.com/Mo
 
 `.github/workflows/mobile-development.yml` builds both platforms from the same commit. It overrides both packages with the same version name and increasing build number, then publishes them together as a development prerelease in `Mohammed-HeshamMohammed/AutoLinky-Production`. Development prereleases never become the production/latest release.
 
+The native builds now run in `../Android app/` and `../IOS app/`. Common code and release tooling live here. `python tool/mobile_apps.py` prepares ignored per-app copies of canonical assets and Shorebird settings; CI does this before resolving either app. Each app has its own lockfile and output directory. The earlier verified release above predates this folder split.
+
 ## Shared source
 
 `mobile-release.json` is the common release policy. `pubspec.yaml` owns the version name. `shorebird.yaml` owns the single Shorebird app ID; neither platform gets a separate updater configuration. Packaging checks the **actual embedded Shorebird configuration in both APK and IPA**, along with their version/identity, before publication.

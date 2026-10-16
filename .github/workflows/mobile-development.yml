@@ -8,7 +8,7 @@ on:
         type: string
   push:
     branches: ['codex/ios-build']
-    paths: ['frontend-v2/client/**', '.github/workflows/mobile-development.yml', '!frontend-v2/client/**/*.md']
+    paths: ['frontend-v2/shared/**', 'frontend-v2/Android app/**', 'frontend-v2/IOS app/**', '.github/workflows/mobile-development.yml', '!frontend-v2/shared/**/*.md', '!frontend-v2/Android app/**/*.md', '!frontend-v2/IOS app/**/*.md']
 permissions:
   contents: read
 concurrency:
@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 45
     defaults:
       run:
-        working-directory: frontend-v2/client
+        working-directory: frontend-v2/shared
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -56,28 +56,29 @@ jobs:
           path.chmod(0o600)
           password=os.environ['KEYSTORE_PASSWORD']
           if not password: raise SystemExit('Android development signing secrets are missing.')
-          Path('android/key.properties').write_text('storeType=PKCS12\nstoreFile='+str(path)+'\nstorePassword='+password+'\nkeyAlias=autolinky-development\nkeyPassword='+password+'\n')
+          Path('../Android app/android/key.properties').write_text('storeType=PKCS12\nstoreFile='+str(path)+'\nstorePassword='+password+'\nkeyAlias=autolinky-development\nkeyPassword='+password+'\n')
           PY
       - name: Build Android release APK
         env:
           VERSION: ${{ steps.release.outputs.version }}
           BUILD_NUMBER: ${{ steps.release.outputs.build_number }}
         run: |
+          cd "../Android app"
           flutter --version
           flutter pub get --enforce-lockfile
-          flutter build apk --release --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=.runtime/mobile/android.json
+          flutter build apk --release --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=../shared/.runtime/mobile/android.json
       - name: Verify APK identity and development certificate
         env:
           ANDROID_DEV_CERT_SHA256: ${{ vars.ANDROID_DEV_CERT_SHA256 }}
         run: |
           tools=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)
-          "$tools" verify --verbose --print-certs build/app/outputs/flutter-apk/app-release.apk > .runtime/mobile/android-signature.txt
-          "$(dirname "$tools")/aapt" dump badging build/app/outputs/flutter-apk/app-release.apk > .runtime/mobile/android-badging.txt
+          "$tools" verify --verbose --print-certs "../Android app/build/app/outputs/flutter-apk/app-release.apk" > .runtime/mobile/android-signature.txt
+          "$(dirname "$tools")/aapt" dump badging "../Android app/build/app/outputs/flutter-apk/app-release.apk" > .runtime/mobile/android-badging.txt
           python3 tool/mobile_release.py verify-android
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: AutoLinky-Android-development
-          path: frontend-v2/client/build/app/outputs/flutter-apk/app-release.apk
+          path: frontend-v2/Android app/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 7
   ios:
@@ -85,7 +86,7 @@ jobs:
     timeout-minutes: 45
     defaults:
       run:
-        working-directory: frontend-v2/client
+        working-directory: frontend-v2/shared
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -104,18 +105,19 @@ jobs:
           BUILD_NUMBER: ${{ steps.release.outputs.build_number }}
           FLUTTER_SWIFT_PACKAGE_MANAGER: 'true'
         run: |
+          cd "../IOS app"
           flutter --version
           flutter pub get --enforce-lockfile
-          flutter build ios --release --no-codesign --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=.runtime/mobile/ios.json
+          flutter build ios --release --no-codesign --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=../shared/.runtime/mobile/ios.json
       - name: Package unsigned device IPA
         run: |
           mkdir -p .runtime/mobile/package/Payload build/mobile-unsigned
-          ditto build/ios/iphoneos/Runner.app .runtime/mobile/package/Payload/Runner.app
+          ditto "../IOS app/build/ios/iphoneos/Runner.app" .runtime/mobile/package/Payload/Runner.app
           ditto -c -k --sequesterRsrc --keepParent .runtime/mobile/package/Payload build/mobile-unsigned/AutoLinky-unsigned.ipa
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: AutoLinky-iOS-unsigned
-          path: frontend-v2/client/build/mobile-unsigned/AutoLinky-unsigned.ipa
+          path: frontend-v2/shared/build/mobile-unsigned/AutoLinky-unsigned.ipa
           if-no-files-found: error
           retention-days: 7
   release:
@@ -126,7 +128,7 @@ jobs:
       contents: write
     defaults:
       run:
-        working-directory: frontend-v2/client
+        working-directory: frontend-v2/shared
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -137,7 +139,7 @@ jobs:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: AutoLinky-*
-          path: frontend-v2/client/.runtime/mobile/downloads
+          path: frontend-v2/shared/.runtime/mobile/downloads
       - name: Verify both packages and create shared manifest
         run: python3 tool/mobile_release.py assemble
       - name: Publish development prerelease with both installers

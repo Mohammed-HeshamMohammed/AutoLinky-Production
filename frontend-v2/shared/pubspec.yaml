@@ -65,25 +65,3 @@ flutter:
           weight: 600
         - asset: assets/fonts/IBMPlexSansArabic-Bold.ttf
           weight: 700
-
-# App icon: dart run flutter_launcher_icons (images from tool/make_brand.py)
-flutter_launcher_icons:
-  android: true
-  ios: true
-  remove_alpha_ios: true
-  image_path: assets/brand/icon.png
-  adaptive_icon_background: assets/brand/icon_background.png
-  adaptive_icon_foreground: assets/brand/icon_foreground.png
-  adaptive_icon_monochrome: assets/brand/icon_monochrome.png
-  min_sdk_android: 24
-
-# Launch screen: dart run flutter_native_splash:create
-flutter_native_splash:
-  color: "#F7F8FC"
-  color_dark: "#0B1020"
-  image: assets/brand/splash.png
-  android_12:
-    image: assets/brand/splash_android12.png
-    color: "#F7F8FC"
-    color_dark: "#0B1020"
-  web: false

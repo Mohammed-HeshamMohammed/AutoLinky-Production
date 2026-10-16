@@ -1,0 +1,22 @@
+# Run from this app folder after preparing the shared brand assets.
+# dart run flutter_launcher_icons -f branding.yaml
+# dart run flutter_native_splash:create --path=branding.yaml
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: assets/brand/icon.png
+  adaptive_icon_background: assets/brand/icon_background.png
+  adaptive_icon_foreground: assets/brand/icon_foreground.png
+  adaptive_icon_monochrome: assets/brand/icon_monochrome.png
+  min_sdk_android: 24
+flutter_native_splash:
+  android: true
+  ios: false
+  web: false
+  color: "#F7F8FC"
+  color_dark: "#0B1020"
+  image: assets/brand/splash.png
+  android_12:
+    image: assets/brand/splash_android12.png
+    color: "#F7F8FC"
+    color_dark: "#0B1020"

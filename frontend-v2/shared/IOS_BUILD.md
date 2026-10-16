@@ -8,6 +8,8 @@ For the current paired Android APK and **unsigned iOS device IPA** development r
 
 Firebase Core 4.15.0 and Auth 6.7.0 pin the native Firebase SDK to 12.19.0. This matches the Google Sign-In 9.x package used by the Flutter plugin. Firebase 13 and Google Sign-In 9 have incompatible `GTMSessionFetcher` constraints, so this build uses the compatible published FlutterFire versions rather than patching downloaded SDKs.
 
+The native project lives in `../IOS app/ios/`. The shared package and these build/configuration tools live here; the helper enters the iOS app folder for compilation. Its entry point uses the shared Dart package.
+
 ## Current verification
 
 The [GitHub macOS build passed](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776) on 2026-10-16 (Cairo), using Xcode 26.6. Source commit: `11d6794b1a99146393ba464374e3e92f688ba454`. The [simulator artifact](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776/artifacts/12009462026) contains version 1.0.1 (2), `com.autolinky.ios`, and arm64/x86_64 binaries. Downloaded ZIP CRC and embedded Firebase identity checks passed. The artifact expires after seven days; the reproducible workflow remains available.
@@ -20,7 +22,7 @@ Native compilation runs in the GitHub macOS job. Its result and downloadable art
 
 ## Prepare configuration on Windows or macOS
 
-Run in this client directory:
+Run in `frontend-v2/shared/`:
 
 ```powershell
 python tool/ios_config.py
@@ -29,18 +31,18 @@ python -m unittest discover -s tool -p test_ios_config.py
 
 This creates ignored `.runtime/ios/defines.json` using the registered iOS Firebase values, API `http://localhost:4100`, and disabled email/Apple providers. Google remains unavailable until its real OAuth client IDs are supplied. It does not replace `env/ios.json`, the downloaded Firebase plist or server environment files.
 
-The generated native plist is `ios/Flutter/AutoLinky-Info.plist`. All three Xcode configurations use it. The shared scheme regenerates it from Xcode's `DART_DEFINES` before preparing the Flutter framework. `ios/Runner/Info.plist` remains the source template. The Google callback is added only when a real iOS OAuth client ID exists; unrelated URL handlers are preserved. HTTP local networking is enabled only for a local HTTP API profile. No global App Transport Security bypass is added.
+The generated native plist is `../IOS app/ios/Flutter/AutoLinky-Info.plist`. All three Xcode configurations use it. The shared scheme regenerates it from Xcode's `DART_DEFINES` before preparing the Flutter framework. `../IOS app/ios/Runner/Info.plist` remains the source template. The Google callback is added only when a real iOS OAuth client ID exists; unrelated URL handlers are preserved. HTTP local networking is enabled only for a local HTTP API profile. No global App Transport Security bypass is added.
 
 ## Build on a Mac
 
 Install Xcode with its iOS platform SDK, select it using `xcode-select`, complete its first launch, and install Flutter 3.47.7 and Python 3. Use a current Xcode compatible with the pinned Firebase SDK; the CI job uses the `macos-26` runner. From the repository:
 
 ```bash
-cd frontend-v2/client
+cd frontend-v2/shared
 bash tool/build_ios.sh simulator
 ```
 
-The script checks the host and tools, enforces the Flutter version and package lock, prepares the native/public configuration, and invokes Xcode through Flutter. It compiles the Swift host and plugins into `build/ios/iphonesimulator/Runner.app`. The localhost API must run on the **same Mac** for this default simulator profile to reach it. To use the backend on a different machine, supply its reachable HTTPS origin:
+The script checks the host and tools, enforces the Flutter version and package lock, prepares the native/public configuration, and invokes Xcode through Flutter. It compiles the Swift host and plugins into `../IOS app/build/ios/iphonesimulator/Runner.app`. The localhost API must run on the **same Mac** for this default simulator profile to reach it. To use the backend on a different machine, supply its reachable HTTPS origin:
 
 ```bash
 bash tool/build_ios.sh simulator --api-url https://YOUR-DEVELOPMENT-API
@@ -61,14 +63,14 @@ bash tool/build_ios.sh archive --defines env/ios.release.json \
   --export-options-plist /path/to/ExportOptions.plist
 ```
 
-Open `ios/Runner.xcworkspace` after preparing the profile. Select the Runner target's signing team for `com.autolinky.ios`. Enable the capabilities required by the chosen providers: Keychain Sharing, Associated Domains and Sign in with Apple. The entitlements use the selected app identifier prefix; no Apple team ID or signing certificate has been invented or embedded.
+Open `../IOS app/ios/Runner.xcworkspace` after preparing the profile. Select the Runner target's signing team for `com.autolinky.ios`. Enable the capabilities required by the chosen providers: Keychain Sharing, Associated Domains and Sign in with Apple. The entitlements use the selected app identifier prefix; no Apple team ID or signing certificate has been invented or embedded.
 
-Archive mode creates `build/ios/archive/` and `build/ios/ipa/` only after signing succeeds. It does not upload to Apple or publish the app.
+Archive mode creates `../IOS app/build/ios/archive/` and `../IOS app/build/ios/ipa/` only after signing succeeds. It does not upload to Apple or publish the app.
 
 ## Provider inputs
 
 - Google: obtain the iOS OAuth client ID for `com.autolinky.ios` and the web/server OAuth client ID. Supply `GOOGLE_IOS_CLIENT_ID` and `GOOGLE_WEB_CLIENT_ID` in the public define file, or download a refreshed Firebase plist containing the iOS client ID. The native callback scheme is generated automatically. The existing supplied plist contains neither OAuth ID nor reversed client ID.
-- Email links: enable only after configuring the approved HTTPS continuation URL, Firebase Hosting/mobile links, and matching associated domains in `ios/Runner/Runner.entitlements`. Set `EMAIL_SIGN_IN` to `true` and test opening an actual link on an iPhone.
+- Email links: enable only after configuring the approved HTTPS continuation URL, Firebase Hosting/mobile links, and matching associated domains in `../IOS app/ios/Runner/Runner.entitlements`. Set `EMAIL_SIGN_IN` to `true` and test opening an actual link on an iPhone.
 - Apple: configure the Apple developer capability, Firebase provider and matching signing profile before setting `APPLE_SIGN_IN` to `true`.
 - Backend: Firebase Admin credentials belong only in the backend runtime. They are never part of an iOS profile or artifact.
 

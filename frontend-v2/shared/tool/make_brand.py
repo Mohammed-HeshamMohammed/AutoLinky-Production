@@ -2,7 +2,7 @@
 Draws the Autolinky brand images (app icon, Android adaptive icon layers, splash) from one geometry, the same as
 lib/core/widgets/app_logo.dart: a white "A" chevron with a mint dot (the match) on a blue gradient.
 
-    python tool/make_brand.py        -> assets/brand/*.png, then: dart run flutter_launcher_icons && dart run flutter_native_splash:create
+    python tool/make_brand.py        -> shared assets/brand/*.png and the Android notification resources; then run mobile_apps.py
                                         and android/app/src/main/res/drawable-*/ic_stat_autolinky.png (notifications)
 """
 
@@ -11,7 +11,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 OUT = Path(__file__).resolve().parent.parent / "assets" / "brand"
-ANDROID_RES = Path(__file__).resolve().parent.parent / "android" / "app" / "src" / "main" / "res"
+ANDROID_RES = Path(__file__).resolve().parents[2] / "Android app" / "android" / "app" / "src" / "main" / "res"
 NOTIFICATION_PX = {"mdpi": 24, "hdpi": 36, "xhdpi": 48, "xxhdpi": 72, "xxxhdpi": 96}   # 24 dp
 TOP, BOTTOM = (0x4C, 0x6E, 0xFF), (0x1F, 0x35, 0xC7)       # gradient, top-left -> bottom-right
 WHITE, MINT = (255, 255, 255, 255), (0x2D, 0xD4, 0xA0, 255)

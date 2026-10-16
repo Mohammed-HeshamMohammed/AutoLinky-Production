@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 
 
 CLIENT = Path(__file__).resolve().parents[1]
+IOS_APP = CLIENT.parent / "IOS app"
 BUNDLE_ID = "com.autolinky.ios"
 GOOGLE_CALLBACK = "com.autolinky.google"
 PUBLIC_KEYS = {
@@ -25,7 +26,7 @@ PUBLIC_KEYS = {
 OAUTH_ID = re.compile(r"^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$")
 
 
-def firebase_settings(client):
+def firebase_settings(client=IOS_APP):
     with (client / "ios/Runner/GoogleService-Info.plist").open("rb") as source:
         native = plistlib.load(source)
     if native.get("BUNDLE_ID") != BUNDLE_ID or native.get("PROJECT_ID") != "auto-linky":
@@ -140,10 +141,10 @@ def main():
         supplied = xcode_defines(os.environ.get("DART_DEFINES", "")) if args.xcode else {}
         if args.defines:
             supplied = json.loads(args.defines.read_text(encoding="utf-8-sig"))
-        settings = public_settings(firebase_settings(CLIENT), supplied, mode=args.mode, api_url=args.api_url, validate=not args.xcode)
-        with (CLIENT / "ios/Runner/Info.plist").open("rb") as source:
+        settings = public_settings(firebase_settings(), supplied, mode=args.mode, api_url=args.api_url, validate=not args.xcode)
+        with (IOS_APP / "ios/Runner/Info.plist").open("rb") as source:
             info = native_info(plistlib.load(source), settings)
-        with (CLIENT / "ios/Flutter/AutoLinky-Info.plist").open("wb") as output:
+        with (IOS_APP / "ios/Flutter/AutoLinky-Info.plist").open("wb") as output:
             plistlib.dump(info, output, sort_keys=False)
         if not args.xcode:
             output = CLIENT / ".runtime/ios/defines.json"

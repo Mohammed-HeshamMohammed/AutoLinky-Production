@@ -27,6 +27,24 @@ PUBLIC_KEYS = {
 OAUTH_ID = re.compile(r"^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$")
 
 
+def google_web_client_id(registration, project_id):
+    if registration.get("project_info", {}).get("project_id") != project_id:
+        raise ValueError("Native Google OAuth and Firebase must use the same project.")
+    clients = [entry for entry in registration.get("client", [])
+               if entry.get("client_info", {}).get("android_client_info", {}).get("package_name") == "com.autolinky.app"]
+    if len(clients) != 1:
+        raise ValueError("Expected one com.autolinky.app registration.")
+    client = clients[0]
+    oauth = client.get("oauth_client", []) + client.get("services", {}).get("appinvite_service", {}).get("other_platform_oauth_client", [])
+    ids = {entry.get("client_id", "") for entry in oauth if entry.get("client_type") == 3}
+    if len(ids) > 1:
+        raise ValueError("Native Google server audience is ambiguous.")
+    audience = next(iter(ids), "")
+    if audience and not OAUTH_ID.fullmatch(audience):
+        raise ValueError("Native Google server audience is invalid.")
+    return audience
+
+
 def firebase_settings(client=IOS_APP):
     with (client / "Resources/GoogleService-Info.plist").open("rb") as source:
         native = plistlib.load(source)
@@ -37,6 +55,9 @@ def firebase_settings(client=IOS_APP):
             raise ValueError("Firebase plist is missing " + key)
     if not native["GOOGLE_APP_ID"].startswith("1:" + native["GCM_SENDER_ID"] + ":ios:"):
         raise ValueError("Firebase app ID and sender ID do not identify the same iOS app.")
+    android = client.parent / "Android app/android/app/google-services.json"
+    if android.is_file():
+        native["WEB_CLIENT_ID"] = google_web_client_id(json.loads(android.read_text(encoding="utf-8-sig")), native["PROJECT_ID"])
     return native
 
 
@@ -55,6 +76,7 @@ def public_settings(native, supplied, *, mode="simulator", api_url=None, validat
         "FIREBASE_AUTH_DOMAIN": native["PROJECT_ID"] + ".firebaseapp.com",
         "FIREBASE_LINK_HOST": native["PROJECT_ID"] + ".firebaseapp.com",
         "GOOGLE_IOS_CLIENT_ID": native.get("CLIENT_ID", ""),
+        "GOOGLE_WEB_CLIENT_ID": native.get("WEB_CLIENT_ID", ""),
         "EMAIL_SIGN_IN": "false",
         "APPLE_SIGN_IN": "false",
     })

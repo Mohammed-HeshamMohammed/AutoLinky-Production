@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-16",
+  "scope": "Import owner-supplied Firebase registration downloads from the Production root",
+  "configuration": {
+    "firebase_project": "auto-linky",
+    "android_identity": "com.autolinky.app",
+    "ios_identity": "com.autolinky.ios",
+    "native_app_ids_changed": false,
+    "native_public_sdk_registrations_refreshed": true,
+    "google_native_server_audience_derived": true,
+    "ios_callback_matches_registered_client": true,
+    "android_omits_ios_only_client_id": true,
+    "web_values_in_ignored_environments": true,
+    "web_measurement_id_imported": true,
+    "admin_file_matches_existing_private_auth_copy": true,
+    "admin_private_rsa_key_parses": true,
+    "unconfigured_native_email_links_disabled": true
+  },
+  "checks": {
+    "native_configuration_tests_passed": 16,
+    "mobile_public_environment_boundary_test_passed": true,
+    "local_public_config_matches_imported_web_values": true,
+    "private_server_values_absent_from_public_config": true,
+    "browser_runtime_initialization": "Passed using actual local config endpoint and fixture SDK modules; no provider sign-in",
+    "local_stack_ready": true
+  },
+  "limits": {
+    "application_or_container_build": false,
+    "workflow_dispatch": false,
+    "deployment": false,
+    "live_provider_sign_in": false,
+    "native_installer_acceptance": false,
+    "production_data_migration": false
+  }
+}

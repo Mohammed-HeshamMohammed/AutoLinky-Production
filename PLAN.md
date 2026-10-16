@@ -2,7 +2,13 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: publish frontend and individual backend source branches (2026-10-16)
+## Current: preserve Dokploy's frontend target (2026-10-16)
+
+The deployment log fails before executing build steps because Dokploy requests target `Production`, while the unified Dockerfile only defined `build` and `runtime`. Add a final `Production` alias inheriting `runtime` so the existing target setting resolves to the complete Node image. Publish this compatibility fix to `main` and `frontend-production`; leave backend branch tips unchanged. Validate target resolution and the existing frontend tests without running an application/container build or dispatching a deployment.
+
+- [x] Static target check confirms `Production` inherits the runtime's Node startup command, port 8080 and non-root user; all 13 frontend tests pass. No build or workflow was run.
+
+## Previous milestone: publish frontend and individual backend source branches (2026-10-16)
 
 The owner requested the frontend update on the existing production branch and a separate branch for each backend. Keep `frontend-production` at its existing `frontend/` path, include its shared Flutter browser dependencies and release metadata, and publish each owned backend under its documented component branch. Preserve production branch history and verify the selected directory trees against `main`; do not build applications, dispatch workflows or deploy services. [Branch map and deployment settings](PRODUCTION_BRANCHES.md).
 

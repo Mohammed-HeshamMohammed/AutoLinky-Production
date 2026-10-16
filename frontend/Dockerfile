@@ -26,3 +26,6 @@ COPY --from=build --chown=node:node /app/frontend/api ./api
 USER node
 EXPOSE 8080
 CMD ["node", "server.js"]
+
+# Keep the existing Dokploy build target compatible with this runtime.
+FROM runtime AS Production

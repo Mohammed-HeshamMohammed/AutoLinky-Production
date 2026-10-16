@@ -15,3 +15,7 @@ migration-plan/
 **/*.log
 **/.playwright-cli
 frontend/output/playwright/
+**/*firebase-adminsdk*.json
+IOS-GoogleService-Info.plist
+android-google-services.json
+web-google-servies.json

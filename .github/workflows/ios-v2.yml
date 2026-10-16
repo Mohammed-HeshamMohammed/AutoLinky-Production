@@ -18,7 +18,7 @@ jobs:
     env:
       FLUTTER_SUPPRESS_ANALYTICS: 'true'
       DART_SUPPRESS_ANALYTICS: 'true'
-      PUB_CACHE: ${{ runner.temp }}/autolinky-pub-cache
+      PUB_CACHE: ${{ github.workspace }}/.runtime/pub-cache
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:

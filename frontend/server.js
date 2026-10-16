@@ -8,13 +8,14 @@ import download from './api/download.js';
 import latest from './api/latest.js';
 import { workspaceRoute } from './workspace-routes.js';
 import { workspaceHeaders } from './workspace-headers.js';
+import { availablePublicSettings } from './public-settings.js';
 
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8',
   '.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.ico':'image/x-icon',
   '.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf',
   '.wasm':'application/wasm','.webmanifest':'application/manifest+json'};
 
-export function createSiteServer({directory=fileURLToPath(new URL('./dist/',import.meta.url)),spaFallback=false,apiOrigin=process.env.API_BASE_URL||''}={}) {
+export function createSiteServer({directory=fileURLToPath(new URL('./dist/',import.meta.url)),spaFallback=false,env=process.env,apiOrigin=env.API_BASE_URL||''}={}) {
   const root=resolve(directory);
   let api;
   if(apiOrigin){api=new URL(apiOrigin);if(!['http:','https:'].includes(api.protocol)||api.username||api.password||api.pathname!=='/'||api.search||api.hash)throw Error('API_BASE_URL must be a trusted gateway origin');}
@@ -24,6 +25,12 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
     res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');
     try {
       const url=new URL(req.url,'http://site.local');
+      if(url.pathname==='/api/config'){
+        if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD','Cache-Control':'no-store'}).end();return;}
+        const settings=availablePublicSettings(env);
+        res.writeHead(settings?200:503,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});
+        res.end(req.method==='HEAD'?undefined:JSON.stringify(settings||{error:'public_configuration_unavailable'}));return;
+      }
       if(url.pathname.startsWith('/v1/')||url.pathname.startsWith('/admin/api/')||['/health','/health/ready'].includes(url.pathname)){
         if(!api){res.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'}).end(JSON.stringify({detail:'API gateway is not configured'}));return;}
         const headers={};
@@ -46,8 +53,9 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       const workspace=workspaceRoute(url);
       if(workspace){
         const shell=resolve(root,'workspace/index.html'),info=await stat(shell).catch(()=>null);
-        if(!info?.isFile()){res.writeHead(503,{'Content-Type':'text/plain; charset=utf-8',...workspaceHeaders(workspace)}).end('The desktop web client is awaiting a requested web deployment.');return;}
-        res.writeHead(200,{'Content-Type':'text/html; charset=utf-8',...workspaceHeaders(workspace)});
+        const headers=workspaceHeaders({...workspace,settings:availablePublicSettings(env)});
+        if(!info?.isFile()){res.writeHead(503,{'Content-Type':'text/plain; charset=utf-8',...headers}).end('The desktop web client is awaiting a requested web deployment.');return;}
+        res.writeHead(200,{'Content-Type':'text/html; charset=utf-8',...headers});
         if(req.method==='HEAD'){res.end();return;}createReadStream(shell).on('error',()=>res.destroy()).pipe(res);return;
       }
       const pathname=decodeURIComponent(url.pathname);

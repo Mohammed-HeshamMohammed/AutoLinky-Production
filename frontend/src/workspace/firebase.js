@@ -1,12 +1,13 @@
-// Public Firebase web configuration. Private Admin/provider secrets stay on Auth.
-const config={apiKey:'AIzaSyBdqjxSr3ZCXI-QmDOovZrJILf3kEr-R5s',authDomain:'auto-linky.firebaseapp.com',projectId:'auto-linky',storageBucket:'auto-linky.firebasestorage.app',messagingSenderId:'218018023814',appId:'1:218018023814:web:f019dda9f6205e2973c407'};
 let pending;
 export function firebaseSession(){
-  pending||=Promise.all([
-    import(/* @vite-ignore */ 'https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js'),
-    import(/* @vite-ignore */ 'https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js'),
-  ]).then(async([app,sdk])=>{
-    const auth=sdk.getAuth(app.getApps().length?app.getApp():app.initializeApp(config));
+  pending||=fetch('/api/config',{cache:'no-store',credentials:'same-origin'}).then(async response=>{
+    if(!response.ok)throw Error('Sign-in configuration is unavailable');
+    const {firebase,sdkBaseUrl}=await response.json();
+    const [app,sdk]=await Promise.all([
+      import(/* @vite-ignore */ `${sdkBaseUrl}firebase-app.js`),
+      import(/* @vite-ignore */ `${sdkBaseUrl}firebase-auth.js`),
+    ]);
+    const auth=sdk.getAuth(app.getApps().length?app.getApp():app.initializeApp(firebase));
     await sdk.setPersistence(auth,sdk.indexedDBLocalPersistence);
     return {auth,sdk};
   }).catch(error=>{pending=null;throw error;});

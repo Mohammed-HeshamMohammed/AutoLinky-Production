@@ -8,12 +8,12 @@ import { renderToString } from 'react-dom/server';
 import { createSiteServer } from '../server.js';
 import { workspaceRoute } from '../workspace-routes.js';
 import { workspaceHeaders } from '../workspace-headers.js';
+import { availablePublicSettings } from '../public-settings.js';
 
 // Current React source plus existing browser-app assets; no production build.
 export async function createDevelopmentServer({port=Number(process.env.PORT||8080),host=process.env.HOST||'127.0.0.1'}={}){
   const root=fileURLToPath(new URL('../',import.meta.url));
   process.env.VITE_SITE_URL||=`http://localhost:${port}`;
-  process.env.VITE_WHATSAPP_NUMBER||='201060933358';
   const staticServer=createSiteServer();
   const httpServer=http.createServer();
   const vite=await createViteServer({root,configFile:false,appType:'custom',logLevel:'error',server:{middlewareMode:true,hmr:{server:httpServer},fs:{allow:[root],deny:['**/.env','**/.env.*','**/*.{crt,pem,key}','**/.runtime/**','**/.git/**']}}});
@@ -33,7 +33,7 @@ export async function createDevelopmentServer({port=Number(process.env.PORT||808
           const markup=renderToString(React.createElement(DesktopApp,{initialURL:url.pathname+url.search}));
           let html=await vite.transformIndexHtml(req.url,await readFile(resolve(root,'index.html'),'utf8'));
           html=html.replace('<html lang="en" dir="ltr">',`<html lang="${workspace.lang}" dir="${workspace.lang==='ar'?'rtl':'ltr'}">`).replace(/<title>[^<]*<\/title>/,'<title>AutoLinky · '+(workspace.admin?'Admin':workspace.screen==='login'||workspace.screen==='signup'?'Sign in':'Workspace')+'</title>').replace(/(<meta name="robots" content=")[^"]*(" \/>)/,'$1noindex, nofollow$2').replace('<div id="root"></div>',`<div id="root">${markup}</div>`);
-          res.writeHead(200,{'Content-Type':'text/html; charset=utf-8',...workspaceHeaders({admin:workspace.admin,development:true})}).end(req.method==='HEAD'?undefined:html);return;
+          res.writeHead(200,{'Content-Type':'text/html; charset=utf-8',...workspaceHeaders({development:true,settings:availablePublicSettings()})}).end(req.method==='HEAD'?undefined:html);return;
         }
         const parts=url.pathname.split('/').filter(Boolean),lang=parts[0]==='ar'?'ar':'en';if(lang==='ar')parts.shift();
         const slug=parts[0]||'';

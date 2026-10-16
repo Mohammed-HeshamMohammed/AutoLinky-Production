@@ -6,6 +6,12 @@ import { randomBytes } from 'node:crypto';
 import { createSiteServer } from '../server.js';
 import { createDevelopmentServer } from '../scripts/dev-server.mjs';
 import { workspaceRoute,safeWorkspaceNext } from '../workspace-routes.js';
+import { parseEnv } from 'node:util';
+import { readFile } from 'node:fs/promises';
+
+// Source preview requires explicit public deployment settings, like production.
+Object.assign(process.env,parseEnv(await readFile(new URL('../.env.example',import.meta.url),'utf8')));
+Object.assign(process.env,{PUBLIC_FIREBASE_API_KEY:'public-fixture',PUBLIC_FIREBASE_APP_ID:'1:123:web:fixture'});
 
 test('desktop routes preserve public product pages, mobile copies and safe post-login navigation',()=>{
   assert.deepEqual(workspaceRoute('/ar/jobs/'),{admin:false,screen:'jobs',lang:'ar'});

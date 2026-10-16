@@ -32,6 +32,7 @@ if(Object.keys(supplied).some(key=>!allowed.has(key)))throw Error('APP_DEFINES m
 if(supplied.FIREBASE_APP_ID&&!supplied.FIREBASE_APP_ID.includes(':web:'))throw Error('Browser builds require a Firebase web registration.');
 const settings={EMAIL_SIGN_IN:'false',APPLE_SIGN_IN:'false',API_BASE_URL:'',...registration,...supplied};
 if(process.env.VITE_SITE_URL) {
+  settings.SITE_URL ||= new URL(process.env.VITE_SITE_URL).origin;
   settings.TERMS_URL ||= new URL('/terms/',process.env.VITE_SITE_URL).href;
   settings.PRIVACY_URL ||= new URL('/privacy/',process.env.VITE_SITE_URL).href;
 }

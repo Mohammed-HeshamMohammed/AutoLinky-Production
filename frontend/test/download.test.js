@@ -15,6 +15,7 @@ function call(handler,{url='/download',method='GET',headers={'user-agent':androi
   });
 }
 before(async()=>{
+  process.env.RELEASES_REPO='AMamdouh3/Autolinky-releases';process.env.GITHUB_API_BASE_URL='https://api.github.com';process.env.GITHUB_WEB_BASE_URL='https://github.com';
   server=http.createServer((req,res)=>{
     let body='';req.on('data',chunk=>{body+=chunk;});req.on('end',()=>{
       rows.push({path:req.url,key:req.headers['x-internal-key'],authorization:req.headers.authorization,row:JSON.parse(body)});

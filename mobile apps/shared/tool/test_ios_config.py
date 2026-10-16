@@ -25,6 +25,13 @@ class IosConfigurationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Only public client settings"):
             ios_config.public_settings(self.native, {"GOOGLE_APPLICATION_CREDENTIALS": "private.json"})
 
+    def test_website_and_legal_urls_are_public_configuration(self):
+        settings = ios_config.public_settings(self.native, {"SITE_URL": "https://site.example.com"})
+        self.assertEqual(settings["SITE_URL"], "https://site.example.com")
+        for url in ("javascript:alert(1)", "https://name:secret@example.com", "http://example.com"):
+            with self.subTest(url=url), self.assertRaisesRegex(ValueError, "SITE_URL"):
+                ios_config.public_settings(self.native, {"SITE_URL": url})
+
     def test_other_platform_registration_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "must match"):
             ios_config.public_settings(self.native, {"FIREBASE_APP_ID": "1:123:web:test"})

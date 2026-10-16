@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (!release) {
     res.statusCode = 503;
     res.setHeader('Cache-Control', 'no-store');
-    res.end(JSON.stringify({ error: 'unavailable', page: releasesPage }));
+    res.end(JSON.stringify({ error: 'unavailable', page: releasesPage() }));
     return;
   }
   res.statusCode = 200;

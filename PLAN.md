@@ -1,15 +1,28 @@
 # AutoLinky migration implementation
 
-Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. Existing files and the existing `frontend/` are preserved.
+Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
+
+## Current: backend split and canonical frontend (2026-10-16)
+
+The owner requested the actual backend split, one active `frontend/`, and no app builds or build waits unless requested. This supersedes the older frontend-v2 preservation/layout and proposed-service milestones below.
+
+- [x] Consolidate the unified landing site and both browser experiences into `frontend/`; retain the previous frontend in baseline Git commit `52a996c` and `.runtime/legacy-frontend-before-unification/`.
+- [x] Add separately runnable `backend-v2/services/{gateway,auth,app,messaging,fetching,data}/`, per-service environment files, database roles, private routing and local orchestration.
+- [x] Preserve public API contracts and SQL/SMTP guarantees; implement bounded external JSON staging and a transactional normalization/deduplication handoff. Collection/processing/maintenance stay disabled by default.
+- [x] Connect the web origin to the public API gateway; preserve landing/app navigation, deep links, languages, missing-asset 404s and download handlers.
+- [x] Make web/native/release workflows manual only. No app build is run for this change.
+- [x] Pass 15 backend unit, 25 PostgreSQL integration, 9 web/server and 13 public configuration tests; verify the local split stack and preserve reference files. Evidence: `migration-plan/evidence/backend-split-web-unification.json`.
+
+The service split does not finish provider-specific collection, server push notification delivery, real provider sign-in or production deployment. Native Android stays Flutter and iOS stays Swift; no mobile rebuild is needed for the preserved API routes. No production data migration is performed.
 
 ## Layout
 
 - `migration-plan/`: copied specification at reference commit `2fd91a2`; source hashes and route inventory are under `evidence/`.
 - `backend-v2/`: new native-ESM JavaScript API, SQL, workers, Python extraction/inference boundaries, tests and deployment files.
-- `mobile apps/Android app/`: Android Flutter entry point and Kotlin/Gradle host. The browser counterpart lives in frontend-v2/apps/android/.
-- `mobile apps/IOS app/`: independent native Swift/SwiftUI app, core Swift package, native resources/tests and Xcode build. Its browser counterpart remains separately implemented in frontend-v2/apps/ios/.
+- `mobile apps/Android app/`: Android Flutter entry point and Kotlin/Gradle host. The browser counterpart lives in frontend/apps/android/.
+- `mobile apps/IOS app/`: independent native Swift/SwiftUI app, core Swift package, native resources/tests and Xcode build. Its browser counterpart remains separately implemented in frontend/apps/ios/.
 - `mobile apps/shared/`: Flutter screens/logic for Android and browser entry points, plus common public release/configuration tools. Native iOS does not depend on its Dart package.
-- `frontend-v2/`: unified landing site plus Android/iOS browser app targets.
+- `frontend/`: canonical unified landing site plus Android/iOS browser app targets.
 
 ## Execution
 

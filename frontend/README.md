@@ -1,91 +1,51 @@
-# Autolinky public site
+# AutoLinky unified frontend
 
-React/Vite frontend for `https://auto-linky.com`. The production build pre-renders the homepage, five topic pages, and five legal pages in English and Arabic so their text, metadata, and links are present in the HTTP response before JavaScript runs.
+This is the web frontend: the original React landing pages, English/Arabic product and legal pages, download handlers, and both Flutter browser app experiences are built and served together.
 
-## Build
+| URL | Experience |
+| --- | --- |
+| `/`, `/ar/` and the existing content routes | React landing site copied from the original `frontend/` |
+| `/app/` | Opens the appropriate browser app, preserving the language query |
+| `/app/android/` | Android app experience in the browser |
+| `/app/ios/` | iOS app experience in the browser |
+| `/download`, `/api/latest` | Existing server-side download/release integration |
 
-```bash
-cd frontend
-cp .env.example .env
+Landing and content pages have an Open app link. The browser apps have a Website link and a selector for the other app. Native hosts remain in `../mobile apps/Android app/` and `../mobile apps/IOS app/`. Android and both browser targets consume the Flutter package in `../mobile apps/shared/`. Native iOS is an independent Swift/SwiftUI app and has no Flutter engine or Dart dependency.
+
+## Build and run
+
+Build commands below are for an explicit build request only. Startup and Git pushes do not build or publish apps. Existing web artifacts were retained during consolidation; no new application build was run for this change.
+
+Use Node 24, Python 3 and Flutter 3.47.7. The existing task-local Flutter SDK is under `../.runtime/flutter-sdk/`; another installation can be selected with `AUTOLINKY_FLUTTER_ROOT`.
+
+```powershell
+$env:VITE_SITE_URL='http://localhost:8080'
+$env:VITE_WHATSAPP_NUMBER='201060933358'
+$env:APP_API_BASE_URL='http://localhost:4100'
 npm ci
-npm run build
+npm test
+npm run check
+npm start
 ```
 
-Serve `frontend/dist/` from the VPS. The build writes 22 indexable pages, `/open/` (noindex), `robots.txt`, `sitemap.xml`, `llms.txt`, a web manifest, a 404 page, and the static artwork. `nginx.conf.example` shows the intended routes and canonical-host redirects; adjust its paths, certificate, and backend port. Serve real 404 responses for unknown URLs rather than a SPA fallback.
+`npm run build` builds the React site and both browser apps into one `dist/`. `npm run check` also verifies the prerendered pages, app bases and bundles. Browser API configuration defaults to `VITE_SITE_URL`; this server forwards `/v1/`, `/health` and `/health/ready` to its server-only `API_BASE_URL` gateway origin. Set `APP_API_BASE_URL` only to intentionally use a separate public API origin. `APP_DEFINES` may point to a public Firebase web settings JSON; it must contain only the keys in `../mobile apps/shared/env/example.json`. Native Firebase app IDs and server secrets cannot be used in browser builds. A standalone build with neither site nor API origin shows its configuration screen.
 
-## Dokploy Docker deployment
+For the isolated local stack using existing assets, run `npm run env:setup` then `npm run env:start` in `../backend-v2/`. The primary frontend is `http://localhost:8080`; the older port 8081 redirects into it. `npm run dev` supports React hot reload and proxies app/download routes to the built Node server on 8080.
 
-The repository contains `frontend/Dockerfile`. It builds and verifies all pre-rendered pages with Node 22, then serves only `dist/` using Nginx on internal port 80. Dokploy/Traefik handles domain routing and HTTPS. The container uses `nginx.container.conf`; the standalone VPS `nginx.conf.example` is a separate configuration.
+## Source and deployment
 
-Set the following on the Autolinky frontend service:
+- `src/`, `public/`, `scripts/prerender.mjs`: the preserved landing site with integrated app links.
+- `apps/android/`, `apps/ios/`: thin browser entry points and independent package locks.
+- `web-template/`: the shared browser host template. The preparation tool generates each app's ignored `web/` and asset inputs.
+- `server.js`: one server for the site and apps, including app-specific reload fallbacks, real asset 404s, WASM MIME types and revalidation for app bundles.
+- `api/`: private download/statistics handlers; secrets stay server-side.
 
-| Dokploy field | Value |
-| --- | --- |
-| Branch | `frontend-production` |
-| Git Build Path | `/` |
-| Build Type | Dockerfile |
-| Dockerfile Path | `frontend/Dockerfile` |
-| Docker Context Path | `./frontend` |
-| Docker Build Stage | Leave empty (final production stage) |
-| Domain Container Port | `80` |
+Build Docker from the repository root using `docker build -f frontend/Dockerfile .`, so it can include the shared Dart package outside this folder. The runtime image serves only the final web build and Node handlers on port 8080. The Docker image and VPS deployment have not been verified here. Build-time settings are shown in `.env.example`; keep server-only values out of `APP_DEFINES` and `VITE_*`.
 
-In **Environment → Build Time Arguments**, paste the public `VITE_*` values from `.env.example`. A missing site URL or WhatsApp number fails the build with a clear message. The releases repository and the download switch are optional. Setting only runtime environment variables does not configure the compiled React frontend. Local `.env` files, dependencies, build output, and screenshots are excluded from the Docker context.
+Both browser targets use the registered Firebase web app and common backend. Real sign-in still requires Firebase Admin/provider/domain setup. Browser releases use web deployment and cache revalidation. Native iOS is now an independent SwiftUI application; both mobile installers use one binary release feed, and the browser variants continue using their own Flutter web code. Data migration remains deferred. The former frontend is retained at Git commit `52a996c` and in `.runtime/legacy-frontend-before-unification/` at the repository root. This `frontend/` is the single active web folder; the reference checkout remains read-only.
 
-The image serves the frontend only. The download buttons need no backend: the browser reads the newest release of the public GitHub repository `VITE_RELEASES_REPO` (default `AMamdouh3/Autolinky-releases`) and links straight to its `.apk`. Do not map host port `80:80` for this container when Dokploy is already managing ports 80/443.
+## Verified development result
 
-Local Docker build from the repository root:
+The [clean unified web build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872) passed for source `232ef50`. Its downloaded artifact contains the landing pages and both browser bundles. Local verification passed eight server/download tests, 152 shared app tests, 13 configuration contracts, shared/web analysis, 22 page checks and live HTTP/API/asset checks. Visual browser automation was unavailable in this session; real provider sign-in and production deployment remain pending.
 
-```bash
-docker build -f frontend/Dockerfile \
-  --build-arg VITE_SITE_URL=https://auto-linky.com \
-  --build-arg VITE_WHATSAPP_NUMBER=201060933358 \
-  --build-arg VITE_DOWNLOAD_URL=/download \
-  --build-arg VITE_RELEASE_API_URL=/api/latest \
-  -t autolinky-frontend frontend
-```
-
-## Environment configuration
-
-Copy `.env.example` to `.env` and edit it before running the development server or production build. `.env` and local/production overrides are ignored by Git; `.env.example` is tracked. On PowerShell, use `Copy-Item .env.example .env` instead of `cp`.
-
-| Variable | Purpose |
-| --- | --- |
-| `VITE_SITE_URL` | Public origin used for canonical URLs, language alternates, social previews, structured data, sitemap, robots, legal copy, and QR downloads. |
-| `VITE_WHATSAPP_NUMBER` | Public contact number, with country code and digits only. |
-| `VITE_RELEASES_REPO` | Public GitHub `owner/repository` whose newest release (with an `.apk`) the download buttons use. Optional. |
-| `VITE_DOWNLOAD_ENABLED` | `false` turns the download buttons off; anything else leaves them on. |
-
-The production prerender and verifier load the same production environment as Vite, including `.env.production` overrides. Rebuild after changing these values; setting environment variables on a static server after building does not change the existing files. The download QR code is regenerated during the build. Update the Nginx example separately if you change its host, paths, or upstream. An API on another origin must allow the site's origin through CORS.
-
-All `VITE_` values are visible in the browser bundle. This frontend contains no private credentials. Put GitHub tokens, database/service-role keys, encryption keys, and mail credentials only in the backend's `.env`; never prefix those keys with `VITE_` or add them to this frontend.
-
-The Privacy Policy, Terms of Use, Billing & Refunds, Website Storage, and Data Requests pages are in `src/legalContent.js`. They reflect the current app and backend. Before public launch, confirm the legal operator identity and contact details, the actual data-retention schedule, third-party providers, and the price, term, cancellation, and refund details offered to Pro customers. Update the bilingual text when these facts change. The current pages use the site's WhatsApp contact because no legal entity name or support email has been supplied.
-
-## Product preview and motion
-
-`src/ProductExperience.jsx` provides the bilingual, keyboard-accessible Match / Prepare / Send preview and the desktop scroll story. Its sample data is labeled as a demonstration. On mobile, users switch stages with the same tab controls. `src/useSiteMotion.js` shares reveal, pointer-light, header, and reading-progress behavior with the article pages; it updates on events rather than running a permanent animation loop. `src/experience.css` contains the visual system and optional native page transitions. Reduced-motion preferences disable decorative animation. The initial preview and every story description are pre-rendered.
-
-`src/usePageNavigation.js` handles internal page navigation in React, using a 420ms native crossfade and slide with a stationary header, or a Web Animations fallback. Back/Forward restore scroll positions; new pages focus the main content. Modified clicks, downloads, external links, and local section links retain browser behavior. Reduced motion switches pages immediately. `src/pageMetadata.js` supplies both the build and live navigation with the same structured data; canonical, language alternates, social metadata, and page titles update on every route. All pages still have standalone pre-rendered HTML for direct visits and search crawlers.
-
-The visual direction was informed by bklit.com, kombai.com, and 21st.dev. These are original Autolinky components; no third-party component source, artwork, package, or logo was copied from those sites.
-
-The WhatsApp logo in `src/WhatsAppIcon.jsx` uses Font Awesome Free 6.7.2 artwork, Copyright 2024 Fonticons, Inc., licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). [Source and attribution](https://github.com/FortAwesome/Font-Awesome/blob/6.x/svgs/brands/whatsapp.svg). Only the SVG viewBox is adjusted to trim empty vertical padding.
-
-## Required server routes
-
-| Route | Response |
-| --- | --- |
-| `GET /download` | Redirect to the current Android APK. Preserve query strings, especially `?src=` and `?direct=1`. |
-| `GET /api/latest` | Optional JSON with `version`, `size` in bytes, and `publishedAt` as an ISO date. If absent, the site still displays the download button without release details. |
-
-Keep GitHub, Supabase, and other private credentials in the backend environment. The browser should receive only public data. The repo currently contains the frontend and a route contract; its `/download` server endpoint still needs implementation on the VPS.
-
-## Search launch checks
-
-1. Confirm `https://auto-linky.com/robots.txt` and `/sitemap.xml` return 200 with the production domain.
-2. Confirm `/`, `/ar/`, and each topic page return pre-rendered HTML and a unique title, description, canonical URL, and language alternates.
-3. Confirm `/open/` has `noindex` and unknown URLs return HTTP 404.
-4. Submit the sitemap in Google Search Console and Bing Webmaster Tools after the site is live. Use their URL inspection tools to verify indexing and structured data.
-5. Measure mobile Core Web Vitals from real traffic after launch. Keep product and pricing copy aligned with the app and backend whenever limits change.
-
-Search engines decide whether and when to index or feature pages. `llms.txt` is a factual convenience file; the pre-rendered pages are the primary source for search and AI answers.
+The [native build and release](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916) also passed after the publication-job retry. [Development installers 1.0.1 (1003)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003) retain persistent Android development signing and unsigned iOS output. Their published checksums match the verified native artifacts.

@@ -43,6 +43,7 @@ export default function ContentPage({ slug, lang }) {
         <a className="brand" href={home} aria-label="Autolinky"><img src="/assets/logo.svg" alt="" width="34" height="34" /><span>Autolinky</span></a>
         <nav className="nav-links" aria-label={navLabel}>{NAV.map(([key, en, ar]) => <a className={key === slug ? 'active' : ''} aria-current={key === slug ? 'page' : undefined} href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav>
         <div className="nav-actions">
+          <a className="btn btn-primary btn-sm" href={`/app/?lang=${lang}`}>{isArabic ? 'افتح التطبيق' : 'Open app'}</a>
           <a className="lang-toggle" href={pagePath(slug, opposite)} aria-label={isArabic ? 'English' : 'العربية'}><Icon name="globe" /><span>{isArabic ? 'English' : 'العربية'}</span></a>
           <a className="btn btn-ghost btn-sm content-contact" href={contact} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />{isArabic ? 'تواصل معنا' : 'Contact us'}</a>
         </div>

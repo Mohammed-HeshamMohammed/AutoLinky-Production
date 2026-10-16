@@ -6,7 +6,7 @@ import { gmailTransport } from './email/gmail.js';
 import { deliveryService } from './email/delivery.js';
 import { senderTick } from './workers/auto-apply.js';
 import { AIClient } from './ai/client.js';
-const config=loadConfig();
+const config=loadConfig(process.env,{identity:false});
 if(!config.senderEnabled)throw Error('Sender is disabled; set SENDER_ENABLED=true only after the sender activation checks');
 const db=createDatabase({...config,poolMax:2}),stop=new AbortController(),mail=deliveryService({db,config,transport:gmailTransport(),ai:new AIClient(config)});
 for(const name of ['SIGINT','SIGTERM'])process.on(name,()=>stop.abort());

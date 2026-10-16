@@ -1,12 +1,8 @@
 # AutoLinky migration backend
 
-This is the isolated Node.js implementation of the specifications in `../migration-plan/`. The reference repository and the existing production frontend are preserved. See `../PLAN.md` and `../migration-plan/evidence/implementation-status.md` for completed work and open release gates.
+This is the isolated Node.js implementation of the specifications in `../migration-plan/`. The reference repository remains read-only. The original frontend is retained in baseline Git history while canonical frontend/ now contains the unified website. See `../PLAN.md` and `../migration-plan/evidence/implementation-status.md` for completed work and open release gates.
 
-The proposed identity/app/messaging/collection/data boundaries and phased worker
-separation are documented in [ADR-0001](docs/adr/0001-service-boundaries.md).
-This is a design proposal; only the API, opt-in sender, reconciliation CLI and
-private CV extractor have their current entry points. The complete five-service
-architecture has not been implemented or deployed.
+The backend now runs a public gateway and five private domain services: auth, app, messaging, API fetching and data processing. Each has its own entry point, environment and PostgreSQL role. See [service operations](services/README.md), [the accepted ADR](docs/adr/0001-service-boundaries.md), and [local startup](ENVIRONMENT.md). Only the gateway is public; native/browser API contracts are preserved.
 
 ## Local checks
 
@@ -24,12 +20,13 @@ Python is used only for PDF/DOCX extraction, retained embedding inference, and r
 
 ## Database and API
 
-Provision a private PostgreSQL 17 database. Run `database/bootstrap.sql` once as its administrator, then provision LOGIN credentials for the named roles outside version control. Runtime roles are not superusers or schema owners. Apply migrations with `PG_MIGRATOR_URL` pointing to `autolinky_migrator`; configure the API's `PG_DATABASE_URL` with `autolinky_api`.
+Provision a private PostgreSQL 17 database. Run `database/bootstrap.sql` once as its administrator, then provision LOGIN credentials for the named roles outside version control. Runtime roles are not superusers or schema owners. Apply migrations with `PG_MIGRATOR_URL` pointing to `autolinky_migrator`; configure each private service with its own `autolinky_auth`, `autolinky_app`, `autolinky_messaging`, `autolinky_fetching` or `autolinky_data` role. The gateway has no database login. The old autolinky_api role is retained for compatibility verification, not used by the split launcher.
 
 ```powershell
-Copy-Item .env.example .env
-npm run migrate
-npm start
+npm run env:setup
+# Run reviewed schema changes with a separate PG_MIGRATOR_URL.
+# Local env:start provisions/migrates only its isolated development cluster.
+npm run env:start
 ```
 
 Only the migrator runs DDL. SQL files have a checksum ledger under `migrator`; API startup refuses pending migrations or catalog/grant drift. A production migration also requires `--snapshot-verified`, which is the operator's assertion that an accessible pre-migration backup was taken and checked. The CLI does not create or verify that backup itself.
@@ -44,7 +41,7 @@ Install `services/cv-extractor/requirements.txt` in a separate Python environmen
 
 The current mail adapter uses Gmail SMTP and Fernet-compatible encrypted app passwords. `MAIL_SECRET_KEY` accepts the original padded URL-safe base64 key, with comma-separated rotation keys. SMTP tests use fake transports. An uncertain SMTP outcome remains `sending` and counted; it cannot be deleted, automatically retried or bypassed by account deletion. A confirmed acceptance whose SQL update fails also remains counted.
 
-The separate sender entry point is `npm run sender`; it stays disabled until `SENDER_ENABLED=true`. Use the `autolinky_sender` database role, never the API or migrator credentials. The API does not start a background sender. See implementation evidence for differences still requiring legacy contract review; platform SMTP is a separate, unfinished Release 2.
+The separate sender entry point is `npm run sender`; it stays disabled until `SENDER_ENABLED=true`. It uses the messaging profile and `autolinky_messaging` role; a separately scoped legacy `autolinky_sender` role also remains supported. Never use migrator credentials. The API does not start a background sender. See implementation evidence for differences still requiring legacy contract review; platform SMTP is a separate, unfinished Release 2.
 
 ## Release limitations
 
@@ -57,4 +54,4 @@ Local tests are not production migration, API parity certification, load/restore
 
 ## Source inventory and CI
 
-`node scripts/source-manifest.js` generates the original-file inventory and partial/pending destination map in migration evidence. `node scripts/verify-workspaces.js` proves that the original tracked files remain unchanged. `.github/workflows/migration-v2.yml` checks the backend and calls the unified frontend workflow on relevant main pushes, pull requests or manual dispatch. Exact main integration checks and GitHub run results are recorded in `../migration-plan/evidence/main-integration-verification.json`; earlier web/native runs are recorded separately. These workflows do not deploy the VPS. Paired native development builds can be dispatched manually from main using `mobile-development.yml`.
+`node scripts/source-manifest.js` generates the original-file inventory and partial/pending destination map in migration evidence. `node scripts/verify-workspaces.js` checks the read-only reference and verifies retained original production bytes from baseline Git history for the authorized frontend/README replacement. `.github/workflows/migration-v2.yml` checks the backend and calls the unified frontend workflow only when manually dispatched. Exact main integration checks and GitHub run results are recorded in `../migration-plan/evidence/main-integration-verification.json`; earlier web/native runs are recorded separately. These workflows do not deploy the VPS. Paired native development builds can be dispatched manually from main using `mobile-development.yml`.

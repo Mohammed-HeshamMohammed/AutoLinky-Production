@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T10:01:36.021Z",
+  "generated_at": "2026-10-16T13:59:56.699Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -277,7 +277,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/config.js",
-          "sha256": "c40f7644a0143210424848c8461d7496369c76136af39cbad388da57ba361072"
+          "sha256": "026ccecfb1ad53a4ad913a714627d2ddce720fd693ef509337145e13e6c45692"
         }
       ]
     },
@@ -333,7 +333,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/db/client.js",
-          "sha256": "ea106b7f51d5524a96b10447a718235b0c64c7888eda539c4b7af5017e9e4ddc"
+          "sha256": "b65c8451d9e6717c5869059aa87fac477ab3372ed9278e6b872ba3c2c70da0a7"
         }
       ]
     },
@@ -393,7 +393,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/app.js",
-          "sha256": "ea88385d8c7f18e6f721ce600d0bbf6c83244cac19a56fd3a7076f104cbc7747"
+          "sha256": "44b1b7d0df429754afdb9a41898b018346c0887f6ab08dcf0bd75ad117f41ba8"
         }
       ]
     },
@@ -487,7 +487,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/app.js",
-          "sha256": "ea88385d8c7f18e6f721ce600d0bbf6c83244cac19a56fd3a7076f104cbc7747"
+          "sha256": "44b1b7d0df429754afdb9a41898b018346c0887f6ab08dcf0bd75ad117f41ba8"
         }
       ]
     },
@@ -513,7 +513,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/app.js",
-          "sha256": "ea88385d8c7f18e6f721ce600d0bbf6c83244cac19a56fd3a7076f104cbc7747"
+          "sha256": "44b1b7d0df429754afdb9a41898b018346c0887f6ab08dcf0bd75ad117f41ba8"
         }
       ]
     },
@@ -552,7 +552,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/sender.js",
-          "sha256": "c8bd78cef8113b6981a7a73521d895cd0ec28926d19ace0b065eb1660a2de156"
+          "sha256": "8a6738abbc4d4ed01af2ce75ea91ff66473b4d279c2672a22713145bce329a9d"
         }
       ]
     },
@@ -1407,7 +1407,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/README.md",
-          "sha256": "0b7dbbf29384a2621557a245a3b3eedf440ad06b118f368bc84b90228b85f5d9"
+          "sha256": "db66035c95cefb9890253a7faa53ac558bb88c73db6ba74e4c00136576e839ec"
         }
       ]
     },
@@ -4654,7 +4654,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/favicon.png",
+          "path": "frontend/web-template/favicon.png",
           "sha256": "7ab2525f4b86b65d3e4c70358a17e5a1aaf6f437f99cbcc046dad73d59bb9015"
         }
       ]
@@ -4667,7 +4667,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/icons/Icon-192.png",
+          "path": "frontend/web-template/icons/Icon-192.png",
           "sha256": "3dce99077602f70421c1c6b2a240bc9b83d64d86681d45f2154143310c980be3"
         }
       ]
@@ -4680,7 +4680,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/icons/Icon-512.png",
+          "path": "frontend/web-template/icons/Icon-512.png",
           "sha256": "baccb205ae45f0b421be1657259b4943ac40c95094ab877f3bcbe12cd544dcbe"
         }
       ]
@@ -4693,7 +4693,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/icons/Icon-maskable-192.png",
+          "path": "frontend/web-template/icons/Icon-maskable-192.png",
           "sha256": "d2c842e22a9f4ec9d996b23373a905c88d9a203b220c5c151885ad621f974b5c"
         }
       ]
@@ -4706,7 +4706,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/icons/Icon-maskable-512.png",
+          "path": "frontend/web-template/icons/Icon-maskable-512.png",
           "sha256": "6aee06cdcab6b2aef74b1734c4778f4421d2da100b0ff9e52b21b55240202929"
         }
       ]
@@ -4719,7 +4719,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/index.html",
+          "path": "frontend/web-template/index.html",
           "sha256": "0567d890bc6f7998a21a864057d25b451784ed4411a810d1a082ce721b48ed36"
         }
       ]
@@ -4732,7 +4732,7 @@
       "note": "Browser hosts are generated from this template in the unified frontend.",
       "destinations": [
         {
-          "path": "frontend-v2/web-template/manifest.json",
+          "path": "frontend/web-template/manifest.json",
           "sha256": "64d2991c549dd23f721131fb93c140dee74a08bbd2cf83b320ba94d703e1f2c0"
         }
       ]
@@ -5873,7 +5873,7 @@
       "note": "The destination uses the existing production React website and a Node VPS server.",
       "destinations": [
         {
-          "path": "frontend-v2/api/_release.js",
+          "path": "frontend/api/_release.js",
           "sha256": "0b57563977af22127ce73f59c992cc562ef5a65bbc1297f1cb88b9fea0a234a5"
         }
       ]
@@ -5886,7 +5886,7 @@
       "note": "The destination uses the existing production React website and a Node VPS server.",
       "destinations": [
         {
-          "path": "frontend-v2/api/_stats.js",
+          "path": "frontend/api/_stats.js",
           "sha256": "6bc6694ab7d9e50bfd04d4e87bbd76dafd59762cc5b9e6772194b4aec0f398e7"
         }
       ]
@@ -5899,7 +5899,7 @@
       "note": "The destination uses the existing production React website and a Node VPS server.",
       "destinations": [
         {
-          "path": "frontend-v2/api/download.js",
+          "path": "frontend/api/download.js",
           "sha256": "567891251b06fd8f462fb0c5ef5b291b3b847d7f744fd0e1b2bae622fb53383e"
         }
       ]
@@ -5912,7 +5912,7 @@
       "note": "The destination uses the existing production React website and a Node VPS server.",
       "destinations": [
         {
-          "path": "frontend-v2/api/latest.js",
+          "path": "frontend/api/latest.js",
           "sha256": "57957eb45a8ea35e514f08bc0ca0e6b8bb4b8d97e5510ab83254b5d3700943c2"
         }
       ]
@@ -6050,10 +6050,10 @@
       "source": "frontend/.dockerignore",
       "source_sha256": "8113eaa4f0f9d0f090ec4ce88e9de9ea96d1cf0834b2fcbc91fac98fc644fbcd",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/.dockerignore",
+          "path": "frontend/.dockerignore",
           "sha256": "538fa106eaeb5b313371fd45d3ad5a246a31d3586543573e3eb70ce4200dcd6b"
         }
       ]
@@ -6063,11 +6063,11 @@
       "source": "frontend/.env.example",
       "source_sha256": "e4afa41a083a7837993614e73b819349e00ade4cc931edbf3daac0728d002204",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/.env.example",
-          "sha256": "de08e9c59b19b3a412f7f6a6ad923ccb4e592427bdd7c6bbe35407b71db3f856"
+          "path": "frontend/.env.example",
+          "sha256": "ae25b4858b42808e14fe0125e942557ec26c66793e70705dada6500eba57d56e"
         }
       ]
     },
@@ -6076,10 +6076,10 @@
       "source": "frontend/.gitignore",
       "source_sha256": "c79efdd3484915b06c2fe782d5ed537c099a6de41bf06b4c6e84651d3f130435",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/.gitignore",
+          "path": "frontend/.gitignore",
           "sha256": "c3227f145a6cb653b55a0655aa80392f5ca05fe02aa1da0915a9624f822459bd"
         }
       ]
@@ -6089,11 +6089,11 @@
       "source": "frontend/Dockerfile",
       "source_sha256": "630ca0d50bafa6e4be2c091d0a736541ad30fd0ba644310b97483064cc5ba748",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/Dockerfile",
-          "sha256": "3b48304b758b45da504e43183c27f0be8a2ffe7f9ce640da7e0fe0bfcf37cdc7"
+          "path": "frontend/Dockerfile",
+          "sha256": "a39208b28e5645180c81ac228072451146714f84dbe2bcae46cc850bed663d07"
         }
       ]
     },
@@ -6102,11 +6102,11 @@
       "source": "frontend/README.md",
       "source_sha256": "a681556c9e57b0ed2001e511bc35b8fdc120d29c36ec660d8994d7e83bdd65ad",
       "status": "adapted_website_instructions",
-      "note": "The original site README is preserved in the original frontend; unified frontend instructions are maintained separately.",
+      "note": "The original README is retained at baseline commit 52a996c; canonical frontend instructions replace it with owner authorization.",
       "destinations": [
         {
-          "path": "frontend-v2/docs/WEBSITE.md",
-          "sha256": "637bfb63b08893fa21e014434abe492b24fbb0cd90369264899ca401cce2f272"
+          "path": "frontend/docs/WEBSITE.md",
+          "sha256": "06c1620a0c7c26578086b29cb9be94d6b331e0d929f4b0f65520c252f8375493"
         }
       ]
     },
@@ -6115,10 +6115,10 @@
       "source": "frontend/index.html",
       "source_sha256": "f6a04e25ff993983d9271d548b9a4461eddf1a1cff9ca4f144bebfbe77d36f28",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/index.html",
+          "path": "frontend/index.html",
           "sha256": "df7c5345b4aa5d406a132891ed8428e4a5288cdd749b01be20ba4d9d10ddf697"
         }
       ]
@@ -6128,11 +6128,11 @@
       "source": "frontend/nginx.conf.example",
       "source_sha256": "e3ac8b0a579ddf5e15c785bcfbf985d545d23e154e82373ddce4c1d94f132c9b",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/nginx.conf.example",
-          "sha256": "d8c5aa27a5da8661cef5e83a2e696d222121c845e07e2b409aac047ea53dc780"
+          "path": "frontend/nginx.conf.example",
+          "sha256": "2daab427f5dc6dd60545455384a74f04e813797ec0e8930e1d41d0839cce2d4a"
         }
       ]
     },
@@ -6141,11 +6141,11 @@
       "source": "frontend/nginx.container.conf",
       "source_sha256": "87f288b0895aa8bf8ddd5f1ca36de5dbed66f6eab2c8cebd51f53c6104c0f100",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/nginx.container.conf",
-          "sha256": "87f288b0895aa8bf8ddd5f1ca36de5dbed66f6eab2c8cebd51f53c6104c0f100"
+          "path": "frontend/nginx.container.conf",
+          "sha256": "f268effa366fab7be96498f76237cb0649c5fbc4e092b81ed228aeaa9ab75788"
         }
       ]
     },
@@ -6154,10 +6154,10 @@
       "source": "frontend/package-lock.json",
       "source_sha256": "294d9fc5a77cbe5a586a5f1a82971550c739cad6f084241f9c75e4477cb814e8",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/package-lock.json",
+          "path": "frontend/package-lock.json",
           "sha256": "294d9fc5a77cbe5a586a5f1a82971550c739cad6f084241f9c75e4477cb814e8"
         }
       ]
@@ -6167,10 +6167,10 @@
       "source": "frontend/package.json",
       "source_sha256": "4608f9e09fbab3a4eccc62064e73d44197990d0122feb5069f498e1479e6688c",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/package.json",
+          "path": "frontend/package.json",
           "sha256": "03cb5d68694b585b1d4e2f47a8d9e89dfa039d02b5467a10b7992bcf2f37bd2c"
         }
       ]
@@ -6180,10 +6180,10 @@
       "source": "frontend/public/assets/app/auto-apply.webp",
       "source_sha256": "b0db0575f2e905ba13ea17bc392869afde374169ad226ab2cc622bc013b8aaf5",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/app/auto-apply.webp",
+          "path": "frontend/public/assets/app/auto-apply.webp",
           "sha256": "b0db0575f2e905ba13ea17bc392869afde374169ad226ab2cc622bc013b8aaf5"
         }
       ]
@@ -6193,10 +6193,10 @@
       "source": "frontend/public/assets/app/explore.webp",
       "source_sha256": "68db3ef7ef07a087bdb75055a8367a208c4984f4031e59d3b4e6836a9842712f",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/app/explore.webp",
+          "path": "frontend/public/assets/app/explore.webp",
           "sha256": "68db3ef7ef07a087bdb75055a8367a208c4984f4031e59d3b4e6836a9842712f"
         }
       ]
@@ -6206,10 +6206,10 @@
       "source": "frontend/public/assets/app/for-you.webp",
       "source_sha256": "1ece700133e9b90a87a1d4f86eb022f71da9a119105c1dd2eeac93b60ff2cfe2",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/app/for-you.webp",
+          "path": "frontend/public/assets/app/for-you.webp",
           "sha256": "1ece700133e9b90a87a1d4f86eb022f71da9a119105c1dd2eeac93b60ff2cfe2"
         }
       ]
@@ -6219,10 +6219,10 @@
       "source": "frontend/public/assets/app/profile.webp",
       "source_sha256": "bbc56169db3122483e9ee248c827123a76504c80cf8ab0ce2ec3be067b3b9a7b",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/app/profile.webp",
+          "path": "frontend/public/assets/app/profile.webp",
           "sha256": "bbc56169db3122483e9ee248c827123a76504c80cf8ab0ce2ec3be067b3b9a7b"
         }
       ]
@@ -6232,10 +6232,10 @@
       "source": "frontend/public/assets/apple-touch-icon.png",
       "source_sha256": "c94148da8321e8991b1fc335de786fa564ef7834694398cbe8ce4dec44260c92",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/apple-touch-icon.png",
+          "path": "frontend/public/assets/apple-touch-icon.png",
           "sha256": "c94148da8321e8991b1fc335de786fa564ef7834694398cbe8ce4dec44260c92"
         }
       ]
@@ -6245,10 +6245,10 @@
       "source": "frontend/public/assets/favicon.ico",
       "source_sha256": "02cb528122c0bdd0b5cb025c787edbe0c0f629ebdac9b807cf7ca4c1fd35665c",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/favicon.ico",
+          "path": "frontend/public/assets/favicon.ico",
           "sha256": "02cb528122c0bdd0b5cb025c787edbe0c0f629ebdac9b807cf7ca4c1fd35665c"
         }
       ]
@@ -6258,10 +6258,10 @@
       "source": "frontend/public/assets/favicon.svg",
       "source_sha256": "ea21bdb81aec3f7bd11f1f06a79cf9e6317de6c8c71270afddab18c9a3f8aae2",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/favicon.svg",
+          "path": "frontend/public/assets/favicon.svg",
           "sha256": "ea21bdb81aec3f7bd11f1f06a79cf9e6317de6c8c71270afddab18c9a3f8aae2"
         }
       ]
@@ -6271,10 +6271,10 @@
       "source": "frontend/public/assets/icon-192.png",
       "source_sha256": "39ab9f777aeaef2555cabb828cc7aae13e75c62cfdc84ffe09d4701643519543",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/icon-192.png",
+          "path": "frontend/public/assets/icon-192.png",
           "sha256": "39ab9f777aeaef2555cabb828cc7aae13e75c62cfdc84ffe09d4701643519543"
         }
       ]
@@ -6284,10 +6284,10 @@
       "source": "frontend/public/assets/icon-48.png",
       "source_sha256": "e9c570a833c156756fbbaa8e7f6a9817c22aaf95e40e6f4c4a097314ce46c780",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/icon-48.png",
+          "path": "frontend/public/assets/icon-48.png",
           "sha256": "e9c570a833c156756fbbaa8e7f6a9817c22aaf95e40e6f4c4a097314ce46c780"
         }
       ]
@@ -6297,10 +6297,10 @@
       "source": "frontend/public/assets/icon-512.png",
       "source_sha256": "2c3da1c3eaa8056d1bd3803be8d3cb63b873b96df53c1e80b9d784d7b1c23008",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/icon-512.png",
+          "path": "frontend/public/assets/icon-512.png",
           "sha256": "2c3da1c3eaa8056d1bd3803be8d3cb63b873b96df53c1e80b9d784d7b1c23008"
         }
       ]
@@ -6310,10 +6310,10 @@
       "source": "frontend/public/assets/logo.svg",
       "source_sha256": "ea21bdb81aec3f7bd11f1f06a79cf9e6317de6c8c71270afddab18c9a3f8aae2",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/logo.svg",
+          "path": "frontend/public/assets/logo.svg",
           "sha256": "ea21bdb81aec3f7bd11f1f06a79cf9e6317de6c8c71270afddab18c9a3f8aae2"
         }
       ]
@@ -6323,10 +6323,10 @@
       "source": "frontend/public/assets/og.png",
       "source_sha256": "d3e401a001cfd954077f948e68f7387f4465676eafad408fc833548594feced9",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/og.png",
+          "path": "frontend/public/assets/og.png",
           "sha256": "d3e401a001cfd954077f948e68f7387f4465676eafad408fc833548594feced9"
         }
       ]
@@ -6336,10 +6336,10 @@
       "source": "frontend/public/assets/qr-download.svg",
       "source_sha256": "add47b9ac0d909b2dfbab9bd456fd0fd852b7cdf7720c4c9b32d1cde6e19af32",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/assets/qr-download.svg",
+          "path": "frontend/public/assets/qr-download.svg",
           "sha256": "5e43128da893ea37c2b2b787ed6c2ebebfa0c95efd3e047bc0479b272ef1f7fb"
         }
       ]
@@ -6349,10 +6349,10 @@
       "source": "frontend/public/site.webmanifest",
       "source_sha256": "bbe699bdcc94e530a2dbfa0a9462295c2c940b05eab3d4306762f19c310e61ec",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/public/site.webmanifest",
+          "path": "frontend/public/site.webmanifest",
           "sha256": "52a4a0b90fb54814b9e9dfe8564215d62fbfbc91d26afdd3747956194b9a051d"
         }
       ]
@@ -6362,10 +6362,10 @@
       "source": "frontend/scripts/prerender.mjs",
       "source_sha256": "19142d37168bb8022301e7d4d1be94894635a3c118d9735a8c0251e395ed41ad",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/scripts/prerender.mjs",
+          "path": "frontend/scripts/prerender.mjs",
           "sha256": "ba4de76b1f41e9335abf99a97028b94d2cb54ff1508db9629dd387c9fe7011b4"
         }
       ]
@@ -6375,10 +6375,10 @@
       "source": "frontend/scripts/verify-build.mjs",
       "source_sha256": "37a75fa41b805447f219f669571e51330df9c4ccea72409518eb2b36703fa493",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/scripts/verify-build.mjs",
+          "path": "frontend/scripts/verify-build.mjs",
           "sha256": "75504094df3b2670825649d778bf8bfbb5e4ce1823b40723123abd1226a87dd5"
         }
       ]
@@ -6388,10 +6388,10 @@
       "source": "frontend/src/ContentPage.jsx",
       "source_sha256": "9bad01f58ab326189c0e856804f5aca672b66adc4fb6830ce27842b1ca732f09",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/ContentPage.jsx",
+          "path": "frontend/src/ContentPage.jsx",
           "sha256": "38ad61dbd83479741e98d75c632fdf0dc3f7729328c0ed3d897c61955a81c23a"
         }
       ]
@@ -6401,10 +6401,10 @@
       "source": "frontend/src/PageMarkup.jsx",
       "source_sha256": "19b2e2c5f527b5adc0d69a5167d57899481fd8c9f5e09d391e124168c5f79e7c",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/PageMarkup.jsx",
+          "path": "frontend/src/PageMarkup.jsx",
           "sha256": "606eec04a4b7d27afac077bde54622ae17f465d1f91bbb14f225c2593ff0f684"
         }
       ]
@@ -6414,10 +6414,10 @@
       "source": "frontend/src/ProductExperience.jsx",
       "source_sha256": "3e1bce81d9532cdf95d5ef0f8be0825655e8191dd538653a3379d2df0cc77fb1",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/ProductExperience.jsx",
+          "path": "frontend/src/ProductExperience.jsx",
           "sha256": "3e1bce81d9532cdf95d5ef0f8be0825655e8191dd538653a3379d2df0cc77fb1"
         }
       ]
@@ -6427,10 +6427,10 @@
       "source": "frontend/src/WhatsAppIcon.jsx",
       "source_sha256": "311219c2e1b49c425b32e8c3b014bb6b85234e738c6c2cea93e338781f4bb5bc",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/WhatsAppIcon.jsx",
+          "path": "frontend/src/WhatsAppIcon.jsx",
           "sha256": "182145e09a957150fdc951fcd9166d645e6a6267eb84318b8ae537118a86f0ac"
         }
       ]
@@ -6440,10 +6440,10 @@
       "source": "frontend/src/config.js",
       "source_sha256": "344914bbeef4ce2f416316785c08f1eb95709a450b06867cf653f3562efec263",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/config.js",
+          "path": "frontend/src/config.js",
           "sha256": "9be61da1e24b7cf1f93e5dcd2f753e2821f2da261a7ff845d5e2c8f311f853d1"
         }
       ]
@@ -6453,10 +6453,10 @@
       "source": "frontend/src/content.js",
       "source_sha256": "35ba1f3549a51a4be32840483d89eca444bda70522088592bd21114776d84e3e",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/content.js",
+          "path": "frontend/src/content.js",
           "sha256": "35ba1f3549a51a4be32840483d89eca444bda70522088592bd21114776d84e3e"
         }
       ]
@@ -6466,10 +6466,10 @@
       "source": "frontend/src/experience.css",
       "source_sha256": "f9b414d2112cb4e4fac81e4adb7dca35ec48b3b25d70fa99ca1d5667d7f6467e",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/experience.css",
+          "path": "frontend/src/experience.css",
           "sha256": "f9b414d2112cb4e4fac81e4adb7dca35ec48b3b25d70fa99ca1d5667d7f6467e"
         }
       ]
@@ -6479,10 +6479,10 @@
       "source": "frontend/src/legalContent.js",
       "source_sha256": "4bb2de36ef5297c2d222c67b79eea293ee98abf093e189e8739a27a853dc0b5a",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/legalContent.js",
+          "path": "frontend/src/legalContent.js",
           "sha256": "4bb2de36ef5297c2d222c67b79eea293ee98abf093e189e8739a27a853dc0b5a"
         }
       ]
@@ -6492,10 +6492,10 @@
       "source": "frontend/src/main.jsx",
       "source_sha256": "3c176f69aa0113605c88870a59fbf70d6f79ec269771de28b0ba417ce107143e",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/main.jsx",
+          "path": "frontend/src/main.jsx",
           "sha256": "807956185d192709b2d2b371b179c2d84ac5b259c215a542121857a4303064d1"
         }
       ]
@@ -6505,10 +6505,10 @@
       "source": "frontend/src/pageContent.js",
       "source_sha256": "b266b53f164f2a764058250149d62a27f3cff5fab39bf79c5d07fde0a12f0710",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/pageContent.js",
+          "path": "frontend/src/pageContent.js",
           "sha256": "b266b53f164f2a764058250149d62a27f3cff5fab39bf79c5d07fde0a12f0710"
         }
       ]
@@ -6518,10 +6518,10 @@
       "source": "frontend/src/pageMetadata.js",
       "source_sha256": "5aff823cb823a9d5d3dd9854954c3e57f1fc52e779dc3065f26813f6583ef35a",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/pageMetadata.js",
+          "path": "frontend/src/pageMetadata.js",
           "sha256": "5aff823cb823a9d5d3dd9854954c3e57f1fc52e779dc3065f26813f6583ef35a"
         }
       ]
@@ -6531,10 +6531,10 @@
       "source": "frontend/src/styles.css",
       "source_sha256": "07c7dccddab0322c3964e887b531cb9b8091787bd382304581970e398056d639",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/styles.css",
+          "path": "frontend/src/styles.css",
           "sha256": "1d108f35e443b53b900aa01706ea02ca782b7236a9fd03084e5e55ba9e836f89"
         }
       ]
@@ -6544,10 +6544,10 @@
       "source": "frontend/src/usePageNavigation.js",
       "source_sha256": "c575e6795cd9e4ee34ed4491ecbc5045e6eae63287dbbf7d78f0d66f7457bf25",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/usePageNavigation.js",
+          "path": "frontend/src/usePageNavigation.js",
           "sha256": "4e4c988624f23b3858d2a758ac7fba5d15f8f6ae9668ac3acc15a43c35f28362"
         }
       ]
@@ -6557,10 +6557,10 @@
       "source": "frontend/src/useSiteMotion.js",
       "source_sha256": "0f7d515a9837ca178ecf69252a2ed3bfe0ecbfb5c7b15f28c5398d69cf75b69a",
       "status": "copied_current_production_site",
-      "note": "The original production file is preserved; destination integration changes are isolated.",
+      "note": "Canonical unified frontend; original bytes retained at baseline commit 52a996c and the local archive.",
       "destinations": [
         {
-          "path": "frontend-v2/src/useSiteMotion.js",
+          "path": "frontend/src/useSiteMotion.js",
           "sha256": "e90d180697515f58a9a96c7b268fa252bbf1f0c0ba6bbd846ef48b0191ba3440"
         }
       ]

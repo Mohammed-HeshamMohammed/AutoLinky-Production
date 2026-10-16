@@ -1,3 +1,9 @@
+## 2026-10-16: implemented private backend services and canonical web frontend
+
+The owner requested actual backend separation and replacing both active web folders with `frontend/`. Services now run independently under `backend-v2/services/{gateway,auth,app,messaging,fetching,data}/`, with private authentication RPC, per-service roles/keys, one public gateway and a durable bounded fetching/data staging pipeline. The unified website contains the preserved landing content and both browser apps, plus same-origin API routing. Native projects remain separate and unchanged.
+
+Builds/releases are manual only. This change runs source/contract/database/local HTTP checks using existing web assets; no app build, release workflow, production deployment, data import or live SMTP/API collection is performed. Full provider acquisition/enrichment, promotion of staged records into the job feed and server push delivery remain incomplete. Exact checks and limits are in `backend-split-web-unification.json`.
+
 # Implementation evidence and remaining work
 
 ## Current native client architecture (2026-10-16)

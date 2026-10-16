@@ -9,7 +9,7 @@
 
 The native iOS app neither depends on the shared Dart package nor bundles a
 Flutter engine. The iOS-style browser experience is a separate Flutter web app
-in `../frontend-v2/apps/ios/`; Android's browser experience is alongside it.
+in `../frontend/apps/ios/`; Android's browser experience is alongside it.
 Both browser apps stay integrated with the landing site.
 
 The clients share backend API contracts, the Firebase project, brand resources

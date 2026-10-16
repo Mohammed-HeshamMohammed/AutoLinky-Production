@@ -80,8 +80,8 @@ export async function migrate(db, { production = false, snapshot = false } = {})
           FROM migrator.schema_state s WHERE s.id;
         $$;
         REVOKE ALL ON FUNCTION migrator.runtime_schema_status() FROM PUBLIC;
-        GRANT USAGE ON SCHEMA migrator TO autolinky_api,autolinky_collector,autolinky_sender,autolinky_ops,autolinky_admin;
-        GRANT EXECUTE ON FUNCTION migrator.runtime_schema_status() TO autolinky_api,autolinky_collector,autolinky_sender,autolinky_ops,autolinky_admin;`);
+        GRANT USAGE ON SCHEMA migrator TO autolinky_api,autolinky_collector,autolinky_sender,autolinky_ops,autolinky_admin,autolinky_auth,autolinky_app,autolinky_messaging,autolinky_fetching,autolinky_data;
+        GRANT EXECUTE ON FUNCTION migrator.runtime_schema_status() TO autolinky_api,autolinky_collector,autolinky_sender,autolinky_ops,autolinky_admin,autolinky_auth,autolinky_app,autolinky_messaging,autolinky_fetching,autolinky_data;`);
       await connection.query('COMMIT');
     } catch (error) { await connection.query('ROLLBACK'); throw error; }
   } finally {

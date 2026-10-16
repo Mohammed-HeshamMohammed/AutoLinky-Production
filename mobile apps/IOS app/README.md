@@ -37,6 +37,6 @@ new app binary; no Dart/Shorebird patch engine is included. Background checks
 are best effort, scheduled by iOS; auto-apply sending runs on the server.
 
 The iOS-style browser app remains a separate Flutter web build at
-`../../frontend-v2/apps/ios/`. SwiftUI is not compiled into that browser app.
+`../../frontend/apps/ios/`. SwiftUI is not compiled into that browser app.
 Prior Flutter iOS sources are recoverable from Git history; a local reference
 copy was retained in ignored `.runtime/previous-flutter/` during conversion.

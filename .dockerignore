@@ -1,5 +1,4 @@
 .git
-frontend/
 backend-v2/
 migration-plan/
 **/node_modules

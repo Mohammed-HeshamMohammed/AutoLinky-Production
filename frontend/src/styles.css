@@ -128,6 +128,12 @@ html[dir='rtl'] .btn-download-sm { padding: 10px 12px 10px 22px; }
 .nav-links a:hover { color: var(--text); background: var(--surface-2); }
 .nav-links a.active, .nav-links a[aria-current='page'] { color: var(--mint); background: rgba(62, 224, 174, .1); }
 .nav-actions { display: flex; align-items: center; gap: 8px; margin-inline-start: auto; }
+@media (max-width: 600px) {
+  .nav-inner { gap: 8px; }
+  .nav-contact, .content-contact { display: none; }
+  .nav-actions .btn { padding-inline: 12px; white-space: nowrap; }
+  .nav-actions { gap: 6px; }
+}
 .lang-toggle {
   display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 13px;
   border-radius: 999px; border: 1px solid var(--border); background: transparent; cursor: pointer;

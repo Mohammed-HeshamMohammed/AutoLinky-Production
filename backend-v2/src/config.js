@@ -10,7 +10,7 @@ function flag(env,name,fallback=false) {
   if (['false','0'].includes(value)) return false;
   throw new Error(`Invalid ${name}`);
 }
-export function loadConfig(env = process.env) {
+export function loadConfig(env = process.env,{database=true,identity=true}={}) {
   const production=env.NODE_ENV === 'production';
   const origins=(env.CORS_ALLOWED_ORIGINS || '').split(',').map(s=>s.trim()).filter(Boolean);
   for (const origin of origins) {
@@ -18,13 +18,13 @@ export function loadConfig(env = process.env) {
     if (url.origin!==origin || (production && url.protocol!=='https:')) throw new Error('CORS origins must be exact trusted origins');
   }
   if (production && env.FIREBASE_AUTH_EMULATOR_HOST) throw new Error('Firebase emulator is forbidden in production');
-  if (production && (!env.FIREBASE_PROJECT_ID || !env.PG_DATABASE_URL)) throw new Error('Production requires Firebase and PostgreSQL configuration');
+  if (production && ((identity&&!env.FIREBASE_PROJECT_ID)||(database&&!env.PG_DATABASE_URL))) throw new Error('Production requires the service Firebase/PostgreSQL configuration');
   const notice=flag(env,'SERVICE_NOTICE') ? {
     en: { title:env.SERVICE_NOTICE_TITLE_EN || "We're making Autolinky better",body:env.SERVICE_NOTICE_BODY_EN || "We're updating our services right now, so some things may be slow or unavailable for a little while. Your account and everything you saved are safe, and we'll be back very soon. Thank you for your patience!" },
     ar: { title:env.SERVICE_NOTICE_TITLE_AR || 'نعمل على تحسين Autolinky',body:env.SERVICE_NOTICE_BODY_AR || 'نقوم الآن بتحديث خدماتنا، لذلك قد تكون بعض الأشياء أبطأ أو غير متاحة لفترة قصيرة. حسابك وكل ما حفظته في أمان، وسنعود قريبًا جدًا. شكرًا لصبرك!' },
   } : null;
   return Object.freeze({
-    production,version:'0.5.10',host:env.HOST || '127.0.0.1',port:integer(env,'PORT',4000,1,65535),
+    production,version:'0.5.10',serviceName:env.SERVICE_NAME||'api',host:env.HOST || '127.0.0.1',port:integer(env,'PORT',4000,1,65535),
     databaseUrl:env.PG_DATABASE_URL || '',poolMax:integer(env,'PG_POOL_MAX',8,1,20),
     statementTimeout:integer(env,'PG_STATEMENT_TIMEOUT_MS',5000,100,30000),
     firebaseProjectId:env.FIREBASE_PROJECT_ID || '',origins,notice,

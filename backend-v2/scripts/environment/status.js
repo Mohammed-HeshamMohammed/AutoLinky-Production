@@ -7,13 +7,14 @@ const settings=await readSettings();
 const services=await Promise.all([
   ['api',`http://127.0.0.1:${settings.ports.api}/health/ready`],['extractor',`http://127.0.0.1:${settings.ports.extractor}/health`],
   ['website',`http://localhost:${settings.ports.website}/`],['client',`http://localhost:${settings.ports.client}/`],
+  ...['auth','app','messaging','fetching','data'].map(name=>[name,`http://127.0.0.1:${settings.ports[name]}/health/ready`]),
 ].map(async([name,url])=>{
   try{const response=await fetch(url,{signal:AbortSignal.timeout(3000)});await response.arrayBuffer();return {name,url,status:response.ok?'ready':`HTTP ${response.status}`};}
   catch{return {name,url,status:'unreachable'};}
 }));
-const api=parseEnv(await readFile(resolve(runtime,'backend.env'),'utf8'));
+const api=parseEnv(await readFile(resolve(runtime,'auth.env'),'utf8'));
 const admin=api.GOOGLE_APPLICATION_CREDENTIALS;
-let adminStatus='missing: set GOOGLE_APPLICATION_CREDENTIALS in the local backend.env';
+let adminStatus='missing: set GOOGLE_APPLICATION_CREDENTIALS in the local auth.env';
 if(admin&&await exists(admin)) {
   const credentials=JSON.parse(await readFile(admin,'utf8'));
   adminStatus=credentials.type==='service_account'&&credentials.project_id==='auto-linky'?'file configured; live access not tested':'project/type mismatch';

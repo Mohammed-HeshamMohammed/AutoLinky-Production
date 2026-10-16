@@ -7,7 +7,7 @@ import shutil
 
 SHARED = Path(__file__).resolve().parents[1]
 APPS = {"android": SHARED.parent / "Android app", "ios": SHARED.parent / "IOS app"}
-WEB = SHARED.parent.parent / "frontend-v2"
+WEB = SHARED.parent.parent / "frontend"
 WEB_APPS = {platform: WEB / "apps" / platform for platform in APPS}
 
 

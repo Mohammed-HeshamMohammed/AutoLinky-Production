@@ -1,66 +1,22 @@
-# Adjust root, certificate paths, and the backend port for your VPS.
-# The backend must implement /download and, if release metadata is wanted, /api/latest.
+# Unified frontend: Node serves landing pages, browser apps, downloads and /v1.
+# Start frontend/server.js on loopback 8080; set its API_BASE_URL to the gateway.
 server {
     listen 80;
     server_name auto-linky.com www.auto-linky.com;
     return 301 https://auto-linky.com$request_uri;
 }
-
 server {
-    listen 443 ssl http2;
-    server_name www.auto-linky.com;
+    listen 443 ssl;
+    server_name auto-linky.com www.auto-linky.com;
     ssl_certificate /etc/letsencrypt/live/auto-linky.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/auto-linky.com/privkey.pem;
-    return 301 https://auto-linky.com$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name auto-linky.com;
-    ssl_certificate /etc/letsencrypt/live/auto-linky.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/auto-linky.com/privkey.pem;
-
-    root /var/www/auto-linky/frontend/dist;
-    index index.html;
-    charset utf-8;
-    add_header X-Content-Type-Options nosniff always;
-    add_header Referrer-Policy strict-origin-when-cross-origin always;
-    add_header X-Frame-Options DENY always;
-
-    # Existing short links from the old site.
-    location = /contact { return 302 https://wa.me/201060933358; }
-    location = /whatsapp { return 302 https://wa.me/201060933358; }
-    location = /apk { return 302 /download$is_args$args; }
-
-    # Keep credentials and release lookup on the backend. Pass query strings through.
-    location = /download {
-        proxy_pass http://127.0.0.1:8000/download;
+    client_max_body_size 4m;
+    location / {
+        proxy_pass http://127.0.0.1:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Real-IP $remote_addr;
+        proxy_read_timeout 100s;
+        proxy_send_timeout 100s;
     }
-    location = /api/latest {
-        proxy_pass http://127.0.0.1:8000/api/latest;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location ~ ^/assets/index-[A-Za-z0-9_-]+\.(js|css)$ {
-        try_files $uri =404;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-    location /assets/ {
-        try_files $uri =404;
-        expires 1h;
-    }
-
-    # The pages are pre-rendered. Unknown URLs should be real 404s, not the homepage.
-    location = / {
-        if ($arg_lang = ar) { return 301 /ar/; }
-        try_files /index.html =404;
-    }
-    location / { try_files $uri $uri/ =404; }
-    error_page 404 /404.html;
-    location = /404.html { internal; }
 }

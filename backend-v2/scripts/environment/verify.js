@@ -17,6 +17,9 @@ for(const platform of ['android','ios']) {
   assert.equal((await fetch(client+`/app/${platform}/missing.js`)).status,404);
 }
 assert.equal((await fetch(client+'/')).status,200);
+for(const name of ['auth','app','messaging'])assert.equal((await fetch(`http://127.0.0.1:${settings.ports[name]}/v1/me`)).status,401);
+assert.equal((await fetch(api+'/internal/v1/session',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).status,404);
+for(const name of ['fetching','data'])assert.equal((await fetch(`http://127.0.0.1:${settings.ports[name]}/internal/v1/data/status`)).status,401);
 const report={checked_at:new Date().toISOString(),result:'passed',checks:['service readiness','native database connectivity','client CORS','private API authorization','untrusted origin refusal','bounded extractor request','client route fallback','missing asset 404'],production_data_imported:false};
 await writeFile(resolve(runtime,'verification.json'),JSON.stringify(report,null,2)+'\n');
 console.log('Live local environment checks passed.');

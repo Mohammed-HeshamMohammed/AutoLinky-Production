@@ -1,69 +1,47 @@
-# Environment first
+# Isolated development environment
 
-The current milestone is the new isolated development environment. Production data import, further feature ports and cutover are deferred. Nothing is copied from the old user database or CV store. Existing production folders and processes are preserved.
+Environment setup comes before data import. The reference checkout stays read-only. The owner authorized replacing the active production `frontend/` with the unified web frontend; its previous version is retained in Git and the local ignored archive.
 
-## Start and stop
+## Start without building
 
-Run from `X:\AutoLinky-Production\backend-v2`:
+From `X:\AutoLinky-Production\backend-v2`:
 
 ```powershell
 npm run env:setup
-npm run env:build
 npm run env:start
 ```
 
-The start command stays running and owns only the new environment's processes. In another terminal:
+Startup uses existing `frontend/dist/` assets. It never compiles web/mobile apps. If assets are absent, request a build separately. All build/release GitHub workflows are manual only; pushing main does not start a build.
 
-```powershell
-npm run env:status
-npm run env:verify
-npm run env:stop
-```
+In another terminal, use `npm run env:status`, `npm run env:verify`, and `npm run env:stop`. The launcher owns its processes and local PostgreSQL cluster, refuses occupied ports, and retains its database and secrets on stop.
 
-| Service | Local address |
+| Component | Local address |
 | --- | --- |
-| Android browser app | http://localhost:8080/app/android/ |
-| iOS browser app | http://localhost:8080/app/ios/ |
+| Unified website | http://localhost:8080 |
+| Browser apps | /app/android/ and /app/ios/ on the website |
 | Compatibility redirect | http://localhost:8081 |
-| Unified frontend / landing site | http://localhost:8080 |
-| API readiness | http://localhost:4100/health/ready |
-| Private CV extractor | http://127.0.0.1:4001/health |
-| PostgreSQL 17 | 127.0.0.1:56432, database `autolinky_dev` |
+| Public API gateway | http://localhost:4100/health/ready |
+| Private auth / app / messaging | 127.0.0.1 ports 4101 / 4102 / 4103 |
+| Private fetching / data | 127.0.0.1 ports 4104 / 4105 |
+| Private CV extractor | 127.0.0.1:4001 |
+| Local PostgreSQL 17 | 127.0.0.1:56432, autolinky_dev |
 
-The usual API/database ports were already occupied, so this environment uses separate ports. Startup refuses occupied ports and does not stop an existing service. All services bind to loopback. Stop retains the database and configuration; it does not delete data directories. Startup and shutdown were checked, followed by a successful restart.
+The website also proxies `/v1/`, `/health` and `/health/ready` to the gateway, so future browser builds can use the website origin. Existing public API origins remain supported. Only known API paths are routed by the gateway; private auth/fetch/data operations are not exposed through the website.
 
-## Configuration
+## Private configuration
 
-All local configuration is under ignored `backend-v2/.runtime/environment/`:
+Ignored `backend-v2/.runtime/environment/` contains `settings.json`, a separate `gateway.env`, `auth.env`, `app.env`, `messaging.env`, `fetching.env`, `data.env`, `website.env`, public `flutter-web.json`, logs and verification reports. Existing keys/passwords are preserved when missing profiles are added. The historical `backend.env` remains only as a configuration migration source and operations reference; it is not the public runtime service profile.
 
-- `settings.json`: local database passwords and independent service secrets.
-- `backend.env`: API database/Firebase/CV configuration.
-- `website.env`: public build settings and server-only statistics settings.
-- `flutter-web.json`: public Firebase settings and the local API URL.
-- `status.json`, `verification.json`: checks without secret values.
-- `api.log`, `extractor.log`, `website.log`: service logs.
+Gateway has no database or Firebase Admin credential. Auth receives its own database role and Admin credential path. App receives CV/AI settings; messaging receives its own encrypted-mail key and AI settings. Fetching/data have no private-user-table grants. The launcher passes only a small OS environment allowlist plus each service's own profile, preventing inherited private credentials from leaking between processes.
 
-Setup creates missing files and preserves existing files/secrets. The PostgreSQL runtime is installed inside `backend-v2/node_modules`; its persistent development data is under `.runtime/environment/postgres`. No system PostgreSQL installation is required. Only schema and taxonomy/reference seeds are installed. The verified initial counts were zero users, CVs and applications.
+Local setup creates only schema/reference seeds, not production users or CVs. Sender, collection, data processing and maintenance remain disabled in this local launcher even if inherited shell variables enable them. Private operations must be activated separately and deliberately. There is no data migration or live SMTP/API collection in verification.
 
-The Node backend uses the pinned task-local Node 24.22.0 through npm scripts. Flutter 3.47.7/Dart 3.13.5 and its package cache are under the repository root’s ignored `.runtime/` directory, outside the source folder with spaces. The combined build reads the shared Dart package from `mobile apps/shared/` and produces the landing site plus both browser apps under `frontend-v2/dist/`. The build command uses that SDK, leaving the system Flutter installation unchanged. Install dependencies with `npm ci` in each new Node folder and install `services/cv-extractor/requirements.txt` into an isolated Python environment on another machine. `AUTOLINKY_PYTHON` can point to that environment's Python executable.
+Use pinned Node 24.22.0. `npm ci` installs the local Node and PostgreSQL test runtimes. Install extractor dependencies into `.runtime/python-deps` using `python -m pip install --target .runtime/python-deps -r services/cv-extractor/requirements.txt`; `AUTOLINKY_PYTHON` can select another Python environment. Flutter is needed only for an explicitly requested web/Android build; Swift iOS uses a macOS runner.
 
-Sender and collector stay disabled. The local HTTP client profile has email-link and Apple sign-in hidden until their relevant provider/domain configuration is ready; Google/UI can be exercised independently. Production client define files are separate and are not overwritten by local setup.
+## Provider inputs still needed
 
-## Firebase settings still needed
+Firebase project `auto-linky` is registered for web, Android `com.autolinky.app` and native iOS `com.autolinky.ios`. Set `GOOGLE_APPLICATION_CREDENTIALS` in **auth.env**, pointing to an ignored Admin service-account file. Real Firebase/provider login remains unverified until credentials, authorized domains, Google native OAuth IDs/fingerprints and relevant email-link/Apple settings are configured. Local email-link/Apple flows remain disabled until their required HTTPS/provider setup is ready. Facebook's App Secret belongs privately in Firebase's Facebook provider, never in frontend code.
 
-Project `auto-linky` and all three app registrations are wired. Android uses `com.autolinky.app`; the user selected `com.autolinky.ios` for the new iOS identity.
+## VPS preparation
 
-1. Configure the backend's Firebase Admin service-account file through `GOOGLE_APPLICATION_CREDENTIALS` in the local `backend.env`. Store the file inside ignored `.runtime/environment/`; only its path belongs in the environment. Restart after changing it.
-2. Verify `localhost` is an authorized domain for the Firebase web client. The environment checker does not claim this console setting has been enabled.
-3. Add the Android signing fingerprints and obtain the native Google OAuth client IDs. The supplied native files contained none. The new iOS build helper generates its callback URL scheme once the real iOS ID is supplied; see `mobile apps/shared/IOS_BUILD.md` in the repository root.
-4. Select the real HTTPS client/continuation origins before enabling email links. Configure the project's Hosting mobile-link domain and verify Android/iPhone links. Apple setup also needs the matching developer capabilities and provider credentials.
-
-These are provider configuration checks, not requests for a production data export. Facebook credentials belong in Firebase's Facebook provider; Facebook client integration is not part of the current running profile.
-
-## VPS / Dokploy
-
-This milestone is running locally. No deployment, DNS switch, store publication or remote database write has occurred. Docker is not installed as a local command, so no container build is claimed.
-
-For a later VPS environment, create separate services and fresh volumes. Use the new backend's Node 24 source, native PostgreSQL 17 roles/migrations and private Python extractor. Keep the API, extractor, database and website runtime secrets on the server. The unified website Dockerfile is `frontend-v2/Dockerfile`, with the repository root as its build context and internal port 8080, because the browser apps depend on `mobile apps/shared/`; public `VITE_*` values are build arguments. The existing production website service is unchanged.
-
-The owner must choose the target VPS/Dokploy project, public API and web-client origins, TLS routing and Firebase Admin secret placement before a concrete remote environment can be brought up. Use fresh environment resources first; production import is a separate later step.
+See [`services/README.md`](services/README.md) for each process and its `.env.example`, private database grants, staging pipeline and prepared Compose layout. The owner still needs to choose/configure target VPS, TLS origins, secret placement, private PostgreSQL/extractor networking and backups. The unified frontend Docker context is the repository root, with `frontend/Dockerfile`; server `API_BASE_URL` targets the gateway. No Docker image was built and no VPS service, DNS, production database or release was changed in this task.

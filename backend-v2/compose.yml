@@ -1,0 +1,46 @@
+name: autolinky-services
+x-backend: &backend
+  image: autolinky-backend:development
+  build: .
+  restart: unless-stopped
+  init: true
+  security_opt: [no-new-privileges:true]
+  read_only: true
+  tmpfs: [/tmp]
+  networks: [services]
+services:
+  gateway:
+    <<: *backend
+    command: [node, services/gateway/index.js]
+    env_file: [.runtime/deployment/gateway.env]
+    ports: ["127.0.0.1:4100:4100"]
+    depends_on: [auth, app, messaging]
+  auth:
+    <<: *backend
+    command: [node, services/auth/index.js]
+    env_file: [.runtime/deployment/auth.env]
+    volumes: ["./.runtime/deployment/firebase-admin.json:/run/secrets/firebase-admin.json:ro"]
+  app:
+    <<: *backend
+    command: [node, services/app/index.js]
+    env_file: [.runtime/deployment/app.env]
+  messaging:
+    <<: *backend
+    command: [node, services/messaging/index.js]
+    env_file: [.runtime/deployment/messaging.env]
+  sender:
+    <<: *backend
+    command: [node, services/messaging/sender.js]
+    env_file: [.runtime/deployment/messaging.env]
+    profiles: [sender]
+  fetching:
+    <<: *backend
+    command: [node, services/fetching/index.js]
+    env_file: [.runtime/deployment/fetching.env]
+  data:
+    <<: *backend
+    command: [node, services/data/index.js]
+    env_file: [.runtime/deployment/data.env]
+networks:
+  services:
+    driver: bridge

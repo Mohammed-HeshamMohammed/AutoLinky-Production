@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 import { resolve } from 'node:path';
 import { setup,backend,production,runtime,exists } from './config.js';
 const settings=await setup();
-const client=resolve(production,'mobile apps/shared'),website=resolve(production,'frontend-v2');
+const client=resolve(production,'mobile apps/shared'),website=resolve(production,'frontend');
 function run(command,args,cwd,env={}) {
   return new Promise((done,reject)=>{
     const child=spawn(command,args,{cwd,env:{...process.env,...env},stdio:'inherit',windowsHide:true});

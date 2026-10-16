@@ -73,6 +73,7 @@ localize(<div onClick={onClick}>
         <a href="/faq/" data-page-link="faq" data-i18n="navFaq">FAQ</a>
       </nav>
       <div className="nav-actions">
+        <a className="btn btn-primary btn-sm" href={`/app/?lang=${lang}`}>{lang === 'ar' ? 'افتح التطبيق' : 'Open app'}</a>
         <a className="lang-toggle" href="/ar/" data-lang-toggle aria-label="العربية">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx={12} cy={12} r="9.25" /><path d="M2.75 12h18.5M12 2.75c2.6 2.6 3.9 5.7 3.9 9.25s-1.3 6.65-3.9 9.25c-2.6-2.6-3.9-5.7-3.9-9.25S9.4 5.35 12 2.75Z" /></svg>
           <span data-lang-label>العربية</span>
@@ -85,6 +86,8 @@ localize(<div onClick={onClick}>
       <details className="mobile-menu">
         <summary aria-label={lang === 'ar' ? 'افتح القائمة' : 'Open menu'}><span></span><span></span><span></span></summary>
         <nav aria-label={lang === 'ar' ? 'القائمة' : 'Mobile menu'}>
+          <a href={`/app/android/?lang=${lang}`}>{lang === 'ar' ? 'نسخة أندرويد على الويب' : 'Android web app'}</a>
+          <a href={`/app/ios/?lang=${lang}`}>{lang === 'ar' ? 'نسخة iOS على الويب' : 'iOS web app'}</a>
           <a href={lang === 'ar' ? '/ar/features/' : '/features/'}>{lang === 'ar' ? 'المميزات' : 'Features'}</a>
           <a href={lang === 'ar' ? '/ar/auto-apply/' : '/auto-apply/'}>{lang === 'ar' ? 'التقديم التلقائي' : 'Auto Apply'}</a>
           <a href={lang === 'ar' ? '/ar/how-it-works/' : '/how-it-works/'}>{lang === 'ar' ? 'طريقة العمل' : 'How it works'}</a>

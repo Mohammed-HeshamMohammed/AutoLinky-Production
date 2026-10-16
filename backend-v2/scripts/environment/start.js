@@ -9,7 +9,6 @@ import http from 'node:http';
 import { timingSafeEqual } from 'node:crypto';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { migrate } from '../../database/migrate.js';
-import { createSiteServer } from '../../../frontend-v2/server.js';
 import { setup,backend,production,runtime,controlFile,exists,databaseUrl } from './config.js';
 
 const settings=await setup(),children=[],logs=[];
@@ -42,7 +41,8 @@ async function free(port) {
 async function child(name,command,args,cwd,env) {
   if(stopping)throw Error('Environment startup was cancelled');
   const log=await open(resolve(runtime,`${name}.log`),'a');logs.push(log);
-  const childEnv={...process.env,...env};delete childEnv.FIREBASE_AUTH_EMULATOR_HOST;
+  const safe=Object.fromEntries(Object.entries(process.env).filter(([key])=>['PATH','SYSTEMROOT','WINDIR','COMSPEC','TEMP','TMP','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMDATA','HOME'].includes(key.toUpperCase())));
+  const childEnv={...safe,...env};delete childEnv.FIREBASE_AUTH_EMULATOR_HOST;
   const processChild=spawn(command,args,{cwd,env:childEnv,windowsHide:true,stdio:['ignore',log.fd,log.fd]});
   children.push(processChild);
   processChild.once('error',error=>{void stop(Error(`${name} could not start (${error.code||error.name}); see its environment log`));});
@@ -60,8 +60,8 @@ async function healthy(url) {
 
 try {
   for(const port of Object.values(settings.ports))await free(port);
-  for(const platform of ['android','ios'])if(!await exists(resolve(production,`frontend-v2/dist/app/${platform}/index.html`)))throw Error('Run npm run env:build before starting the environment');
-  if(!await exists(resolve(production,'frontend-v2/dist/index.html')))throw Error('The website build is missing; run npm run env:build');
+  for(const platform of ['android','ios'])if(!await exists(resolve(production,`frontend/dist/app/${platform}/index.html`)))throw Error('Existing browser assets are missing. Request a web build separately; startup never builds apps.');
+  if(!await exists(resolve(production,'frontend/dist/index.html')))throw Error('Existing website assets are missing. Request a web build separately; startup never builds apps.');
   if(!await exists(resolve(settings.databaseDir,'PG_VERSION')))await cluster.initialise();
   await cluster.start();clusterStarted=true;
   const admin=new pg.Client({host:'127.0.0.1',port:settings.ports.database,user:'postgres',password:settings.passwords.postgres,database:'postgres'});
@@ -73,23 +73,24 @@ try {
   try {
     // These objects belong exclusively to this task's local cluster.
     await bootstrap.query(await readFile(resolve(backend,'database/bootstrap.sql'),'utf8'));
-    for(const role of ['autolinky_migrator','autolinky_api','autolinky_ops']) {
+    for(const role of ['autolinky_migrator','autolinky_api','autolinky_ops','autolinky_auth','autolinky_app','autolinky_messaging','autolinky_fetching','autolinky_data']) {
       const {rows}=await bootstrap.query("SELECT format('ALTER ROLE %I LOGIN PASSWORD %L',$1::text,$2::text) AS sql",[role,settings.passwords[role]]);
       await bootstrap.query(rows[0].sql);
     }
   } finally{await bootstrap.end();}
   const migrator=new pg.Pool({host:'127.0.0.1',port:settings.ports.database,user:'autolinky_migrator',password:settings.passwords.autolinky_migrator,database:'autolinky_dev',max:1});
   try{await migrate(migrator);}finally{await migrator.end();}
-  const apiEnv=parseEnv(await readFile(resolve(runtime,'backend.env'),'utf8'));
   const websiteEnv=parseEnv(await readFile(resolve(runtime,'website.env'),'utf8'));
-  if(apiEnv.PG_DATABASE_URL!==databaseUrl(settings,'autolinky_api'))throw Error('The local profile must use its own isolated API database URL');
-  // Prevent an unrelated inherited emulator/worker setting from changing this profile.
-  delete apiEnv.FIREBASE_AUTH_EMULATOR_HOST;
-  const baseEnv={...process.env};delete baseEnv.FIREBASE_AUTH_EMULATOR_HOST;
-  await child('api',process.execPath,['src/api.js'],backend,{...baseEnv,...apiEnv,NODE_ENV:'development',HOST:'127.0.0.1',PORT:String(settings.ports.api),SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false'});
+  for(const name of ['auth','app','messaging','fetching','data','gateway']){
+    const values=parseEnv(await readFile(resolve(runtime,`${name}.env`),'utf8'));
+    if(name!=='gateway'&&values.PG_DATABASE_URL!==databaseUrl(settings,'autolinky_'+name))throw Error(`The ${name} profile must use its isolated role/database`);
+    // Do not leak an inherited superuser URL, Firebase credential, mail key or
+    // provider token into another service's process.
+    await child(name,process.execPath,[`services/${name}/index.js`],backend,{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});
+  }
   await child('extractor',process.env.AUTOLINKY_PYTHON||'python',['-B',resolve(backend,'services/cv-extractor/app.py')],backend,
     {HOST:'127.0.0.1',PORT:String(settings.ports.extractor),CV_EXTRACTOR_KEY:settings.extractorKey,PYTHONPATH:resolve(backend,'.runtime/python-deps')});
-  await child('website',process.execPath,['server.js'],resolve(production,'frontend-v2'),{...websiteEnv,HOST:'127.0.0.1',PORT:String(settings.ports.website)});
+  await child('website',process.execPath,['server.js'],resolve(production,'frontend'),{...websiteEnv,HOST:'127.0.0.1',PORT:String(settings.ports.website)});
   clientServer=http.createServer((request,response)=>{
     const url=new URL(request.url,'http://local.client');
     response.writeHead(302,{Location:`http://localhost:${settings.ports.website}/app/android${url.pathname}${url.search}`,'Cache-Control':'no-store'}).end();
@@ -101,9 +102,17 @@ try {
     response.writeHead(202).end();void stop();
   });
   await new Promise((done,reject)=>{control.once('error',reject);control.listen(0,'127.0.0.1',done);});
+  if(await exists(controlFile)){
+    const previous=JSON.parse(await readFile(controlFile,'utf8'));
+    let stale=false;
+    try{await fetch(`http://127.0.0.1:${previous.port}/health`,{signal:AbortSignal.timeout(1000)});}catch(error){stale=error.cause?.code==='ECONNREFUSED';}
+    if(!stale)throw Error('An existing environment control endpoint must be stopped before starting');
+    await unlink(controlFile);
+  }
   await writeFile(controlFile,JSON.stringify({pid:process.pid,port:control.address().port})+'\n',{mode:0o600,flag:'wx'});controlOwned=true;
   await Promise.all([healthy(`http://127.0.0.1:${settings.ports.api}/health/ready`),healthy(`http://127.0.0.1:${settings.ports.extractor}/health`),
-    healthy(`http://127.0.0.1:${settings.ports.website}/`),healthy(`http://127.0.0.1:${settings.ports.client}/`)]);
+    healthy(`http://127.0.0.1:${settings.ports.website}/`),healthy(`http://127.0.0.1:${settings.ports.client}/`),
+    ...['auth','app','messaging','fetching','data'].map(name=>healthy(`http://127.0.0.1:${settings.ports[name]}/health/ready`))]);
   console.log(`Environment ready. Client http://localhost:${settings.ports.client} | Website http://localhost:${settings.ports.website} | API http://localhost:${settings.ports.api}/health/ready`);
   console.log('Fresh local database only. Sender and collector are disabled. Stop with npm run env:stop.');
 } catch(error){await stop(error);process.exit(1);}

@@ -2,9 +2,9 @@
 
 This copy uses Firebase Authentication and the new Node API. Google and Apple exchange provider credentials with Firebase; the email flow uses a sign-in link. The previous six-digit screen and authentication SDK have been removed. All application data continues through the API; the Firebase UID scopes local caches, while `GET /v1/me` supplies the separate internal user UUID.
 
-Android and iOS now have separate app projects in `../Android app/` and `../IOS app/`. This directory contains their common `autolinky` package, tests, assets, profiles and release tools. The browser hosts live in `../../frontend-v2/apps/` and consume this package.
+Android and iOS now have separate app projects in `../Android app/` and `../IOS app/`. This directory contains their common `autolinky` package, tests, assets, profiles and release tools. The browser hosts live in `../../frontend/apps/` and consume this package.
 
-Both browser copies are part of the unified `../../frontend-v2/` frontend, alongside the landing pages. Their entry points reference this package; assets and app logic are shared with the native builds.
+Both browser copies are part of the unified `../../frontend/` frontend, alongside the landing pages. Their entry points reference this package; assets and app logic are shared with the native builds.
 
 ## Development
 
@@ -15,7 +15,7 @@ $env:PUB_CACHE="$PWD/../../.runtime/pub-cache"
 & ../../.runtime/flutter-sdk/bin/flutter.bat pub get
 & ../../.runtime/flutter-sdk/bin/flutter.bat analyze
 & ../../.runtime/flutter-sdk/bin/flutter.bat test --exclude-tags screenshots
- # Build both browser apps with npm run build from ../../frontend-v2/
+ # Build both browser apps with npm run build from ../../frontend/
 ```
 
 Create a separate ignored `env/android.json`, `env/ios.json` and `env/web.json` from `env/example.json`. Supply each platform's own registered Firebase app ID and public API key. The user's supplied web registration for `auto-linky` has been saved in `env/web.json`; API and email continuation URLs remain empty until their deployment origins are selected. A build without required values opens the configuration screen. Never put an Admin service-account key or any backend secret in these files.

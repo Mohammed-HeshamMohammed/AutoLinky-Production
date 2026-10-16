@@ -1,0 +1,9 @@
+.git
+node_modules
+.runtime
+.env
+.env.*
+**/__pycache__
+test
+android-google-services.json
+*.plist

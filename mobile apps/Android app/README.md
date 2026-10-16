@@ -2,7 +2,7 @@
 
 This folder owns the Android application (`com.autolinky.app`), Gradle configuration and build output. `lib/main.dart` starts the shared `autolinky` package in `../shared/`; screens and app logic are edited there.
 
-The browser counterpart is now in `../../frontend-v2/apps/android/`, served at `/app/android/` by the unified frontend. It uses this same shared Flutter package with the Firebase web registration. Native source and build output stay in this mobile project.
+The browser counterpart is now in `../../frontend/apps/android/`, served at `/app/android/` by the unified frontend. It uses this same shared Flutter package with the Firebase web registration. Native source and build output stay in this mobile project.
 
 Use Flutter 3.47.7 / Dart 3.13.5. From this directory:
 

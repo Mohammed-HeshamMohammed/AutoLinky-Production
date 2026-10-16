@@ -20,30 +20,18 @@ function initialLanguage() {
   return /^ar\b/i.test(navigator.languages?.[0] || navigator.language || '') ? 'ar' : 'en';
 }
 
-// Newest release straight from GitHub: { version, size, publishedAt, url } or null (no .apk / GitHub unreachable).
-let apkUrl = '';
+// Public release metadata comes from the same-origin server. Every download
+// continues through /download so in-app handling and statistics work consistently.
 let releasePromise = null;
 function loadRelease() {
-  if (!RELEASE_API_URL || !DOWNLOAD_ENABLED) return Promise.resolve(null);
-  releasePromise ||= fetch(RELEASE_API_URL, { headers: { Accept: 'application/vnd.github+json' } })
+  if (!DOWNLOAD_ENABLED) return Promise.resolve(null);
+  releasePromise ||= fetch(RELEASE_API_URL, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(10000) })
     .then(response => response.ok ? response.json() : null)
-    .then(data => {
-      const asset = (data?.assets || []).find(a => /\.apk$/i.test(a.name) && (a.state || 'uploaded') === 'uploaded');
-      if (!asset) return null;
-      apkUrl = asset.browser_download_url;
-      return { version: String(data.tag_name || '').replace(/^[^0-9]*/, '').split('+')[0], size: asset.size || null, publishedAt: data.published_at || asset.updated_at || null, url: apkUrl };
-    })
-    .catch(() => null); // The download link still opens the releases page.
+    .then(data => data?.version ? { version: data.version, size: data.size || null, publishedAt: data.publishedAt || null, url: '/download' } : null)
+    .catch(() => null);
   return releasePromise;
 }
-if (typeof document !== 'undefined') {
-  loadRelease();
-  // Every download link, on any page, goes straight to the newest APK once it is known.
-  document.addEventListener('click', event => {
-    const link = event.target instanceof Element && event.target.closest('a[data-download]');
-    if (link && apkUrl) link.href = apkUrl;
-  }, true);
-}
+if (typeof document !== 'undefined') loadRelease();
 
 function platform() {
   if (/android/i.test(navigator.userAgent)) return 'android';

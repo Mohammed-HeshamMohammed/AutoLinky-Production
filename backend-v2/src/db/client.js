@@ -3,7 +3,7 @@ import { unavailable } from '../http/errors.js';
 export function createDatabase(config) {
   if (!config.databaseUrl) return {configured:false,query:async()=>{throw unavailable();},transaction:async()=>{throw unavailable();},end:async()=>{}};
   const pool=new pg.Pool({connectionString:config.databaseUrl,max:config.poolMax,connectionTimeoutMillis:5000,idleTimeoutMillis:30000,
-    statement_timeout:config.statementTimeout,idle_in_transaction_session_timeout:10000,application_name:'autolinky-api-v2'});
+    statement_timeout:config.statementTimeout,idle_in_transaction_session_timeout:10000,application_name:'autolinky-'+(config.serviceName||'api')});
   pool.on('error',()=>{});
   return {
     configured:true,query:(text,values)=>pool.query(text,values),end:()=>pool.end(),

@@ -4,6 +4,8 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 
 ## Current: environment configuration (2026-10-16)
 
+- [x] Extend runtime Firebase loading to both Flutter browser copies, strip Firebase/native OAuth fields from browser build inputs, and remove the tracked web registration file. Native registrations remain embedded. Pass all 19 frontend tests and direct Dart HTTP configuration checks; no app build is run.
+
 - [x] Move desktop Firebase settings to an explicit public runtime environment allowlist; retain private Admin/provider/service keys on servers.
 - [x] Configure AI endpoints/models, SMTP and release-provider addresses through owning environments; require explicit Gateway targets and preserve TLS/no-redirect credential boundaries.
 - [x] Protect downloaded credentials from Git/images, configure the supplied Firebase Admin file in ignored local Auth profiles, and add public mobile environment preparation without building apps.

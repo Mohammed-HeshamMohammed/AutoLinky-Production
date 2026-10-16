@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_redundant_argument_values
 import 'package:firebase_core/firebase_core.dart';
 
+import 'web_firebase.dart';
+
 /// Public build settings. Use a separate define file for each registered platform.
 /// Firebase Admin credentials and mail/AI secrets belong only on the server.
 class Env {
@@ -11,6 +13,8 @@ class Env {
     this.firebaseProjectId = '',
     this.firebaseSenderId = '',
     this.firebaseAuthDomain = '',
+    this.firebaseStorageBucket = '',
+    this.firebaseMeasurementId = '',
     this.firebaseLinkHost = '',
     this.emailLinkContinueUrl = '',
     this.emailLinkDomain = '',
@@ -40,12 +44,34 @@ class Env {
     privacyUrl: String.fromEnvironment('PRIVACY_URL'),
   );
 
+  Env withWebFirebase(WebFirebaseSettings settings) => Env(
+    apiBaseUrl: apiBaseUrl,
+    firebaseApiKey: settings.apiKey,
+    firebaseAppId: settings.appId,
+    firebaseProjectId: settings.projectId,
+    firebaseSenderId: settings.senderId,
+    firebaseAuthDomain: settings.authDomain,
+    firebaseStorageBucket: settings.storageBucket,
+    firebaseMeasurementId: settings.measurementId,
+    firebaseLinkHost: settings.authDomain,
+    emailLinkContinueUrl: emailLinkContinueUrl,
+    emailLinkDomain: emailLinkDomain,
+    googleWebClientId: '',
+    googleIosClientId: '',
+    emailSignIn: emailSignIn,
+    appleSignIn: appleSignIn,
+    termsUrl: termsUrl,
+    privacyUrl: privacyUrl,
+  );
+
   final String apiBaseUrl;
   final String firebaseApiKey;
   final String firebaseAppId;
   final String firebaseProjectId;
   final String firebaseSenderId;
   final String firebaseAuthDomain;
+  final String firebaseStorageBucket;
+  final String firebaseMeasurementId;
   final String firebaseLinkHost;
   final String emailLinkContinueUrl;
 
@@ -65,6 +91,8 @@ class Env {
     messagingSenderId: firebaseSenderId,
     projectId: firebaseProjectId,
     authDomain: firebaseAuthDomain,
+    storageBucket: firebaseStorageBucket.isEmpty ? null : firebaseStorageBucket,
+    measurementId: firebaseMeasurementId.isEmpty ? null : firebaseMeasurementId,
     iosClientId: googleIosClientId.isEmpty ? null : googleIosClientId,
     iosBundleId: 'com.autolinky.ios',
   );

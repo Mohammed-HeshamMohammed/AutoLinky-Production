@@ -36,6 +36,7 @@ jobs:
           flutter pub get --enforce-lockfile
           flutter analyze
           flutter test --exclude-tags screenshots
+          dart --packages=.dart_tool/package_config.json tool/check_web_firebase.dart
           python3 -m unittest discover -s tool -p 'test_*.py'
       - name: Build and verify the unified frontend
         working-directory: frontend

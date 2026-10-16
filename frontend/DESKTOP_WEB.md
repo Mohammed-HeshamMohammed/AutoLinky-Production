@@ -4,6 +4,8 @@ Implemented 2026-10-16 in the canonical `frontend/`. The desktop client uses the
 
 ## Routes and behavior
 
+All three web clients use the frontend runtime environment for Firebase: desktop React and the two Flutter browser routes fetch the allowlisted `/api/config`. Firebase web registration is absent from browser build definitions. Native Android/Swift iOS retain their embedded configurations. Existing browser-copy artifacts adopt this source at the next requested web build; no build runs as part of this source change.
+
 | Route | Behavior |
 | --- | --- |
 | `/login/`, `/signup/` | Google popup or passwordless email link. Firebase creates a new account on first sign-in. |

@@ -3,6 +3,7 @@ import { promisify } from 'node:util';
 import { access,readFile,writeFile,mkdir } from 'node:fs/promises';
 import { resolve,delimiter,dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { browserBuildSettings } from './browser-settings.mjs';
 
 const frontend=fileURLToPath(new URL('../',import.meta.url));
 const shared=resolve(frontend,'../mobile apps/shared');
@@ -26,22 +27,7 @@ function run(command,args,cwd) {
 }
 const settingsFile=process.env.APP_DEFINES?resolve(process.env.APP_DEFINES):resolve(shared,'env/web.json');
 const supplied=await exists(settingsFile)?JSON.parse(await readFile(settingsFile,'utf8')):{};
-const registration=JSON.parse(await readFile(resolve(shared,'firebase-project.json'),'utf8'));
-const allowed=new Set(Object.keys(JSON.parse(await readFile(resolve(shared,'env/example.json'),'utf8'))));
-if(Object.keys(supplied).some(key=>!allowed.has(key)))throw Error('APP_DEFINES may contain only public app settings from env/example.json.');
-if(supplied.FIREBASE_APP_ID&&!supplied.FIREBASE_APP_ID.includes(':web:'))throw Error('Browser builds require a Firebase web registration.');
-const settings={EMAIL_SIGN_IN:'false',APPLE_SIGN_IN:'false',API_BASE_URL:'',...registration,...supplied};
-if(process.env.VITE_SITE_URL) {
-  settings.SITE_URL ||= new URL(process.env.VITE_SITE_URL).origin;
-  settings.TERMS_URL ||= new URL('/terms/',process.env.VITE_SITE_URL).href;
-  settings.PRIVACY_URL ||= new URL('/privacy/',process.env.VITE_SITE_URL).href;
-}
-if(process.env.APP_API_BASE_URL)settings.API_BASE_URL=process.env.APP_API_BASE_URL;
-else if(process.env.VITE_SITE_URL)settings.API_BASE_URL=new URL(process.env.VITE_SITE_URL).origin;
-if(settings.API_BASE_URL) {
-  const api=new URL(settings.API_BASE_URL);
-  if(api.username||api.password||api.search||api.hash||!(api.protocol==='https:'||(api.protocol==='http:'&&['localhost','127.0.0.1','[::1]'].includes(api.hostname))))throw Error('Use HTTPS for the app API, or HTTP localhost for development.');
-}
+const settings=browserBuildSettings(supplied);
 const version=(await readFile(resolve(shared,'pubspec.yaml'),'utf8')).match(/^version:\s*(\S+)/m)?.[1];
 const output=resolve(frontend,'.runtime/web-defines.json');
 await mkdir(dirname(output),{recursive:true});

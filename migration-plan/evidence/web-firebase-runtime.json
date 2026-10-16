@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-16",
+  "scope": "All web Firebase registrations are supplied through the frontend runtime environment; native registrations remain embedded",
+  "checks": {
+    "frontend_tests_passed": 19,
+    "dart_analysis": "No issues found",
+    "native_configuration_contracts_passed": 14,
+    "direct_dart_http_configuration": [
+      "Android and iOS browser routes resolve the same-origin /api/config endpoint",
+      "Runtime responses replace registration without recompiling",
+      "Optional measurement ID is preserved",
+      "Unavailable/missing configuration stops loading",
+      "Native and mismatched app IDs are rejected"
+    ],
+    "browser_build_configuration": "Legacy Firebase and native Google OAuth values are excluded; native input objects remain unchanged",
+    "native_registration_files": "Unchanged"
+  },
+  "limits": {
+    "web_application_build": false,
+    "native_application_build": false,
+    "container_build": false,
+    "workflow_dispatch": false,
+    "deployment": false,
+    "real_provider_acceptance": false,
+    "existing_browser_artifacts": "Adopt new loader only at a future requested web build"
+  }
+}

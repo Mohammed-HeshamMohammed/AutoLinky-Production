@@ -41,8 +41,9 @@ export async function setup(){
   await writeFile(settingsFile,JSON.stringify(settings,null,2)+'\n',{mode:0o600});
   const defaults=async folder=>parseEnv(await readFile(resolve(production,folder,'.env.example'),'utf8'));
   const siteDefaults=await defaults('frontend'),appDefaults=await defaults('App-backend'),notifyDefaults=await defaults('Notify-backend'),authDefaults=await defaults('Auth-backend');
-  const publicRegistration=JSON.parse(await readFile(resolve(production,'mobile apps/shared/firebase-project.json'),'utf8'));
-  const publicWeb=Object.fromEntries(Object.entries(publicRegistration).filter(([key])=>Object.hasOwn(siteDefaults,`PUBLIC_${key}`)).map(([key,value])=>[`PUBLIC_${key}`,value]));
+  const localSiteFile=resolve(production,'frontend/.env');
+  const localSite=await exists(localSiteFile)?parseEnv(await readFile(localSiteFile,'utf8')):{};
+  const publicWeb=Object.fromEntries(Object.entries(localSite).filter(([key])=>key.startsWith('PUBLIC_FIREBASE_')&&Object.hasOwn(siteDefaults,key)));
   const backendEnv={NODE_ENV:'development',HOST:settings.host,PORT:settings.ports.api,PG_DATABASE_URL:databaseUrl(settings,'autolinky_api'),
     PG_MIGRATOR_URL:databaseUrl(settings,'autolinky_migrator'),PG_OPS_URL:databaseUrl(settings,'autolinky_ops'),FIREBASE_PROJECT_ID:authDefaults.FIREBASE_PROJECT_ID,
     GOOGLE_APPLICATION_CREDENTIALS:'',CORS_ALLOWED_ORIGINS:[`http://localhost:${settings.ports.website}`,`http://127.0.0.1:${settings.ports.website}`,`http://localhost:${settings.ports.client}`,`http://127.0.0.1:${settings.ports.client}`,'http://localhost:5173'].join(','),
@@ -87,14 +88,16 @@ export async function setup(){
     await writeFile(target,envFile({SERVICE_NAME:name,...values,...saved}),{mode:0o600});
   }
   const clientEnv=resolve(runtime,'flutter-web.json');
-  if(!await exists(clientEnv)) {
+  {
     const webFile=resolve(production,'mobile apps/shared/env/web.json');
-    const web=JSON.parse(await readFile(await exists(webFile)?webFile:resolve(production,'mobile apps/shared/firebase-project.json'),'utf8'));
+    const previousFile=await exists(clientEnv)?clientEnv:webFile;
+    const suppliedWeb=await exists(previousFile)?JSON.parse(await readFile(previousFile,'utf8')):{};
+    const web=Object.fromEntries(Object.entries(suppliedWeb).filter(([key])=>!key.startsWith('FIREBASE_')&&!key.startsWith('GOOGLE_')));
     web.API_BASE_URL=`http://localhost:${settings.ports.api}`;
     // Local HTTP development can exercise Google/UI now. Native email links
     // remain off until an approved HTTPS continuation domain is configured.
     web.EMAIL_SIGN_IN='false';web.APPLE_SIGN_IN='false';
-    await writeFile(clientEnv,JSON.stringify(web,null,2)+'\n',{flag:'wx',mode:0o600});
+    await writeFile(clientEnv,JSON.stringify(web,null,2)+'\n',{mode:0o600});
   }
   return settings;
 }

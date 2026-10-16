@@ -1,4 +1,8 @@
-## 2026-10-16: backend implementations and packages physically separated
+## 2026-10-16: owned backends and private API sharing
+
+The residual backend-v2 folder is removed. All runtime imports stay inside their owning root backend. Data owns SQL/migrations/reference configuration, App owns Python CV extraction, Auth owns Firebase setup copies, and Gateway owns Compose plus local/integration tooling. Caller-keyed HTTP APIs share jobs/CVs/matches, application state, ingestion, atomic SQL-first cleanup and schema readiness. Migrations 0008/0009 revoke the former cross-domain SQL reads/ingestion/deletion access; one private PostgreSQL instance and the narrow identity/mail transaction boundary remain. Source/image boundaries, 18 unit and 27 native PostgreSQL integration tests and the local stack pass, including committed cleanup with a lost response. See `owned-backend-api-layout.json` and `../../Gateway-backene/BACKENDS.md`. No app/container build, workflow dispatch, production import or deployment occurred.
+
+## Historical 2026-10-16: backend implementations and packages physically separated
 
 Controllers, workers and integrations now live under their owning `backend-v2/services/` backends. Each owns a package/lockfile and Dockerfile/image. The production role-switching composer and central user/operations loaders have been removed; the combined legacy parity harness exists only in tests. Boundary checks enforce source/dependency isolation. See `backend-source-split.json` for focused evidence. No app builds, live external traffic, data migration or deployment were run.
 

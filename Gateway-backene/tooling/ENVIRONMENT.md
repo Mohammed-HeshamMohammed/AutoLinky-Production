@@ -1,0 +1,44 @@
+# Isolated local environment
+
+All services run from their own root backend folders. Gateway owns this local launcher and its ignored profiles/logs. Existing secrets and database files were relocated here from the former backend-v2 folder; the database directory in settings.json was adjusted without rotating credentials. The reference workspace stays read-only.
+
+## Start using existing assets
+
+From X:\AutoLinky-Production\Gateway-backene\tooling:
+
+```powershell
+npm ci
+npm run install:backends
+python -m pip install --target .runtime/python-deps -r test/requirements.txt
+npm run env:setup
+npm run env:start
+```
+
+Startup checks existing frontend/dist browser assets, starts isolated PostgreSQL, runs reviewed migrations from Data-baceknd/database, starts Data, then the other backends, App-owned extractor and current React development server. It never builds an app. Open http://localhost:8080. The old http://localhost:8081 address redirects into the unified website.
+
+In another terminal use npm run env:status, npm run env:verify and npm run env:stop. Stop affects only the owned stack and retains its database/configuration. Occupied ports are refused. Source preview serves current React code and existing Flutter browser assets; production npm start still serves the built web output.
+
+| Component | Local port |
+| --- | --- |
+| Gateway / website | 4100 / 8080 |
+| Auth / App / Notify | 4101 / 4102 / 4103 |
+| Fetching / Data | 4104 / 4105 |
+| App CV extractor / PostgreSQL | 4001 / 56432 |
+
+The website proxies /v1, /health and /health/ready to the gateway. Private service APIs are absent from public routing. All service listeners stay on loopback in this launcher.
+
+## Configuration and dependency ownership
+
+.runtime/environment contains individual gateway.env, auth.env, app.env, messaging.env, fetching.env and data.env profiles plus website.env, settings/control state and logs. Setup adds distinct APP_READ_KEY, NOTIFY_READ_KEY, DATA_INGESTION_KEY and DATA_IDENTITY_KEY values to their caller/receiver profiles without rotating existing keys. Fetching receives no database URL. Gateway has no database or Firebase credentials. A small OS allowlist prevents inherited secrets from leaking across processes.
+
+Each backend has local lib utilities and its own installed node_modules. No runtime source is loaded from a sibling. Generic test support in this tooling folder is test-only. SQL migrations, checksums, reference configuration and maintenance belong to Data. Auth owns public Firebase setup copies; App owns Python extraction. See [API ownership](../BACKENDS.md) for caller keys, data exchange and retained atomic database boundaries.
+
+Sending, collection, processing and maintenance stay disabled in the local launcher regardless of inherited shell flags. Local setup imports no production users or CVs. Tests use isolated clusters and fake SMTP/provider data.
+
+## External setup still needed
+
+Firebase project auto-linky has web, Android com.autolinky.app and iOS com.autolinky.ios configuration. Put a private Firebase Admin service-account path in auth.env GOOGLE_APPLICATION_CREDENTIALS. Native Google OAuth IDs/fingerprints, authorized origins and email-link/Apple settings remain external acceptance gates. Facebook App Secret belongs only in Firebase provider configuration.
+
+## Deployment
+
+See [Gateway Compose and backend operations](../BACKENDS.md). Each Docker build context is its owning backend folder. Only Data includes migration files; callers use the Data readiness API. Provision private PostgreSQL/extractor networking, credentials, TLS, backups and target VPS settings before deployment. No container/native/web build or release workflow runs on push. No deployment or data transfer is performed by this setup.

@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { transaction } from '../../backend-v2/shared/db/client.js';
+import { transaction } from '../lib/db/client.js';
 const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const text=(value,max)=>typeof value==='string'?value.normalize('NFKC').replace(/\p{C}/gu,' ').trim().slice(0,max):null;
 

@@ -1,7 +1,7 @@
 import { getApps,initializeApp,applicationDefault } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
-import { MemoryCache } from '../../backend-v2/shared/cache/memory.js';
-import { HttpError,unavailable } from '../../backend-v2/shared/http/errors.js';
+import { MemoryCache } from '../lib/cache/memory.js';
+import { HttpError,unavailable } from '../lib/http/errors.js';
 
 export function firebaseIdentity(config) {
   let auth;
@@ -15,7 +15,8 @@ export function firebaseIdentity(config) {
 const unauthorized=(detail='Invalid or expired token')=>new HttpError(401,detail,{'WWW-Authenticate':'Bearer'});
 export function authentication(db,identity,limiter,config) {
   const cache=new MemoryCache({maxEntries:10000,maxBytes:4*1024*1024});
-  const invalidate=uid=>cache.delete(uid);
+  const fresh=new MemoryCache({maxEntries:10000,maxBytes:1024*1024});
+  const invalidate=uid=>{cache.delete(uid);fresh.set(uid,true,60000);};
   async function authenticate(request) {
     const header=request.headers.authorization;
     if(!header)throw unauthorized('Missing Authorization header');
@@ -30,7 +31,7 @@ export function authentication(db,identity,limiter,config) {
       throw unavailable();
     }
     if(!claims.uid || claims.firebase?.sign_in_provider==='anonymous')throw unauthorized();
-    let user=sensitive?undefined:cache.get(claims.uid);
+    let user=sensitive||fresh.get(claims.uid)?undefined:cache.get(claims.uid);
     if(!user){
       try {
         const {rows}=await db.query('SELECT * FROM public.bind_firebase_user($1,$2,$3)',[claims.uid,claims.email || null,claims.email_verified===true]);

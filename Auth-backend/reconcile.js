@@ -1,7 +1,7 @@
-import { loadConfig } from '../backend-v2/shared/config.js';
-import { createDatabase } from '../backend-v2/shared/db/client.js';
+import { loadConfig } from './lib/config.js';
+import { createDatabase } from './lib/db/client.js';
 import { firebaseIdentity } from './src/auth.js';
-import { checkMigrations } from '../backend-v2/database/migrate.js';
+import { schemaReadiness } from './lib/api.js';
 import { reconcileIdentityDeletions } from './src/identity-deletions.js';
 
 const args=process.argv.slice(2);
@@ -14,7 +14,7 @@ const db=createDatabase({...config,databaseUrl:process.env.PG_OPS_URL,poolMax:2}
 const stop=new AbortController();
 for(const name of ['SIGINT','SIGTERM'])process.once(name,()=>stop.abort());
 try {
-  await checkMigrations(db);
+  await schemaReadiness(config.dataServiceUrl);
   if(!args.includes('--apply')) {
     const {rows}=await db.query(`SELECT count(*) FILTER(WHERE completed_at IS NULL)::integer AS pending,
       count(*) FILTER(WHERE completed_at IS NULL AND next_attempt_at<=now())::integer AS due,

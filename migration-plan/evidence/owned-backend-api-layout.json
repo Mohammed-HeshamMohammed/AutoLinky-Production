@@ -1,0 +1,255 @@
+{
+  "checked_at": "2026-10-16T15:43:35.762Z",
+  "base_commit": "4bbfc27e35f4d1e4236cb8962ba8c660c4628947",
+  "scope": "Feature-owned runtime folders with API-based domain sharing; residual backend-v2 removed",
+  "boundaries": [
+    {
+      "name": "gateway",
+      "directory": "Gateway-backene",
+      "source_files": 5,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors"
+      ],
+      "image": "autolinky-gateway:development"
+    },
+    {
+      "name": "auth",
+      "directory": "Auth-backend",
+      "source_files": 15,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors",
+        "pg",
+        "firebase-admin"
+      ],
+      "image": "autolinky-auth:development"
+    },
+    {
+      "name": "app",
+      "directory": "App-backend",
+      "source_files": 27,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors",
+        "pg"
+      ],
+      "image": "autolinky-app:development"
+    },
+    {
+      "name": "messaging",
+      "directory": "Notify-backend",
+      "source_files": 29,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors",
+        "pg",
+        "nodemailer"
+      ],
+      "image": "autolinky-messaging:development"
+    },
+    {
+      "name": "fetching",
+      "directory": "Fetching-backend",
+      "source_files": 13,
+      "runtime_dependencies": [
+        "fastify",
+        "he"
+      ],
+      "image": "autolinky-fetching:development"
+    },
+    {
+      "name": "data",
+      "directory": "Data-baceknd",
+      "source_files": 11,
+      "runtime_dependencies": [
+        "fastify",
+        "pg"
+      ],
+      "image": "autolinky-data:development"
+    }
+  ],
+  "ownership": {
+    "database": "Data-baceknd/database",
+    "reference_config": "Data-baceknd/config",
+    "cv_extractor": "App-backend/extractor",
+    "firebase_setup": "Auth-backend/firebase",
+    "stack_and_tests": "Gateway-backene/tooling",
+    "compose": "Gateway-backene/compose.yml"
+  },
+  "private_apis": [
+    {
+      "caller": "App/Notify",
+      "owner": "Auth",
+      "path": "/internal/v1/session"
+    },
+    {
+      "caller": "Notify",
+      "owner": "App",
+      "path": "/internal/v1/messaging/{snapshot,job,matches,new-matches}",
+      "key": "APP_READ_KEY"
+    },
+    {
+      "caller": "App",
+      "owner": "Notify",
+      "path": "/internal/v1/applications/overlay",
+      "key": "NOTIFY_READ_KEY"
+    },
+    {
+      "caller": "Fetching",
+      "owner": "Data",
+      "path": "/internal/v1/ingestion",
+      "key": "DATA_INGESTION_KEY"
+    },
+    {
+      "caller": "Auth",
+      "owner": "Data",
+      "path": "/internal/v1/identity/delete-data",
+      "key": "DATA_IDENTITY_KEY"
+    },
+    {
+      "caller": "Auth/App/Notify/Fetching",
+      "owner": "Data",
+      "path": "/health/ready"
+    }
+  ],
+  "database_boundary": "One private PostgreSQL instance. Feature roles own records; narrow identity status/row-lock access remains in Notify for atomic mail/deletion, device status and billing. Former App/Notify data reads and Fetching ingestion/ Auth cleanup SQL permissions are revoked by reviewed migrations.",
+  "migrations": [
+    {
+      "name": "0001_native_baseline.sql",
+      "sha256": "0842392833fa285b94418baf1bfe8a1eefb3fcd40091801269b26ba333a8de04",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0002_identity_cv_operations.sql",
+      "sha256": "78b9b04d397b14d16e5d273c74108bcf772f6b81461ba65160b1086c34db0a19",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0003_seeds.sql",
+      "sha256": "dc6a1a232eb3ac4d99c32c926b43363272bf577a946db537ed312aa908d4c779",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0004_native_grants.sql",
+      "sha256": "3b2de69c5c7465141720771a38f2889f6de3249a362d776e13abacaf89e587c8",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0005_identity_reconciliation_grants.sql",
+      "sha256": "60f0fe6b22af80c4078a9dbb7ad90434b0c76254fe2fafe8f8450cde1e6bac48",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0006_service_boundaries.sql",
+      "sha256": "e76cd8278a2802a7ba1c8ff3fbbee4dd3a6dfd3bc36de9548942bc74116f0d98",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0007_messaging_row_locks.sql",
+      "sha256": "b67148c8a3db46754835d2bec4f1704b9318bd1f620c906dc795e27897634963",
+      "existing_sql_unchanged": true
+    },
+    {
+      "name": "0008_api_owned_data_sharing.sql",
+      "sha256": "fd4b6ed6a4378dd6296c11d2cbce9a281c309da4f51b3e092617df11d8ea1d4b",
+      "existing_sql_unchanged": false
+    },
+    {
+      "name": "0009_identity_data_api.sql",
+      "sha256": "861a328f3963d9a315fb348eba3a17baa8642b5e78fc646e94cc38932bd23677",
+      "existing_sql_unchanged": false
+    }
+  ],
+  "checks": {
+    "unit_tests": 18,
+    "postgres_integration_tests": 27,
+    "owned_runtime_imports": "passed",
+    "native_js_syntax": "passed",
+    "private_keys_and_schema_validation": "passed",
+    "api_failure_no_automatic_retry": "passed",
+    "committed_cleanup_response_loss_and_cached_identity_denial": "passed",
+    "sql_privilege_denials": "passed",
+    "cv_mail_device_and_sql_first_cleanup": "passed",
+    "containers": {
+      "own_folder_build_contexts": 6,
+      "all_copy_sources_owned_and_present": true,
+      "separate_backend_images": 6,
+      "only_gateway_published": true,
+      "sender_reuses_notify_only": true,
+      "docker_build_performed": false
+    },
+    "reference_preservation": [
+      {
+        "name": "reference",
+        "filesChecked": 544,
+        "changed": 0
+      },
+      {
+        "name": "production-existing",
+        "filesChecked": 41,
+        "changed": 0
+      }
+    ],
+    "source_inventory": 585,
+    "missing_destinations": 0,
+    "live_local_services": [
+      {
+        "name": "api",
+        "url": "http://127.0.0.1:4100/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "extractor",
+        "url": "http://127.0.0.1:4001/health",
+        "status": "ready"
+      },
+      {
+        "name": "website",
+        "url": "http://localhost:8080/",
+        "status": "ready"
+      },
+      {
+        "name": "client",
+        "url": "http://localhost:8081/",
+        "status": "ready"
+      },
+      {
+        "name": "auth",
+        "url": "http://127.0.0.1:4101/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "app",
+        "url": "http://127.0.0.1:4102/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "messaging",
+        "url": "http://127.0.0.1:4103/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "fetching",
+        "url": "http://127.0.0.1:4104/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "data",
+        "url": "http://127.0.0.1:4105/health/ready",
+        "status": "ready"
+      }
+    ],
+    "frontend_and_native_runtime_source": "unchanged"
+  },
+  "app_build_performed": false,
+  "workflow_dispatched": false,
+  "production_data_imported": false,
+  "live_mail_or_collection_performed": false,
+  "vps_deployment_performed": false,
+  "limitations": [
+    "Container manifests, contexts and source paths were checked without building images.",
+    "Firebase Admin, native OAuth and origin/provider acceptance are still external configuration gates.",
+    "No physical database split, full provider feed promotion or APNs/FCM push is claimed."
+  ]
+}

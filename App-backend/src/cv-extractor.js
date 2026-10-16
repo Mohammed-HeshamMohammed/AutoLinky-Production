@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { HttpError,unavailable } from '../../backend-v2/shared/http/errors.js';
+import { HttpError,unavailable } from '../lib/http/errors.js';
 export async function extractCV(bytes,config,{fetcher=fetch}={}){
   if(!bytes.length)throw new HttpError(400,'cv_empty');
   if(bytes.length>config.cvMaxBytes)throw new HttpError(413,'cv_too_large');

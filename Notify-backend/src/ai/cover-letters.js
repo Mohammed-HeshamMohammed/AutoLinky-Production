@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { jobTitle } from '../email/composition.js';
-import { redactContacts } from '../../../backend-v2/shared/domain/redaction.js';
-import { durableLimit } from '../../../backend-v2/shared/http/rate-limit.js';
-import { AIUnavailable } from '../../../backend-v2/shared/ai/client.js';
+import { redactContacts } from '../../lib/domain/redaction.js';
+import { durableLimit } from '../../lib/http/rate-limit.js';
+import { AIUnavailable } from '../../lib/ai/client.js';
 const system=await readFile(new URL('./prompts/letter-system.txt',import.meta.url),'utf8');
 export function cleanBody(content){
   if(typeof content!=='string'||!content.trim())throw new AIUnavailable('Empty letter');
@@ -15,12 +15,7 @@ export function cleanBody(content){
   if(/\[[^\]\n]{2,40}\]|\{[^}\n]{2,40}\}|<[^>\n]{2,40}>/.test(body)||words<90||words>420)throw new AIUnavailable('Unusable letter');
   return body;
 }
-async function jobText(db,job){
-  if(!job.source_ref)return job.snippet||'';
-  const {rows}=job.source==='linkedin_job'?await db.query('SELECT description text FROM public.linkedin_jobs WHERE job_id=$1',[job.source_ref]):await db.query('SELECT post_text text FROM public.hiring_posts WHERE id::text=$1',[job.source_ref]);
-  return rows[0]?.text||job.snippet||'';
-}
-export function letterService({db,config,ai}){
+export function letterService({db,config,ai,appData}){
   const inflight=new Map();
   return async function letterBody(id,job,cv){
     const existing=(await db.query('SELECT body,cv_sha256 FROM public.cover_letters WHERE user_id=$1 AND opportunity_id=$2',[id,job.id])).rows[0];
@@ -32,7 +27,7 @@ export function letterService({db,config,ai}){
     const pending=(async()=>{
       try{
         await durableLimit(db,'letter_ai:all',300,86400);
-        const post=await jobText(db,job),result=await ai.ask({model:config.letterModel,json:false,maxTokens:900,temperature:0.2,messages:[
+        const post=(await appData.job(job.id)).body_text||job.snippet||'',result=await ai.ask({model:config.letterModel,json:false,maxTokens:900,temperature:0.2,messages:[
           {role:'system',content:system.replace('{{today}}',new Date().toISOString().slice(0,10))},
           {role:'user',content:`Job title: ${jobTitle(job.title)}\nCompany: ${job.company||'not given'}\nJob post:\n<<<\n${post.trim().slice(0,3500)}\n>>>\n\nCV:\n<<<\n${redactContacts(cv.text).slice(0,9000)}\n>>>`},
         ]});

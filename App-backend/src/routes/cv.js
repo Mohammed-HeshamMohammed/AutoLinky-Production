@@ -1,13 +1,13 @@
 import { createHash } from 'node:crypto';
-import { HttpError } from '../../../backend-v2/shared/http/errors.js';
-import { durableLimit } from '../../../backend-v2/shared/http/rate-limit.js';
-import { queryOf } from '../../../backend-v2/shared/contracts/query.js';
-import { transaction } from '../../../backend-v2/shared/db/client.js';
+import { HttpError } from '../../lib/http/errors.js';
+import { durableLimit } from '../../lib/http/rate-limit.js';
+import { queryOf } from '../../lib/contracts/query.js';
+import { transaction } from '../../lib/db/client.js';
 import { extractCV } from '../cv-extractor.js';
 import { analyzeCV } from '../ai/cv-analysis.js';
 import { loadCatalog } from '../catalog.js';
 import { readProfile,saveProfile } from './profile.js';
-import { unique } from '../../../backend-v2/shared/domain/text.js';
+import { unique } from '../../lib/domain/text.js';
 
 const infoColumns='file_name,file_type,file_size,pages,analysis,detected,created_at,analyzed_at';
 const output=row=>({cv:{file_name:row.file_name,file_type:row.file_type,file_size:row.file_size,pages:row.pages??null,analysis:row.analysis,uploaded_at:row.created_at,analyzed_at:row.analyzed_at},detected:row.detected});

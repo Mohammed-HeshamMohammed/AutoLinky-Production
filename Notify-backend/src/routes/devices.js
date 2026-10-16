@@ -1,8 +1,8 @@
 import { randomUUID,randomBytes,createHash } from 'node:crypto';
-import { HttpError,notFound } from '../../../backend-v2/shared/http/errors.js';
-import { durableLimit } from '../../../backend-v2/shared/http/rate-limit.js';
-import { transaction } from '../../../backend-v2/shared/db/client.js';
-import { uuid,queryOf,time } from '../../../backend-v2/shared/contracts/query.js';
+import { HttpError,notFound } from '../../lib/http/errors.js';
+import { durableLimit } from '../../lib/http/rate-limit.js';
+import { transaction } from '../../lib/db/client.js';
+import { uuid,queryOf,time } from '../../lib/contracts/query.js';
 import { activitySince } from '../activity.js';
 export const tokenHash=value=>createHash('sha256').update(value).digest('hex');
 export function registerDevices(app,{db}){
@@ -17,12 +17,12 @@ export function registerDevices(app,{db}){
   });
   app.delete('/v1/devices/:device_id',async(request,reply)=>{if(!uuid.test(request.params.device_id))throw notFound();await db.query('DELETE FROM public.app_devices WHERE id=$1 AND user_id=$2',[request.params.device_id,request.user.id]);return reply.code(204).send();});
 }
-export function registerDeviceActivity(app,{db,config}){
+export function registerDeviceActivity(app,{db,config,appData}){
   app.get('/v1/device/activity',async request=>{
     const match=/^Device (dv1_[A-Za-z0-9_-]+)$/.exec(request.headers.authorization||'');if(!match||match[1].length>100)throw new HttpError(401,'Invalid device token');
     const device=(await db.query('SELECT d.id,d.user_id,u.status FROM public.app_devices d JOIN public.app_users u ON u.id=d.user_id WHERE d.token_hash=$1',[tokenHash(match[1])])).rows[0];
     if(!device)throw new HttpError(401,'Invalid device token');if(device.status!=='active')throw new HttpError(403,'Forbidden');
     await durableLimit(db,`device:${device.id}`,30,3600);await db.query('UPDATE public.app_devices SET last_seen_at=now() WHERE id=$1',[device.id]).catch(()=>{});
-    return activitySince(db,device.user_id,time(queryOf(request).get('after'),'after'),config);
+    return activitySince(db,device.user_id,time(queryOf(request).get('after'),'after'),config,appData);
   });
 }

@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 15
     defaults:
       run:
-        working-directory: backend-v2
+        working-directory: Gateway-backene/tooling
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:

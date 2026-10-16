@@ -1,4 +1,4 @@
-import { SkillMatcher,RoleMatcher } from '../../backend-v2/shared/domain/skillmatch.js';
+import { SkillMatcher,RoleMatcher } from '../lib/domain/skillmatch.js';
 export function roleSearchTitle(name,keywords){
   if(!/[/&,()]/.test(name))return name;
   const acronyms=new Set((name.match(/[A-Za-z]+/g)||[]).filter(w=>w===w.toUpperCase()).map(w=>w.toLowerCase()));

@@ -1,5 +1,5 @@
 import { timingSafeEqual } from 'node:crypto';
-import { HttpError,unavailable } from '../backend-v2/shared/http/errors.js';
+import { HttpError,unavailable } from './lib/http/errors.js';
 import { registerCatalog } from './src/routes/catalog.js';
 import { registerJobs } from './src/routes/jobs.js';
 import { registerProfile } from './src/routes/profile.js';

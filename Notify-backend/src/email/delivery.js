@@ -1,25 +1,24 @@
 import { createHash } from 'node:crypto';
-import { transaction } from '../../../backend-v2/shared/db/client.js';
-import { HttpError } from '../../../backend-v2/shared/http/errors.js';
-import { durableLimit } from '../../../backend-v2/shared/http/rate-limit.js';
+import { transaction } from '../../lib/db/client.js';
+import { HttpError } from '../../lib/http/errors.js';
+import { durableLimit } from '../../lib/http/rate-limit.js';
 import { billing } from '../billing.js';
-import { summary } from '../../../backend-v2/shared/repositories/jobs.js';
+import { summary } from '../../lib/repositories/jobs.js';
 import { validAddress,compose,suggestSignature } from './composition.js';
 import { decryptSecret } from './secret.js';
 import { MailError } from './gmail.js';
 import { letterService } from '../ai/cover-letters.js';
 const refusal={email_not_connected:409,email_invalid:409,cv_needed:409,no_email_contact:422,free_limit:402,daily_limit:429,gmail_limit:429,gmail_busy:503,mail_unavailable:503};
 const refuse=code=>{throw new HttpError(refusal[code]||409,code);};
-export async function jobRecipient(db,job){if(job.source!=='post')return null;const {rows}=await db.query("SELECT value FROM public.post_contacts WHERE post_id::text=$1 AND type='email' ORDER BY id",[job.source_ref]);return rows.map(r=>validAddress(r.value)).find(Boolean)||null;}
-export function deliveryService({db,config,transport,ai}){
-  const letterBody=letterService({db,config,ai});
+export async function jobRecipient(appData,job){if(job.source!=='post')return null;const row=job.email_contacts?job:await appData.job(job.id);return (row.email_contacts||[]).map(validAddress).find(Boolean)||null;}
+export function deliveryService({db,config,transport,ai,appData}){
+  const letterBody=letterService({db,config,ai,appData});
   async function preview(user,job){
-    const to=await jobRecipient(db,job);if(!to)refuse('no_email_contact');
+    const to=await jobRecipient(appData,job);if(!to)refuse('no_email_contact');
     const account=(await db.query('SELECT address,sender_name,signature FROM public.mail_accounts WHERE user_id=$1',[user.id])).rows[0]||{address:user.email};
-    const cv=(await db.query('SELECT file_name,file_type,text,links,sha256 FROM public.user_cvs WHERE user_id=$1',[user.id])).rows[0]||{};
-    const profile=(await db.query('SELECT headline,years_experience,skills FROM public.user_profiles WHERE user_id=$1',[user.id])).rows[0]||{};
+    const snapshot=await appData.snapshot(user.id),cv=snapshot.cv||{},profile=snapshot.profile;
     const shared=(job.skills||[]).filter(s=>profile.skills?.includes(s)).slice(0,4);
-    const skills=shared.length?(await db.query('SELECT slug,name FROM public.skills WHERE slug=ANY($1::text[])',[shared])).rows:[];
+    const skills=snapshot.skill_names;
     const names=new Map(skills.map(s=>[s.slug,s.name]));
     const body=await letterBody(user.id,job,cv);
     return compose({job,to,account,cv,profile,body,signature:account.signature??suggestSignature(cv.text,account.address||user.email,cv.links||[]),skillNames:shared.map(s=>names.get(s)||s)});
@@ -27,6 +26,7 @@ export function deliveryService({db,config,transport,ai}){
   async function send(user,job,edited=null,{auto=false}={}){
     await durableLimit(db,`email:${user.id}`,10,600);
     const letter=await preview(user,job);if(edited)letter.body=compose({job,to:letter.to,account:{address:letter.from_address,sender_name:letter.from_name},edited}).body;
+    const attachment=await appData.snapshot(user.id,true);
     const reservation=await transaction(db,async c=>{
       await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[`mail:${user.id}`]);
       const active=(await c.query('SELECT status FROM public.app_users WHERE id=$1 FOR UPDATE',[user.id])).rows[0];if(active?.status!=='active')throw new HttpError(403,'Account blocked');
@@ -34,7 +34,7 @@ export function deliveryService({db,config,transport,ai}){
       if(auto&&existing)return {existing};
       if(existing?.method==='email'&&['queued','sending','sent'].includes(existing.status))return {existing};
       const account=(await c.query('SELECT * FROM public.mail_accounts WHERE user_id=$1',[user.id])).rows[0];if(!account)refuse('email_not_connected');if(account.status==='invalid')refuse('email_invalid');
-      const cv=(await c.query('SELECT c.file_name,c.file_type,c.sha256,f.bytes FROM public.user_cvs c JOIN public.user_cv_files f USING(user_id) WHERE c.user_id=$1',[user.id])).rows[0];if(!cv)refuse('cv_needed');
+      const cv=attachment.has_file&&attachment.cv&&attachment.bytes?{...attachment.cv,bytes:Buffer.from(attachment.bytes,'base64')}:null;if(!cv)refuse('cv_needed');
       if(createHash('sha256').update(cv.bytes).digest('hex')!==cv.sha256)refuse('mail_unavailable');
       const plan=await billing(c,user.id,config);if(!plan.canSend)refuse('free_limit');if(plan.daily!==null&&plan.dailyUsed>=plan.daily)refuse('daily_limit');
       const settings=(await c.query('SELECT enabled,daily_limit,paused_until,pause_reason FROM public.auto_apply WHERE user_id=$1',[user.id])).rows[0];

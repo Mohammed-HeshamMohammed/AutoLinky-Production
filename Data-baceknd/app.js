@@ -1,12 +1,16 @@
-import { loadConfig } from '../backend-v2/shared/config.js';
-import { createDatabase } from '../backend-v2/shared/db/client.js';
-import { createOperations } from '../backend-v2/shared/http/operations.js';
-import { HttpError } from '../backend-v2/shared/http/errors.js';
+import { loadConfig } from './lib/config.js';
+import { createDatabase } from './lib/db/client.js';
+import { createOperations } from './lib/http/operations.js';
+import { HttpError } from './lib/http/errors.js';
 import { processBatch } from './src/process.js';
+import { registerIngestion,ingestionPath } from './src/ingestion.js';
+import { registerIdentityData,identityPath } from './src/identity.js';
 
 export function buildData({env=process.env,db,logger=false}={}){
   const config=loadConfig(env,{identity:false});db||=createDatabase(config);
-  const app=createOperations({role:'data',db,key:env.SERVICE_KEY,logger});
+  const app=createOperations({role:'data',db,key:env.SERVICE_KEY,routeKeys:{[ingestionPath]:env.DATA_INGESTION_KEY,[identityPath]:env.DATA_IDENTITY_KEY},bodyLimit:4*1024*1024+16384,logger});
+  registerIngestion(app,db);
+  registerIdentityData(app,db);
   app.get('/internal/v1/data/status',async()=>({batches:(await db.query('SELECT status,count(*)::integer AS count FROM public.ingestion_batches GROUP BY status')).rows,records:(await db.query('SELECT count(*)::integer AS count FROM public.provider_records')).rows[0].count}));
   app.post('/internal/v1/data/process',{schema:{body:{type:'object',additionalProperties:false,properties:{}}}},async()=>{
     if(env.DATA_PROCESSING_ENABLED!=='true')throw new HttpError(409,'Data processing is disabled');

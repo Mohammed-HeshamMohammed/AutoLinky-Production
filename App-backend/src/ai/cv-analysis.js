@@ -1,15 +1,15 @@
 import { readFile } from 'node:fs/promises';
-import { HttpError } from '../../../backend-v2/shared/http/errors.js';
-import { countryCode } from '../../../backend-v2/shared/domain/countries.js';
-import { unique,uniqueText } from '../../../backend-v2/shared/domain/text.js';
-import { durableLimit } from '../../../backend-v2/shared/http/rate-limit.js';
-import { AIUnavailable } from '../../../backend-v2/shared/ai/client.js';
+import { HttpError } from '../../lib/http/errors.js';
+import { countryCode } from '../../lib/domain/countries.js';
+import { unique,uniqueText } from '../../lib/domain/text.js';
+import { durableLimit } from '../../lib/http/rate-limit.js';
+import { AIUnavailable } from '../../lib/ai/client.js';
 const levels=['intern','junior','mid','senior','manager'],languages=['en','ar','de','fr','nl','es','pt'];
 const languageNames={english:'en',arabic:'ar',german:'de',french:'fr',dutch:'nl',spanish:'es',portuguese:'pt','عربي':'ar','العربية':'ar','انجليزي':'en'};
 const dialing={'20':'EG','966':'SA','971':'AE','974':'QA','965':'KW','973':'BH','968':'OM','962':'JO','961':'LB','964':'IQ','963':'SY','970':'PS','967':'YE','212':'MA','213':'DZ','216':'TN','218':'LY','249':'SD','44':'GB','49':'DE','33':'FR','31':'NL','34':'ES','39':'IT','90':'TR','91':'IN','92':'PK'};
 const phone=/(?<![\p{L}\p{N}_+])\+?\(?\d[\d\s().\-/]{6,}\d(?![\p{L}\p{N}_])/gu;
-export { redactContacts } from '../../../backend-v2/shared/domain/redaction.js';
-import { redactContacts } from '../../../backend-v2/shared/domain/redaction.js';
+export { redactContacts } from '../../lib/domain/redaction.js';
+import { redactContacts } from '../../lib/domain/redaction.js';
 export function phoneCountry(text){for(const [s] of text.slice(0,3000).matchAll(phone)){const written=s.replace(/^\(/,''),digits=written.replace(/\D/g,'');if(digits.length<9||digits.length>15)continue;if(written.startsWith('+')||written.startsWith('00')){const n=written.startsWith('00')?digits.slice(2):digits;for(const [code,country] of Object.entries(dialing))if(n.startsWith(code))return country;}else if(/^01[0125]\d{8}$/.test(digits))return 'EG';}return null;}
 export function textLanguage(text){const sample=text.slice(0,5000),letters=(sample.match(/\p{L}/gu)||[]).length;return letters&&(sample.match(/[ء-ي]/gu)||[]).length/letters>0.3?'ar':'en';}
 const short=(value,max)=>typeof value==='string'?value.replace(/[\x00-\x1f\x7f<>]/g,' ').trim().replace(/\s+/g,' ').replace(/^[ ,;]+|[ ,;]+$/g,'').slice(0,max)||null:null;

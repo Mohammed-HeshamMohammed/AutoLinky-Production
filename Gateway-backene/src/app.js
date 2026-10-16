@@ -1,7 +1,7 @@
 import Fastify,{ LogController } from 'fastify';
 import cors from '@fastify/cors';
-import { HttpError,errorHandler } from '../../backend-v2/shared/http/errors.js';
-import { privateOrigin } from '../../backend-v2/shared/runtime.js';
+import { HttpError,errorHandler } from '../lib/http/errors.js';
+import { privateOrigin } from '../lib/runtime.js';
 
 export function destination(path){
   if(/^\/v1\/me\/?$/.test(path))return 'auth';

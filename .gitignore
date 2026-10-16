@@ -6,3 +6,6 @@
 !**/.env.example
 **/coverage/
 **/*.log
+**/.runtime/
+**/__pycache__/
+**/*.pyc

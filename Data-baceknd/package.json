@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env index.js",
-    "dev": "node --env-file-if-exists=.env --watch index.js"
+    "dev": "node --env-file-if-exists=.env --watch index.js",
+    "migrate": "node --env-file-if-exists=.env database/migrate.js",
+    "migrate:check": "node --env-file-if-exists=.env database/migrate.js --check"
   },
   "dependencies": {
     "fastify": "5.12.7",

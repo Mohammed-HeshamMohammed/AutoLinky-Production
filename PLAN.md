@@ -2,7 +2,20 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: root backend folders (2026-10-16)
+## Current: feature ownership and private API sharing (2026-10-16)
+
+The owner required every backend to own its complete runtime and exchange domain data through APIs. The residual `backend-v2/` folder is removed; the earlier shared-infrastructure layout below is historical.
+
+- [x] Give each root backend local runtime utilities and reject imports from any sibling or integration tooling folder.
+- [x] Assign schema/migrations/reference data to Data, Python extraction to App, Firebase setup to Auth, and local orchestration/integration tests to Gateway.
+- [x] Use caller-keyed private APIs for Notify reads of App jobs/CVs/matches, App reads of Notify application state, Fetching ingestion into Data, Auth atomic SQL cleanup through Data, and Data schema readiness.
+- [x] Add reviewed migrations 0008/0009 removing former cross-domain read/ingestion/deletion grants; retain one private database and the narrow transactional identity/mail reservation boundary.
+- [x] Pass 18 unit and 27 PostgreSQL integration tests, per-backend source/dependency/image checks and live local stack verification. Cover wrong caller keys, private API failure and committed cleanup with a lost response. No app build or workflow dispatch runs.
+- [x] Record final ownership, unchanged existing SQL bytes, source/reference preservation and six own-folder container contexts in `migration-plan/evidence/owned-backend-api-layout.json`; integrate the verified layout into main.
+
+Operations: [backend ownership](Gateway-backene/BACKENDS.md) and [local startup](Gateway-backene/tooling/ENVIRONMENT.md). No production data import, live mail/provider traffic or VPS deployment is included.
+
+## Historical: root backend folders (2026-10-16)
 
 The owner clarified that each backend must be a folder directly inside the repository root. This supersedes the nested `backend-v2/services/` Node layout below; the folder names preserve the owner's requested spelling.
 
@@ -55,7 +68,9 @@ The service split does not finish provider-specific collection, server push noti
 
 - `migration-plan/`: copied specification at reference commit `2fd91a2`; source hashes and route inventory are under `evidence/`.
 - `Auth-backend/`, `Notify-backend/`, `App-backend/`, `Data-baceknd/`, `Gateway-backene/`, `Fetching-backend/`: independent root-level Node backend implementations and runtime packages.
-- `backend-v2/`: shared native-ESM infrastructure, SQL migrations, Python extraction/inference boundaries, tests, local profiles and orchestration/deployment files.
+- `Data-baceknd/database/` and `Data-baceknd/config/`: owned schema, migrations and reference configuration.
+- `App-backend/extractor/` and `Auth-backend/firebase/`: owned extraction and Firebase setup resources.
+- `Gateway-backene/tooling/` and `Gateway-backene/compose.yml`: stack orchestration, local profiles and integration checks; excluded from runtime images.
 - `mobile apps/Android app/`: Android Flutter entry point and Kotlin/Gradle host. The browser counterpart lives in frontend/apps/android/.
 - `mobile apps/IOS app/`: independent native Swift/SwiftUI app, core Swift package, native resources/tests and Xcode build. Its browser counterpart remains separately implemented in frontend/apps/ios/.
 - `mobile apps/shared/`: Flutter screens/logic for Android and browser entry points, plus common public release/configuration tools. Native iOS does not depend on its Dart package.
@@ -115,7 +130,7 @@ the successful main run.
 
 The proposed division into identity, app API, messaging, collection and data
 processing is evaluated in
-[`backend-v2/docs/adr/0001-service-boundaries.md`](backend-v2/docs/adr/0001-service-boundaries.md).
+[`Gateway-backene/tooling/docs/adr/0001-service-boundaries.md`](Gateway-backene/tooling/docs/adr/0001-service-boundaries.md).
 The recommendation is one repository with domain modules and private workers,
 Firebase authentication and one private PostgreSQL instance initially. Database
 maintenance remains controlled operations work. The ADR is a proposal; the

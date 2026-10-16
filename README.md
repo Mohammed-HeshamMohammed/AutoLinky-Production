@@ -9,13 +9,16 @@ One repository with a unified web frontend, independent mobile apps and private 
 - [`Data-baceknd/`](Data-baceknd/): normalization, deduplication and database maintenance.
 - [`Gateway-backene/`](Gateway-backene/): public API gateway.
 - [`Fetching-backend/`](Fetching-backend/): external API acquisition.
-- [`backend-v2/`](backend-v2/README.md): shared infrastructure, database migrations, local orchestration and tests. [Backend operations](backend-v2/services/README.md) describes each independent package and image.
+- [`Data-baceknd/database/`](Data-baceknd/database/): database schema, reviewed migrations and migration tooling, owned by Data.
+- [`Gateway-backene/tooling/`](Gateway-backene/tooling/README.md): local orchestration and integration tests. [Backend operations](Gateway-backene/BACKENDS.md) describes the private API connections.
 - `mobile apps/Android app/`: Flutter Android application.
 - `mobile apps/IOS app/`: native Swift/SwiftUI application, unsigned during development.
 - `mobile apps/shared/`: Android/browser Flutter code and common public release/configuration tools. Native iOS has no Dart dependency.
 - [`PLAN.md`](PLAN.md): implementation history and current verification scope.
 
-From `backend-v2/`, install tooling with `npm ci` and the six backend dependency sets with `npm run install:backends`. Run `npm run env:setup` and `npm run env:start` to start the isolated development stack using existing web assets. Open http://localhost:8080. Use `npm run env:verify` to check it and `npm run env:stop` to stop its owned processes. See [environment instructions](backend-v2/ENVIRONMENT.md).
+From `Gateway-backene/tooling/`, install tooling with `npm ci` and the six backend dependency sets with `npm run install:backends`. Run `npm run env:setup` and `npm run env:start` to start the isolated development stack using existing web assets. Open http://localhost:8080. Use `npm run env:verify` to check it and `npm run env:stop` to stop its owned processes. See [environment instructions](Gateway-backene/tooling/ENVIRONMENT.md).
+
+Each backend owns all of its runtime code and installs/builds from its own folder. Domain data is exchanged through authenticated private HTTP APIs. There is no `backend-v2/` runtime or shared source dependency between backends.
 
 Builds and release workflows run only on manual request. Startup never builds apps; if web assets are missing, it stops with an explanation. No build or release is triggered by a push or pull request.
 

@@ -1,7 +1,5 @@
-import { createHash } from 'node:crypto';
-import { HttpError } from '../../backend-v2/shared/http/errors.js';
-const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
-export async function fetchProvider({provider,providers,db,fetcher=fetch}){
+import { HttpError } from '../lib/http/errors.js';
+export async function fetchProvider({provider,providers,data,fetcher=fetch}){
   const source=providers[provider];
   if(!source)throw new HttpError(422,'Unknown configured provider');
   const url=new URL(source.url);
@@ -17,8 +15,5 @@ export async function fetchProvider({provider,providers,db,fetcher=fetch}){
   try{payload=JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{throw new HttpError(502,'Invalid provider JSON');}
   const items=Array.isArray(payload)?payload:payload?.items;
   if(!Array.isArray(items)||items.length>500)throw new HttpError(502,'Provider must return at most 500 records');
-  const hash=digest(items);
-  const {rows}=await db.query(`INSERT INTO public.ingestion_batches(provider,payload_hash,payload) VALUES($1,$2,$3::jsonb)
-    ON CONFLICT(provider,payload_hash) DO UPDATE SET provider=EXCLUDED.provider RETURNING id,status,created_at`,[provider,hash,JSON.stringify(items)]);
-  return rows[0];
+  return data.stage(provider,items);
 }

@@ -1,7 +1,7 @@
-import { HttpError } from '../../../backend-v2/shared/http/errors.js';
-import { transaction } from '../../../backend-v2/shared/db/client.js';
-import { unique,uniqueText } from '../../../backend-v2/shared/domain/text.js';
-import { countryCode } from '../../../backend-v2/shared/domain/countries.js';
+import { HttpError } from '../../lib/http/errors.js';
+import { transaction } from '../../lib/db/client.js';
+import { unique,uniqueText } from '../../lib/domain/text.js';
+import { countryCode } from '../../lib/domain/countries.js';
 
 export const profileColumns='headline,target_roles,target_fields,skills,extra_skills,level,years_experience,countries,remote_ok,languages,search_titles,search_scope,updated_at';
 const slug={type:'string',pattern:'^[a-zA-Z][a-zA-Z0-9_]{1,59}$'};

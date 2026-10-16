@@ -1,11 +1,11 @@
-# Context: repository root. Only this backend and shared libraries are copied.
+# Context: Gateway-backene/. This backend has no sibling source dependencies.
 FROM node:24.22.0-bookworm-slim
 ENV NODE_ENV=production HOST=0.0.0.0
 WORKDIR /app
-COPY Gateway-backene/package.json Gateway-backene/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund && npm cache clean --force
-COPY --chown=node:node backend-v2/shared ./backend-v2/shared
-COPY --chown=node:node backend-v2/database ./backend-v2/database
-COPY --chown=node:node Gateway-backene ./Gateway-backene
+COPY --chown=node:node index.js ./
+COPY --chown=node:node lib ./lib
+COPY --chown=node:node src ./src
 USER node
-CMD ["node", "Gateway-backene/index.js"]
+CMD ["node", "index.js"]

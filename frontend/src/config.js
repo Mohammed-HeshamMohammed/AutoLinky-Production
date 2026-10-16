@@ -13,12 +13,9 @@ export const SITE_URL = site.origin;
 export const SITE_HOST = site.host;
 export const WHATSAPP_NUMBER = required('VITE_WHATSAPP_NUMBER');
 if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) throw new Error('VITE_WHATSAPP_NUMBER must contain 8–15 digits including the country code, without + or spaces.');
-// Releases are published in a public GitHub repository; the browser reads the newest one straight from GitHub.
-const repo = env.VITE_RELEASES_REPO?.trim() || 'AMamdouh3/Autolinky-releases';
-if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) throw new Error('VITE_RELEASES_REPO must look like owner/repository.');
-// Fallback link (the releases page) used until, or unless, the newest APK address is known.
-export const DOWNLOAD_URL = `https://github.com/${repo}/releases/latest`;
-export const RELEASE_API_URL = `https://api.github.com/repos/${repo}/releases/latest`;
+// The server resolves releases and records downloads; credentials never reach this bundle.
+export const DOWNLOAD_URL = '/download';
+export const RELEASE_API_URL = '/api/latest';
 
 export function directDownloadUrl(origin) {
   const url = new URL(DOWNLOAD_URL, origin);

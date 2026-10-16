@@ -6,6 +6,7 @@ import { ProductPreview } from './ProductExperience';
 import { useSiteMotion } from './useSiteMotion';
 import WhatsAppIcon from './WhatsAppIcon';
 import { downloadLinkProps } from './config';
+import SiteHeader, { accountHref } from './SiteHeader';
 
 function Icon({ name }) {
   const paths = {
@@ -24,9 +25,7 @@ export default function ContentPage({ slug, lang }) {
   const hasPreview = slug === 'auto-apply' || slug === 'features';
   useSiteMotion(slug);
   const home = pagePath('', lang);
-  const opposite = isArabic ? 'en' : 'ar';
   const contact = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(MESSAGES.contact[lang])}`;
-  const navLabel = isArabic ? 'التنقل الرئيسي' : 'Main navigation';
 
   useLayoutEffect(() => {
     document.documentElement.lang = lang;
@@ -38,17 +37,7 @@ export default function ContentPage({ slug, lang }) {
 
   return <div className="site-page">
     <a className="skip" href="#main">{isArabic ? 'تخطَّ إلى المحتوى' : 'Skip to content'}</a>
-    <header className="nav">
-      <div className="container nav-inner">
-        <a className="brand" href={home} aria-label="Autolinky"><img src="/assets/logo.svg" alt="" width="34" height="34" /><span>Autolinky</span></a>
-        <nav className="nav-links" aria-label={navLabel}>{NAV.map(([key, en, ar]) => <a className={key === slug ? 'active' : ''} aria-current={key === slug ? 'page' : undefined} href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav>
-        <div className="nav-actions">
-          <a className="lang-toggle" href={pagePath(slug, opposite)} aria-label={isArabic ? 'English' : 'العربية'}><Icon name="globe" /><span>{isArabic ? 'English' : 'العربية'}</span></a>
-          <a className="btn btn-ghost btn-sm content-contact" href={contact} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />{isArabic ? 'تواصل معنا' : 'Contact us'}</a>
-        </div>
-        <details className="mobile-menu"><summary aria-label={isArabic ? 'افتح القائمة' : 'Open menu'}><span></span><span></span><span></span></summary><nav aria-label={isArabic ? 'القائمة' : 'Mobile menu'}>{NAV.map(([key, en, ar]) => <a href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}<span className="menu-divider" />{LEGAL_NAV.map(([key, en, ar]) => <a href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav></details>
-      </div>
-    </header>
+    <SiteHeader lang={lang} slug={slug} />
     <main id="main">
       <section className={`content-hero${hasPreview ? ' content-hero--auto' : ''}${isLegal ? ' content-hero--legal' : ''}`}>
         <div className="hero-bg" aria-hidden="true"><div className="glow g1" /><div className="glow g2" /><div className="grid" /></div>
@@ -58,7 +47,7 @@ export default function ContentPage({ slug, lang }) {
           <p className="eyebrow">{page.eyebrow}</p>
           <h1>{page.heading}</h1>
           <p className="content-lead">{page.intro}</p>
-          {isLegal ? <div className="legal-meta"><span>{isArabic ? 'آخر تحديث:' : 'Last updated:'} {page.updated}</span><a href={contact} target="_blank" rel="noopener noreferrer">{isArabic ? 'تواصل معنا بشأن هذه الصفحة' : 'Contact us about this page'} <Icon name="arrow" /></a></div> : <div className="content-actions"><a className="btn btn-primary" {...downloadLinkProps}><Icon name="download" />{isArabic ? 'حمّل Autolinky لأندرويد' : 'Download Autolinky for Android'}</a><a className="btn btn-ghost" href={contact} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />{isArabic ? 'اسألنا على واتساب' : 'Ask us on WhatsApp'}</a></div>}
+          {isLegal ? <div className="legal-meta"><span>{isArabic ? 'آخر تحديث:' : 'Last updated:'} {page.updated}</span><a href={contact} target="_blank" rel="noopener noreferrer">{isArabic ? 'تواصل معنا بشأن هذه الصفحة' : 'Contact us about this page'} <Icon name="arrow" /></a></div> : <div className="content-actions"><a className="btn btn-primary" href={accountHref('signup',lang)}>{isArabic ? 'أنشئ حسابك المجاني' : 'Create your free account'}</a><a className="btn btn-ghost" {...downloadLinkProps}><Icon name="download" />{isArabic ? 'حمّل Autolinky لأندرويد' : 'Download Autolinky for Android'}</a><a className="btn btn-ghost" href={contact} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />{isArabic ? 'اسألنا على واتساب' : 'Ask us on WhatsApp'}</a></div>}
           </div>
           {hasPreview && <ProductPreview lang={lang} id={`${slug}-product`} />}
         </div>
@@ -78,6 +67,6 @@ export default function ContentPage({ slug, lang }) {
         <div className="related-grid">{page.related.map(key => <a className="related-card" href={pagePath(key, lang)} key={key}><span>{PAGES[key][lang].eyebrow}</span><strong>{PAGES[key][lang].heading}</strong><Icon name="arrow" /></a>)}</div>
       </div></section>
     </main>
-    <footer className="footer"><div className="container footer-inner"><div className="footer-brand"><a className="brand" href={home}><img src="/assets/logo.svg" alt="" width="28" height="28" /><span>Autolinky</span></a><p>{isArabic ? 'مساعد وظائف ذكي يساعدك على التقديم.' : 'The AI job assistant that helps you apply.'}</p></div><div className="footer-nav-groups"><nav className="footer-links" aria-label={isArabic ? 'روابط الموقع' : 'Site links'}>{NAV.map(([key, en, ar]) => <a href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav><nav className="footer-links footer-legal" aria-label={isArabic ? 'السياسات والشروط' : 'Policies and terms'}>{LEGAL_NAV.map(([key, en, ar]) => <a href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav></div></div><div className="container footer-bottom"><p>© {new Date().getFullYear()} Autolinky. {isArabic ? 'جميع الحقوق محفوظة. محتوى هذا الموقع والتطبيق وتصميمهما وبرمجياتهما محمية بحقوق النشر. أسماء الجهات الأخرى وعلاماتها التجارية ملك لأصحابها.' : 'All rights reserved. The content, design, and software of this site and app are protected by copyright. Third-party names and trademarks belong to their respective owners.'}</p><p className="muted">{isArabic ? 'Autolinky غير تابع لـ Google أو لأي منصة وظائف.' : 'Autolinky is not affiliated with Google or any job platform.'}</p></div></footer>
+    <footer className="footer"><div className="container footer-inner"><div className="footer-brand"><a className="brand" href={home}><img src="/assets/logo.svg" alt="" width="28" height="28" /><span>Autolinky</span></a><p>{isArabic ? 'مساعد وظائف ذكي يساعدك على التقديم.' : 'The AI job assistant that helps you apply.'}</p></div><div className="footer-nav-groups"><nav className="footer-links" aria-label={isArabic ? 'روابط الموقع' : 'Site links'}><a href={accountHref('login',lang)}>{isArabic ? 'تسجيل الدخول' : 'Log in'}</a>{NAV.map(([key, en, ar]) => <a href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav><nav className="footer-links footer-legal" aria-label={isArabic ? 'السياسات والشروط' : 'Policies and terms'}>{LEGAL_NAV.map(([key, en, ar]) => <a href={pagePath(key, lang)} key={key}>{isArabic ? ar : en}</a>)}</nav></div></div><div className="container footer-bottom"><p>© {new Date().getFullYear()} Autolinky. {isArabic ? 'جميع الحقوق محفوظة. محتوى هذا الموقع والتطبيق وتصميمهما وبرمجياتهما محمية بحقوق النشر. أسماء الجهات الأخرى وعلاماتها التجارية ملك لأصحابها.' : 'All rights reserved. The content, design, and software of this site and app are protected by copyright. Third-party names and trademarks belong to their respective owners.'}</p><p className="muted">{isArabic ? 'Autolinky غير تابع لـ Google أو لأي منصة وظائف.' : 'Autolinky is not affiliated with Google or any job platform.'}</p></div></footer>
   </div>;
 }

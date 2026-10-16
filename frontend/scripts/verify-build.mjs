@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createServer } from 'vite';
+import { accountPaths } from '../workspace-routes.js';
 
 const server = await createServer({ mode: 'production', server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
 const { SITE_URL, PAGES } = await server.ssrLoadModule('/src/pageContent.js');
@@ -41,6 +42,7 @@ for (const lang of ['en', 'ar']) for (const slug of slugs) {
 for (const { route, html } of pages) {
   for (const match of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const value = match[1];
+    if(accountPaths.includes(value))continue;
     if ([DOWNLOAD_URL, RELEASE_API_URL].filter(Boolean).some(endpoint => value === endpoint.split(/[?#]/)[0])) continue;
     const target = path.join(root, value.slice(1));
     const exists = fs.existsSync(target) && (fs.statSync(target).isFile() || fs.existsSync(path.join(target, 'index.html')));
@@ -49,8 +51,17 @@ for (const { route, html } of pages) {
 }
 
 const open = fs.readFileSync(path.join(root, 'open', 'index.html'), 'utf8');
+const workspace=fs.readFileSync(path.join(root,'workspace','index.html'),'utf8');
+assert(workspace.includes('noindex')&&!workspace.includes('rel="canonical"'),'Desktop shell must be private and excluded from indexing');
 assert(open.includes('noindex') && !open.includes('rel="canonical"'), '/open/ must be noindex');
 assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').match(/<loc>/g)?.length === pages.length, 'Sitemap count mismatch');
 assert(fs.readFileSync(path.join(root, 'robots.txt'), 'utf8').includes(`${site}/sitemap.xml`), 'Sitemap missing from robots.txt');
 assert(fs.existsSync(path.join(root, '404.html')), 'Missing 404 page');
+for (const variant of ['android', 'ios']) {
+  const app = path.join(root, 'app', variant);
+  const html = fs.readFileSync(path.join(app, 'index.html'), 'utf8');
+  assert(html.includes(`<base href="/app/${variant}/">`), `Wrong app base: ${variant}`);
+  assert(fs.existsSync(path.join(app, 'main.dart.js')), `Missing browser app bundle: ${variant}`);
+  assert(html.includes('noindex'), `Missing app noindex: ${variant}`);
+}
 console.log(`Verified ${pages.length} rendered pages, internal links, language alternates, sitemap, and noindex route`);

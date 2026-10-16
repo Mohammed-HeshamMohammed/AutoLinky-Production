@@ -4,6 +4,7 @@ import { LEGAL_NAV } from './legalContent';
 import { HeroExperience, WorkflowStory } from './ProductExperience';
 import WhatsAppIcon from './WhatsAppIcon';
 import { downloadLinkProps } from './config';
+import SiteHeader, { accountHref } from './SiteHeader';
 
 function releaseText(release, lang) {
   if (!release?.version) return lang === 'ar' ? 'دائمًا أحدث نسخة' : 'Always the newest release';
@@ -59,43 +60,7 @@ localize(<div onClick={onClick}>
     <symbol id="i-android" viewBox="0 0 24 24"><path d="M17.6 9.48 19.44 6.3a.38.38 0 0 0-.66-.38l-1.87 3.23a11.4 11.4 0 0 0-9.82 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52ZM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z" /></symbol>
   </svg>
   <a className="skip" href="#main" data-i18n="skip">Skip to content</a>
-  <header className="nav" id="top">
-    <div className="container nav-inner">
-      <a className="brand" href={lang === 'ar' ? '/ar/' : '/'} aria-label="Autolinky">
-        <img src="/assets/logo.svg" alt="" width={34} height={34} />
-        <span>Autolinky</span>
-      </a>
-      <nav className="nav-links" aria-label={lang === 'ar' ? 'التنقل الرئيسي' : 'Main navigation'}>
-        <a href="/features/" data-page-link="features" data-i18n="navFeatures">Features</a>
-        <a href="/auto-apply/" data-page-link="auto-apply" data-i18n="navAuto">Auto Apply</a>
-        <a href="/how-it-works/" data-page-link="how-it-works" data-i18n="navHow">How it works</a>
-        <a href="/pricing/" data-page-link="pricing" data-i18n="navPricing">Pricing</a>
-        <a href="/faq/" data-page-link="faq" data-i18n="navFaq">FAQ</a>
-      </nav>
-      <div className="nav-actions">
-        <a className="lang-toggle" href="/ar/" data-lang-toggle aria-label="العربية">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx={12} cy={12} r="9.25" /><path d="M2.75 12h18.5M12 2.75c2.6 2.6 3.9 5.7 3.9 9.25s-1.3 6.65-3.9 9.25c-2.6-2.6-3.9-5.7-3.9-9.25S9.4 5.35 12 2.75Z" /></svg>
-          <span data-lang-label>العربية</span>
-        </a>
-        <a className="btn btn-ghost btn-sm nav-contact" aria-label={lang === 'ar' ? 'تواصل معنا على واتساب' : 'Contact us on WhatsApp'} data-wa="contact" href="#" target="_blank" rel="noopener">
-          <WhatsAppIcon />
-          <span data-i18n="contact">Contact us</span>
-        </a>
-      </div>
-      <details className="mobile-menu">
-        <summary aria-label={lang === 'ar' ? 'افتح القائمة' : 'Open menu'}><span></span><span></span><span></span></summary>
-        <nav aria-label={lang === 'ar' ? 'القائمة' : 'Mobile menu'}>
-          <a href={lang === 'ar' ? '/ar/features/' : '/features/'}>{lang === 'ar' ? 'المميزات' : 'Features'}</a>
-          <a href={lang === 'ar' ? '/ar/auto-apply/' : '/auto-apply/'}>{lang === 'ar' ? 'التقديم التلقائي' : 'Auto Apply'}</a>
-          <a href={lang === 'ar' ? '/ar/how-it-works/' : '/how-it-works/'}>{lang === 'ar' ? 'طريقة العمل' : 'How it works'}</a>
-          <a href={lang === 'ar' ? '/ar/pricing/' : '/pricing/'}>{lang === 'ar' ? 'الأسعار' : 'Pricing'}</a>
-          <a href={lang === 'ar' ? '/ar/faq/' : '/faq/'}>{lang === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}</a>
-          <span className="menu-divider" />
-          {LEGAL_NAV.map(([key, en, ar]) => <a href={`${lang === 'ar' ? '/ar' : ''}/${key}/`} key={key}>{lang === 'ar' ? ar : en}</a>)}
-        </nav>
-      </details>
-    </div>
-  </header>
+  <SiteHeader lang={lang} />
   <main id="main">
     <section className="hero">
       <div className="hero-bg" aria-hidden="true"><div className="glow g1" /><div className="glow g2" /><div className="grid" /></div>
@@ -108,6 +73,12 @@ localize(<div onClick={onClick}>
         <h1 className="hero-title reveal" data-i18n="heroTitle">Your next job.<br /><span className="grad">A smarter search.</span></h1>
         <p className="hero-sub reveal" data-i18n="heroSub">Autolinky searches for jobs, matches them to your CV with AI, and can <strong>auto-apply to eligible email jobs</strong> from your own Gmail with a tailored cover letter.</p>
         <div className="cta-block reveal" id="download">
+          <div className="web-entry">
+            <p>{lang === 'ar' ? 'ابحث عن وظيفتك من هنا' : 'Your next job starts here'}</p>
+            <a className="btn btn-primary web-start" href={accountHref('signup',lang)}>{lang === 'ar' ? 'ابدأ مجانًا على الويب' : 'Get started free on the web'}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5" /></svg></a>
+            <span>{lang === 'ar' ? 'لديك حساب بالفعل؟' : 'Already have an account?'} <a href={accountHref('login',lang)}>{lang === 'ar' ? 'تسجيل الدخول' : 'Log in'}</a></span>
+          </div>
+          <p className="web-download-label">{lang === 'ar' ? 'أو حمّل تطبيق أندرويد' : 'Or take AutoLinky with you on Android'}</p>
           <a className="btn-download" {...downloadLinkProps}>
             <span className="btn-download-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><use href="#i-android" /></svg>
@@ -238,7 +209,7 @@ localize(<div onClick={onClick}>
           <h2 data-i18n="howTitle">From download to applications in 4 steps</h2>
         </header>
         <ol className="steps">
-          <li className="step reveal"><span className="step-n">1</span><h3 data-i18n="h1Title">Download &amp; sign in</h3><p data-i18n="h1Body">Install the app and continue with Google in seconds.</p></li>
+          <li className="step reveal"><span className="step-n">1</span><h3 data-i18n="h1Title">Create your account</h3><p data-i18n="h1Body">Sign in on the web or download the Android app to get started.</p></li>
           <li className="step reveal"><span className="step-n">2</span><h3 data-i18n="h2Title">Upload your CV</h3><p data-i18n="h2Body">PDF or Word. AI reads your skills, title and experience.</p></li>
           <li className="step reveal"><span className="step-n">3</span><h3 data-i18n="h3Title">Connect Gmail once</h3><p data-i18n="h3Body">A quick two-minute setup, only if you want email applications.</p></li>
           <li className="step reveal"><span className="step-n">4</span><h3 data-i18n="h4Title">Turn on Auto Apply</h3><p data-i18n="h4Body">Watch matches roll in and applications go out.</p></li>
@@ -262,9 +233,8 @@ localize(<div onClick={onClick}>
               <li data-i18n="pf3">Auto Apply and AI cover letters</li>
               <li data-i18n="pf4">Applied tracker and notifications</li>
             </ul>
-            <a className="btn btn-primary btn-block" {...downloadLinkProps}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14" /></svg>
-              <span data-i18n="pFreeCta">Download free</span>
+            <a className="btn btn-primary btn-block" href={accountHref('signup',lang)}>
+              <span data-i18n="pFreeCta">Create a free account</span>
             </a>
           </article>
           <article className="plan plan-pro reveal">
@@ -347,8 +317,8 @@ localize(<div onClick={onClick}>
   </footer>
   <div className="sticky-cta" data-sticky-cta>
     <img src="/assets/logo.svg" alt="" width={36} height={36} />
-    <div><b>Autolinky</b><small data-i18n="stickySub">Free · Android</small></div>
-    <a className="btn btn-primary btn-sm" {...downloadLinkProps} data-i18n="stickyCta">Download</a>
+    <div><b>Autolinky</b><small data-i18n="stickySub">Web · Android</small></div>
+    <a className="btn btn-primary btn-sm" href={accountHref('signup',lang)} data-i18n="stickyCta">Get started</a>
   </div>
   <a className="wa-float" data-wa="contact" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" data-i18n-attr="aria-label:waAria">
     <WhatsAppIcon />

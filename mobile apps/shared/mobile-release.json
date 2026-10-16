@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "channel": "development",
+  "repository": "Mohammed-HeshamMohammed/AutoLinky-Production",
+  "flutter_version": "3.47.7",
+  "version_source": "pubspec.yaml",
+  "updates": {
+    "provider": "github-releases",
+    "config": "../release-source.json",
+    "binary_only": true,
+    "ota_active": false,
+    "android_engine": "flutter",
+    "ios_engine": "native_swift"
+  }
+}

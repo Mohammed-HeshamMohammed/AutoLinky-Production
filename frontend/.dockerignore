@@ -5,3 +5,5 @@ dist
 .git
 .playwright-cli
 *.log
+.runtime
+test

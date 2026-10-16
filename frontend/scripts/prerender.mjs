@@ -68,11 +68,12 @@ for (const lang of ['en', 'ar']) {
   }
 }
 await writePage('open', documentFor('open', 'en', { title: 'Open Autolinky in your browser', description: 'Instructions for downloading Autolinky from an in-app browser.' }, '', true));
+await writePage('workspace',documentFor('workspace','en',{title:'AutoLinky workspace',description:'Your job search workspace.'},'',true));
 await fs.writeFile(path.join(dist, '404.html'), '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Page not found | Autolinky</title><link rel="icon" href="/assets/favicon.svg"></head><body style="font:16px system-ui;background:#070b1d;color:#eef1ff;display:grid;place-items:center;min-height:100vh"><main><h1>Page not found</h1><p>That Autolinky page does not exist.</p><a style="color:#3ee0ae" href="/">Go to the homepage</a></main></body></html>');
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sitemapUrls.map(({ slug, lang }) => `  <url><loc>${site}${pagePath(slug, lang)}</loc><xhtml:link rel="alternate" hreflang="en" href="${site}${pagePath(slug, 'en')}"/><xhtml:link rel="alternate" hreflang="ar" href="${site}${pagePath(slug, 'ar')}"/><xhtml:link rel="alternate" hreflang="x-default" href="${site}${pagePath(slug, 'en')}"/></url>`).join('\n')}\n</urlset>\n`;
 await fs.writeFile(path.join(dist, 'sitemap.xml'), sitemap);
-await fs.writeFile(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${site}/sitemap.xml\n`);
+await fs.writeFile(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /app/\nDisallow: /admin/\nDisallow: /ar/admin/\nDisallow: /workspace/\nSitemap: ${site}/sitemap.xml\n`);
 await fs.writeFile(path.join(dist, 'llms.txt'), `# Autolinky\n\nAutolinky is an Android job assistant. It matches collected jobs to a user's CV and helps the user apply by email, WhatsApp, and application links. Auto Apply sends eligible email applications from the user's connected Gmail when enabled. The free plan includes 20 email applications total; Pro removes that plan allowance while active, subject to sending limits.\n\nOfficial site: ${site}/\nFeatures: ${site}/features/\nAuto Apply: ${site}/auto-apply/\nHow it works: ${site}/how-it-works/\nPricing: ${site}/pricing/\nFAQ: ${site}/faq/\nPrivacy: ${site}/privacy/\nTerms: ${site}/terms/\nBilling and refunds: ${site}/billing/\nWebsite storage: ${site}/website-storage/\nData requests: ${site}/data-requests/\nArabic: ${site}/ar/\n`);
 await server.close();
 console.log(`Prerendered ${sitemapUrls.length} indexable pages, /open/, sitemap.xml, robots.txt, and llms.txt`);

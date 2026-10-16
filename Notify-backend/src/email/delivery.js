@@ -28,6 +28,7 @@ export function deliveryService({db,config,transport,ai,appData}){
     const letter=await preview(user,job);if(edited)letter.body=compose({job,to:letter.to,account:{address:letter.from_address,sender_name:letter.from_name},edited}).body;
     const attachment=await appData.snapshot(user.id,true);
     const reservation=await transaction(db,async c=>{
+      if(auto&&!(await c.query('SELECT public.sender_reservation_allowed() allowed')).rows[0]?.allowed)throw new HttpError(409,'sender_paused');
       await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[`mail:${user.id}`]);
       const active=(await c.query('SELECT status FROM public.app_users WHERE id=$1 FOR UPDATE',[user.id])).rows[0];if(active?.status!=='active')throw new HttpError(403,'Account blocked');
       const existing=(await c.query('SELECT * FROM public.applications WHERE user_id=$1 AND opportunity_id=$2 FOR UPDATE',[user.id,job.id])).rows[0];

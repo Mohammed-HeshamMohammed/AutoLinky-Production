@@ -4,7 +4,7 @@ export function workspaceRoute(value){
   const url=value instanceof URL?value:new URL(value,'http://local.web');
   const parts=url.pathname.split('/').filter(Boolean),lang=parts[0]==='ar'?'ar':url.searchParams.get('lang')==='ar'?'ar':'en';
   if(parts[0]==='ar')parts.shift();
-  if(parts[0]==='admin'&&parts.length<=2&&['','login','users','subscriptions','health','audit'].includes(parts[1]||''))return {admin:true,screen:parts[1]||'overview',lang};
+  if(parts[0]==='admin'&&parts.length<=2&&['','login','users','subscriptions','health','audit','collector','accounts','search-titles','sender'].includes(parts[1]||''))return {admin:true,screen:parts[1]||'overview',lang};
   if(parts.length!==1||!workspaceScreens.includes(parts[0]))return null;
   return {admin:false,screen:parts[0]==='matches'?'dashboard':parts[0]==='automation'?'auto-apply':parts[0],lang};
 }

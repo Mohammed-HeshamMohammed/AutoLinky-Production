@@ -1,0 +1,101 @@
+{
+  "checked_at": "2026-10-16T17:08:15.478Z",
+  "base_commit": "4dbd3ef",
+  "reference": {
+    "repository": "https://github.com/AMamdouh3/Autolinky-with-serverbased",
+    "revision": "9901aa48193757db3143e5ecd107602bb952fbf3",
+    "fetch_location": "ignored Production .runtime/reference-admin-latest snapshot",
+    "original_checkout": "read-only; unchanged",
+    "original_files_checked": 544,
+    "sources": [
+      {
+        "file": "backend/admin/admin.js",
+        "sha256": "664dee0c7980a9ae87bd7d65c2c924c40a7c27e8c05b08d76415875d15c7d4a8"
+      },
+      {
+        "file": "backend/admin/admin.css",
+        "sha256": "32084378946e34be4b277d128db9f5a70b478dd81f03dabbd0ee43289a5d2516"
+      },
+      {
+        "file": "backend/routers/admin.py",
+        "sha256": "14d1f93e1752be4f1203c5c04b27d6eb2dd494934ed992cb0501fbf6cabc82a8"
+      },
+      {
+        "file": "backend/routers/admin_control.py",
+        "sha256": "7a8c2f3c0f5946ac70bba28f7e95c12dd9be29e1419d1b7d632bf95ffba8ee0e"
+      },
+      {
+        "file": "supabase/migrations/step19_admin.sql",
+        "sha256": "af13ed712fb59671aedca25dda81a5225d7b1894146cdc7accf756ef27784f64"
+      },
+      {
+        "file": "supabase/migrations/step20_admin_control.sql",
+        "sha256": "fbbc0fe99f0ad75cbbe16152bc7747e57ff4fb5cd88a14eb4339fb9970ee14c6"
+      }
+    ],
+    "fonts": [
+      {
+        "file": "IBMPlexSansArabic-Regular.ttf",
+        "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+      },
+      {
+        "file": "IBMPlexSansArabic-SemiBold.ttf",
+        "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+      },
+      {
+        "file": "OFL.txt",
+        "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+      }
+    ]
+  },
+  "implemented": [
+    "reference top navigation, local typeface, 4-metric totals strip",
+    "Cairo-time downloads/signups/emails with 14/30/90 periods, chart/table and keyboard inspection",
+    "setup funnel, activity, plans and delivery breakdowns",
+    "searchable/filterable/sortable users and focus-contained user drawer",
+    "safe profile/CV/Gmail metadata and recent email outcomes/per-day history",
+    "unlimited/custom/default allowances, active-plan extensions, Cairo through-day date and no-end-date Pro",
+    "MFA/elevation, reasons, optimistic revisions and immutable atomic audits retained",
+    "persistent collector/sender pause controls",
+    "Fetching private Data pause read before a configured provider request",
+    "sender tick pause and transaction-locked automatic reservation pause; manual/in-flight work preserved",
+    "private runtime capability APIs with distinct Data-to-Fetching and Data-to-Notify keys",
+    "normalized search-title creation/state/manual/search queue operations and demand-protected owner deletion",
+    "responsive and Arabic RTL navigation, theme and read-only viewer controls"
+  ],
+  "unavailable": [
+    "LinkedIn session/account worker and encrypted cookie management are not ported; the Accounts screen requests no unused secrets",
+    "Collector process restart, live service settings editing and per-title cadence are not implemented",
+    "Search queue writes do not imply a connected LinkedIn search worker",
+    "Firebase provider acceptance still requires external setup"
+  ],
+  "verification": {
+    "backend_unit": 20,
+    "postgresql_integration": 37,
+    "frontend_http_client": 13,
+    "backend_owned_boundaries": 6,
+    "backend_esm": "passed",
+    "real_local_admin_browser": "password+TOTP, all nine sections and logout",
+    "intercepted_browser_fixtures": [
+      "chart measure/period/table/keyboard",
+      "rich drawer",
+      "one confirmed limit mutation with reason/elevation",
+      "cancelled operational change",
+      "viewer write controls disabled",
+      "theme",
+      "390px layout",
+      "Arabic RTL",
+      "existing desktop user flows"
+    ],
+    "reference_files_changed": 0,
+    "existing_migration_bytes": "0001 through 0011 unchanged",
+    "migration_added": "0012_reference_console.sql",
+    "native_apps": "unchanged",
+    "screenshots": "ignored frontend/output/playwright/"
+  },
+  "app_build_performed": false,
+  "workflow_dispatched": false,
+  "production_data_imported": false,
+  "live_mail_or_collection_performed": false,
+  "vps_deployment_performed": false
+}

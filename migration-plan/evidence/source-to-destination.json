@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T16:38:23.102Z",
+  "generated_at": "2026-10-16T17:08:15.480Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -212,7 +212,7 @@
       "destinations": [
         {
           "path": "Notify-backend/src/email/delivery.js",
-          "sha256": "72ff72c7d2f5d29661252bfe0cf799c5c0f06b464fc2a9664372858fd57c264b"
+          "sha256": "b0052b1e846bf5a132bd161c488fe5effda943114c84a85cc4e6487d300f09a4"
         }
       ]
     },
@@ -238,7 +238,7 @@
       "destinations": [
         {
           "path": "Notify-backend/src/auto-apply.js",
-          "sha256": "d4e19609e36351f962aa84f5d2823712f24850ff7eea69a711683e1ff1453b58"
+          "sha256": "8358eabac34c725e9a5f09c5732622981066599618d676affaee4fba1b4cfe2a"
         }
       ]
     },
@@ -393,7 +393,7 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "c7303d307c59e30a357166b176e6287a0bacd2730f95cf5f713867e5e6e583a9"
+          "sha256": "dc1b7ccc5b1392ce9aa3687b5229c445898bb07498708600c93a8d9d80aef2f0"
         },
         {
           "path": "Auth-backend/app.js",
@@ -405,7 +405,7 @@
         },
         {
           "path": "Notify-backend/app.js",
-          "sha256": "5dbf7cc226e1686d698425ef54e9b30a8a85c5e8b589bbd72f0d1835de3fbceb"
+          "sha256": "5f734a70825f2485da8da7a2eb49dcabb21f4b4b20e71c725eaed5a336d774be"
         }
       ]
     },
@@ -499,7 +499,7 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "c7303d307c59e30a357166b176e6287a0bacd2730f95cf5f713867e5e6e583a9"
+          "sha256": "dc1b7ccc5b1392ce9aa3687b5229c445898bb07498708600c93a8d9d80aef2f0"
         },
         {
           "path": "Auth-backend/app.js",
@@ -511,7 +511,7 @@
         },
         {
           "path": "Notify-backend/app.js",
-          "sha256": "5dbf7cc226e1686d698425ef54e9b30a8a85c5e8b589bbd72f0d1835de3fbceb"
+          "sha256": "5f734a70825f2485da8da7a2eb49dcabb21f4b4b20e71c725eaed5a336d774be"
         }
       ]
     },
@@ -537,7 +537,7 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "c7303d307c59e30a357166b176e6287a0bacd2730f95cf5f713867e5e6e583a9"
+          "sha256": "dc1b7ccc5b1392ce9aa3687b5229c445898bb07498708600c93a8d9d80aef2f0"
         },
         {
           "path": "Auth-backend/app.js",
@@ -549,7 +549,7 @@
         },
         {
           "path": "Notify-backend/app.js",
-          "sha256": "5dbf7cc226e1686d698425ef54e9b30a8a85c5e8b589bbd72f0d1835de3fbceb"
+          "sha256": "5f734a70825f2485da8da7a2eb49dcabb21f4b4b20e71c725eaed5a336d774be"
         }
       ]
     },
@@ -6602,5 +6602,12 @@
       ]
     }
   ],
-  "missing_destinations": []
+  "missing_destinations": [],
+  "reference_admin_adaptation": {
+    "revision": "9901aa48193757db3143e5ecd107602bb952fbf3",
+    "evidence": "migration-plan/evidence/reference-admin-adaptation.json",
+    "frontend": "frontend/src/workspace/AdminApp.jsx",
+    "console_data": "Data-baceknd/src/console.js",
+    "migration": "Data-baceknd/database/migrations/0012_reference_console.sql"
+  }
 }

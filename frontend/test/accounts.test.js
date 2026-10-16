@@ -10,6 +10,7 @@ import { workspaceRoute,safeWorkspaceNext } from '../workspace-routes.js';
 test('desktop routes preserve public product pages, mobile copies and safe post-login navigation',()=>{
   assert.deepEqual(workspaceRoute('/ar/jobs/'),{admin:false,screen:'jobs',lang:'ar'});
   assert.deepEqual(workspaceRoute('/admin/'),{admin:true,screen:'overview',lang:'en'});
+  for(const screen of ['collector','accounts','search-titles','sender'])assert.deepEqual(workspaceRoute('/ar/admin/'+screen+'/'),{admin:true,screen,lang:'ar'});
   assert.equal(workspaceRoute('/app/android/matches'),null);assert.equal(workspaceRoute('/auto-apply/'),null);assert.equal(workspaceRoute('/admin/api/overview'),null);
   assert.equal(workspaceRoute('/automation/').screen,'auto-apply');
   for(const value of ['https://untrusted.invalid','//untrusted.invalid','/\\untrusted.invalid','/admin/','/login/','/unknown'])assert.equal(safeWorkspaceNext(value),'/dashboard/');
@@ -21,7 +22,7 @@ test('production serves private desktop shells and restricted admin CSP',async()
   await mkdir(resolve(directory,'workspace'),{recursive:true});await writeFile(resolve(directory,'workspace/index.html'),'<main>Workspace shell</main>');
   const server=createSiteServer({directory});await new Promise(done=>server.listen(0,'127.0.0.1',done));const origin=`http://127.0.0.1:${server.address().port}`;
   try{
-    for(const path of ['/login/','/signup/','/dashboard/','/jobs/','/ar/profile/','/admin/','/admin/users/']){
+    for(const path of ['/login/','/signup/','/dashboard/','/jobs/','/ar/profile/','/admin/','/admin/users/','/admin/collector/','/admin/search-titles/','/ar/admin/sender/']){
       const response=await fetch(origin+path,{redirect:'manual'});assert.equal(response.status,200);assert.match(await response.text(),/Workspace shell/);assert.equal(response.headers.get('cache-control'),'no-store');assert.match(response.headers.get('x-robots-tag'),/noindex/);assert.equal(response.headers.get('x-frame-options'),'DENY');
       const csp=response.headers.get('content-security-policy');assert.match(csp,/frame-ancestors 'none'/);if(path.startsWith('/admin'))assert(!csp.split(';')[1].includes('gstatic.com'));
     }

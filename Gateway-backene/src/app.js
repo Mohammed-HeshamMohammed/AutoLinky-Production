@@ -5,7 +5,7 @@ import { privateOrigin } from '../lib/runtime.js';
 
 export function destination(path){
   if(/^\/admin\/api\/(login|verify|reauth|logout|session)\/?$/.test(path))return 'auth';
-  if(/^\/admin\/api\/(overview|users|subscriptions|health|audit)(\/|$)/.test(path))return 'data';
+  if(/^\/admin\/api\/(overview|users|subscriptions|health|audit|collector|accounts|search-titles|sender|controls)(\/|$)/.test(path))return 'data';
   if(/^\/v1\/me\/?$/.test(path))return 'auth';
   if(/^\/v1\/(applications|auto-apply|mail-account|devices)(\/|$)/.test(path)||path==='/v1/device/activity')return 'messaging';
   if(/^\/v1\/(taxonomy|jobs|profile|cv)(\/|$)/.test(path)||path==='/internal/v1/downloads')return 'app';

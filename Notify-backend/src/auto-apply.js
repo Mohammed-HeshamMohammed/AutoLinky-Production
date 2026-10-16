@@ -23,6 +23,7 @@ export async function candidates(db,id,minMatch,{now=new Date(),limit=50,appData
 export function inHours(hour,range){const [start,end]=range.split('-').map(Number);return start<=end?hour>=start&&hour<end:hour>=start||hour<end;}
 export async function senderTick({db,config,mail,signal,now=new Date(),pickCandidates=candidates,appData}){
   await db.query("INSERT INTO public.worker_heartbeats(name,seen_at) VALUES('sender',$1) ON CONFLICT(name) DO UPDATE SET seen_at=EXCLUDED.seen_at",[now]);
+  if((await db.query("SELECT paused FROM public.console_service_control WHERE service='sender'")).rows[0]?.paused!==false)return 0;
   const hour=Number(new Intl.DateTimeFormat('en-GB',{timeZone:config.senderTimezone,hour:'2-digit',hourCycle:'h23'}).format(now));
   if(!inHours(hour,config.senderHours))return 0;
   const due=(await db.query(`SELECT a.user_id,a.min_match,a.daily_limit,a.gap_minutes FROM public.auto_apply a

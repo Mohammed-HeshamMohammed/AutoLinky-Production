@@ -23,7 +23,7 @@ const pools={},key='split-service-test-'.repeat(3),identity={verify:async token=
   if(!['valid','lost-response'].includes(token))throw Object.assign(Error(),{code:'auth/invalid-id-token'});
   return {uid:token==='valid'?'split-user':'lost-response-user',email:'split@example.com',email_verified:true};
 },deleteUser:async()=>{}};
-const appReadKey='app-read-'.repeat(5),notifyReadKey='notify-read-'.repeat(5);
+const appReadKey='app-read-'.repeat(5),notifyReadKey='notify-read-'.repeat(5),notifyAdminKey='notify-console-'.repeat(4),fetchingAdminKey='fetch-console-'.repeat(4);
 before(async()=>{
   cluster=await testDatabase();
   for(const role of ['auth','app','messaging','fetching','data']){
@@ -38,7 +38,7 @@ before(async()=>{
   const authURL=`http://127.0.0.1:${auth.server.address().port}`;
   for(const role of ['app','messaging']){
     const readKey=role==='app'?appReadKey:notifyReadKey;
-    const server=(role==='app'?buildAppBackend:buildMessaging)({config,db:pools[role],readKey,serviceKey:key,authProvider:remoteAuthentication({url:authURL,key}),
+    const server=(role==='app'?buildAppBackend:buildMessaging)({config,db:pools[role],readKey,adminKey:notifyAdminKey,serviceKey:key,authProvider:remoteAuthentication({url:authURL,key}),
       ...(role==='app'?{notifyData:{overlay:(...args)=>createNotifyClient({url:`http://127.0.0.1:${messaging.server.address().port}`,key:notifyReadKey}).overlay(...args)}}:{appData:createAppClient({url:`http://127.0.0.1:${app.server.address().port}`,key:appReadKey})}),
       extractor:async bytes=>({file_type:'pdf',size:bytes.length,pages:1,text:'Developer\nJavaScript\n'+'Experience building web applications. '.repeat(10),sha256:createHash('sha256').update(bytes).digest('hex'),links:[]}),
       transport:{verify:async()=>{},send:async()=>{smtpCalls++;throw new MailError('busy',{uncertain:true});}}});
@@ -46,7 +46,7 @@ before(async()=>{
     if(role==='app')app=server;else messaging=server;
   }
   gateway=buildGateway({targets:Object.fromEntries(Object.entries({auth,app,messaging}).map(([name,server])=>[name,{url:`http://127.0.0.1:${server.server.address().port}`,key}]))});
-  fetching=buildFetching({env:{...operationConfig,DATA_SERVICE_URL:dataURL},fetcher:async()=>Response.json([{id:'job-1',title:' Engineer ',company:'AutoLinky'},{title:''}])});
+  fetching=buildFetching({env:{...operationConfig,DATA_SERVICE_URL:dataURL,FETCHING_ADMIN_KEY:fetchingAdminKey},fetcher:async()=>Response.json([{id:'job-1',title:' Engineer ',company:'AutoLinky'},{title:''}])});
   await fetching.ready();
 });
 after(async()=>{for(const server of [gateway,fetching,data,messaging,app,auth])await server?.close();await cluster?.close();});
@@ -100,6 +100,7 @@ test('fetching and data processes hand off durably, deduplicate and stay private
   assert.equal((await fetching.inject({method:'POST',url:'/internal/v1/fetch',payload:{provider:'demo'}})).statusCode,401);
   const fetch=()=>fetching.inject({method:'POST',url:'/internal/v1/fetch',headers:{'x-service-key':key},payload:{provider:'demo'}});
   const first=await fetch();assert.equal(first.statusCode,202,first.body);
+  await cluster.db.query("UPDATE public.console_service_control SET paused=true WHERE service='collector'");assert.equal((await fetch()).statusCode,409);await cluster.db.query("UPDATE public.console_service_control SET paused=false WHERE service='collector'");
   const duplicate=await fetch();assert.equal(first.json().id,duplicate.json().id);
   const result=await data.inject({method:'POST',url:'/internal/v1/data/process',headers:{'x-service-key':key},payload:{}});
   assert.equal(result.statusCode,200,result.body);assert.equal(result.json().accepted,1);assert.equal(result.json().skipped,1);
@@ -116,9 +117,14 @@ test('private sharing requires its own caller key, validates inputs and is absen
   assert.equal((await app.inject({method:'POST',url:path,headers:{'x-service-key':appReadKey},payload:{user_id:'bad'}})).statusCode,422);
   assert.equal((await app.inject({method:'POST',url:path,headers:{'x-service-key':appReadKey},payload:{user_id:id,sql:'SELECT 1'}})).statusCode,422);
   assert.equal((await messaging.inject({method:'POST',url:'/internal/v1/applications/overlay',headers:{'x-service-key':key},payload:{user_id:id,ids:[]}})).statusCode,401);
-  for(const privatePath of [path,'/internal/v1/ingestion','/internal/v1/identity/delete-data'])assert.equal((await gateway.inject({method:'POST',url:privatePath,payload:{user_id:id}})).statusCode,404);
+  for(const [server,path,privateKey] of [[fetching,'/internal/v1/admin/collector-status',fetchingAdminKey],[messaging,'/internal/v1/admin/sender-status',notifyAdminKey]]){
+    assert.equal((await server.inject({url:path,headers:{'x-service-key':key}})).statusCode,401);
+    const status=await server.inject({url:path,headers:{'x-service-key':privateKey}});assert.equal(status.statusCode,200,status.body);assert.equal(status.json().connected,undefined);assert(!status.body.includes('provider.invalid'));assert(!status.body.includes('MAIL_SECRET_KEY'));assert.equal((await gateway.inject(path)).statusCode,404);
+  }
+  for(const privatePath of [path,'/internal/v1/ingestion','/internal/v1/identity/delete-data','/internal/v1/collection/control'])assert.equal((await gateway.inject({method:'POST',url:privatePath,payload:{user_id:id}})).statusCode,404);
   assert.equal((await data.inject({method:'POST',url:'/internal/v1/identity/delete-data',headers:{'x-service-key':key},payload:{user_id:id}})).statusCode,401);
   assert.equal((await data.inject({method:'POST',url:'/internal/v1/ingestion',headers:{'x-service-key':key},payload:{provider:'demo',items:[]}})).statusCode,401);
+  assert.equal((await data.inject({method:'POST',url:'/internal/v1/collection/control',headers:{'x-service-key':key},payload:{}})).statusCode,401);
   for(const url of ['/internal/v1/identity/%64elete-data','/internal/v1/identity/delete-data/']){
     const response=await data.inject({method:'POST',url,headers:{'x-service-key':key},payload:{user_id:id}});
     assert([401,404].includes(response.statusCode),response.body);

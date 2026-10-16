@@ -33,6 +33,12 @@ test('mail settings return no secret and round-trip the Gmail connection and quo
   response=await inject('/v1/mail-account',{method:'PUT',payload:{address:'test@gmail.com',sender_name:'Test',app_password:'abcd efgh ijkl mnop'}});assert.equal(response.statusCode,200,response.body);assert.equal(response.json().email.status,'ok');assert.equal(response.json().email.secret,undefined);
   response=await inject('/v1/auto-apply',{method:'PUT',payload:{enabled:true,daily_limit:10}});assert.equal(response.statusCode,200,response.body);assert.equal(response.json().enabled,true);assert.equal(response.json().problem,'sender_offline');
 });
+test('a stale automatic sender cannot reserve SMTP work while globally paused',async()=>{
+  await db.query("UPDATE public.console_service_control SET paused=true WHERE service='sender'");
+  await assert.rejects(app.services.mail.send({id:user,email:'test@gmail.com',status:'active'},await app.services.appData.job(job),null,{auto:true}),{status:409,detail:'sender_paused'});
+  assert.equal(calls,0);assert.equal((await db.query('SELECT count(*)::integer n FROM applications WHERE user_id=$1',[user])).rows[0].n,0);
+  // Manual application requests below must still work while the auto worker is paused.
+});
 test('two concurrent sends reserve once; unknown SMTP outcomes stay counted and cannot be retried/deleted',async()=>{
   const options={method:'POST',payload:{job_id:job,method:'email'}};
   const responses=await Promise.all([inject('/v1/applications',options),inject('/v1/applications',options)]);

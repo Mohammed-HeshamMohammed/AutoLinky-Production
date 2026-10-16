@@ -2,6 +2,19 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
+## Current: adapt the latest reference admin dashboard (2026-10-16)
+
+The owner asked to fetch the latest reference and use its admin dashboard. Remote main `9901aa48193757db3143e5ecd107602bb952fbf3` was fetched into an ignored Production snapshot; the original read-only checkout stays at its existing commit with unchanged files.
+
+- [x] Inspect the actual Step 19/20 frontend, routers and SQL, then adapt its top navigation, typeface, Numbers analytics and rich user workflow in the canonical React frontend.
+- [x] Reuse existing Cairo-time aggregate SQL through a narrowly granted wrapper; add 14/30/90-day measures, chart/table/keyboard controls, filters/sorting, metadata/history and richer allowance/Pro management.
+- [x] Add real audited, elevated pause controls, Fetching-to-Data control reads, dedicated private runtime-capability APIs and a transactional sender pause check before automatic reservation. Preserve manual sends and uncertain SMTP safeguards.
+- [x] Add normalized search-title management with optimistic revisions, shared demand locks and owner-only deletion protected against active user demand.
+- [x] Keep legacy LinkedIn account/session collection, restart and global settings controls explicitly unavailable: their worker was not ported; no cookie storage or collection execution is fabricated.
+- [x] Apply only new migration 0012 to the local development database and isolated test clusters. Pass 20 backend unit, 37 PostgreSQL integration, 13 frontend HTTP/client tests, ownership/source checks and actual/fixture browser flows.
+
+No application/container build, workflow dispatch, production data import, live provider fetch/mail or VPS deployment was performed. [Setup and capability boundaries](frontend/DESKTOP_WEB.md); [source and verification evidence](migration-plan/evidence/reference-admin-adaptation.json).
+
 ## Current: desktop workspace and administrator console (2026-10-16)
 
 The owner requested a real web login, a desktop workspace familiar to mobile users with more room/tools, and an admin dashboard. This supersedes the earlier redirects from account URLs into Flutter.

@@ -35,3 +35,9 @@ test('sender observes cancellation before taking a due user and does not retry u
   const stop=new AbortController();stop.abort();let called=false;
   assert.equal(await senderTick({db,config,mail:{send:async()=>{called=true;}},signal:stop.signal}),0);assert.equal(called,false);
 });
+test('a paused automatic worker records liveness but performs no candidate search or due-user claim',async()=>{
+  await db.query("UPDATE console_service_control SET paused=true WHERE service='sender'");let searched=false;
+  const before=(await db.query('SELECT next_send_at FROM auto_apply WHERE user_id=$1',[id])).rows[0].next_send_at;
+  assert.equal(await senderTick({db,config,mail:{send:async()=>{throw Error('SMTP must not run');}},pickCandidates:async()=>{searched=true;return [job];}}),0);
+  assert.equal(searched,false);assert.equal(+(await db.query('SELECT next_send_at FROM auto_apply WHERE user_id=$1',[id])).rows[0].next_send_at,+before);
+});

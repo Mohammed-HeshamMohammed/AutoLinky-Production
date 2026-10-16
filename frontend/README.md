@@ -51,7 +51,7 @@ Both browser targets use the registered Firebase web app and common backend. Rea
 
 ## Verified development result
 
-Current desktop work passed 13 frontend HTTP/client tests, 20 backend unit tests and 31 PostgreSQL integration tests. Headless Edge verified the live local password/TOTP admin flow and used browser-only fixtures for all user screens/interactions, RTL and narrow layout. No build or workflow was run for this update. See [verification scope and remaining Firebase gates](DESKTOP_WEB.md).
+Current desktop work passed 13 frontend HTTP/client tests, 20 backend unit tests and 37 PostgreSQL integration tests. Administration now follows reference `9901aa4` with top tabs, Numbers charts, a rich user drawer, allowance/Pro management, operational pauses and search-title controls. Headless Edge verified live local password/TOTP administration and used browser-only fixtures for deeper interactions, user screens, RTL and narrow layout. No build or workflow was run for this update. See [verification scope and remaining Firebase gates](DESKTOP_WEB.md).
 
 The earlier [clean unified web build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872) passed for source `232ef50`. Its downloaded artifact contains the landing pages and both browser bundles; it predates the desktop implementation. Historical checks passed eight server/download tests, 152 shared app tests, 13 configuration contracts, shared/web analysis and 22 page checks. Real provider sign-in and production deployment remain pending.
 

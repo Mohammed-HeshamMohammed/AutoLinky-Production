@@ -6,7 +6,7 @@ All production branches include [environment configuration](ENVIRONMENT_VARIABLE
 
 | Branch | Service folder | Dockerfile | Docker build context |
 | --- | --- | --- | --- |
-| `frontend-production` | `frontend/` | `frontend/Dockerfile` | Repository root (`.`) |
+| `frontend-production` | `frontend/` | `frontend/Dockerfile` | `frontend/` |
 | `auth-production` | `Auth-backend/` | `Auth-backend/Dockerfile` | `Auth-backend/` |
 | `notify-production` | `Notify-backend/` | `Notify-backend/Dockerfile` | `Notify-backend/` |
 | `app-production` | `App-backend/` | `App-backend/Dockerfile` | `App-backend/` |
@@ -16,7 +16,7 @@ All production branches include [environment configuration](ENVIRONMENT_VARIABLE
 
 The frontend branch contains only `frontend/` and the shared root guides/ignore files. It must not contain `mobile apps/`, Dart/Swift/Gradle projects, Flutter SDK inputs or native release metadata. The frontend tree matches `main` exactly. React provides both desktop and narrow-browser layouts; native Android and Swift iOS implementations remain solely under `mobile apps/` on `main`.
 
-The unified frontend uses a Node runtime on **port 8080**, replacing the former static nginx runtime on port 80. Set the frontend Docker context to the repository root, its Dockerfile path to `frontend/Dockerfile`, and the application's target port to 8080. The Docker build target may stay **`Production`**: that final stage inherits the complete `runtime` image, including its user, port and startup command. Public `VITE_*` values are build arguments; private `API_BASE_URL`, download/statistics keys and provider credentials belong in the appropriate server environments. The API origin must resolve to Gateway from the deployed frontend container; browser code receives no service key. Backend listeners use `PORT` from their service environment. Existing service Dockerfiles install only their own runtime dependencies.
+The unified frontend uses a Node runtime on **port 8080**, replacing the former static nginx runtime on port 80. Set the frontend Docker context to `frontend/`, its repository-relative Dockerfile path to `frontend/Dockerfile`, and the application's target port to 8080. If the deployment tool resolves the Dockerfile relative to its build context, use `Dockerfile`. The equivalent command from the repository root is `docker build -f frontend/Dockerfile --target Production frontend`. The Docker build target may stay **`Production`**: that final stage inherits the complete `runtime` image, including its user, port and startup command. Public `VITE_*` values are build arguments; private `API_BASE_URL`, download/statistics keys and provider credentials belong in the appropriate server environments. The API origin must resolve to Gateway from the deployed frontend container; browser code receives no service key. Backend listeners use `PORT` from their service environment. Existing service Dockerfiles install only their own runtime dependencies.
 
 The updated desktop/admin frontend requires the matching Auth/Data/Gateway API versions and Data migration `0013_app_user_admin.sql`, following reviewed migration procedures. Only an explicitly assigned Firebase-bound user with a confirmed authenticator can use the admin console. Firebase Admin credentials, authorized providers/domains and the actual administrator assignment remain deployment configuration; they are not stored in these branches. Other services continue to exchange domain data through authenticated private APIs.
 

@@ -1,9 +1,9 @@
-# Build from repository root: docker build -f frontend/Dockerfile .
+# Build from repository root: docker build -f frontend/Dockerfile --target Production frontend
 FROM node:24.22.0-bookworm-slim AS build
 WORKDIR /app/frontend
-COPY frontend/package.json frontend/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
-COPY frontend/ ./
+COPY . ./
 ARG VITE_SITE_URL
 ARG VITE_WHATSAPP_NUMBER
 ARG VITE_DOWNLOAD_ENABLED=true

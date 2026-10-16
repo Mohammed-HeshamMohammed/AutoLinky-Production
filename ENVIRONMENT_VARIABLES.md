@@ -20,7 +20,7 @@ The service examples are the complete starting templates. Existing private crede
 
 Gmail app passwords and authenticator seeds belong to individual users. They remain encrypted database records; `MAIL_SECRET_KEY` and `ADMIN_TOTP_KEY` are environment-held encryption keys. Moving those records into one global `.env` would break account isolation. A Facebook App Secret remains in Firebase's Facebook provider configuration and never enters browser/mobile settings.
 
-## Desktop web runtime settings
+## Firebase runtime settings for all web clients
 
 Set these in the **frontend runtime** environment:
 
@@ -31,10 +31,15 @@ PUBLIC_FIREBASE_PROJECT_ID=your-project
 PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
 PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
 PUBLIC_FIREBASE_APP_ID=your-web-app-id
+PUBLIC_FIREBASE_MEASUREMENT_ID=
 PUBLIC_FIREBASE_SDK_BASE_URL=https://www.gstatic.com/firebasejs/13.0.0/
 ```
 
-`GET /api/config` returns only six named Firebase client fields and the validated SDK URL. It never enumerates the environment or exposes other `PUBLIC_*` variables. Responses are `no-store`; incomplete/invalid settings return 503 without their values. The desktop loads this response before initializing Firebase, and its CSP follows the configured SDK/auth origins. Change settings and restart the website server; subsequent runtime changes require no new web bundle once this source version is deployed.
+`GET /api/config` returns only the named Firebase client fields, optional measurement ID and validated SDK URL. It never enumerates the environment or exposes other `PUBLIC_*` variables. Responses are `no-store`; incomplete/invalid settings return 503 without their values. A web app ID must belong to the configured sender; native Android/iOS IDs are rejected. The desktop loads this response before initializing Firebase, and its CSP follows the configured SDK/auth origins.
+
+The Flutter browser copies at `/app/android/` and `/app/ios/` also fetch this same-origin endpoint before Firebase initialization. Their web artifacts contain no Firebase registration from compile-time defines. Missing/unavailable runtime settings stop startup with a configuration message; there is no fallback to an embedded registration. Legacy `APP_DEFINES` Firebase/native Google OAuth fields are stripped from browser build inputs. The old tracked `shared/firebase-project.json` web registration has been removed. A local frontend `.env` can seed named public Firebase values into the isolated launcher; its existing website profile values are preserved.
+
+Once this source version has been built/deployed, change Firebase settings and restart the website server without rebuilding any web client. Existing browser artifacts need the next explicitly requested web build to adopt the new loader. No build is performed by this change.
 
 Firebase client API keys, app/project IDs and OAuth client IDs are public identifiers required by the SDK. Environment variables keep configuration manageable; they cannot make browser-delivered values private. Authorization remains Firebase verification, private caller keys, assigned admin roles and mandatory authenticator verification. Never put private values in `VITE_*`, `PUBLIC_FIREBASE_*`, Flutter defines, Swift resources or public JSON.
 

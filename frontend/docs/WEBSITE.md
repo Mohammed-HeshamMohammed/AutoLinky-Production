@@ -1,6 +1,6 @@
 # AutoLinky migration website
 
-The production React/Vite landing site was copied into the unified frontend. The previous production frontend is retained at baseline Git commit `52a996c`; the owner authorized canonical `frontend/` to replace both active web folders. Landing and content routes now open the browser apps under `/app/`; downloads still pass through `/download`. `/api/latest` and statistics remain server-side.
+The production React/Vite landing site was copied into the unified frontend. The previous production frontend is retained at baseline Git commit `52a996c`; the owner authorized canonical `frontend/` to replace both active web folders. Landing and content routes open the independent responsive React workspace under `/login/` and `/dashboard/`; downloads still pass through `/download`. `/api/latest` and statistics remain server-side.
 
 ```powershell
 Copy-Item .env.example .env
@@ -17,6 +17,6 @@ Server settings: `RELEASES_REPO`, optional `APK_FIXED_NAME`/`GITHUB_TOKEN`, `API
 
 `server.js` serves the prerendered files and the download handlers on the VPS, with real 404 responses, HEAD support and directory redirects. The new Dockerfile builds the site and runs this Node server as a non-root user on internal port 8080. In Dokploy, use `frontend/Dockerfile`, repository-root context `.`, and domain container port 8080. Configure the VITE_ values as build arguments and the private settings as runtime environment variables. The existing production service has not been changed or deployed.
 
-Keep the website behind its trusted gateway. Only that gateway may supply trusted forwarding/country headers. Route `/admin*` directly to the API at the gateway, with no caching and no indexing; the public site server does not proxy arbitrary API paths. The Nginx samples proxy all web routes to the unified Node frontend; they are optional reverse-proxy configuration, not the image entry point.
+Keep the website behind its trusted gateway. Only that gateway may supply trusted forwarding/country headers. The frontend serves the protected React `/admin/` shell and proxies only the allowed `/admin/api/` and `/v1/` contracts to Gateway, with private responses uncached. Assigned roles and authenticator assurance remain enforced by the backends. The Nginx samples proxy all web routes to the unified Node frontend; they are optional reverse-proxy configuration, not the image entry point.
 
 The public app/deletion links, privacy wording, current platform availability and deployment environment still require owner review against the actual release. Legal copy has not been certified by this implementation.

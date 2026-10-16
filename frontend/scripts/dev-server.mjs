@@ -10,7 +10,7 @@ import { workspaceRoute } from '../workspace-routes.js';
 import { workspaceHeaders } from '../workspace-headers.js';
 import { availablePublicSettings } from '../public-settings.js';
 
-// Current React source plus existing browser-app assets; no production build.
+// Current responsive React source, with API/download handlers; no production build.
 export async function createDevelopmentServer({port=Number(process.env.PORT||8080),host=process.env.HOST||'127.0.0.1'}={}){
   const root=fileURLToPath(new URL('../',import.meta.url));
   process.env.VITE_SITE_URL||=`http://localhost:${port}`;
@@ -58,6 +58,6 @@ export async function createDevelopmentServer({port=Number(process.env.PORT||808
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const app=await createDevelopmentServer();
-  console.log(`Current frontend source is live on http://localhost:${app.server.address().port}; existing browser apps reused.`);
+  console.log(`Current frontend source is live on http://localhost:${app.server.address().port}; responsive React client.`);
   for(const signal of ['SIGINT','SIGTERM'])process.once(signal,async()=>{await app.close();});
 }

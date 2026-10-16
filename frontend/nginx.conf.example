@@ -1,4 +1,4 @@
-# Unified frontend: Node serves landing pages, browser apps, downloads and /v1.
+# Unified frontend: Node serves React marketing/workspace pages, downloads and /v1.
 # Start frontend/server.js on loopback 8080; set its API_BASE_URL to the gateway.
 server {
     listen 80;

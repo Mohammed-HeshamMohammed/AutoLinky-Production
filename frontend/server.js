@@ -6,7 +6,7 @@ import { resolve,sep,extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import download from './api/download.js';
 import latest from './api/latest.js';
-import { workspaceRoute } from './workspace-routes.js';
+import { workspaceRoute,legacyWorkspaceRedirect } from './workspace-routes.js';
 import { workspaceHeaders } from './workspace-headers.js';
 import { availablePublicSettings } from './public-settings.js';
 
@@ -15,7 +15,7 @@ const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=
   '.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf',
   '.wasm':'application/wasm','.webmanifest':'application/manifest+json'};
 
-export function createSiteServer({directory=fileURLToPath(new URL('./dist/',import.meta.url)),spaFallback=false,env=process.env,apiOrigin=env.API_BASE_URL||''}={}) {
+export function createSiteServer({directory=fileURLToPath(new URL('./dist/',import.meta.url)),env=process.env,apiOrigin=env.API_BASE_URL||''}={}) {
   const root=resolve(directory);
   let api;
   if(apiOrigin){api=new URL(apiOrigin);if(!['http:','https:'].includes(api.protocol)||api.username||api.password||api.pathname!=='/'||api.search||api.hash)throw Error('API_BASE_URL must be a trusted gateway origin');}
@@ -50,6 +50,10 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       if(['/download','/apk'].includes(url.pathname))return await download(req,res);
       if(url.pathname==='/api/latest')return await latest(req,res);
       if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'}).end();return;}
+      if(url.pathname==='/app'||url.pathname.startsWith('/app/')){
+        const target=legacyWorkspaceRedirect(url);
+        res.writeHead(target?302:404,{'Cache-Control':'no-store',...(target?{Location:target}:{})}).end();return;
+      }
       const workspace=workspaceRoute(url);
       if(workspace){
         const shell=resolve(root,'workspace/index.html'),info=await stat(shell).catch(()=>null);
@@ -60,10 +64,6 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       }
       const pathname=decodeURIComponent(url.pathname);
       if(pathname.includes('\0') || pathname.includes('\\')){res.writeHead(400).end();return;}
-      if(pathname==='/app'||pathname==='/app/') {
-        const platform=/iPhone|iPad|iPod/i.test(req.headers['user-agent']||'')?'ios':'android';
-        res.writeHead(302,{Location:`/app/${platform}/${url.search}`,'Cache-Control':'no-store',Vary:'User-Agent'}).end();return;
-      }
       let path=resolve(root,'.'+pathname);
       if(path!==root && !path.startsWith(root+sep)){res.writeHead(404).end();return;}
       let info=await stat(path).catch(()=>null);
@@ -72,17 +72,13 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
         path=resolve(path,'index.html');info=await stat(path).catch(()=>null);
       }
       if(!info?.isFile()){
-        const app=pathname.match(/^\/app\/(android|ios)(?:\/|$)/)?.[1];
-        const appRoute=app&&!extname(pathname)&&!pathname.startsWith(`/app/${app}/assets/`);
-        const fallback=appRoute||(spaFallback && !extname(pathname) && !pathname.startsWith('/api/'));
-        path=resolve(root,appRoute?`app/${app}/index.html`:fallback?'index.html':'404.html');
-        info=await stat(path).catch(()=>null);res.statusCode=fallback&&info?.isFile()?200:404;
+        path=resolve(root,'404.html');
+        info=await stat(path).catch(()=>null);res.statusCode=404;
       }
       if(!info?.isFile()){res.writeHead(404).end('Not found');return;}
       res.setHeader('Content-Type',types[extname(path)]||'application/octet-stream');
       res.setHeader('Content-Length',info.size);
-      const appAsset=pathname.startsWith('/app/');
-      res.setHeader('Cache-Control',res.statusCode===404?'no-store':appAsset||extname(path)==='.html'?'public, max-age=0, must-revalidate':'public, max-age=3600');
+      res.setHeader('Cache-Control',res.statusCode===404?'no-store':extname(path)==='.html'?'public, max-age=0, must-revalidate':'public, max-age=3600');
       if(req.method==='HEAD'){res.end();return;}
       createReadStream(path).on('error',()=>res.destroy()).pipe(res);
     } catch {

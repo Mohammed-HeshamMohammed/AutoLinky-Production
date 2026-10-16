@@ -1,5 +1,7 @@
 # Production source branches
 
+All production branches include [environment configuration](ENVIRONMENT_VARIABLES.md). Desktop sign-in requires the frontend's runtime `PUBLIC_FIREBASE_*` values, in addition to the existing server environment. Private Admin/provider credentials never enter the public settings endpoint or images.
+
 `main` is the complete source and integration workspace. Production branches contain the selected service folder at its existing path, plus this guide and root ignore files. They do not contain the other backends. Publishing branch source does not confirm a running VPS deployment, build, database migration or live Firebase configuration.
 
 | Branch | Service folder | Dockerfile | Docker build context |

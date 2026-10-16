@@ -14,7 +14,9 @@ export function destination(path){
 
 export function gatewayTargets(env=process.env){
   return Object.fromEntries(['auth','app','messaging','data'].map(name=>{
-    const prefix=name.toUpperCase(),url=privateOrigin(env[`${prefix}_SERVICE_URL`]||`http://127.0.0.1:${{auth:4101,app:4102,messaging:4103,data:4105}[name]}`),key=env[`${prefix}_SERVICE_KEY`];
+    const prefix=name.toUpperCase();
+    if(!env[`${prefix}_SERVICE_URL`])throw Error(`${prefix}_SERVICE_URL is required`);
+    const url=privateOrigin(env[`${prefix}_SERVICE_URL`]),key=env[`${prefix}_SERVICE_KEY`];
     if(!key||key.length<32)throw Error(`${prefix}_SERVICE_KEY is required`);
     return [name,{url,key}];
   }));

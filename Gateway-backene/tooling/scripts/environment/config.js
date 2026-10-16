@@ -39,16 +39,21 @@ export async function setup(){
   settings.passwords.autolinky_console_data||=randomBytes(24).toString('hex');
   settings.adminSessionSecret||=randomBytes(32).toString('hex');settings.adminTotpKey||=randomBytes(32).toString('base64url');
   await writeFile(settingsFile,JSON.stringify(settings,null,2)+'\n',{mode:0o600});
+  const defaults=async folder=>parseEnv(await readFile(resolve(production,folder,'.env.example'),'utf8'));
+  const siteDefaults=await defaults('frontend'),appDefaults=await defaults('App-backend'),notifyDefaults=await defaults('Notify-backend'),authDefaults=await defaults('Auth-backend');
+  const publicRegistration=JSON.parse(await readFile(resolve(production,'mobile apps/shared/firebase-project.json'),'utf8'));
+  const publicWeb=Object.fromEntries(Object.entries(publicRegistration).filter(([key])=>Object.hasOwn(siteDefaults,`PUBLIC_${key}`)).map(([key,value])=>[`PUBLIC_${key}`,value]));
   const backendEnv={NODE_ENV:'development',HOST:settings.host,PORT:settings.ports.api,PG_DATABASE_URL:databaseUrl(settings,'autolinky_api'),
-    PG_MIGRATOR_URL:databaseUrl(settings,'autolinky_migrator'),PG_OPS_URL:databaseUrl(settings,'autolinky_ops'),FIREBASE_PROJECT_ID:'auto-linky',
+    PG_MIGRATOR_URL:databaseUrl(settings,'autolinky_migrator'),PG_OPS_URL:databaseUrl(settings,'autolinky_ops'),FIREBASE_PROJECT_ID:authDefaults.FIREBASE_PROJECT_ID,
     GOOGLE_APPLICATION_CREDENTIALS:'',CORS_ALLOWED_ORIGINS:[`http://localhost:${settings.ports.website}`,`http://127.0.0.1:${settings.ports.website}`,`http://localhost:${settings.ports.client}`,`http://127.0.0.1:${settings.ports.client}`,'http://localhost:5173'].join(','),
     INTERNAL_DOWNLOADS_KEY:settings.statsKey,CV_EXTRACTOR_URL:`http://127.0.0.1:${settings.ports.extractor}`,CV_EXTRACTOR_KEY:settings.extractorKey,
     MAIL_SECRET_KEY:settings.mailKey,SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false'};
   const websiteEnv={NODE_ENV:'development',HOST:settings.host,PORT:settings.ports.website,
-    VITE_SITE_URL:`http://localhost:${settings.ports.website}`,VITE_WHATSAPP_NUMBER:'201060933358',RELEASES_REPO:'AMamdouh3/Autolinky-releases',
+    ...siteDefaults,...publicWeb,VITE_SITE_URL:`http://localhost:${settings.ports.website}`,
     API_BASE_URL:`http://127.0.0.1:${settings.ports.api}`,STATS_KEY:settings.statsKey,STATS_SALT:settings.statsSalt};
   for(const [name,values] of [['backend.env',backendEnv],['website.env',websiteEnv]]) {
-    const file=resolve(runtime,name);if(!await exists(file))await writeFile(file,envFile(values),{flag:'wx',mode:0o600});
+    const file=resolve(runtime,name),saved=await exists(file)?parseEnv(await readFile(file,'utf8')):{};
+    await writeFile(file,envFile({...values,...saved}),{mode:0o600});
   }
   const previous=parseEnv(await readFile(resolve(runtime,'backend.env'),'utf8'));
   const select=names=>Object.fromEntries(names.filter(name=>previous[name]!==undefined).map(name=>[name,previous[name]]));
@@ -56,7 +61,7 @@ export async function setup(){
   const auth={...common,PORT:settings.ports.auth,PG_DATABASE_URL:databaseUrl(settings,'autolinky_auth'),SERVICE_KEY:settings.serviceKeys.auth,
     DATA_IDENTITY_KEY:settings.serviceKeys.identityData,
     ADMIN_SESSION_SECRET:settings.adminSessionSecret,ADMIN_TOTP_KEY:settings.adminTotpKey,AUTH_ADMIN_KEY:settings.serviceKeys.admin,
-    FIREBASE_PROJECT_ID:previous.FIREBASE_PROJECT_ID||'auto-linky',GOOGLE_APPLICATION_CREDENTIALS:previous.GOOGLE_APPLICATION_CREDENTIALS||''};
+    FIREBASE_PROJECT_ID:previous.FIREBASE_PROJECT_ID||authDefaults.FIREBASE_PROJECT_ID,GOOGLE_APPLICATION_CREDENTIALS:previous.GOOGLE_APPLICATION_CREDENTIALS||''};
   const authClient={AUTH_SERVICE_URL:`http://127.0.0.1:${settings.ports.auth}`,AUTH_SERVICE_KEY:settings.serviceKeys.auth};
   const gateway={...common,PORT:settings.ports.api,...authClient,...select(Object.keys(previous).filter(name=>name.startsWith('SERVICE_NOTICE'))),
     DATA_SERVICE_KEY:settings.serviceKeys.data,
@@ -65,10 +70,12 @@ export async function setup(){
   const app={...common,...authClient,PORT:settings.ports.app,PG_DATABASE_URL:databaseUrl(settings,'autolinky_app'),SERVICE_KEY:settings.serviceKeys.app,APP_READ_KEY:settings.serviceKeys.appRead,
     NOTIFY_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,NOTIFY_READ_KEY:settings.serviceKeys.notifyRead,
     INTERNAL_DOWNLOADS_KEY:settings.statsKey,CV_EXTRACTOR_URL:backendEnv.CV_EXTRACTOR_URL,CV_EXTRACTOR_KEY:settings.extractorKey,
-    AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||'https://openrouter.ai/api/v1',...select(['CV_AI_MODEL'])};
+    AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||appDefaults.AI_BASE_URL,CV_AI_MODEL:previous.CV_AI_MODEL||appDefaults.CV_AI_MODEL};
   const messaging={...common,...authClient,PORT:settings.ports.messaging,PG_DATABASE_URL:databaseUrl(settings,'autolinky_messaging'),SERVICE_KEY:settings.serviceKeys.messaging,NOTIFY_READ_KEY:settings.serviceKeys.notifyRead,NOTIFY_ADMIN_KEY:settings.serviceKeys.notifyAdmin,
     APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,APP_READ_KEY:settings.serviceKeys.appRead,
-    MAIL_SECRET_KEY:previous.MAIL_SECRET_KEY||settings.mailKey,SENDER_ENABLED:'false',AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||'https://openrouter.ai/api/v1',...select(['LETTER_AI_MODEL','FREE_EMAILS','EMAIL_DAILY_LIMIT','AUTO_APPLY_HOURS','SENDER_TIMEZONE','UPGRADE_URL','UPGRADE_MESSAGE'])};
+    MAIL_SECRET_KEY:previous.MAIL_SECRET_KEY||settings.mailKey,SENDER_ENABLED:'false',AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||notifyDefaults.AI_BASE_URL,
+    LETTER_AI_MODEL:notifyDefaults.LETTER_AI_MODEL,SMTP_HOST:notifyDefaults.SMTP_HOST,SMTP_PORT:notifyDefaults.SMTP_PORT,SMTP_SECURE:notifyDefaults.SMTP_SECURE,UPGRADE_URL:notifyDefaults.UPGRADE_URL,
+    ...select(['LETTER_AI_MODEL','SMTP_HOST','SMTP_PORT','SMTP_SECURE','FREE_EMAILS','EMAIL_DAILY_LIMIT','AUTO_APPLY_HOURS','SENDER_TIMEZONE','UPGRADE_URL','UPGRADE_MESSAGE'])};
   for(const [name,values] of Object.entries({gateway,auth,app,messaging,
     fetching:{...common,PORT:settings.ports.fetching,SERVICE_KEY:settings.serviceKeys.fetching,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,FETCHING_ADMIN_KEY:settings.serviceKeys.fetchAdmin,COLLECTOR_ENABLED:'false',FETCH_PROVIDERS_JSON:'{}'},
     data:{...common,PORT:settings.ports.data,PG_DATABASE_URL:databaseUrl(settings,'autolinky_data'),CONSOLE_DATABASE_URL:databaseUrl(settings,'autolinky_console_data'),SERVICE_KEY:settings.serviceKeys.data,

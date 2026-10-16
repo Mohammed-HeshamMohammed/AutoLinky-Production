@@ -1,0 +1,12 @@
+/.runtime/
+/build/
+**/node_modules/
+**/.env
+**/.env.*
+!**/.env.example
+**/coverage/
+**/*.log
+**/.runtime/
+**/__pycache__/
+**/*.pyc
+/frontend/output/playwright/

@@ -1,0 +1,3905 @@
+{
+  "reference": "collector/search_query.py at 2fd91a2",
+  "source_sha256": "eaf2f9c54fa9d3bdbb9693e8d642086c6722abc6534ac0fb74fb26f297186b23",
+  "cases": [
+    {
+      "title": "Network Engineer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "Network Engineer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "Network Engineer",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "Network Engineer",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "Network Engineer",
+      "locations": [],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "Network Engineer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "Network Engineer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "network engineer",
+      "plural": "network engineers",
+      "phrases": [
+        "network engineer",
+        "network engineers",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"network engineer\" OR \"network engineers\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "data analyst",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "data analyst",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "data analyst",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "data analyst",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "data analyst",
+      "locations": [],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "data analyst",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "data analyst",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "data analyst",
+      "plural": "data analysts",
+      "phrases": [
+        "data analyst",
+        "data analysts",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"data analyst\" OR \"data analysts\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "devops",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "devops",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "devops",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "devops",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "devops",
+      "locations": [],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "devops",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "devops",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "devops",
+      "plural": null,
+      "phrases": [
+        "devops",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"devops\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "محاسب",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "محاسب",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "محاسب",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "محاسب",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "محاسب",
+      "locations": [],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "محاسب",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "محاسب",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "محاسب",
+      "plural": null,
+      "phrases": [
+        "محاسب",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"محاسب\" OR \"junior developer\" OR \"senior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "c++ \"developer\" (senior)",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "c++ developer senior",
+      "plural": null,
+      "phrases": [
+        "c++ developer senior",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"c++ developer senior\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\" OR \"software developer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\" OR \"software developer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\" OR \"software developer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\" OR \"software developer\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": " Senior\u001cDeveloper ",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "senior developer",
+      "plural": "senior developers",
+      "phrases": [
+        "senior developer",
+        "senior developers",
+        "junior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"senior developer\" OR \"senior developers\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "sales OR marketing",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "sales or marketing",
+      "plural": null,
+      "phrases": [
+        "sales or marketing",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"sales or marketing\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "﻿developer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "﻿developer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "﻿developer",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "﻿developer",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "﻿developer",
+      "locations": [],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "﻿developer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "﻿developer",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "﻿developer",
+      "plural": null,
+      "phrases": [
+        "﻿developer",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"﻿developer\" OR \"junior developer\" OR \"senior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\" OR \"network specialist\" OR \"network consultant\" OR \"network presales engineer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "مهندس شبكات",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network",
+        "مهندس شبكات",
+        "noc engineer"
+      ],
+      "clean": "مهندس شبكات",
+      "plural": null,
+      "phrases": [
+        "مهندس شبكات",
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "noc engineer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"مهندس شبكات\" OR \"network engineer\" OR \"networking engineer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "support specialist",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "support specialist",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") egypt",
+          "egypt",
+          "Egypt"
+        ]
+      ]
+    },
+    {
+      "title": "support specialist",
+      "locations": [
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "support specialist",
+      "locations": [
+        {
+          "keyword": "",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\")",
+          "",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "support specialist",
+      "locations": [],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [],
+      "searches": []
+    },
+    {
+      "title": "support specialist",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "mansoura",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "dubai",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "abu dhabi",
+          "country": "United Arab Emirates"
+        },
+        {
+          "keyword": "remote",
+          "country": null
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "mansoura"
+          ],
+          "Egypt"
+        ],
+        [
+          [
+            "dubai",
+            "abu dhabi"
+          ],
+          "United Arab Emirates"
+        ],
+        [
+          [
+            "remote"
+          ],
+          null
+        ]
+      ],
+      "searches": [
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ],
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") mansoura",
+          "mansoura",
+          "Egypt"
+        ],
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") (dubai OR \"abu dhabi\")",
+          "dubai | abu dhabi",
+          "United Arab Emirates"
+        ],
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\" OR \"senior developer\" OR \"software developer\") remote",
+          "remote",
+          null
+        ]
+      ]
+    },
+    {
+      "title": "support specialist",
+      "locations": [
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "egypt",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "cairo",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "giza",
+          "country": "Egypt"
+        },
+        {
+          "keyword": "alexandria",
+          "country": "Egypt"
+        }
+      ],
+      "synonyms": [
+        "\"junior\" developer",
+        "senior developer",
+        "software developer",
+        "  ",
+        "__proto__ specialist"
+      ],
+      "clean": "support specialist",
+      "plural": "support specialists",
+      "phrases": [
+        "support specialist",
+        "support specialists",
+        "junior developer",
+        "senior developer",
+        "software developer"
+      ],
+      "groups": [
+        [
+          [
+            "egypt",
+            "cairo",
+            "giza",
+            "alexandria"
+          ],
+          "Egypt"
+        ]
+      ],
+      "searches": [
+        [
+          "(\"support specialist\" OR \"support specialists\" OR \"junior developer\") (egypt OR cairo OR giza OR alexandria)",
+          "egypt | cairo | giza | alexandria",
+          "Egypt"
+        ]
+      ]
+    }
+  ]
+}

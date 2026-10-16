@@ -1,0 +1,62 @@
+name: autolinky-services
+x-backend: &backend
+  restart: unless-stopped
+  init: true
+  security_opt: [no-new-privileges:true]
+  read_only: true
+  tmpfs: [/tmp]
+  networks: [services]
+services:
+  gateway:
+    <<: *backend
+    image: autolinky-gateway:development
+    build: {context: ../Gateway-backene, dockerfile: Dockerfile}
+    command: [node, index.js]
+    env_file: [tooling/.runtime/deployment/gateway.env]
+    ports: ["127.0.0.1:4100:4100"]
+    depends_on: [data, auth, app, messaging]
+  auth:
+    <<: *backend
+    image: autolinky-auth:development
+    build: {context: ../Auth-backend, dockerfile: Dockerfile}
+    command: [node, index.js]
+    env_file: [tooling/.runtime/deployment/auth.env]
+    volumes: ["./tooling/.runtime/deployment/firebase-admin.json:/run/secrets/firebase-admin.json:ro"]
+    depends_on: [data]
+  app:
+    <<: *backend
+    image: autolinky-app:development
+    build: {context: ../App-backend, dockerfile: Dockerfile}
+    command: [node, index.js]
+    env_file: [tooling/.runtime/deployment/app.env]
+    depends_on: [data, auth]
+  messaging:
+    <<: *backend
+    image: autolinky-messaging:development
+    build: {context: ../Notify-backend, dockerfile: Dockerfile}
+    command: [node, index.js]
+    env_file: [tooling/.runtime/deployment/messaging.env]
+    depends_on: [data, auth, app]
+  sender:
+    <<: *backend
+    image: autolinky-messaging:development
+    build: {context: ../Notify-backend, dockerfile: Dockerfile}
+    command: [node, sender.js]
+    env_file: [tooling/.runtime/deployment/messaging.env]
+    profiles: [sender]
+  fetching:
+    <<: *backend
+    image: autolinky-fetching:development
+    build: {context: ../Fetching-backend, dockerfile: Dockerfile}
+    command: [node, index.js]
+    env_file: [tooling/.runtime/deployment/fetching.env]
+    depends_on: [data]
+  data:
+    <<: *backend
+    image: autolinky-data:development
+    build: {context: ../Data-baceknd, dockerfile: Dockerfile}
+    command: [node, index.js]
+    env_file: [tooling/.runtime/deployment/data.env]
+networks:
+  services:
+    driver: bridge

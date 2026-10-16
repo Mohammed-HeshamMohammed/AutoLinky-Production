@@ -1,0 +1,67 @@
+{
+  "reference_commit": "2fd91a2",
+  "posts": {
+    "input": "0:[[\"$\", \"$L2\", null, {}], [\"$\", \"$L5\", null, {}], {\"all\": [\"urn:li:activity:111\", \"urn:li:ugcPost:222\"]}]\n2:[\"$\", \"div\", null, {\"children\": \"$L3\", \"actor\": {\"link\": \"/in/author-one/\", \"avatar\": \"/in/author-one/\"}, \"menu\": [\"urn:li:activity:111\", \"urn:li:activity:111\"], \"attachment\": {\"href\": \"https://www.linkedin.com/jobs/view/4242/\"}}]\n3:[\"$\", \"$L9\", null, {\"expansionKey\": \"expandable_text_block_auto-component-x\", \"textProps\": {\"children\": [[\"$\", \"span\", null, {\"children\": \"We are hiring a backend developer\"}], [\"$\", \"br\", null, {}], \"Send your CV to \", [\"$\", \"$L8a\", \"t0\", {\"action\": {\"actions\": [{\"value\": {\"url\": \"mailto:HR@Acme.com\"}}]}, \"children\": \"HR@Acme.com\"}], [\"$\", \"br\", null, {}], \"Thanks \", [\"$\", \"a\", null, {\"href\": \"/in/mentioned-person/\", \"children\": \"Mentioned Person\"}]]}}]\n5:[\"$\", \"div\", null, {\"children\": \"$L6\", \"actor\": [\"https://www.linkedin.com/company/acme-co/\", \"https://www.linkedin.com/company/acme-co/\"], \"urn\": \"urn:li:ugcPost:222\"}]\n6:[\"$\", \"$L9\", null, {\"expansionKey\": \"expandable_text_block_auto-component-x\", \"textProps\": {\"children\": [\"مطلوب محاسب\", [\"$\", \"br\", null, {}], \"واتساب ٠١٠١٢٣٤٥٦٧٨\"]}}]\n9:I[\"$1\",[],\"default\"]",
+    "expected": [
+      {
+        "text": "We are hiring a backend developer\nSend your CV to HR@Acme.com\nThanks Mentioned Person",
+        "urn": "urn:li:activity:111",
+        "url": "https://www.linkedin.com/feed/update/urn:li:activity:111/",
+        "author_url": "https://www.linkedin.com/in/author-one",
+        "mailto": [
+          "mailto:HR@Acme.com"
+        ],
+        "attached_jobs": [
+          "https://www.linkedin.com/jobs/view/4242/"
+        ],
+        "contacts": []
+      },
+      {
+        "text": "مطلوب محاسب\nواتساب ٠١٠١٢٣٤٥٦٧٨",
+        "urn": "urn:li:ugcPost:222",
+        "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:222/",
+        "author_url": "https://www.linkedin.com/company/acme-co",
+        "mailto": [],
+        "attached_jobs": [],
+        "contacts": []
+      }
+    ]
+  },
+  "jobs": {
+    "input": "<li>\n      <div class=\"base-card base-search-card job-search-card\" data-entity-urn=\"urn:li:jobPosting:111\">\n        <a class=\"base-card__full-link\" href=\"https://eg.linkedin.com/jobs/view/x-111?position=1\">\n          <span class=\"sr-only\">Data Analyst &amp; BI</span></a>\n        <div class=\"base-search-card__info\">\n          <h3 class=\"base-search-card__title\">\n            Data Analyst &amp; BI\n          </h3>\n          <h4 class=\"base-search-card__subtitle\">\n            <a class=\"hidden-nested-link\" href=\"https://eg.linkedin.com/company/acme?trk=x\">\n              Acme\n            </a>\n          </h4>\n          <div class=\"base-search-card__metadata\">\n            <span class=\"job-search-card__location\">\n              Cairo, Cairo, Egypt\n            </span>\n            <time class=\"job-search-card__listdate\" datetime=\"2026-10-02\">1 day ago</time>\n          </div>\n        </div>\n      </div>\n    </li><li>\n      <div class=\"base-card base-search-card job-search-card\" data-entity-urn=\"urn:li:jobPosting:222\">\n        <a class=\"base-card__full-link\" href=\"https://eg.linkedin.com/jobs/view/x-222?position=1\">\n          <span class=\"sr-only\">Backend Developer</span></a>\n        <div class=\"base-search-card__info\">\n          <h3 class=\"base-search-card__title\">\n            Backend Developer\n          </h3>\n          <h4 class=\"base-search-card__subtitle\">\n            <a class=\"hidden-nested-link\" href=\"https://eg.linkedin.com/company/acme?trk=x\">\n              Acme\n            </a>\n          </h4>\n          <div class=\"base-search-card__metadata\">\n            <span class=\"job-search-card__location\">\n              Riyadh Region\n            </span>\n            <time class=\"job-search-card__listdate\" datetime=\"2026-10-02\">1 day ago</time>\n          </div>\n        </div>\n      </div>\n    </li>",
+    "expected": [
+      {
+        "job_id": "111",
+        "title": "Data Analyst & BI",
+        "company": "Acme",
+        "company_url": "https://eg.linkedin.com/company/acme",
+        "location": "Cairo, Cairo, Egypt",
+        "listed_at": "2026-10-02",
+        "job_url": "https://www.linkedin.com/jobs/view/111/",
+        "details": {}
+      },
+      {
+        "job_id": "222",
+        "title": "Backend Developer",
+        "company": "Acme",
+        "company_url": "https://eg.linkedin.com/company/acme",
+        "location": "Riyadh Region",
+        "listed_at": "2026-10-02",
+        "job_url": "https://www.linkedin.com/jobs/view/222/",
+        "details": {}
+      }
+    ]
+  },
+  "details": {
+    "input": "\n<section class=\"top-card-layout\"><a data-tracking-control-name=\"public_jobs_apply-link-offsite_x\">Apply</a>\n<figcaption class=\"num-applicants__caption\">  Over 200 applicants  </figcaption></section>\n<div class=\"show-more-less-html__markup\">\n  <p>We are <strong>hiring</strong> a data analyst.</p><ul><li>SQL &amp; Python</li><li>Power BI</li></ul>\n</div>\n<ul class=\"description__job-criteria-list\">\n  <li><h3 class=\"description__job-criteria-subheader\">Seniority level</h3>\n      <span class=\"description__job-criteria-text description__job-criteria-text--criteria\">Entry level</span></li>\n  <li><h3 class=\"description__job-criteria-subheader\">Employment type</h3>\n      <span class=\"description__job-criteria-text description__job-criteria-text--criteria\">Full-time</span></li>\n</ul>",
+    "expected": {
+      "seniority": "Entry level",
+      "employment_type": "Full-time",
+      "job_function": null,
+      "industries": null,
+      "applicants": "Over 200 applicants",
+      "apply_type": "external",
+      "description": "We are hiring a data analyst.\nSQL & Python\nPower BI"
+    }
+  }
+}

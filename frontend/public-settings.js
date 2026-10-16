@@ -5,6 +5,12 @@ export function publicSettings(env=process.env){
   if(Object.values(firebase).some(value=>!value||value.length>512||/[\s<>"']/.test(value)))throw Error('Public Firebase configuration is incomplete');
   for(const field of ['authDomain','storageBucket'])if(!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/i.test(firebase[field]))throw Error('Invalid public Firebase domain');
   if(!/^[a-z0-9-]+$/i.test(firebase.projectId)||!/^\d+$/.test(firebase.messagingSenderId))throw Error('Invalid public Firebase identity');
+  if(!firebase.appId.startsWith(`1:${firebase.messagingSenderId}:web:`))throw Error('A matching Firebase web registration is required');
+  if(env.PUBLIC_FIREBASE_MEASUREMENT_ID){
+    const id=env.PUBLIC_FIREBASE_MEASUREMENT_ID.trim();
+    if(!/^G-[A-Z0-9]+$/.test(id))throw Error('Invalid public Firebase measurement ID');
+    firebase.measurementId=id;
+  }
   const sdk=new URL(env.PUBLIC_FIREBASE_SDK_BASE_URL||'');
   if(sdk.protocol!=='https:'||sdk.username||sdk.password||sdk.search||sdk.hash||!sdk.pathname.endsWith('/'))throw Error('Invalid public Firebase SDK URL');
   return {firebase,sdkBaseUrl:sdk.href};

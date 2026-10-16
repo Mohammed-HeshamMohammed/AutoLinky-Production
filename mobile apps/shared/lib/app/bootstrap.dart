@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/config/env.dart';
 import '../core/config/providers.dart';
+import '../core/config/web_firebase.dart';
 import '../core/logging/app_log.dart';
 import '../core/storage/email_link_store.dart';
 import '../core/updates/app_updates.dart';
@@ -32,7 +33,15 @@ Future<void> bootstrap() async {
     return true;
   };
 
-  final env = Env.fromDefines();
+  var env = Env.fromDefines();
+  if (kIsWeb) {
+    try {
+      env = env.withWebFirebase(await loadWebFirebase(Uri.base));
+    } catch (_) {
+      runApp(const ConfigMissingApp(missing: ['Web Firebase runtime settings (/api/config)']));
+      return;
+    }
+  }
   final results = await (
     SharedPreferencesWithCache.create(
       cacheOptions: const SharedPreferencesWithCacheOptions(

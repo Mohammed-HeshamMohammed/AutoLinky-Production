@@ -2,7 +2,18 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: backend Dokploy target compatibility (2026-10-17)
+## Current: diagnose backend startup dependencies (2026-10-17)
+
+The supplied Auth runtime log shows only `type=Error` and `Service startup failed`: the existing handler drops the underlying dependency detail. Auth checks Data readiness before listening. Live checks found `data.auto-linky.com` returned NXDOMAIN through both Google and Cloudflare public DNS, which prevents this configured dependency check from succeeding. Production DNS, the Data route/database/schema and subsequent service startup remain operator actions.
+
+- [x] Preserve bounded, allowlisted Data readiness diagnostics for invalid origins, DNS, refused connections, timeouts, TLS and non-success HTTP status. Discard upstream response bodies and raw error messages.
+- [x] Apply safe structured startup diagnostics in each independently owned Node backend, preserving readiness rejection, cleanup and unsuccessful exit behavior.
+- [x] Pass six targeted regression tests across all four readiness clients and all six owned runtime handlers; document Data-first startup and the required DNS/route/readiness checks.
+- [x] Pass all 29 backend unit tests, six ownership/target checks and backend JavaScript syntax/source checks.
+
+Publication scope is `main` and the six backend production branches, with exact selected-tree/Docker input verification. Frontend and native source stay unchanged. No builds, deployments, DNS writes or live provider actions are part of this change.
+
+## Previous: backend Dokploy target compatibility (2026-10-17)
 
 The supplied backend deployment log stops before build execution because Dokploy requests target `Production` and the backend Dockerfile has no named stage. All six Node backend Dockerfiles share this omission. Name each existing runtime stage `Production`, preserving its source inputs, dependencies, user, command and environment-driven port.
 

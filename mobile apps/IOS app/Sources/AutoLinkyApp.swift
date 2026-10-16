@@ -56,7 +56,10 @@ struct SignedInView: View {
         Group {
             if store.loading { ProgressView(t("Loading your account…")) }
             else if store.account.isNull {
-                ContentUnavailableView { Label(t("Unable to load account"), systemImage: "wifi.exclamationmark") } description: { Text(t("Check your connection and try again.")) } actions: { Button(t("Retry")) { Task { await store.load() } } }
+                ContentUnavailableView { Label(t("Unable to load account"), systemImage: "wifi.exclamationmark") } description: { Text(t("Check your connection and try again.")) } actions: {
+                    Button(t("Retry")) { Task { await store.load() } }
+                    Button(t("Sign out")) { Task { await ActivityNotifications.disable(api: nil); try? store.auth.signOut() } }
+                }
             } else {
                 TabView {
                     NavigationStack { FeedView(matched: true) }.tabItem { Label(t("For you"), systemImage: "sparkles") }

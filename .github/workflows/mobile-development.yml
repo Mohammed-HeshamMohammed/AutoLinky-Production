@@ -7,8 +7,8 @@ on:
         required: false
         type: string
   push:
-    branches: ['codex/ios-build']
-    paths: ['mobile apps/shared/**', 'mobile apps/Android app/**', 'mobile apps/IOS app/**', '.github/workflows/mobile-development.yml', '!mobile apps/shared/**/*.md', '!mobile apps/Android app/**/*.md', '!mobile apps/IOS app/**/*.md']
+    branches: [main]
+    paths: ['mobile apps/shared/**', 'mobile apps/Android app/**', 'mobile apps/IOS app/**', 'mobile apps/release-source.json', '.github/workflows/mobile-development.yml', '!**/*.md']
 permissions:
   contents: read
 concurrency:

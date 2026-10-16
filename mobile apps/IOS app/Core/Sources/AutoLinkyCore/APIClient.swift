@@ -20,7 +20,10 @@ public actor APIClient {
                 identity: @escaping @Sendable () async -> String?) {
         self.base = base; self.version = version; self.owner = owner; self.session = session; self.credential = credential; self.identity = identity
     }
-    private func refreshed(_ uid: String) async throws -> SessionCredential {
+    private func refreshed(_ uid: String, rejectedToken: String) async throws -> SessionCredential {
+        let current = try await credential(false)
+        guard current.uid == uid else { throw APIError(status: 401, code: "session_expired") }
+        if current.token != rejectedToken { return current }
         if let pending = refresh, pending.0 == uid { return try await pending.1.value }
         let task = Task { try await credential(true) }; refresh = (uid, task)
         defer { refresh = nil }
@@ -44,7 +47,7 @@ public actor APIClient {
             let (bytes, response) = try await session.data(for: request)
             guard await identity() == initial.uid else { throw APIError(status: 401, code: "session_expired") }
             guard let http = response as? HTTPURLResponse, bytes.count <= 16 * 1024 * 1024 else { throw APIError(status: 0, code: "invalid_response") }
-            if http.statusCode == 401 && attempt == 0 { token = try await refreshed(initial.uid); continue }
+            if http.statusCode == 401 && attempt == 0 { token = try await refreshed(initial.uid, rejectedToken: token.token); continue }
             let body = bytes.isEmpty ? JSON.null : (try? JSONDecoder().decode(JSON.self, from: bytes)) ?? .null
             guard (200...299).contains(http.statusCode) else {
                 let detail = body["detail"]

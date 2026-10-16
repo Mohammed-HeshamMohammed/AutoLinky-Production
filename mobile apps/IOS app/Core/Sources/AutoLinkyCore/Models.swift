@@ -40,7 +40,7 @@ public struct Job: Identifiable, Sendable, Equatable {
     public var title: String { raw["title"].text }
     public var company: String { raw["company"].text }
     public var location: String { [raw["city"].text, raw["country"].text].filter { !$0.isEmpty }.joined(separator: ", ") }
-    public var methods: [String] { raw["apply_methods"].strings }
+    public var methods: [String] { let values = raw["apply_methods"].strings; return values.isEmpty && raw["source"].text == "linkedin_job" ? ["easy_apply", "external"] : values }
     public var application: JSON { raw["application"] }
     public var matchPercent: Int? { raw["match_percent"].isNull ? nil : min(100, max(0, raw["match_percent"].integer)) }
     public var description: String { raw["description"].text.isEmpty ? raw["snippet"].text : raw["description"].text }

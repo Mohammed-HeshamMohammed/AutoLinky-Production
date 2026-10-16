@@ -50,6 +50,7 @@ import AutoLinkyCore
     }
     func perform(_ operation: () async throws -> Void) async {
         do { try await operation() } catch is CancellationError { } catch {
+            if (error as NSError).domain == NSCocoaErrorDomain && (error as NSError).code == NSUserCancelledError { return }
             guard auth.uid == owner else { return }
             if let failure = error as? APIError, failure.status == 401 { try? auth.signOut(); return }
             self.error = Self.message(error)
@@ -68,7 +69,7 @@ import AutoLinkyCore
     func saveProfile(_ fields: [String: JSON]) async throws {
         let result = try await api.request("/v1/profile", method: "PUT", json: .object(fields))
         try validateOwner(); profile = result; showOnboarding = false; revision += 1
-        searchStatus = try await api.request("/v1/profile/search-now", method: "POST")
+        do { let result = try await api.request("/v1/profile/search-now", method: "POST"); try validateOwner(); searchStatus = result } catch { self.error = Self.message(error) }
     }
     func upload(_ url: URL) async throws {
         let scoped = url.startAccessingSecurityScopedResource(); defer { if scoped { url.stopAccessingSecurityScopedResource() } }

@@ -14,9 +14,10 @@ private final class StubProtocol: URLProtocol {
 private actor SessionState {
     var uid = "A"
     var refreshes = 0
+    var fresh = false
     func identity() -> String? { uid }
     func switchUser() { uid = "B" }
-    func token(_ force: Bool) -> SessionCredential { if force { refreshes += 1 }; return SessionCredential(uid: uid, token: force ? "fresh" : "old") }
+    func token(_ force: Bool) -> SessionCredential { if force { refreshes += 1; fresh = true }; return SessionCredential(uid: uid, token: fresh ? "fresh" : "old") }
     func count() -> Int { refreshes }
 }
 final class NetworkingTests: XCTestCase {

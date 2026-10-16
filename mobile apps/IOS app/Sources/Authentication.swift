@@ -39,7 +39,12 @@ enum Keychain {
         if DebugFixtures.enabled { uid = "fixture-user"; email = "ui-test@example.com"; return }
         #endif
         listener = Auth.auth().addStateDidChangeListener { [weak self] _, user in
-            Task { @MainActor in self?.uid = user?.uid; self?.email = user?.email ?? "" }
+            Task { @MainActor in
+                if let saved = Keychain.read("activity-device"), let data = saved.data(using: .utf8), let device = try? JSONDecoder().decode(JSON.self, from: data), device["uid"].text != user?.uid {
+                    await ActivityNotifications.disable(api: nil)
+                }
+                self?.uid = user?.uid; self?.email = user?.email ?? ""
+            }
         }
     }
     func credential(refresh: Bool) async throws -> SessionCredential {
@@ -48,7 +53,7 @@ enum Keychain {
         #endif
         guard let user = Auth.auth().currentUser else { throw APIError(status: 401, code: "session_expired") }
         let uid = user.uid
-        let token = try await user.getIDTokenForcingRefresh(refresh)
+        let token = try await user.getIDToken(forcingRefresh: refresh)
         guard Auth.auth().currentUser?.uid == uid else { throw APIError(status: 401, code: "session_expired") }
         return SessionCredential(uid: uid, token: token)
     }

@@ -1,5 +1,11 @@
 import XCTest
 final class AutoLinkyUITests: XCTestCase {
+    @MainActor func testNativeSimulatorLaunchBaseline() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-development.api", "https://api.example.com", "-language", "en"]
+        let options = XCTMeasureOptions(); options.iterationCount = 3
+        measure(metrics: [XCTApplicationLaunchMetric()], options: options) { app.launch() }
+    }
     @MainActor func testNativeSetupRejectsInsecureOriginAndSupportsArabic() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-development.api", "", "-language", "en"]

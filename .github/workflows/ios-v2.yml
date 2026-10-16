@@ -1,6 +1,9 @@
 name: Native Swift iOS checks
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['mobile apps/IOS app/**', 'mobile apps/release-source.json', '.github/workflows/ios-v2.yml', '!**/*.md']
   pull_request:
     paths: ['mobile apps/IOS app/**', 'mobile apps/release-source.json', '.github/workflows/ios-v2.yml', '!**/*.md']
 permissions:

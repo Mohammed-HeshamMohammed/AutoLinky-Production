@@ -14,3 +14,4 @@ migration-plan/
 **/*.jks
 **/*.log
 **/.playwright-cli
+frontend/output/playwright/

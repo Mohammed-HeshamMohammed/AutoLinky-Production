@@ -4,7 +4,7 @@ DO $roles$
 DECLARE r text;
 BEGIN
   FOREACH r IN ARRAY ARRAY['autolinky_migrator','autolinky_api','autolinky_collector','autolinky_sender','autolinky_ops','autolinky_admin',
-    'autolinky_auth','autolinky_app','autolinky_messaging','autolinky_fetching','autolinky_data'] LOOP
+    'autolinky_auth','autolinky_app','autolinky_messaging','autolinky_fetching','autolinky_data','autolinky_console_data'] LOOP
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = r) THEN
       EXECUTE format('CREATE ROLE %I NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION', r);
     END IF;

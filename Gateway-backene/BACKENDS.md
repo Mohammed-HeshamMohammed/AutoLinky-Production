@@ -13,13 +13,14 @@ Each root backend contains its own complete runtime source, package/lockfile, co
 
 ## Private API contracts
 
-- Gateway routes public `/v1` requests to Auth, App and Notify with each target's service key. It exposes none of the private APIs below.
+- Gateway routes public `/v1` requests to Auth, App and Notify, and `/admin/api` to Auth/Data, with each target's service key. It exposes none of the private APIs below.
 - App and Notify call Auth's `/internal/v1/session`, carrying the original Bearer token and HTTP method. Mutations retain fresh revocation policy.
 - Notify calls App's `/internal/v1/messaging/snapshot`, `/job`, `/matches` and `/new-matches` with `APP_READ_KEY`. App owns the CV/profile/job reads; Notify has no direct SQL grants on these tables or matching functions. CV bytes are requested only for an attachment and checked against their stored SHA-256 before sending.
 - App calls Notify's `/internal/v1/applications/overlay` with `NOTIFY_READ_KEY`. Notify owns per-user application state; App has no direct applications table read grant.
 - Fetching submits `{provider,items}` to Data's `/internal/v1/ingestion` with `DATA_INGESTION_KEY`. Data computes the hash and durably deduplicates the batch. Fetching has no ingestion table grants or PostgreSQL runtime dependency.
 - Auth calls Data's `/internal/v1/identity/delete-data` with `DATA_IDENTITY_KEY`. Data runs the existing SQL-first atomic deletion, preserving reservations, tombstones and reconciliation work. Auth then calls Firebase. A lost API response does not trigger an automatic retry; SQL tombstones and queued identity reconciliation remain effective.
 - Auth, App, Notify and Fetching query Data's `/health/ready` for schema readiness. Only Data reads migration files and checks their checksum/catalog fingerprint at runtime.
+- Data verifies console sessions/roles/write elevation through Auth's `/internal/v1/admin/session` using `AUTH_ADMIN_KEY`. Auth owns admin credentials/session state. Data owns the narrowly scoped console SQL role and atomic audited updates. See [desktop administration](../frontend/DESKTOP_WEB.md).
 
 Read, ingestion and identity-cleanup keys are distinct from each backend's general service key. Requests use bounded JSON bodies, strict field schemas, fixed server-configured origins and deadlines. Clients never submit SQL or arbitrary target URLs. Private API calls do not automatically retry mutations. An unavailable required dependency denies that operation.
 

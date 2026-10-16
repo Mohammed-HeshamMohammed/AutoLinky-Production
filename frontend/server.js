@@ -6,7 +6,8 @@ import { resolve,sep,extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import download from './api/download.js';
 import latest from './api/latest.js';
-import { accountDestination } from './account-routes.js';
+import { workspaceRoute } from './workspace-routes.js';
+import { workspaceHeaders } from './workspace-headers.js';
 
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8',
   '.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.ico':'image/x-icon',
@@ -23,12 +24,12 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
     res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');
     try {
       const url=new URL(req.url,'http://site.local');
-      if(url.pathname.startsWith('/v1/')||['/health','/health/ready'].includes(url.pathname)){
+      if(url.pathname.startsWith('/v1/')||url.pathname.startsWith('/admin/api/')||['/health','/health/ready'].includes(url.pathname)){
         if(!api){res.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'}).end(JSON.stringify({detail:'API gateway is not configured'}));return;}
         const headers={};
-        for(const key of ['authorization','content-type','content-length','origin','x-request-id','x-autolinky-client-version','access-control-request-method','access-control-request-headers'])if(req.headers[key])headers[key]=req.headers[key];
+        for(const key of ['authorization','content-type','content-length','origin','x-request-id','x-autolinky-client-version','x-admin-elevation','access-control-request-method','access-control-request-headers'])if(req.headers[key])headers[key]=req.headers[key];
         const upstream=(api.protocol==='https:'?https:http).request(new URL(url.pathname+url.search,api),{method:req.method,headers,timeout:95000},response=>{
-          const output={'Cache-Control':'no-store'};
+          const output={'Cache-Control':'no-store',...(url.pathname.startsWith('/admin/')?{'X-Robots-Tag':'noindex, nofollow'}:{})};
           for(const key of ['content-type','retry-after','www-authenticate','x-request-id','access-control-allow-origin','access-control-allow-methods','access-control-allow-headers','access-control-expose-headers','vary'])if(response.headers[key])output[key]=response.headers[key];
           res.writeHead(response.statusCode,output);response.on('error',()=>res.destroy());response.pipe(res);
         });
@@ -42,8 +43,13 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       if(['/download','/apk'].includes(url.pathname))return await download(req,res);
       if(url.pathname==='/api/latest')return await latest(req,res);
       if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'}).end();return;}
-      const account=accountDestination(url,req.headers['user-agent']);
-      if(account){res.writeHead(302,{Location:account,'Cache-Control':'no-store',Vary:'User-Agent','X-Robots-Tag':'noindex'}).end();return;}
+      const workspace=workspaceRoute(url);
+      if(workspace){
+        const shell=resolve(root,'workspace/index.html'),info=await stat(shell).catch(()=>null);
+        if(!info?.isFile()){res.writeHead(503,{'Content-Type':'text/plain; charset=utf-8',...workspaceHeaders(workspace)}).end('The desktop web client is awaiting a requested web deployment.');return;}
+        res.writeHead(200,{'Content-Type':'text/html; charset=utf-8',...workspaceHeaders(workspace)});
+        if(req.method==='HEAD'){res.end();return;}createReadStream(shell).on('error',()=>res.destroy()).pipe(res);return;
+      }
       const pathname=decodeURIComponent(url.pathname);
       if(pathname.includes('\0') || pathname.includes('\\')){res.writeHead(400).end();return;}
       if(pathname==='/app'||pathname==='/app/') {

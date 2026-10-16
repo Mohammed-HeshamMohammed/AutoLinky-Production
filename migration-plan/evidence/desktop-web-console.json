@@ -1,0 +1,185 @@
+{
+  "checked_at": "2026-10-16T16:38:23.209Z",
+  "base_commit": "e307afb1b57d2cc89d879e7f9e5b89c17249e865",
+  "scope": "React desktop login, authenticated workspace and independent MFA admin console",
+  "implementation": {
+    "frontend": "frontend/src/workspace/",
+    "identity": "Auth-backend/src/admin.js",
+    "console_data": "Data-baceknd/src/console.js",
+    "private_admin_session": "/internal/v1/admin/session",
+    "public_admin_api": "/admin/api/",
+    "desktop_automation": "/automation/",
+    "preserved_public_product_page": "/auto-apply/",
+    "admin_sql_role": "autolinky_console_data"
+  },
+  "checks": {
+    "backend_unit_tests": 20,
+    "postgresql_integration_tests": 31,
+    "frontend_http_client_tests": 13,
+    "service_boundaries": 6,
+    "backend_esm_syntax": "passed",
+    "production_shell": "HTTP fixture tested; actual build intentionally not run",
+    "browser": {
+      "engine": "headless Microsoft Edge via bundled Playwright",
+      "actual_local_admin": [
+        "password challenge",
+        "non-reusable TOTP",
+        "overview",
+        "users",
+        "subscriptions",
+        "health",
+        "audit",
+        "logout"
+      ],
+      "intercepted_user_fixtures": [
+        "dashboard",
+        "jobs/detail",
+        "saved",
+        "comparison",
+        "applications",
+        "profile PUT with remote_ok false",
+        "CV entry",
+        "Gmail/Auto Apply entry",
+        "settings",
+        "single edited email-send POST",
+        "Arabic RTL",
+        "narrow navigation/no overflow"
+      ],
+      "live_firebase_provider_signin": "not performed",
+      "screenshots": "ignored frontend/output/playwright/"
+    },
+    "http_admin_proxy": "Bearer/elevation forwarded, cookies/private keys dropped",
+    "gateway_path_normalization": "encoded dot, slash and backslash traversal denied before dispatch",
+    "local_stack": [
+      {
+        "name": "api",
+        "url": "http://127.0.0.1:4100/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "extractor",
+        "url": "http://127.0.0.1:4001/health",
+        "status": "ready"
+      },
+      {
+        "name": "website",
+        "url": "http://localhost:8080/",
+        "status": "ready"
+      },
+      {
+        "name": "client",
+        "url": "http://localhost:8081/",
+        "status": "ready"
+      },
+      {
+        "name": "auth",
+        "url": "http://127.0.0.1:4101/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "app",
+        "url": "http://127.0.0.1:4102/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "messaging",
+        "url": "http://127.0.0.1:4103/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "fetching",
+        "url": "http://127.0.0.1:4104/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "data",
+        "url": "http://127.0.0.1:4105/health/ready",
+        "status": "ready"
+      }
+    ]
+  },
+  "security": [
+    "separate password+TOTP administrator identity",
+    "viewer/operator/owner enforcement",
+    "durable password failures/account lock",
+    "purpose-bound expiring challenge/session/elevation",
+    "token hash, epoch and fresh role checks",
+    "reasons/revision conflicts/atomic immutable audit",
+    "console SQL cannot read CV/mail/letter/device/admin credentials",
+    "cached app bindings check current user status",
+    "no-store/noindex/frame denial/CSP",
+    "no mutation auto-retry"
+  ],
+  "preservation": {
+    "reference_root": "X:\\Autolinky-with-serverbased",
+    "reference_files_checked": 544,
+    "reference_changed": [],
+    "original_production_files_retained_in_git": 41,
+    "original_production_baseline": "52a996c4bee25b24e61fe978cee980b854867898",
+    "existing_migrations_0001_through_0009": "Git unchanged and existing local applied checksums accepted",
+    "native_mobile_sources": "Git unchanged",
+    "migrations": [
+      {
+        "name": "0001_native_baseline.sql",
+        "sha256": "0842392833fa285b94418baf1bfe8a1eefb3fcd40091801269b26ba333a8de04"
+      },
+      {
+        "name": "0002_identity_cv_operations.sql",
+        "sha256": "78b9b04d397b14d16e5d273c74108bcf772f6b81461ba65160b1086c34db0a19"
+      },
+      {
+        "name": "0003_seeds.sql",
+        "sha256": "dc6a1a232eb3ac4d99c32c926b43363272bf577a946db537ed312aa908d4c779"
+      },
+      {
+        "name": "0004_native_grants.sql",
+        "sha256": "3b2de69c5c7465141720771a38f2889f6de3249a362d776e13abacaf89e587c8"
+      },
+      {
+        "name": "0005_identity_reconciliation_grants.sql",
+        "sha256": "60f0fe6b22af80c4078a9dbb7ad90434b0c76254fe2fafe8f8450cde1e6bac48"
+      },
+      {
+        "name": "0006_service_boundaries.sql",
+        "sha256": "e76cd8278a2802a7ba1c8ff3fbbee4dd3a6dfd3bc36de9548942bc74116f0d98"
+      },
+      {
+        "name": "0007_messaging_row_locks.sql",
+        "sha256": "b67148c8a3db46754835d2bec4f1704b9318bd1f620c906dc795e27897634963"
+      },
+      {
+        "name": "0008_api_owned_data_sharing.sql",
+        "sha256": "fd4b6ed6a4378dd6296c11d2cbce9a281c309da4f51b3e092617df11d8ea1d4b"
+      },
+      {
+        "name": "0009_identity_data_api.sql",
+        "sha256": "861a328f3963d9a315fb348eba3a17baa8642b5e78fc646e94cc38932bd23677"
+      },
+      {
+        "name": "0010_admin_identity.sql",
+        "sha256": "c3acc40198b7e315b3417be75d68d30647ea8aaeec954ae39ff8e05d5362baee"
+      },
+      {
+        "name": "0011_console_data_permissions.sql",
+        "sha256": "3a67be3ea4a69ee960ecb02fbf134ea6e8dc298a4aa76bde43027cdce28392bb"
+      }
+    ]
+  },
+  "local_administrator": {
+    "provisioned": true,
+    "private_setup": "Auth-backend/.runtime/admin-setup.html",
+    "credentials_committed": false
+  },
+  "app_build_performed": false,
+  "workflow_dispatched": false,
+  "production_data_imported": false,
+  "live_mail_or_collection_performed": false,
+  "vps_deployment_performed": false,
+  "limitations": [
+    "Firebase Admin credential, authorized domain and provider/email-link acceptance pending",
+    "User browser flows use intercepted test fixtures, not a real provider account",
+    "Production desktop shell awaits a separately requested web build",
+    "Bookmarks/comparison are browser-local",
+    "Exports, collector controls, impersonation and backup management are not implemented"
+  ]
+}

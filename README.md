@@ -2,7 +2,7 @@
 
 One repository with a unified web frontend, independent mobile apps and private backend services.
 
-- [`frontend/`](frontend/README.md): landing/product/legal pages, Android and iOS browser experiences, download handlers and a same-origin API proxy.
+- [`frontend/`](frontend/README.md): landing/product/legal pages, desktop login/workspace/admin console, Android and iOS browser experiences, download handlers and a same-origin API proxy.
 - [`Auth-backend/`](Auth-backend/): Firebase authentication and identity management.
 - [`Notify-backend/`](Notify-backend/): email, applications, sender and notification activity.
 - [`App-backend/`](App-backend/): profiles, CVs, jobs and application APIs.
@@ -21,5 +21,7 @@ From `Gateway-backene/tooling/`, install tooling with `npm ci` and the six backe
 Each backend owns all of its runtime code and installs/builds from its own folder. Domain data is exchanged through authenticated private HTTP APIs. There is no `backend-v2/` runtime or shared source dependency between backends.
 
 Builds and release workflows run only on manual request. Startup never builds apps; if web assets are missing, it stops with an explanation. No build or release is triggered by a push or pull request.
+
+Desktop entry: http://localhost:8080/login/; administration: http://localhost:8080/admin/. See [desktop routes, access controls and private local admin setup](frontend/DESKTOP_WEB.md). Real user provider sign-in remains an external Firebase acceptance gate; the separate local administrator flow is verified.
 
 The reference workspace `X:\Autolinky-with-serverbased` remains read-only. The former production frontend is retained at Git commit `52a996c` and in the ignored local archive `.runtime/legacy-frontend-before-unification/`. `frontend/` is now the single active web source. This is development infrastructure, with no production data import or VPS cutover.

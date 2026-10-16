@@ -1,18 +1,20 @@
 # AutoLinky unified frontend
 
-This is the web frontend: the original React landing pages, English/Arabic product and legal pages, download handlers, and both Flutter browser app experiences are built and served together.
+This is the web frontend: React landing/product/legal pages, a desktop login/workspace/admin console, download handlers, and both Flutter browser experiences are served together. [Desktop routes, access controls and setup](DESKTOP_WEB.md).
 
 | URL | Experience |
 | --- | --- |
 | `/`, `/ar/` and the existing content routes | React landing site copied from the original `frontend/` |
-| `/login/`, `/signup/` (and Arabic equivalents) | Website account entry points into the existing Firebase sign-in/onboarding flow |
-| `/dashboard/`, `/jobs/`, `/profile/` | Short links to the corresponding authenticated browser screens |
+| `/login/`, `/signup/` (and Arabic equivalents) | React Google/email-link sign-in using the same Firebase project |
+| `/dashboard/`, `/jobs/`, `/saved/`, `/compare/`, `/applications/` | Desktop matching, job search/detail, local bookmarks/comparison and server application history |
+| `/profile/`, `/cv/`, `/automation/`, `/settings/` | Desktop profile/CV, Gmail/Auto Apply and account controls |
+| `/admin/` | Separate password + TOTP console with roles and audited user/plan changes |
 | `/app/` | Opens the appropriate browser app, preserving the language query |
 | `/app/android/` | Android app experience in the browser |
 | `/app/ios/` | iOS app experience in the browser |
 | `/download`, `/api/latest` | Existing server-side download/release integration |
 
-Landing, product and legal pages share the same header with Log in and Create account. The homepage leads with a browser signup action and an existing-account login link; Android download stays available underneath. Login and signup use the same provider screen because Firebase creates a new account on first sign-in; existing sessions continue to matches and new users follow existing onboarding. The account aliases choose the browser variant from the device and preserve English/Arabic; they never accept an external redirect target. The browser apps have a Website link and a selector for the other app. Native hosts remain in `../mobile apps/Android app/` and `../mobile apps/IOS app/`. Android and both browser targets consume the Flutter package in `../mobile apps/shared/`. Native iOS is an independent Swift/SwiftUI app and has no Flutter engine or Dart dependency.
+Landing, product and legal pages share the same header with Log in and Create account. Those links now open the desktop React experience. Login and signup use the same Firebase methods because the provider creates a new account on first sign-in; an empty workspace guides new users to CV/profile setup. Existing mobile-style browser copies remain at `/app/android/` and `/app/ios/`. Arabic uses `/ar/` prefixes; post-login navigation never accepts an external target. The public `/auto-apply/` information page remains separate from signed-in `/automation/`. Native hosts remain in `../mobile apps/Android app/` and `../mobile apps/IOS app/`; native iOS uses independent Swift/SwiftUI with no Flutter engine or Dart dependency.
 
 ## Build and run
 
@@ -32,11 +34,12 @@ npm start
 
 `npm run build` builds the React site and both browser apps into one `dist/`. `npm run check` also verifies the prerendered pages, app bases and bundles. Browser API configuration defaults to `VITE_SITE_URL`; this server forwards `/v1/`, `/health` and `/health/ready` to its server-only `API_BASE_URL` gateway origin. Set `APP_API_BASE_URL` only to intentionally use a separate public API origin. `APP_DEFINES` may point to a public Firebase web settings JSON; it must contain only the keys in `../mobile apps/shared/env/example.json`. Native Firebase app IDs and server secrets cannot be used in browser builds. A standalone build with neither site nor API origin shows its configuration screen.
 
-For the isolated local stack using existing assets, run `npm run env:setup` then `npm run env:start` in `../Gateway-backene/tooling/`. The primary frontend is `http://localhost:8080`; the older port 8081 redirects into it. `npm run dev` serves current React source with hot reload and server-rendered landing/content pages on port 8080, alongside existing Flutter browser assets, account aliases, API proxy and download handlers. Local `env:start` uses this source preview so interface changes are visible without a production/mobile build. Production `npm start` continues serving the built `dist/` with the same account routes. No Flutter/Android/Swift build is started by the source preview.
+For the isolated local stack using existing assets, run `npm run env:setup` then `npm run env:start` in `../Gateway-backene/tooling/`. The primary frontend is `http://localhost:8080`; the older port 8081 redirects into it. `npm run dev` serves current React source with hot reload and server-rendered landing/content/desktop pages, alongside existing Flutter browser assets, API proxy and download handlers. Local `env:start` uses this source preview so interface changes are visible without a production/mobile build. Production `npm start` serves `dist/`; the new desktop shell requires a separately requested web build, and returns 503 if it is absent. No Flutter/Android/Swift build is started by source preview.
 
 ## Source and deployment
 
 - `src/`, `public/`, `scripts/prerender.mjs`: the preserved landing site with integrated app links.
+- `src/workspace/`, `workspace-routes.js`, `workspace-headers.js`: responsive desktop client, separate admin console, private route handling and security policies.
 - `apps/android/`, `apps/ios/`: thin browser entry points and independent package locks.
 - `web-template/`: the shared browser host template. The preparation tool generates each app's ignored `web/` and asset inputs.
 - `server.js`: one server for the site and apps, including app-specific reload fallbacks, real asset 404s, WASM MIME types and revalidation for app bundles.
@@ -48,6 +51,8 @@ Both browser targets use the registered Firebase web app and common backend. Rea
 
 ## Verified development result
 
-The [clean unified web build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872) passed for source `232ef50`. Its downloaded artifact contains the landing pages and both browser bundles. Local verification passed eight server/download tests, 152 shared app tests, 13 configuration contracts, shared/web analysis, 22 page checks and live HTTP/API/asset checks. Visual browser automation was unavailable in this session; real provider sign-in and production deployment remain pending.
+Current desktop work passed 13 frontend HTTP/client tests, 20 backend unit tests and 31 PostgreSQL integration tests. Headless Edge verified the live local password/TOTP admin flow and used browser-only fixtures for all user screens/interactions, RTL and narrow layout. No build or workflow was run for this update. See [verification scope and remaining Firebase gates](DESKTOP_WEB.md).
+
+The earlier [clean unified web build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872) passed for source `232ef50`. Its downloaded artifact contains the landing pages and both browser bundles; it predates the desktop implementation. Historical checks passed eight server/download tests, 152 shared app tests, 13 configuration contracts, shared/web analysis and 22 page checks. Real provider sign-in and production deployment remain pending.
 
 The [native build and release](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916) also passed after the publication-job retry. [Development installers 1.0.1 (1003)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003) retain persistent Android development signing and unsigned iOS output. Their published checksums match the verified native artifacts.

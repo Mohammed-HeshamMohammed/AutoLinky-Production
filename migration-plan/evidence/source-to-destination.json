@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T15:43:32.617Z",
+  "generated_at": "2026-10-16T16:38:23.102Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -225,7 +225,7 @@
       "destinations": [
         {
           "path": "Auth-backend/src/auth.js",
-          "sha256": "e2fc03c34a4c5c14891140215689814a8752a4f2de9bf8183a30ef93934df4ba"
+          "sha256": "c118510e497497ab3a2fc090b3369419ab622a435ee54371260e887dd97bfe2b"
         }
       ]
     },
@@ -393,11 +393,11 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "0f6fd92dbdaac3c6cdffcaad71e722f5252589abe23d2129ff79acffbb9756bc"
+          "sha256": "c7303d307c59e30a357166b176e6287a0bacd2730f95cf5f713867e5e6e583a9"
         },
         {
           "path": "Auth-backend/app.js",
-          "sha256": "51cb7c182702d38075d0f9631e16dc836b33979aa0d39759e1b98e55d2026c78"
+          "sha256": "18de3f1cff6ff5d1d7e9d0f2a038386c82ba9aa251a2a6ff292b0e9109677c74"
         },
         {
           "path": "App-backend/app.js",
@@ -499,11 +499,11 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "0f6fd92dbdaac3c6cdffcaad71e722f5252589abe23d2129ff79acffbb9756bc"
+          "sha256": "c7303d307c59e30a357166b176e6287a0bacd2730f95cf5f713867e5e6e583a9"
         },
         {
           "path": "Auth-backend/app.js",
-          "sha256": "51cb7c182702d38075d0f9631e16dc836b33979aa0d39759e1b98e55d2026c78"
+          "sha256": "18de3f1cff6ff5d1d7e9d0f2a038386c82ba9aa251a2a6ff292b0e9109677c74"
         },
         {
           "path": "App-backend/app.js",
@@ -537,11 +537,11 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "0f6fd92dbdaac3c6cdffcaad71e722f5252589abe23d2129ff79acffbb9756bc"
+          "sha256": "c7303d307c59e30a357166b176e6287a0bacd2730f95cf5f713867e5e6e583a9"
         },
         {
           "path": "Auth-backend/app.js",
-          "sha256": "51cb7c182702d38075d0f9631e16dc836b33979aa0d39759e1b98e55d2026c78"
+          "sha256": "18de3f1cff6ff5d1d7e9d0f2a038386c82ba9aa251a2a6ff292b0e9109677c74"
         },
         {
           "path": "App-backend/app.js",
@@ -6129,7 +6129,7 @@
       "destinations": [
         {
           "path": "frontend/Dockerfile",
-          "sha256": "8291c605c186b985d0c9d3d95735df6a65f901cd01f532587a6dd838850af473"
+          "sha256": "dfcb4b6f833e178aa8e0d55c5bd6cc70c832c3a38ecd60ed28639f1ecfe21c00"
         }
       ]
     },
@@ -6402,7 +6402,7 @@
       "destinations": [
         {
           "path": "frontend/scripts/prerender.mjs",
-          "sha256": "ba4de76b1f41e9335abf99a97028b94d2cb54ff1508db9629dd387c9fe7011b4"
+          "sha256": "1d85c3841758040101d2ceae8aa6c72bd47af538f502a6b1acb31236026aa04c"
         }
       ]
     },
@@ -6415,7 +6415,7 @@
       "destinations": [
         {
           "path": "frontend/scripts/verify-build.mjs",
-          "sha256": "33f33c41925891d3be112762f48f002abae7781a12c9cb9c0dc082177e221dbc"
+          "sha256": "0e7bb6add515500b41b58610b55398c5332bf24dbc16ca99ae426c959fc3319e"
         }
       ]
     },
@@ -6532,7 +6532,7 @@
       "destinations": [
         {
           "path": "frontend/src/main.jsx",
-          "sha256": "807956185d192709b2d2b371b179c2d84ac5b259c215a542121857a4303064d1"
+          "sha256": "c351f18d6f06b8a00b8710a15dcc05ce8ddd503146d2ae9ccba4747c2c773146"
         }
       ]
     },

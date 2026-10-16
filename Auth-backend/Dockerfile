@@ -7,5 +7,6 @@ RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund && npm cache clean -
 COPY --chown=node:node index.js app.js routes.js reconcile.js ./
 COPY --chown=node:node lib ./lib
 COPY --chown=node:node src ./src
+COPY --chown=node:node scripts ./scripts
 USER node
 CMD ["node", "index.js"]

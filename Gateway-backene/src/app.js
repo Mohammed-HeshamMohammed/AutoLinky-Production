@@ -4,6 +4,8 @@ import { HttpError,errorHandler } from '../lib/http/errors.js';
 import { privateOrigin } from '../lib/runtime.js';
 
 export function destination(path){
+  if(/^\/admin\/api\/(login|verify|reauth|logout|session)\/?$/.test(path))return 'auth';
+  if(/^\/admin\/api\/(overview|users|subscriptions|health|audit)(\/|$)/.test(path))return 'data';
   if(/^\/v1\/me\/?$/.test(path))return 'auth';
   if(/^\/v1\/(applications|auto-apply|mail-account|devices)(\/|$)/.test(path)||path==='/v1/device/activity')return 'messaging';
   if(/^\/v1\/(taxonomy|jobs|profile|cv)(\/|$)/.test(path)||path==='/internal/v1/downloads')return 'app';
@@ -11,8 +13,8 @@ export function destination(path){
 }
 
 export function gatewayTargets(env=process.env){
-  return Object.fromEntries(['auth','app','messaging'].map(name=>{
-    const prefix=name.toUpperCase(),url=privateOrigin(env[`${prefix}_SERVICE_URL`]||`http://127.0.0.1:${{auth:4101,app:4102,messaging:4103}[name]}`),key=env[`${prefix}_SERVICE_KEY`];
+  return Object.fromEntries(['auth','app','messaging','data'].map(name=>{
+    const prefix=name.toUpperCase(),url=privateOrigin(env[`${prefix}_SERVICE_URL`]||`http://127.0.0.1:${{auth:4101,app:4102,messaging:4103,data:4105}[name]}`),key=env[`${prefix}_SERVICE_KEY`];
     if(!key||key.length<32)throw Error(`${prefix}_SERVICE_KEY is required`);
     return [name,{url,key}];
   }));
@@ -35,12 +37,17 @@ export function buildGateway({targets,origins=[],fetcher=fetch,logger=false,time
     return reply.code(ready?200:503).send({status:ready?'ok':'degraded',services:Object.fromEntries(results)});
   });
   app.route({method:['GET','HEAD','POST','PUT','DELETE','PATCH'],url:'/*',handler:async(request,reply)=>{
-    const path=request.url.split('?')[0],name=destination(path),target=targets[name];
+    const path=request.url.split('?')[0];let decoded;
+    try{decoded=decodeURIComponent(path);}catch{throw new HttpError(404,'Not Found');}
+    // Fetch normalizes dot segments before dispatch. Reject them before choosing
+    // a privileged upstream so a public route cannot become a private URL.
+    if(decoded.includes('\\')||decoded.includes('\0')||decoded.split('/').some(part=>part==='.'||part==='..')||/%2f/i.test(path))throw new HttpError(404,'Not Found');
+    const name=destination(path),target=targets[name];
     if(!target)throw new HttpError(404,'Not Found');
     // Preserve CV bytes and DTO/status contracts. Never forward caller-supplied
     // service credentials, identity headers, cookies or arbitrary proxy headers.
     const headers={'x-service-key':target.key};
-    for(const key of ['authorization','content-type','x-request-id','x-autolinky-client-version','x-internal-key'])if(request.headers[key])headers[key]=request.headers[key];
+    for(const key of ['authorization','content-type','x-request-id','x-autolinky-client-version','x-internal-key','x-admin-elevation'])if(request.headers[key])headers[key]=request.headers[key];
     let upstream;
     try{
       upstream=await fetcher(target.url+request.url,{method:request.method,headers,body:['GET','HEAD'].includes(request.method)?undefined:request.body,signal:AbortSignal.timeout(timeoutMs),redirect:'error'});

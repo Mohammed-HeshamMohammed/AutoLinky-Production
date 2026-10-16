@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createServer } from 'vite';
-import { accountPaths } from '../account-routes.js';
+import { accountPaths } from '../workspace-routes.js';
 
 const server = await createServer({ mode: 'production', server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
 const { SITE_URL, PAGES } = await server.ssrLoadModule('/src/pageContent.js');
@@ -51,6 +51,8 @@ for (const { route, html } of pages) {
 }
 
 const open = fs.readFileSync(path.join(root, 'open', 'index.html'), 'utf8');
+const workspace=fs.readFileSync(path.join(root,'workspace','index.html'),'utf8');
+assert(workspace.includes('noindex')&&!workspace.includes('rel="canonical"'),'Desktop shell must be private and excluded from indexing');
 assert(open.includes('noindex') && !open.includes('rel="canonical"'), '/open/ must be noindex');
 assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').match(/<loc>/g)?.length === pages.length, 'Sitemap count mismatch');
 assert(fs.readFileSync(path.join(root, 'robots.txt'), 'utf8').includes(`${site}/sitemap.xml`), 'Sitemap missing from robots.txt');

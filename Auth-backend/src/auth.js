@@ -32,6 +32,10 @@ export function authentication(db,identity,limiter,config) {
     }
     if(!claims.uid || claims.firebase?.sign_in_provider==='anonymous')throw unauthorized();
     let user=sensitive||fresh.get(claims.uid)?undefined:cache.get(claims.uid);
+    if(user){
+      let current;try{current=(await db.query('SELECT status FROM public.app_users WHERE id=$1',[user.id])).rows[0];}catch{throw unavailable();}
+      if(!current){invalidate(claims.uid);throw unauthorized();}user={...user,status:current.status};
+    }
     if(!user){
       try {
         const {rows}=await db.query('SELECT * FROM public.bind_firebase_user($1,$2,$3)',[claims.uid,claims.email || null,claims.email_verified===true]);

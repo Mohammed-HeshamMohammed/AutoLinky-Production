@@ -2,6 +2,20 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
+## Current: desktop workspace and administrator console (2026-10-16)
+
+The owner requested a real web login, a desktop workspace familiar to mobile users with more room/tools, and an admin dashboard. This supersedes the earlier redirects from account URLs into Flutter.
+
+- [x] Implement React Google/email-link login, verified user sessions and safe post-login navigation in the canonical frontend; preserve marketing pages and both existing browser copies.
+- [x] Add desktop matches, searchable jobs with detail pane, browser-local saved jobs/comparison, server applications, editable email preview/send, profile/taxonomy, CV, Gmail/Auto Apply and account settings; English/Arabic, RTL, dark theme and responsive navigation.
+- [x] Assign separate administrator password/TOTP/session ownership to Auth; scoped console SQL queries and audited user/status/limit/plan updates to Data; connect through the private admin session API and public Gateway routes.
+- [x] Enforce MFA, roles, durable failure limits, non-reusable TOTP, session expiry/epoch/logout, write elevation, reasons, optimistic revisions and atomic immutable audits; prohibit private content/credential reads by the console SQL role.
+- [x] Apply new migrations 0010/0011 only to isolated/local databases, preserve 0001–0009, and provision local owner credentials in ignored Auth runtime files.
+- [x] Pass 20 backend unit, 31 PostgreSQL integration and 13 frontend HTTP/client tests, six backend ownership checks, source checks and browser verification of actual local admin MFA plus intercepted user fixtures.
+- [ ] Complete actual Google/email-link provider acceptance after private Firebase Admin credentials and provider/domain setup. This is an external gate, not a successful fixture test.
+
+No app/container build, workflow dispatch, production import, email delivery or VPS deployment ran. Local port 8080 serves current desktop source without a build; a future requested web build must create the production desktop shell. [Implementation/setup](frontend/DESKTOP_WEB.md); [evidence](migration-plan/evidence/desktop-web-console.json).
+
 ## Current: feature ownership and private API sharing (2026-10-16)
 
 The owner required every backend to own its complete runtime and exchange domain data through APIs. The residual `backend-v2/` folder is removed; the earlier shared-infrastructure layout below is historical.

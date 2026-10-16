@@ -9,6 +9,8 @@ import './experience.css';
 import { useSiteMotion } from './useSiteMotion';
 import { usePageNavigation } from './usePageNavigation';
 import { RELEASE_API_URL, DOWNLOAD_ENABLED, directDownloadUrl } from './config';
+import DesktopApp from './workspace/DesktopApp.jsx';
+import { workspaceRoute } from '../workspace-routes.js';
 
 function initialLanguage() {
   const asked = new URLSearchParams(location.search).get('lang');
@@ -31,7 +33,7 @@ function loadRelease() {
     .catch(() => null);
   return releasePromise;
 }
-if (typeof document !== 'undefined') loadRelease();
+if (typeof document !== 'undefined'&&!workspaceRoute(new URL(location.href))) loadRelease();
 
 function platform() {
   if (/android/i.test(navigator.userAgent)) return 'android';
@@ -144,6 +146,7 @@ function OpenPage() {
 const root = document.getElementById('root');
 function App() {
   const url = usePageNavigation();
+  if(workspaceRoute(url))return <DesktopApp initialURL={url.pathname+url.search}/>;
   const route = url.pathname.split('/').filter(Boolean);
   const routeLang = route[0] === 'ar' ? 'ar' : 'en';
   const slug = routeLang === 'ar' ? route[1] : route[0];

@@ -7,7 +7,7 @@ import { fetchProvider } from '../../../Fetching-backend/src/fetch.js';
 import { createAppClient } from '../../../Notify-backend/src/app-client.js';
 import { createIdentityDataClient } from '../../../Auth-backend/src/data-client.js';
 
-const targets=Object.fromEntries(['auth','app','messaging'].map(name=>[name,{url:`http://${name}.internal`,key:name.repeat(40)}]));
+const targets=Object.fromEntries(['auth','app','messaging','data'].map(name=>[name,{url:`http://${name}.internal`,key:name.repeat(40)}]));
 test('gateway routes contracts, forwards exact CV bytes and replaces untrusted service headers',async()=>{
   const calls=[];
   const app=buildGateway({targets,origins:['https://auto-linky.com'],fetcher:async(url,options)=>{calls.push({url,...options});return new Response(JSON.stringify({ok:true}),{status:201,headers:{'content-type':'application/json','x-request-id':'owned'}});}});
@@ -18,6 +18,9 @@ test('gateway routes contracts, forwards exact CV bytes and replaces untrusted s
     assert.equal(calls[0].url,'http://app.internal/v1/cv?name=resume.pdf');assert.deepEqual(calls[0].body,bytes);
     assert.equal(calls[0].headers['x-service-key'],targets.app.key);assert.equal(calls[0].headers['x-user-id'],undefined);
     assert.equal((await app.inject({method:'POST',url:'/internal/v1/session',payload:{method:'DELETE'}})).statusCode,404);
+    const previous=calls.length;
+    for(const path of ['/admin/api/users/%2e%2e/%2e%2e/%2e%2e/internal/v1/data/process','/admin/api/users/a%2f..%2f..%2finternal','/v1/jobs/%5c..%5cinternal'])assert.equal((await app.inject({method:'POST',url:path,payload:{}})).statusCode,404);
+    assert.equal(calls.length,previous);
     assert.equal((await app.inject('/v1/profile?x=1')).statusCode,201);
     assert.equal((await app.inject({url:'/v1/me',headers:{origin:'https://untrusted.invalid'}})).statusCode,403);
     assert.equal((await app.inject({method:'OPTIONS',url:'/v1/me',headers:{origin:'https://auto-linky.com','access-control-request-method':'GET'}})).statusCode,204);

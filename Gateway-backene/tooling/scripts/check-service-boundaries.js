@@ -44,7 +44,7 @@ export async function inspectBoundary(root,name){
     if(lock.packages?.['']?.dependencies?.[dependency]!==version||!lock.packages?.['node_modules/'+dependency])throw Error(`${name}: runtime lock does not contain ${dependency}`);
   }
   const docker=await readFile(resolve(own,'Dockerfile'),'utf8');
-  const allowed=new Set(['package.json','package-lock.json','index.js','app.js','routes.js','sender.js','reconcile.js','src','lib','database']);
+  const allowed=new Set(['package.json','package-lock.json','index.js','app.js','routes.js','sender.js','reconcile.js','src','lib','database','scripts']);
   const copied=new Set();
   for(const line of docker.split(/\r?\n/).filter(line=>line.startsWith('COPY '))){
     const args=line.split(/\s+/).slice(1).filter(arg=>!arg.startsWith('--'));

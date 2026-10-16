@@ -35,7 +35,9 @@ export async function setup(){
     settings.passwords['autolinky_'+name]||=randomBytes(24).toString('hex');
     settings.serviceKeys[name]||=randomBytes(32).toString('hex');
   }
-  for(const name of ['appRead','notifyRead','ingestion','identityData'])settings.serviceKeys[name]||=randomBytes(32).toString('hex');
+  for(const name of ['appRead','notifyRead','ingestion','identityData','admin'])settings.serviceKeys[name]||=randomBytes(32).toString('hex');
+  settings.passwords.autolinky_console_data||=randomBytes(24).toString('hex');
+  settings.adminSessionSecret||=randomBytes(32).toString('hex');settings.adminTotpKey||=randomBytes(32).toString('base64url');
   await writeFile(settingsFile,JSON.stringify(settings,null,2)+'\n',{mode:0o600});
   const backendEnv={NODE_ENV:'development',HOST:settings.host,PORT:settings.ports.api,PG_DATABASE_URL:databaseUrl(settings,'autolinky_api'),
     PG_MIGRATOR_URL:databaseUrl(settings,'autolinky_migrator'),PG_OPS_URL:databaseUrl(settings,'autolinky_ops'),FIREBASE_PROJECT_ID:'auto-linky',
@@ -53,9 +55,11 @@ export async function setup(){
   const common={NODE_ENV:'development',HOST:settings.host,DATA_SERVICE_URL:`http://127.0.0.1:${settings.ports.data}`,CORS_ALLOWED_ORIGINS:previous.CORS_ALLOWED_ORIGINS||backendEnv.CORS_ALLOWED_ORIGINS,...select(['RATE_LIMIT_PER_MINUTE','PG_POOL_MAX','PG_STATEMENT_TIMEOUT_MS'])};
   const auth={...common,PORT:settings.ports.auth,PG_DATABASE_URL:databaseUrl(settings,'autolinky_auth'),SERVICE_KEY:settings.serviceKeys.auth,
     DATA_IDENTITY_KEY:settings.serviceKeys.identityData,
+    ADMIN_SESSION_SECRET:settings.adminSessionSecret,ADMIN_TOTP_KEY:settings.adminTotpKey,AUTH_ADMIN_KEY:settings.serviceKeys.admin,
     FIREBASE_PROJECT_ID:previous.FIREBASE_PROJECT_ID||'auto-linky',GOOGLE_APPLICATION_CREDENTIALS:previous.GOOGLE_APPLICATION_CREDENTIALS||''};
   const authClient={AUTH_SERVICE_URL:`http://127.0.0.1:${settings.ports.auth}`,AUTH_SERVICE_KEY:settings.serviceKeys.auth};
   const gateway={...common,PORT:settings.ports.api,...authClient,...select(Object.keys(previous).filter(name=>name.startsWith('SERVICE_NOTICE'))),
+    DATA_SERVICE_KEY:settings.serviceKeys.data,
     APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,APP_SERVICE_KEY:settings.serviceKeys.app,
     MESSAGING_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,MESSAGING_SERVICE_KEY:settings.serviceKeys.messaging};
   const app={...common,...authClient,PORT:settings.ports.app,PG_DATABASE_URL:databaseUrl(settings,'autolinky_app'),SERVICE_KEY:settings.serviceKeys.app,APP_READ_KEY:settings.serviceKeys.appRead,
@@ -67,7 +71,9 @@ export async function setup(){
     MAIL_SECRET_KEY:previous.MAIL_SECRET_KEY||settings.mailKey,SENDER_ENABLED:'false',AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||'https://openrouter.ai/api/v1',...select(['LETTER_AI_MODEL','FREE_EMAILS','EMAIL_DAILY_LIMIT','AUTO_APPLY_HOURS','SENDER_TIMEZONE','UPGRADE_URL','UPGRADE_MESSAGE'])};
   for(const [name,values] of Object.entries({gateway,auth,app,messaging,
     fetching:{...common,PORT:settings.ports.fetching,SERVICE_KEY:settings.serviceKeys.fetching,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,COLLECTOR_ENABLED:'false',FETCH_PROVIDERS_JSON:'{}'},
-    data:{...common,PORT:settings.ports.data,PG_DATABASE_URL:databaseUrl(settings,'autolinky_data'),SERVICE_KEY:settings.serviceKeys.data,DATA_IDENTITY_KEY:settings.serviceKeys.identityData,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'}})){
+    data:{...common,PORT:settings.ports.data,PG_DATABASE_URL:databaseUrl(settings,'autolinky_data'),CONSOLE_DATABASE_URL:databaseUrl(settings,'autolinky_console_data'),SERVICE_KEY:settings.serviceKeys.data,
+      AUTH_SERVICE_URL:authClient.AUTH_SERVICE_URL,AUTH_ADMIN_KEY:settings.serviceKeys.admin,APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,MESSAGING_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,FETCHING_SERVICE_URL:`http://127.0.0.1:${settings.ports.fetching}`,
+      DATA_IDENTITY_KEY:settings.serviceKeys.identityData,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'}})){
     const target=resolve(runtime,`${name}.env`);
     const saved=await exists(target)?parseEnv(await readFile(target,'utf8')):{};
     if(name==='fetching')delete saved.PG_DATABASE_URL;

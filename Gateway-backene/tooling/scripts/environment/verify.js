@@ -13,13 +13,15 @@ assert.equal((await fetch(api+'/health',{headers:{Origin:'https://untrusted.exam
 const cv=await fetch(`http://127.0.0.1:${settings.ports.extractor}/extract`,{method:'POST',headers:{'X-Extractor-Key':env.CV_EXTRACTOR_KEY},body:Buffer.alloc(0)});
 assert.equal(cv.status,400);assert.deepEqual(await cv.json(),{detail:'cv_empty'});
 for(const platform of ['android','ios']) {
-  assert.equal((await fetch(client+`/app/${platform}/welcome/email/verify`)).status,200);
+  const redirect=await fetch(client+`/app/${platform}/welcome/email/verify?oobCode=fixture`,{redirect:'manual'});
+  assert.equal(redirect.status,302);assert.equal(redirect.headers.get('location'),'/login/?oobCode=fixture');
   assert.equal((await fetch(client+`/app/${platform}/missing.js`)).status,404);
 }
 assert.equal((await fetch(client+'/')).status,200);
+assert.equal((await fetch(client+'/login/')).status,200);
 for(const name of ['auth','app','messaging'])assert.equal((await fetch(`http://127.0.0.1:${settings.ports[name]}/v1/me`)).status,401);
 assert.equal((await fetch(api+'/internal/v1/session',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).status,404);
 for(const name of ['fetching','data'])assert.equal((await fetch(`http://127.0.0.1:${settings.ports[name]}/internal/v1/data/status`)).status,401);
-const report={checked_at:new Date().toISOString(),result:'passed',checks:['service readiness','native database connectivity','client CORS','private API authorization','untrusted origin refusal','bounded extractor request','client route fallback','missing asset 404'],production_data_imported:false};
+const report={checked_at:new Date().toISOString(),result:'passed',checks:['service readiness','native database connectivity','client CORS','private API authorization','untrusted origin refusal','bounded extractor request','React routes and compatibility redirects','missing asset 404'],production_data_imported:false};
 await writeFile(resolve(runtime,'verification.json'),JSON.stringify(report,null,2)+'\n');
 console.log('Live local environment checks passed.');

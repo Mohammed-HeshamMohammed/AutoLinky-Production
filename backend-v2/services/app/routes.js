@@ -1,9 +1,9 @@
 import { timingSafeEqual } from 'node:crypto';
-import { HttpError,unavailable } from '../../src/http/errors.js';
-import { registerCatalog } from '../../src/http/routes/catalog.js';
-import { registerJobs } from '../../src/http/routes/jobs.js';
-import { registerProfile } from '../../src/http/routes/profile.js';
-import { registerCV } from '../../src/http/routes/cv.js';
+import { HttpError,unavailable } from '../../shared/http/errors.js';
+import { registerCatalog } from './src/routes/catalog.js';
+import { registerJobs } from './src/routes/jobs.js';
+import { registerProfile } from './src/routes/profile.js';
+import { registerCV } from './src/routes/cv.js';
 
 export function registerAppRoutes(app,context){
   registerCatalog(app,context);registerJobs(app,context);

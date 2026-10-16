@@ -1,3 +1,7 @@
+## 2026-10-16: backend implementations and packages physically separated
+
+Controllers, workers and integrations now live under their owning `backend-v2/services/` backends. Each owns a package/lockfile and Dockerfile/image. The production role-switching composer and central user/operations loaders have been removed; the combined legacy parity harness exists only in tests. Boundary checks enforce source/dependency isolation. See `backend-source-split.json` for focused evidence. No app builds, live external traffic, data migration or deployment were run.
+
 ## 2026-10-16: implemented private backend services and canonical web frontend
 
 The owner requested actual backend separation and replacing both active web folders with `frontend/`. Services now run independently under `backend-v2/services/{gateway,auth,app,messaging,fetching,data}/`, with private authentication RPC, per-service roles/keys, one public gateway and a durable bounded fetching/data staging pipeline. The unified website contains the preserved landing content and both browser apps, plus same-origin API routing. Native projects remain separate and unchanged.

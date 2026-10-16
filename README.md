@@ -3,7 +3,7 @@
 One repository with a unified web frontend, independent mobile apps and private backend services.
 
 - [`frontend/`](frontend/README.md): landing/product/legal pages, Android and iOS browser experiences, download handlers and a same-origin API proxy.
-- [`backend-v2/services/`](backend-v2/services/README.md): public gateway plus auth, app, messaging, fetching and data backends. Each runs separately with its own configuration and database role.
+- [`backend-v2/services/`](backend-v2/services/README.md): public gateway plus auth, app, messaging, fetching and data backends. Each owns its implementation, package/lockfile, Dockerfile, configuration and database role, and runs separately.
 - `mobile apps/Android app/`: Flutter Android application.
 - `mobile apps/IOS app/`: native Swift/SwiftUI application, unsigned during development.
 - `mobile apps/shared/`: Android/browser Flutter code and common public release/configuration tools. Native iOS has no Dart dependency.

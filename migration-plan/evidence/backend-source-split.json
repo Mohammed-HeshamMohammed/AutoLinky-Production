@@ -1,0 +1,179 @@
+{
+  "checked_at": "2026-10-16T14:43:37.373314+00:00",
+  "base_commit": "3b4738a79e69f1ba5194d6bd64533bcb223d347b",
+  "scope": "Complete backend implementation/package separation; no deployment or app build",
+  "services": [
+    {
+      "name": "gateway",
+      "directory": "backend-v2/services/gateway",
+      "runtime_dependencies": {
+        "fastify": "5.12.7",
+        "@fastify/cors": "11.3.1"
+      },
+      "image": "autolinky-gateway:development",
+      "package_sha256": "f77c4248fb65a77db88b1e1d5b8c06191ae02673d0a0ce971988f83d37c34171",
+      "lock_sha256": "1e6d06c446be76620e86545eb56a6d653a72522a8eed8ae511f34d3c98bb669e",
+      "dockerfile_sha256": "787a0932fb930a01e3e515052c069f5ff91f31da81c6b2665f2209e08fdf283d"
+    },
+    {
+      "name": "auth",
+      "directory": "backend-v2/services/auth",
+      "runtime_dependencies": {
+        "fastify": "5.12.7",
+        "@fastify/cors": "11.3.1",
+        "pg": "8.23.1",
+        "firebase-admin": "14.5.0"
+      },
+      "image": "autolinky-auth:development",
+      "package_sha256": "efba61f263312efc539db5fc329d19dcb2debfe059fba83586875dd54a7709a4",
+      "lock_sha256": "2f7d372fa6d57a65bfa5a90556da77722e0c07931639b2ec66b04b7bf254cc5e",
+      "dockerfile_sha256": "5f043566bc2fda1d4ac39d9802d0b25071adf43d5f042abdfa104e251985b8ae"
+    },
+    {
+      "name": "app",
+      "directory": "backend-v2/services/app",
+      "runtime_dependencies": {
+        "fastify": "5.12.7",
+        "@fastify/cors": "11.3.1",
+        "pg": "8.23.1"
+      },
+      "image": "autolinky-app:development",
+      "package_sha256": "36ba7b77292fc11e67d9aa9ac1484e5ad87fc26777eca5bd1766f55ea174a8be",
+      "lock_sha256": "80e36d2a5e626e7643d986159f6c090cde078f43944ad064cefb1944224a6476",
+      "dockerfile_sha256": "6c9bf062beaffd05794b3c83ff40dfae5b6cb122bc798a01ac2c2cd6f9eb079c"
+    },
+    {
+      "name": "messaging",
+      "directory": "backend-v2/services/messaging",
+      "runtime_dependencies": {
+        "fastify": "5.12.7",
+        "@fastify/cors": "11.3.1",
+        "pg": "8.23.1",
+        "nodemailer": "10.1.1"
+      },
+      "image": "autolinky-messaging:development",
+      "package_sha256": "9a99f6bd48829b7f712d32a2ce2a7957c62c46c24a988214677f68154adef7f8",
+      "lock_sha256": "ccab202cb6c20f84e65ec28b428318c4f59266a196bbc82ef4e1eba0e25743d8",
+      "dockerfile_sha256": "09e97e5f12fa55d398c91069391ab90976e16099445725e8fa40cebb8c87c642"
+    },
+    {
+      "name": "fetching",
+      "directory": "backend-v2/services/fetching",
+      "runtime_dependencies": {
+        "fastify": "5.12.7",
+        "pg": "8.23.1",
+        "he": "1.2.0"
+      },
+      "image": "autolinky-fetching:development",
+      "package_sha256": "9bb032f7560da921a6a6b7c29f7d104342c8c785bb5591696419b2a66ff2a4e0",
+      "lock_sha256": "cd32d26c904f4636df76194d50ca63d59ed7255384de7aa7edb83bffd8bbf943",
+      "dockerfile_sha256": "06ce5f91177bec4548109021075e7f9981bd9e4307a9b766a553ed8853e3bc65"
+    },
+    {
+      "name": "data",
+      "directory": "backend-v2/services/data",
+      "runtime_dependencies": {
+        "fastify": "5.12.7",
+        "pg": "8.23.1"
+      },
+      "image": "autolinky-data:development",
+      "package_sha256": "0e9ad81054784ee9159f535b401a0922e0ab25feb7172cacac973f0725f1e038",
+      "lock_sha256": "b3eb0e9d3b0b81219bca0ec32a4c335302ad0765a81958b162bb0056f6a96785",
+      "dockerfile_sha256": "78672b606a2b7e11de3ef724598005c1ef8edad3df5538a9b3f1f3ce4188baee"
+    }
+  ],
+  "removed_production_composers": [
+    "backend-v2/src/app.js",
+    "backend-v2/src/services/user-service.js",
+    "backend-v2/src/services/operations.js"
+  ],
+  "shared_code": "backend-v2/shared/; infrastructure, contracts and job read helpers only; no service imports",
+  "legacy_composition": "backend-v2/test/helpers/application.js; test-only and absent from all image COPY inputs",
+  "checks": {
+    "backend_unit_tests": 17,
+    "postgres_integration_tests": 25,
+    "native_js_source_check": "passed",
+    "backend_import_and_dependency_boundaries": "passed",
+    "cross_backend_import_rejection": "passed",
+    "independent_runtime_locks_offline_npm_ci_dry_run": 6,
+    "distinct_runtime_image_definitions": 6,
+    "source_inventory": 585,
+    "missing_mapped_destinations": 0,
+    "unchanged_reference_files": 544,
+    "retained_original_production_files": 41,
+    "local_endpoint_status": [
+      {
+        "name": "api",
+        "url": "http://127.0.0.1:4100/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "extractor",
+        "url": "http://127.0.0.1:4001/health",
+        "status": "ready"
+      },
+      {
+        "name": "website",
+        "url": "http://localhost:8080/",
+        "status": "ready"
+      },
+      {
+        "name": "client",
+        "url": "http://localhost:8081/",
+        "status": "ready"
+      },
+      {
+        "name": "auth",
+        "url": "http://127.0.0.1:4101/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "app",
+        "url": "http://127.0.0.1:4102/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "messaging",
+        "url": "http://127.0.0.1:4103/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "fetching",
+        "url": "http://127.0.0.1:4104/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "data",
+        "url": "http://127.0.0.1:4105/health/ready",
+        "status": "ready"
+      }
+    ],
+    "local_database": {
+      "status": "ready",
+      "users": 0,
+      "cvs": 0,
+      "applications": 0
+    },
+    "http_contracts": [
+      "service readiness",
+      "native database connectivity",
+      "client CORS",
+      "private API authorization",
+      "untrusted origin refusal",
+      "bounded extractor request",
+      "client route fallback",
+      "missing asset 404"
+    ]
+  },
+  "production_data_imported": false,
+  "app_builds_run": false,
+  "docker_images_built": false,
+  "ci_dispatched": false,
+  "vps_deployed": false,
+  "live_email_or_collection_run": false,
+  "remaining_activation": [
+    "Real Firebase/provider/domain setup",
+    "Target VPS/private networking and image deployment",
+    "Full provider-specific collector/enrichment/feed promotion and server push delivery remain separate feature work"
+  ]
+}

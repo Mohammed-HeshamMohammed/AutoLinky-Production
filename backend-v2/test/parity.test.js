@@ -4,11 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { normalize } from '../src/shared/text.js';
-import { SkillMatcher,RoleMatcher } from '../src/shared/skillmatch.js';
-import { titleKey } from '../src/ai/cv-analysis.js';
-import { encryptSecret,decryptSecret } from '../src/email/secret.js';
-import { MemoryCache } from '../src/cache/memory.js';
+import { normalize } from '../shared/domain/text.js';
+import { SkillMatcher,RoleMatcher } from '../shared/domain/skillmatch.js';
+import { titleKey } from '../services/app/src/ai/cv-analysis.js';
+import { encryptSecret,decryptSecret } from '../services/messaging/src/email/secret.js';
+import { MemoryCache } from '../shared/cache/memory.js';
 import fc from 'fast-check';
 const fixture=JSON.parse(await readFile(new URL('./fixtures/text-parity.json',import.meta.url)));
 test('normalization, search-title keys, skills and role tie-breaking match the pinned Python output',()=>{

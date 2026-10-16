@@ -13,7 +13,7 @@
     "env:stop": "node scripts/environment/stop.js",
     "env:status": "node scripts/environment/status.js",
     "env:verify": "node scripts/environment/verify.js",
-    "identity:reconcile": "node --env-file-if-exists=.env scripts/reconcile-identities.js",
+    "identity:reconcile": "node --env-file-if-exists=.env services/auth/reconcile.js",
     "start": "npm run start:gateway",
     "dev": "node --env-file-if-exists=.runtime/environment/gateway.env --watch services/gateway/index.js",
     "sender": "node --env-file-if-exists=.runtime/environment/messaging.env services/messaging/sender.js",
@@ -27,7 +27,8 @@
     "start:app": "node --env-file-if-exists=.runtime/environment/app.env services/app/index.js",
     "start:messaging": "node --env-file-if-exists=.runtime/environment/messaging.env services/messaging/index.js",
     "start:fetching": "node --env-file-if-exists=.runtime/environment/fetching.env services/fetching/index.js",
-    "start:data": "node --env-file-if-exists=.runtime/environment/data.env services/data/index.js"
+    "start:data": "node --env-file-if-exists=.runtime/environment/data.env services/data/index.js",
+    "check:boundaries": "node scripts/check-service-boundaries.js"
   },
   "dependencies": {
     "@fastify/cors": "11.3.1",

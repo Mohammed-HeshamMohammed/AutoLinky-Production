@@ -3,13 +3,16 @@ import assert from 'node:assert/strict';
 import pg from 'pg';
 import { randomUUID,createHash } from 'node:crypto';
 import { testDatabase } from '../helpers/database.js';
-import { buildApp } from '../../src/app.js';
-import { loadConfig } from '../../src/config.js';
-import { buildGateway } from '../../src/services/gateway.js';
-import { remoteAuthentication,requireServiceKey } from '../../src/services/runtime.js';
-import { buildOperations } from '../../src/services/operations.js';
-import { processBatch } from '../../src/services/ingestion.js';
-import { MailError } from '../../src/email/gmail.js';
+import { buildAuth } from '../../services/auth/app.js';
+import { buildAppBackend } from '../../services/app/app.js';
+import { buildMessaging } from '../../services/messaging/app.js';
+import { loadConfig } from '../../shared/config.js';
+import { buildGateway } from '../../services/gateway/src/app.js';
+import { remoteAuthentication,requireServiceKey } from '../../shared/runtime.js';
+import { buildFetching } from '../../services/fetching/app.js';
+import { buildData } from '../../services/data/app.js';
+import { processBatch } from '../../services/data/src/process.js';
+import { MailError } from '../../services/messaging/src/email/gmail.js';
 
 let cluster,gateway,auth,app,messaging,fetching,data,smtpCalls=0;
 const pools={},key='split-service-test-'.repeat(3),identity={verify:async token=>{
@@ -23,10 +26,10 @@ before(async()=>{
     pools[role]=new pg.Pool({host:'127.0.0.1',port:cluster.port,user:'autolinky_'+role,password:cluster.password,database:'postgres',max:2});
   }
   const config=loadConfig({MAIL_SECRET_KEY:Buffer.alloc(32,1).toString('base64url'),INTERNAL_DOWNLOADS_KEY:key,CORS_ALLOWED_ORIGINS:'https://auto-linky.com'});
-  auth=buildApp({config,db:pools.auth,identity,role:'auth'});requireServiceKey(auth,key);await auth.listen({host:'127.0.0.1',port:0});
+  auth=buildAuth({config,db:pools.auth,identity});requireServiceKey(auth,key);await auth.listen({host:'127.0.0.1',port:0});
   const authURL=`http://127.0.0.1:${auth.server.address().port}`;
   for(const role of ['app','messaging']){
-    const server=buildApp({config,role,db:pools[role],authProvider:remoteAuthentication({url:authURL,key}),
+    const server=(role==='app'?buildAppBackend:buildMessaging)({config,db:pools[role],authProvider:remoteAuthentication({url:authURL,key}),
       extractor:async bytes=>({file_type:'pdf',size:bytes.length,pages:1,text:'Developer\nJavaScript\n'+'Experience building web applications. '.repeat(10),sha256:createHash('sha256').update(bytes).digest('hex'),links:[]}),
       transport:{verify:async()=>{},send:async()=>{smtpCalls++;throw new MailError('busy',{uncertain:true});}}});
     requireServiceKey(server,key);await server.listen({host:'127.0.0.1',port:0});
@@ -34,8 +37,8 @@ before(async()=>{
   }
   gateway=buildGateway({targets:Object.fromEntries(Object.entries({auth,app,messaging}).map(([name,server])=>[name,{url:`http://127.0.0.1:${server.server.address().port}`,key}]))});
   const operationConfig={SERVICE_KEY:key,COLLECTOR_ENABLED:'true',DATA_PROCESSING_ENABLED:'true',FETCH_PROVIDERS_JSON:JSON.stringify({demo:{url:'https://provider.invalid/jobs'}})};
-  fetching=buildOperations({role:'fetching',env:operationConfig,db:pools.fetching,fetcher:async()=>Response.json([{id:'job-1',title:' Engineer ',company:'AutoLinky'},{title:''}])});
-  data=buildOperations({role:'data',env:operationConfig,db:pools.data});
+  fetching=buildFetching({env:operationConfig,db:pools.fetching,fetcher:async()=>Response.json([{id:'job-1',title:' Engineer ',company:'AutoLinky'},{title:''}])});
+  data=buildData({env:operationConfig,db:pools.data});
   await fetching.ready();await data.ready();
 });
 after(async()=>{for(const server of [gateway,fetching,data,messaging,app,auth])await server?.close();await cluster?.close();});

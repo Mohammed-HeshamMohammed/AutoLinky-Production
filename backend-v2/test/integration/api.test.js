@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import pg from 'pg';
 import { randomUUID,createHash } from 'node:crypto';
 import { testDatabase } from '../helpers/database.js';
-import { buildApp } from '../../src/app.js';
-import { loadConfig } from '../../src/config.js';
+import { buildApp } from '../helpers/application.js';
+import { loadConfig } from '../../shared/config.js';
 
 let cluster,app,db,pool;
 const tokens={a:{uid:'opaque-A',email:'a@example.com',email_verified:true},b:{uid:'opaque-B',email:'b@example.com',email_verified:true}};

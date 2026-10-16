@@ -2,7 +2,7 @@
 
 This is the isolated Node.js implementation of the specifications in `../migration-plan/`. The reference repository remains read-only. The original frontend is retained in baseline Git history while canonical frontend/ now contains the unified website. See `../PLAN.md` and `../migration-plan/evidence/implementation-status.md` for completed work and open release gates.
 
-The backend now runs a public gateway and five private domain services: auth, app, messaging, API fetching and data processing. Each has its own entry point, environment and PostgreSQL role. See [service operations](services/README.md), [the accepted ADR](docs/adr/0001-service-boundaries.md), and [local startup](ENVIRONMENT.md). Only the gateway is public; native/browser API contracts are preserved.
+The backend now runs a public gateway and five private domain services: auth, app, messaging, API fetching and data processing. Each has its own implementation folder, application factory, package/lockfile, Dockerfile, entry point, environment and PostgreSQL role. Production backends no longer use a common role-switching application. See [service operations](services/README.md), [the accepted ADR](docs/adr/0001-service-boundaries.md), and [local startup](ENVIRONMENT.md). Only the gateway is public; native/browser API contracts are preserved.
 
 ## Local checks
 
@@ -12,6 +12,7 @@ Use Node **24.22.0** (`.nvmrc`). The development dependencies include a matching
 npm ci
 python -m pip install --target .runtime/python-deps -r test/requirements.txt
 npm run check
+npm run check:boundaries
 npm test
 npm run test:db
 ```

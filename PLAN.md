@@ -2,6 +2,18 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
+## Current: complete backend source/package split (2026-10-16)
+
+The owner repeated that the backend split must be implemented. The earlier process separation still used a shared role-switching application/dependency set. This follow-up moves the actual controllers, workers and integrations into their owning backends and removes the production monolithic composer.
+
+- [x] Move auth, app, messaging, fetching and data implementation files into their service folders; keep only infrastructure/contracts/read repositories under `backend-v2/shared/`.
+- [x] Give every backend an independent application, package/lockfile, Dockerfile and image; sender reuses only the messaging image.
+- [x] Reject cross-backend source imports and undeclared runtime dependencies; keep the combined legacy parity harness exclusively in tests.
+- [x] Validate all six runtime lockfiles with offline `npm ci --dry-run` and exercise the split API against real isolated PostgreSQL.
+- [x] Pass 17 unit and 25 PostgreSQL integration tests, source/dependency boundary checks, six runtime lock validations and local stack checks. Evidence: `migration-plan/evidence/backend-source-split.json`.
+
+No app build, data migration, production activation or deployment is part of this work.
+
 ## Current: backend split and canonical frontend (2026-10-16)
 
 The owner requested the actual backend split, one active `frontend/`, and no app builds or build waits unless requested. This supersedes the older frontend-v2 preservation/layout and proposed-service milestones below.

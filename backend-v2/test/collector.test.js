@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { parsePosts } from '../src/collector/post-parser.js';
-import { parseSearch,parseDetails } from '../src/collector/job-parser.js';
-import { urnTime,postTooOld,listingTooOld } from '../src/collector/job-age.js';
+import { parsePosts } from '../services/fetching/src/collector/post-parser.js';
+import { parseSearch,parseDetails } from '../services/fetching/src/collector/job-parser.js';
+import { urnTime,postTooOld,listingTooOld } from '../services/fetching/src/collector/job-age.js';
 const fixture=JSON.parse(await readFile(new URL('./fixtures/collector-parity.json',import.meta.url)));
 test('post RSC parsing, mentions, mailto and attached jobs match the original Python fixture exactly',()=>{
   assert.deepEqual(parsePosts(fixture.posts.input),fixture.posts.expected);

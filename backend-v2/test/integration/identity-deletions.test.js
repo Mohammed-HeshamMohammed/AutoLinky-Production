@@ -2,7 +2,7 @@ import { before,after,test } from 'node:test';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 import { testDatabase } from '../helpers/database.js';
-import { reconcileIdentityDeletions } from '../../src/workers/identity-deletions.js';
+import { reconcileIdentityDeletions } from '../../services/auth/src/identity-deletions.js';
 let fixture,db;
 before(async()=>{
   fixture=await testDatabase();

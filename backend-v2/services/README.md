@@ -1,6 +1,6 @@
 # Backend services
 
-All Node services use native ESM JavaScript, one dependency lockfile and one PostgreSQL instance initially. Each has a separate entry point, environment file, private service key, database login and process/container. Shared backend libraries do not put another runtime inside the mobile clients.
+All Node services use native ESM JavaScript, separate runtime packages/lockfiles and one PostgreSQL instance initially. Each has a separate entry point, environment file, private service key, database login and process/container. Shared backend libraries do not put another runtime inside the mobile clients.
 
 | Folder | Responsibility | Local port | Database role |
 | --- | --- | --- | --- |
@@ -12,6 +12,21 @@ All Node services use native ESM JavaScript, one dependency lockfile and one Pos
 | `data/` | Batch normalization/deduplication, staged data retention and bounded ANALYZE | 4105 | autolinky_data |
 
 The Python CV extractor remains a separate private process on 4001. The sender is a separate opt-in worker under `messaging/sender.js`. Identity reconciliation is under `auth/reconcile.js` and uses a separate operations credential. Migrations run once as the migrator, never at each service's startup.
+
+## Implemented source and deployment split
+
+Every named Node backend owns `index.js`, its application factory/controllers, `src/`, `package.json`, `package-lock.json`, `.env.example` and `Dockerfile`. The old role-switching `src/app.js`, central operations switch and central user-service loader have been removed. The only combined parity application is inside `test/helpers/` and is never copied into an image.
+
+- `auth/src/`: Firebase identity/token policy and deletion reconciliation.
+- `app/src/`: taxonomy, profiles, CV extraction/analysis and job HTTP routes.
+- `messaging/src/`: encrypted Gmail credentials, SMTP/composition/letters, applications, auto-apply worker and device notification activity.
+- `fetching/src/`: configured API acquisition and source parsers/search helpers.
+- `data/src/`: normalization, deduplication and durable batch processing; `data/app.js` owns maintenance endpoints.
+- `gateway/src/`: the public HTTP proxy and route table.
+
+`backend-v2/shared/` contains infrastructure, contracts and shared job-read functions. It imports no backend implementation. Runtime source in one backend cannot import another backend's source. Calls to auth use its private HTTP API; the collection/data handoff uses PostgreSQL batches. `npm run check:boundaries` validates imports, required dependencies and image ownership; tests include rejection of a cross-backend import.
+
+Auth is the only package containing Firebase Admin. Messaging is the only package containing Nodemailer. Gateway has no PostgreSQL dependency. The root package/lockfile supports local orchestration and the complete test suite; it is not a production image dependency set. Local development installs root dependencies once and can start each service independently using its existing profile. Runtime images install only their own package lockfile at `/app`, then copy only that backend, shared libraries and migration files.
 
 ## Run locally
 
@@ -33,6 +48,8 @@ This is an operational service boundary and staging pipeline. Provider-specific 
 
 ## VPS preparation
 
-Each folder has a `.env.example`. Copy them to ignored `.runtime/deployment/`, generate fresh private values, and set real private PostgreSQL/CV addresses. Run `database/bootstrap.sql` as administrator to create roles, provision individual logins, then run reviewed migrations as `autolinky_migrator` (production also requires a verified backup assertion). Never use a migrator login in a service.
+Each folder has its own package/lockfile, Dockerfile and `.env.example`. Copy them to ignored `.runtime/deployment/`, generate fresh private values, and set real private PostgreSQL/CV addresses. Run `database/bootstrap.sql` as administrator to create roles, provision individual logins, then run reviewed migrations as `autolinky_migrator` (production also requires a verified backup assertion). Never use a migrator login in a service.
 
-`compose.yml` is a prepared container layout using the shared Node image; it publishes only gateway port 4100 on loopback for a TLS reverse proxy. PostgreSQL and the Python extractor must be provisioned on a reachable private network separately; the example hostnames are configuration placeholders. Only auth mounts the Firebase Admin file. Sender uses the optional `sender` profile and still requires explicit activation. No container build, deployment or live provider/email traffic was run for this change.
+`compose.yml` is a prepared container layout using six separate backend images; it publishes only gateway port 4100 on loopback for a TLS reverse proxy. PostgreSQL and the Python extractor must be provisioned on a reachable private network separately; the example hostnames are configuration placeholders. Only auth mounts the Firebase Admin file. Sender uses the optional `sender` profile and still requires explicit activation. No container build, deployment or live provider/email traffic was run for this change.
+
+The build context for each backend Dockerfile is `backend-v2/`, for example `docker build -f services/auth/Dockerfile -t autolinky-auth:development .`. These are deployment instructions only: no container or mobile application build was run for the source split. The sender reuses the messaging image; other services use independent images and can be redeployed separately. `compose.yml` wires these explicit image/Dockerfile pairs.

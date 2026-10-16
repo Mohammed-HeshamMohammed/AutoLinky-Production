@@ -1,8 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildGateway,destination } from '../src/services/gateway.js';
-import { remoteAuthentication } from '../src/services/runtime.js';
-import { normalizeRecord,fetchProvider } from '../src/services/ingestion.js';
+import { buildGateway,destination } from '../services/gateway/src/app.js';
+import { remoteAuthentication } from '../shared/runtime.js';
+import { normalizeRecord } from '../services/data/src/process.js';
+import { fetchProvider } from '../services/fetching/src/fetch.js';
 
 const targets=Object.fromEntries(['auth','app','messaging'].map(name=>[name,{url:`http://${name}.internal`,key:name.repeat(40)}]));
 test('gateway routes contracts, forwards exact CV bytes and replaces untrusted service headers',async()=>{

@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import pg from 'pg';
 import { randomUUID } from 'node:crypto';
 import { testDatabase } from '../helpers/database.js';
-import { letterService,cleanBody } from '../../src/ai/cover-letters.js';
-import { senderTick,inHours } from '../../src/workers/auto-apply.js';
-import { loadConfig } from '../../src/config.js';
+import { letterService,cleanBody } from '../../services/messaging/src/ai/cover-letters.js';
+import { senderTick,inHours } from '../../services/messaging/src/auto-apply.js';
+import { loadConfig } from '../../shared/config.js';
 let cluster,db,id,job;
 const config=loadConfig();
 before(async()=>{

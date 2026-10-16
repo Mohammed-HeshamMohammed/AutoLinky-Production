@@ -1,4 +1,4 @@
-import { HttpError } from '../../src/http/errors.js';
+import { HttpError } from '../../shared/http/errors.js';
 
 export function registerIdentityRoutes(app,{db,auth,identity}){
     app.get('/v1/me',async request=>({user_id:request.user.id,email:request.user.email}));

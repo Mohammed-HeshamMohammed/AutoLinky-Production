@@ -22,6 +22,6 @@ Each backend owns all of its runtime code and installs/builds from its own folde
 
 Builds and release workflows run only on manual request. Startup never builds apps; if web assets are missing, it stops with an explanation. No build or release is triggered by a push or pull request.
 
-Desktop entry: http://localhost:8080/login/; administration: http://localhost:8080/admin/. See [desktop routes, access controls and private local admin setup](frontend/DESKTOP_WEB.md). Real user provider sign-in remains an external Firebase acceptance gate; the separate local administrator flow is verified.
+Desktop entry: http://localhost:8080/login/; administration: http://localhost:8080/admin/. Only an explicitly assigned AutoLinky user with a verified authenticator can use the console. See [desktop routes, access controls and administrator assignment](frontend/DESKTOP_WEB.md). Live Firebase provider acceptance and assignment of the owner's actual account remain pending.
 
 The reference workspace `X:\Autolinky-with-serverbased` remains read-only. The former production frontend is retained at Git commit `52a996c` and in the ignored local archive `.runtime/legacy-frontend-before-unification/`. `frontend/` is now the single active web source. This is development infrastructure, with no production data import or VPS cutover.

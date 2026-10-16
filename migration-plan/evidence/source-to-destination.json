@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T17:08:15.480Z",
+  "generated_at": "2026-10-16T17:28:35.377Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -393,11 +393,11 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "dc1b7ccc5b1392ce9aa3687b5229c445898bb07498708600c93a8d9d80aef2f0"
+          "sha256": "b64dd17feca65e60c732cacc5cccd27383f4ec15686050ee71e00e8d1271d4a3"
         },
         {
           "path": "Auth-backend/app.js",
-          "sha256": "18de3f1cff6ff5d1d7e9d0f2a038386c82ba9aa251a2a6ff292b0e9109677c74"
+          "sha256": "35b3b124e98a33e8b172479eff1a598acfc51db9af4d37678eb5c9f95bcde009"
         },
         {
           "path": "App-backend/app.js",
@@ -499,11 +499,11 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "dc1b7ccc5b1392ce9aa3687b5229c445898bb07498708600c93a8d9d80aef2f0"
+          "sha256": "b64dd17feca65e60c732cacc5cccd27383f4ec15686050ee71e00e8d1271d4a3"
         },
         {
           "path": "Auth-backend/app.js",
-          "sha256": "18de3f1cff6ff5d1d7e9d0f2a038386c82ba9aa251a2a6ff292b0e9109677c74"
+          "sha256": "35b3b124e98a33e8b172479eff1a598acfc51db9af4d37678eb5c9f95bcde009"
         },
         {
           "path": "App-backend/app.js",
@@ -537,11 +537,11 @@
       "destinations": [
         {
           "path": "Gateway-backene/src/app.js",
-          "sha256": "dc1b7ccc5b1392ce9aa3687b5229c445898bb07498708600c93a8d9d80aef2f0"
+          "sha256": "b64dd17feca65e60c732cacc5cccd27383f4ec15686050ee71e00e8d1271d4a3"
         },
         {
           "path": "Auth-backend/app.js",
-          "sha256": "18de3f1cff6ff5d1d7e9d0f2a038386c82ba9aa251a2a6ff292b0e9109677c74"
+          "sha256": "35b3b124e98a33e8b172479eff1a598acfc51db9af4d37678eb5c9f95bcde009"
         },
         {
           "path": "App-backend/app.js",
@@ -1014,7 +1014,7 @@
       "destinations": [
         {
           "path": "migration-plan/admin-dashboard.md",
-          "sha256": "11c030be52c0d4a93413c3d80b635152fc8aff95f6dc0b86e1712a3dea57bd55"
+          "sha256": "89170c9eb7bef95e3371ad4d80d0204c3941d0f505d7c562f748a3fea18adc1a"
         }
       ]
     },
@@ -6609,5 +6609,10 @@
     "frontend": "frontend/src/workspace/AdminApp.jsx",
     "console_data": "Data-baceknd/src/console.js",
     "migration": "Data-baceknd/database/migrations/0012_reference_console.sql"
+  },
+  "admin_access": {
+    "model": "assigned Firebase-bound app user plus mandatory TOTP",
+    "evidence": "migration-plan/evidence/app-user-admin-access.json",
+    "migration": "Data-baceknd/database/migrations/0013_app_user_admin.sql"
   }
 }

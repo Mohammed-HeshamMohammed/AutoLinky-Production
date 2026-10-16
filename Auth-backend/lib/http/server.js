@@ -15,7 +15,7 @@ export function createBackend({config,db,logger=false,schemaCheck=()=>schemaRead
   app.setNotFoundHandler((request,reply)=>reply.code(404).send({detail:'Not Found'}));
   app.addHook('onSend',async(request,reply)=>{reply.header('X-Request-ID',request.id);reply.header('X-Content-Type-Options','nosniff');reply.header('Cache-Control','no-store');});
   app.register(cors,{origin:(origin,callback)=>!origin||config.origins.includes(origin)?callback(null,true):callback(new HttpError(403,'Origin not allowed'),false),
-    credentials:false,methods:['GET','POST','PUT','DELETE','OPTIONS'],allowedHeaders:['Authorization','Content-Type','X-Request-ID','X-Autolinky-Client-Version'],exposedHeaders:['Retry-After','X-Request-ID'],maxAge:600});
+    credentials:false,methods:['GET','POST','PUT','DELETE','OPTIONS'],allowedHeaders:['Authorization','Content-Type','X-Request-ID','X-Autolinky-Client-Version','X-Admin-Session','X-Admin-Elevation'],exposedHeaders:['Retry-After','X-Request-ID'],maxAge:600});
   const cache=new MemoryCache(),limiter=new MemoryLimiter();
   app.decorate('services',{config,db,cache,limiter});app.decorateRequest('user',null);
   app.addHook('onReady',async()=>{if(db.configured!==false)await schemaCheck();});

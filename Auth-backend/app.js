@@ -11,7 +11,7 @@ export function buildAuth({config=loadConfig(),db=createDatabase(config),identit
   const app=createBackend({config,db,logger,schemaCheck}),context=app.services;
   context.identity=identity;context.identityData=identityData;context.auth=authentication(db,identity,context.limiter,config);
   protectedRoutes(app,context.auth,registerIdentityRoutes);registerAuthSession(app,context);
-  context.admin=registerAdminAuthentication(app,{db,...adminOptions});
+  context.admin=registerAdminAuthentication(app,{db,auth:context.auth,...adminOptions});
   if(serviceKey!==undefined)requireServiceKey(app,serviceKey,context.admin?{[adminSessionPath]:adminServiceKey}:{});
   return app;
 }

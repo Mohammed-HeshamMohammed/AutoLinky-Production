@@ -1,7 +1,8 @@
 import { HttpError } from './lib/http/errors.js';
 
-export function registerIdentityRoutes(app,{db,auth,identity,identityData}){
-    app.get('/v1/me',async request=>({user_id:request.user.id,email:request.user.email}));
+export function registerIdentityRoutes(app,{db,auth,identity,identityData,admin}){
+    app.get('/v1/me',async request=>({user_id:request.user.id,email:request.user.email,
+      admin_role:admin?(await db.query('SELECT role FROM public.admin_accounts WHERE user_id=$1 AND enabled',[request.user.id])).rows[0]?.role||null:null}));
     app.delete('/v1/me',async(request,reply)=>{
       auth.invalidate(request.user.firebase_uid);
       try{await identityData.deleteUser(request.user.id);}

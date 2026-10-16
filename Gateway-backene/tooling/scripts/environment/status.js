@@ -24,7 +24,7 @@ const ios=JSON.parse(await readFile(resolve(production,'mobile apps/shared/env/i
 const report={checked_at:new Date().toISOString(),scope:'isolated local environment; no production import',services,
   firebase:{project:'auto-linky',admin:adminStatus,native_google_client_ids:android.GOOGLE_WEB_CLIENT_ID&&ios.GOOGLE_IOS_CLIENT_ID?'configured':'missing from supplied native files',
     localhost_authorized_domain:'must be verified in Firebase by the owner',local_email_links:'desktop form implemented; live continuation/provider acceptance pending; legacy Flutter local flag disabled'},
-  desktop:{login:`http://localhost:${settings.ports.website}/login/`,admin:`http://localhost:${settings.ports.website}/admin/`,local_owner_setup:await exists(resolve(production,'Auth-backend/.runtime/admin-setup.json'))?'private local setup file present':'not provisioned'},
+  desktop:{login:`http://localhost:${settings.ports.website}/login/`,admin:`http://localhost:${settings.ports.website}/admin/`,access:'assigned Firebase-bound app user plus mandatory authenticator; legacy standalone setup grants no access'},
   sender:'disabled',collector:'disabled'};
 const db=new pg.Client({connectionString:databaseUrl(settings,'autolinky_api'),connectionTimeoutMillis:2000});
 try {
@@ -33,6 +33,12 @@ try {
   report.local_database={status:'ready',...rows[0]};
 }catch{report.local_database={status:'unreachable'};}
 finally{await db.end().catch(()=>{});}
+const authDb=new pg.Client({connectionString:databaseUrl(settings,'autolinky_auth'),connectionTimeoutMillis:2000});
+try{await authDb.connect();report.desktop.assignments=(await authDb.query(`SELECT count(*) FILTER(WHERE a.enabled AND u.status='active')::integer enabled,
+ count(*) FILTER(WHERE a.enabled AND u.status='active' AND a.totp_confirmed_at IS NOT NULL)::integer authenticator_confirmed
+ FROM public.admin_accounts a JOIN public.app_users u ON u.id=a.user_id`)).rows[0];}
+catch{report.desktop.assignments={status:'unavailable'};}
+finally{await authDb.end().catch(()=>{});}
 await writeFile(resolve(runtime,'status.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report,null,2));
 if(services.some(service=>service.status!=='ready')||report.local_database.status!=='ready')process.exitCode=1;

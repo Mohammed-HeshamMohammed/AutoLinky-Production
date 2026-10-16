@@ -2,7 +2,22 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: adapt the latest reference admin dashboard (2026-10-16)
+## Current: assigned app-user administrator access (2026-10-16)
+
+The owner requires the actual AutoLinky user to be explicitly assigned an administrator role and to verify an authenticator before opening the backend dashboard. This supersedes the independent username/password administrator model below and in earlier migration proposals.
+
+- [x] Link administrator authority to the internal Firebase-bound app user; reject unassigned/blocked users, standalone legacy credentials and another user's MFA session.
+- [x] Require a revocation-checked Firebase token plus a user-bound, server-stored TOTP session for every administrator data request. Keep role and write-elevation checks in Auth through Data's private API.
+- [x] Add encrypted first-use authenticator enrollment, strict six-digit verification/replay protection, locks, expiry, logout and fresh-code confirmation for writes. Invalidate sessions after role/status/factor changes and cascade them on user deletion.
+- [x] Restrict offline role assignment/recovery to an existing app identity, with an atomic audit and no public promotion endpoint. Remove the standalone password provisioning path.
+- [x] Gate the web console with the normal login, hide its entry for ordinary users and clear admin UI/state when the account changes. Preserve desktop/reference-console behavior.
+- [x] Apply additive migration 0013 only to the isolated local database; disable old standalone administrators and invalidate their sessions. Existing migration files and mobile apps stay unchanged.
+- [x] Pass 20 backend unit, 41 PostgreSQL integration and 13 frontend HTTP/client tests, ownership/source checks, the access-specific browser cases and existing desktop/reference-console browser regressions. Live unauthenticated requests are denied; all nine local services are ready.
+- [ ] Assign the owner's actual app account after its identity is supplied and Firebase Admin credentials are configured. No administrator is auto-created from an email or the first sign-in.
+
+Verification and remaining provider gates are recorded in [desktop administration](frontend/DESKTOP_WEB.md) and [access evidence](migration-plan/evidence/app-user-admin-access.json). No app/container build, workflow dispatch, data import or deployment is part of this change.
+
+## Previous milestone: adapt the latest reference admin dashboard (2026-10-16)
 
 The owner asked to fetch the latest reference and use its admin dashboard. Remote main `9901aa48193757db3143e5ecd107602bb952fbf3` was fetched into an ignored Production snapshot; the original read-only checkout stays at its existing commit with unchanged files.
 
@@ -15,7 +30,7 @@ The owner asked to fetch the latest reference and use its admin dashboard. Remot
 
 No application/container build, workflow dispatch, production data import, live provider fetch/mail or VPS deployment was performed. [Setup and capability boundaries](frontend/DESKTOP_WEB.md); [source and verification evidence](migration-plan/evidence/reference-admin-adaptation.json).
 
-## Current: desktop workspace and administrator console (2026-10-16)
+## Previous milestone: desktop workspace and administrator console (2026-10-16)
 
 The owner requested a real web login, a desktop workspace familiar to mobile users with more room/tools, and an admin dashboard. This supersedes the earlier redirects from account URLs into Flutter.
 

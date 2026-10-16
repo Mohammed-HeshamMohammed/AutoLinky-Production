@@ -21,8 +21,8 @@ test('landing origin proxies app API bytes and auth without exposing private ope
     assert.equal(calls[0].url,'/v1/cv?name=test.pdf');assert.deepEqual(calls[0].body,bytes);assert.equal(calls[0].headers.authorization,'Bearer example');assert.equal(calls[0].headers['x-service-key'],undefined);
     const before=calls.length;assert.equal((await fetch(origin+'/internal/v1/session',{method:'POST',body:'{}'})).status,405);assert.equal(calls.length,before);
     assert.equal((await fetch(origin+'/health')).status,201);
-    const admin=await fetch(origin+'/admin/api/users/fixture',{method:'PUT',headers:{authorization:'Bearer admin-fixture','x-admin-elevation':'confirmed-fixture','content-type':'application/json','x-service-key':'forged','cookie':'do-not-forward=1'},body:'{"patch":{"status":"blocked"}}'});
+    const admin=await fetch(origin+'/admin/api/users/fixture',{method:'PUT',headers:{authorization:'Bearer app-fixture','x-admin-session':'admin-fixture','x-admin-elevation':'confirmed-fixture','content-type':'application/json','x-service-key':'forged','cookie':'do-not-forward=1'},body:'{"patch":{"status":"blocked"}}'});
     assert.equal(admin.status,201);assert.match(admin.headers.get('x-robots-tag'),/noindex/);
-    const forwarded=calls.at(-1);assert.equal(forwarded.url,'/admin/api/users/fixture');assert.equal(forwarded.headers.authorization,'Bearer admin-fixture');assert.equal(forwarded.headers['x-admin-elevation'],'confirmed-fixture');assert.equal(forwarded.headers.cookie,undefined);assert.equal(forwarded.headers['x-service-key'],undefined);
+    const forwarded=calls.at(-1);assert.equal(forwarded.url,'/admin/api/users/fixture');assert.equal(forwarded.headers.authorization,'Bearer app-fixture');assert.equal(forwarded.headers['x-admin-session'],'admin-fixture');assert.equal(forwarded.headers['x-admin-elevation'],'confirmed-fixture');assert.equal(forwarded.headers.cookie,undefined);assert.equal(forwarded.headers['x-service-key'],undefined);
   }finally{await Promise.all([new Promise(done=>site.close(done)),new Promise(done=>gateway.close(done))]);}
 });

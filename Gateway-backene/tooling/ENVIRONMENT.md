@@ -25,7 +25,7 @@ In another terminal use npm run env:status, npm run env:verify and npm run env:s
 | Fetching / Data | 4104 / 4105 |
 | App CV extractor / PostgreSQL | 4001 / 56432 |
 
-The website proxies /v1, /admin/api, /health and /health/ready to the gateway. Private service APIs are absent from public routing. All service listeners stay on loopback in this launcher. The new desktop client opens at /login/ and its separate administrator console at /admin/; [private local administrator setup](../../frontend/DESKTOP_WEB.md) explains provisioning and MFA.
+The website proxies /v1, /admin/api, /health and /health/ready to the gateway. Private service APIs are absent from public routing. All service listeners stay on loopback in this launcher. The desktop client opens at /login/ and its administrator console at /admin/. The console requires the normal Firebase account, an explicit backend admin assignment and a confirmed authenticator; [administrator setup](../../frontend/DESKTOP_WEB.md) explains assignment and MFA. Old standalone owner setup files grant no access after migration 0013.
 
 ## Configuration and dependency ownership
 

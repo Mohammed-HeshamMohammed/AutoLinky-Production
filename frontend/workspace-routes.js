@@ -12,5 +12,5 @@ export function workspacePath(screen,lang='en'){return `${lang==='ar'?'/ar':''}/
 export function safeWorkspaceNext(value,lang='en'){
   if(typeof value!=='string'||!value.startsWith('/')||value.startsWith('//'))return workspacePath('dashboard',lang);
   const url=new URL(value,'http://local.web'),route=workspaceRoute(url);
-  return url.origin==='http://local.web'&&route&&!route.admin&&!['login','signup'].includes(route.screen)?url.pathname+url.search:workspacePath('dashboard',lang);
+  return url.origin==='http://local.web'&&route&&(route.admin||!['login','signup'].includes(route.screen))?url.pathname+url.search:workspacePath('dashboard',lang);
 }

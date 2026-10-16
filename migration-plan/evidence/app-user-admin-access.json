@@ -1,0 +1,89 @@
+{
+  "checked_at": "2026-10-16T17:28:35.327Z",
+  "base_commit": "859f974",
+  "access": {
+    "identity": "explicit backend assignment to an existing Firebase-bound app user",
+    "first_factor": "Firebase ID token, checked for revocation/disabled state on every administrator request including reads",
+    "second_factor": "encrypted TOTP enrollment and confirmation; signed, server-stored, user-bound MFA session",
+    "roles": [
+      "owner",
+      "operator",
+      "viewer"
+    ],
+    "all_roles_require_authenticator": true,
+    "legacy_standalone_login": "disabled",
+    "public_promotion_or_recovery_endpoint": false,
+    "write_confirmation": "fresh non-reused TOTP plus reason and optimistic revision; atomic audit",
+    "pending_enrollment_seconds": 600,
+    "challenge_seconds": 120,
+    "session_seconds": 43200,
+    "elevation_seconds": 300
+  },
+  "verification": {
+    "backend_unit_tests": 20,
+    "postgresql_integration_tests": 41,
+    "frontend_http_client_tests": 13,
+    "backend_owned_boundaries": 6,
+    "backend_esm": "passed",
+    "browser_access_fixtures": [
+      "signed-out local continuation",
+      "unassigned-user denial and hidden administration link",
+      "no data before enrollment confirmation",
+      "wrong-code rejection",
+      "MFA entry",
+      "no browser-persisted MFA session or enrollment key",
+      "logout",
+      "no confirmed-key redisclosure",
+      "different-user cleanup"
+    ],
+    "browser_regressions": [
+      "reference chart/table/keyboard",
+      "drawer mutation and cancellation",
+      "viewer read-only controls",
+      "desktop pages and one application mutation",
+      "Arabic RTL",
+      "390px layout"
+    ],
+    "browser_identity": "intercepted browser fixture; actual Firebase provider sign-in not accepted",
+    "database_identity": "fake Firebase verifier with real PostgreSQL roles and independently listening Auth/Data/Gateway APIs",
+    "public_http_checks": [
+      {
+        "path": "/admin/api/overview",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "path": "/admin/api/login",
+        "method": "POST",
+        "status": 401
+      },
+      {
+        "path": "/admin/api/login",
+        "method": "POST",
+        "status": 422
+      }
+    ],
+    "original_reference_files_unchanged": 544,
+    "original_reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
+    "old_migrations_unchanged": 12,
+    "migration_added": "0013_app_user_admin.sql",
+    "native_apps": "unchanged"
+  },
+  "local_database": {
+    "schema": "checksum/fingerprint verified",
+    "users": 0,
+    "enabled_admin_assignments": 0,
+    "enabled_standalone_admins": 0,
+    "admin_sessions": 0
+  },
+  "pending": [
+    "Firebase Admin service-account credentials and live provider acceptance",
+    "exact owner app identity and explicit administrator assignment"
+  ],
+  "app_build_performed": false,
+  "container_build_performed": false,
+  "workflow_dispatched": false,
+  "production_data_imported": false,
+  "vps_deployed": false,
+  "live_mail_or_collection_performed": false
+}

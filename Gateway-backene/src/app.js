@@ -25,7 +25,7 @@ export function buildGateway({targets,origins=[],fetcher=fetch,logger=false,time
   app.setErrorHandler(errorHandler);
   app.setNotFoundHandler((request,reply)=>reply.code(404).send({detail:'Not Found'}));
   app.addHook('onSend',async(request,reply)=>{reply.header('X-Content-Type-Options','nosniff');reply.header('Cache-Control','no-store');});
-  app.register(cors,{origin:(origin,done)=>!origin||origins.includes(origin)?done(null,true):done(new HttpError(403,'Origin not allowed'),false),methods:['GET','POST','PUT','DELETE','OPTIONS'],allowedHeaders:['Authorization','Content-Type','X-Request-ID','X-Autolinky-Client-Version'],exposedHeaders:['Retry-After','X-Request-ID'],maxAge:600});
+  app.register(cors,{origin:(origin,done)=>!origin||origins.includes(origin)?done(null,true):done(new HttpError(403,'Origin not allowed'),false),methods:['GET','POST','PUT','DELETE','OPTIONS'],allowedHeaders:['Authorization','Content-Type','X-Request-ID','X-Autolinky-Client-Version','X-Admin-Session','X-Admin-Elevation'],exposedHeaders:['Retry-After','X-Request-ID'],maxAge:600});
   app.removeAllContentTypeParsers();
   app.addContentTypeParser('*',{parseAs:'buffer'},(request,body,done)=>done(null,body));
   app.get('/health',async()=>({status:'ok',service:'gateway',version,notice}));
@@ -47,7 +47,7 @@ export function buildGateway({targets,origins=[],fetcher=fetch,logger=false,time
     // Preserve CV bytes and DTO/status contracts. Never forward caller-supplied
     // service credentials, identity headers, cookies or arbitrary proxy headers.
     const headers={'x-service-key':target.key};
-    for(const key of ['authorization','content-type','x-request-id','x-autolinky-client-version','x-internal-key','x-admin-elevation'])if(request.headers[key])headers[key]=request.headers[key];
+    for(const key of ['authorization','content-type','x-request-id','x-autolinky-client-version','x-internal-key','x-admin-session','x-admin-elevation'])if(request.headers[key])headers[key]=request.headers[key];
     let upstream;
     try{
       upstream=await fetcher(target.url+request.url,{method:request.method,headers,body:['GET','HEAD'].includes(request.method)?undefined:request.body,signal:AbortSignal.timeout(timeoutMs),redirect:'error'});

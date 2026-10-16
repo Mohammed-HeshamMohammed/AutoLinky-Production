@@ -13,7 +13,8 @@ test('desktop routes preserve public product pages, mobile copies and safe post-
   for(const screen of ['collector','accounts','search-titles','sender'])assert.deepEqual(workspaceRoute('/ar/admin/'+screen+'/'),{admin:true,screen,lang:'ar'});
   assert.equal(workspaceRoute('/app/android/matches'),null);assert.equal(workspaceRoute('/auto-apply/'),null);assert.equal(workspaceRoute('/admin/api/overview'),null);
   assert.equal(workspaceRoute('/automation/').screen,'auto-apply');
-  for(const value of ['https://untrusted.invalid','//untrusted.invalid','/\\untrusted.invalid','/admin/','/login/','/unknown'])assert.equal(safeWorkspaceNext(value),'/dashboard/');
+  for(const value of ['https://untrusted.invalid','//untrusted.invalid','/\\untrusted.invalid','/admin/api/overview','/login/','/unknown'])assert.equal(safeWorkspaceNext(value),'/dashboard/');
+  assert.equal(safeWorkspaceNext('/admin/users/'),'/admin/users/');
   assert.equal(safeWorkspaceNext('/jobs/?q=engineer'),'/jobs/?q=engineer');
 });
 
@@ -24,7 +25,7 @@ test('production serves private desktop shells and restricted admin CSP',async()
   try{
     for(const path of ['/login/','/signup/','/dashboard/','/jobs/','/ar/profile/','/admin/','/admin/users/','/admin/collector/','/admin/search-titles/','/ar/admin/sender/']){
       const response=await fetch(origin+path,{redirect:'manual'});assert.equal(response.status,200);assert.match(await response.text(),/Workspace shell/);assert.equal(response.headers.get('cache-control'),'no-store');assert.match(response.headers.get('x-robots-tag'),/noindex/);assert.equal(response.headers.get('x-frame-options'),'DENY');
-      const csp=response.headers.get('content-security-policy');assert.match(csp,/frame-ancestors 'none'/);if(path.startsWith('/admin'))assert(!csp.split(';')[1].includes('gstatic.com'));
+      const csp=response.headers.get('content-security-policy');assert.match(csp,/frame-ancestors 'none'/);assert.match(csp,/script-src 'self' https:\/\/www.gstatic.com;/);assert(!csp.split(';')[1].includes('unsafe-inline'));
     }
     assert.equal((await fetch(origin+'/login/',{method:'POST'})).status,405);
     assert.equal((await fetch(origin+'/app/',{redirect:'manual'})).headers.get('location'),'/app/android/');
@@ -39,7 +40,7 @@ test('source renders web login, protected shells, admin entry and marketing link
     }
     for(const path of ['/login/','/signup/','/ar/login/','/admin/','/dashboard/','/jobs/']){
       const response=await fetch(origin+path),html=await response.text();assert.equal(response.status,200,html);assert.equal(response.headers.get('cache-control'),'no-store');assert.match(response.headers.get('x-robots-tag'),/noindex/);
-      if(path==='/admin/'){assert.match(html,/Administrator sign-in/);assert.match(html,/type="password"/);}
+      if(path==='/admin/'){assert.match(html,/Checking administrator access/);assert.doesNotMatch(html,/type="password"|ac-top|ac-tabs/);}
       else if(path==='/login/'||path==='/signup/'){assert.match(html,/Continue with Google/);assert.match(html,/type="email"/);assert.match(html,/ws-app ws-login/);}
       else if(path==='/ar/login/')assert.match(html,/<html lang="ar" dir="rtl">/);
       else{assert.match(html,/Opening your workspace/);assert.doesNotMatch(html,/Gmail app password/);}

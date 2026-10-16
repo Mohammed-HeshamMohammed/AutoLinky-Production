@@ -27,7 +27,7 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       if(url.pathname.startsWith('/v1/')||url.pathname.startsWith('/admin/api/')||['/health','/health/ready'].includes(url.pathname)){
         if(!api){res.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'}).end(JSON.stringify({detail:'API gateway is not configured'}));return;}
         const headers={};
-        for(const key of ['authorization','content-type','content-length','origin','x-request-id','x-autolinky-client-version','x-admin-elevation','access-control-request-method','access-control-request-headers'])if(req.headers[key])headers[key]=req.headers[key];
+        for(const key of ['authorization','content-type','content-length','origin','x-request-id','x-autolinky-client-version','x-admin-session','x-admin-elevation','access-control-request-method','access-control-request-headers'])if(req.headers[key])headers[key]=req.headers[key];
         const upstream=(api.protocol==='https:'?https:http).request(new URL(url.pathname+url.search,api),{method:req.method,headers,timeout:95000},response=>{
           const output={'Cache-Control':'no-store',...(url.pathname.startsWith('/admin/')?{'X-Robots-Tag':'noindex, nofollow'}:{})};
           for(const key of ['content-type','retry-after','www-authenticate','x-request-id','access-control-allow-origin','access-control-allow-methods','access-control-allow-headers','access-control-expose-headers','vary'])if(response.headers[key])output[key]=response.headers[key];

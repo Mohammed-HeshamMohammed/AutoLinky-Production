@@ -1,5 +1,7 @@
 # Admin dashboard (owner console)
 
+**Access model superseded on 2026-10-16 by the owner's instruction.** The implemented console requires an explicitly assigned Firebase-bound AutoLinky user **plus mandatory TOTP for every role**, including viewers. Standalone username/password administrators are disabled by migration 0013. Sections below describing independent identities, password provisioning, Firebase-independent access or public admin-account management are historical proposals, not the current access contract. See [current access, provisioning and verification](../frontend/DESKTOP_WEB.md) and [implementation status](../PLAN.md).
+
 Owns the design of the private console the owners use to watch and manage Autolinky: access, roles, every management action and its failure cases, API surface, data model, audit and tests. It replaces the read-only dashboard described earlier in the backend plan. Follow the [shared status](README.md); schema objects are specified in the [SQL plan](sql-mapping.md), efficiency rules in the [database efficiency plan](database-efficiency.md), release staging in the [roadmap](implementation-roadmap.md).
 
 ## 1. Starting point: what already exists (Step 19)

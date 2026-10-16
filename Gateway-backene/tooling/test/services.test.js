@@ -24,6 +24,8 @@ test('gateway routes contracts, forwards exact CV bytes and replaces untrusted s
     assert.equal((await app.inject('/v1/profile?x=1')).statusCode,201);
     assert.equal((await app.inject({url:'/v1/me',headers:{origin:'https://untrusted.invalid'}})).statusCode,403);
     assert.equal((await app.inject({method:'OPTIONS',url:'/v1/me',headers:{origin:'https://auto-linky.com','access-control-request-method':'GET'}})).statusCode,204);
+    const admin=await app.inject({url:'/admin/api/overview',headers:{authorization:'Bearer app-user','x-admin-session':'mfa-session','x-admin-elevation':'mfa-elevation','x-service-key':'forged'}});assert.equal(admin.statusCode,201);
+    assert.equal(calls.at(-1).headers.authorization,'Bearer app-user');assert.equal(calls.at(-1).headers['x-admin-session'],'mfa-session');assert.equal(calls.at(-1).headers['x-admin-elevation'],'mfa-elevation');assert.equal(calls.at(-1).headers['x-service-key'],targets.data.key);
     for(const [path,expected] of [['/v1/me','auth'],['/v1/mail-account','messaging'],['/v1/applications/email-preview','messaging'],['/v1/device/activity','messaging'],['/v1/jobs','app'],['/internal/v1/data/process',null]])assert.equal(destination(path),expected);
   }finally{await app.close();}
 });

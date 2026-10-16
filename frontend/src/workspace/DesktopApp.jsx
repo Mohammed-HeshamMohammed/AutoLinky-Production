@@ -28,6 +28,14 @@ function UserApp(props){
   const Screen={dashboard:Dashboard,jobs:Jobs,saved:Jobs,compare:Compare,applications:Applications,compose:Compose,profile:Profile,cv:CV,'auto-apply':AutoApply,settings:Settings}[route.screen]||Dashboard;
   return <WorkspaceShell {...props} session={session}><Screen key={session.account.user_id+':'+route.screen} {...context}/></WorkspaceShell>;
 }
+function AdminGate(props){
+  const session=useSession(),{route,url,navigate}=props,ar=route.lang==='ar';
+  useEffect(()=>{if(session.status==='signed-out')navigate(workspacePath('login',route.lang)+'?next='+encodeURIComponent(url.pathname+url.search),true);},[session.status]);
+  if(session.status==='loading'||session.status==='signed-out')return <div className="ws-app ws-opening"><Brand/><Loading label={ar?'جارٍ التحقق من وصول الإدارة…':'Checking administrator access…'}/></div>;
+  if(session.status==='error')return <div className="ws-app ws-opening"><Brand/><ErrorState error={session.error} ar={ar} onRetry={session.retry}/><button className="ws-button secondary" onClick={session.signOut}>{ar?'تبديل الحساب':'Switch account'}</button></div>;
+  if(!session.account.admin_role)return <div className="ws-app ws-opening"><Brand/><h1>{ar?'الوصول مخصص للإدارة':'Administrator access required'}</h1><p>{ar?'لم يتم تعيين هذا الحساب كمسؤول.':'This account has not been assigned an administrator role.'}</p><button className="ws-button secondary" onClick={session.signOut}>{ar?'تبديل الحساب':'Switch account'}</button><a href={workspacePath('dashboard',route.lang)}>{ar?'مساحة العمل':'Your workspace'}</a></div>;
+  return <AdminApp key={session.account.user_id} {...props} appSession={session}/>;
+}
 export default function DesktopApp({initialURL='/login/'}){
   const [url,setURL]=useState(()=>new URL(initialURL,'http://local.web'));
   const route=workspaceRoute(url)||{screen:'login',lang:'en',admin:false};
@@ -35,5 +43,5 @@ export default function DesktopApp({initialURL='/login/'}){
   useEffect(()=>{const pop=()=>setURL(new URL(location.href));const click=event=>{if(event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;const link=event.target.closest?.('a[href]');if(!link||link.target||link.hasAttribute('download'))return;const next=new URL(link.href,location.origin);if(next.origin===location.origin&&workspaceRoute(next)?.admin===route.admin){event.preventDefault();navigate(next.pathname+next.search);}};window.addEventListener('popstate',pop);document.addEventListener('click',click);return()=>{window.removeEventListener('popstate',pop);document.removeEventListener('click',click);};},[]);
   useEffect(()=>{document.documentElement.lang=route.lang;document.documentElement.dir=route.lang==='ar'?'rtl':'ltr';document.title=`${route.admin?'Admin':route.screen.replaceAll('-',' ')} · AutoLinky`;document.body.classList.add('desktop-app');document.querySelector('meta[name="robots"]')?.setAttribute('content','noindex, nofollow');return()=>document.body.classList.remove('desktop-app');},[route.lang,route.screen]);
   const props={route,url,navigate};
-  return route.admin?<AdminApp {...props}/>:<SessionProvider><UserApp {...props}/></SessionProvider>;
+  return <SessionProvider>{route.admin?<AdminGate {...props}/>:<UserApp {...props}/>}</SessionProvider>;
 }

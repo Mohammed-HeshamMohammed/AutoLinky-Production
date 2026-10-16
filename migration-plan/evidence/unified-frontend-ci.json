@@ -1,0 +1,14 @@
+{
+  "source_commit": "232ef50f36e2677cab2e1c40c2984b85b7697e89",
+  "run": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872",
+  "status": "passed",
+  "version": "1.0.1+2",
+  "bundles_sha256": {
+    "android": "483eeec0d31f719b078b96b0ad839aca198a6dbfc48f99237d27456937098d75",
+    "ios": "8a6f4b056d974705aaeaae2e9bb11a18daddd6c329992342c996a1c3dcd414aa"
+  },
+  "ci_api_configured": false,
+  "local_api_configured": true,
+  "browser_ui": "not verified; browser provider unavailable",
+  "production_deployed": false
+}

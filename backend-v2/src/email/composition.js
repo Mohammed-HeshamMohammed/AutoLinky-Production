@@ -1,0 +1,21 @@
+export const validAddress=value=>{const v=String(value||'').trim().toLowerCase();return v.length<=254&&/^[A-Za-z0-9._%+'\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,24}$/.test(v)?v:null;};
+export function oneLine(value,limit){let text=String(value||'').replace(/\p{C}/gu,' ').trim().replace(/\s+/g,' ');if(text.length>limit){const part=text.slice(0,limit),index=part.lastIndexOf(' ');text=(index>0?part.slice(0,index):part).replace(/[ ,;:-]+$/,'');}return text;}
+export function cleanSignature(value){return String(value||'').split(/\r?\n/).map(line=>oneLine(line,120)).filter(Boolean).slice(0,6).join('\n').slice(0,400);}
+export function cleanLetter(value){return String(value||'').replace(/\r\n?/g,'\n').replace(/[^\S\n\t]|[\p{C}]/gu,c=>c==='\n'||c==='\t'?c:c.match(/\p{C}/u)?'':c).replace(/\n{3,}/g,'\n\n').trim().slice(0,8000);}
+const acronyms=new Set('rf noc qa qc it hr ui ux ai ml bi gis sap erp crm sql api ios lte ran ip iot plc scada hvac mep pmo seo ceo cto cfo vp nlp dsp fpga sdr vlsi ic pcb devops sre soc it/ot cad bim ehs hse kyc aml b2b b2c ar vr 2g 3g 4g 5g osp isp ftth'.split(' '));
+export function jobTitle(value){return oneLine(value,90).split(' ').map(w=>acronyms.has(w.toLowerCase())?({devops:'DevOps',ios:'iOS'}[w.toLowerCase()]||w.toUpperCase()):w).join(' ');}
+export function suggestSignature(text,address,links=[]){const top=(text||'').slice(0,4000)+'\n'+links.join('\n'),lines=[];const email=(top.match(/[A-Za-z0-9._%+'\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,24}/g)||[]).map(validAddress).find(Boolean)||validAddress(address);if(email)lines.push(`📧 ${email}`);
+  for(const [written] of top.matchAll(/(?<![\w+])\+?\(?\d[\d\s().\-/]{6,}\d(?!\w)/g)){const raw=written.trim().replace(/^\(/,''),groups=raw.match(/\d+/g)||[],digits=groups.join('');if(digits.length<9||digits.length>15||groups.every(g=>/^(19|20)\d\d$/.test(g)))continue;const phone=raw.startsWith('+')?'+'+digits:raw.startsWith('00')?'+'+digits.slice(2):/^01[0125]\d{8}$/.test(digits)?'+20'+digits.slice(1):digits;lines.push(`📞 ${phone}`);break;}
+  const linkedin=/linkedin\.com\/in\/([A-Za-z0-9\-_%]{3,100})/i.exec(top),github=/github\.com\/([A-Za-z0-9-]{1,39})(?![\w.-]*\.(?:io|com))/i.exec(top);
+  if(linkedin)lines.push(`🔗 https://www.linkedin.com/in/${linkedin[1].toLowerCase()}/`);if(github)lines.push(`💻 https://github.com/${github[1]}`);return lines.join('\n');}
+export function compose({job,to,account={},cv={},profile={},body=null,edited=null,signature='',skillNames=[]}){
+  const name=oneLine(account.sender_name,80),title=jobTitle(job.title)||'the open position',company=oneLine(job.company,60);
+  let about='',headline=oneLine(profile.headline,90).split(/\s+[|•·/–—-]\s+/)[0];if(headline){about=`I am ${/^[aeiou]/i.test(headline)?'an':'a'} ${headline}`;if(Number.isInteger(profile.years_experience)&&profile.years_experience>=1)about+=` with ${profile.years_experience} year${profile.years_experience===1?'':'s'} of experience`;about+='.';}
+  const skills=skillNames.map(s=>oneLine(s,40)).filter(Boolean).slice(0,4);if(skills.length){const joined=skills.length===1?skills[0]:`${skills.slice(0,-1).join(', ')} and ${skills.at(-1)}`;about=`${about} My experience includes ${joined}.`.trim();}
+  const paragraphs=body?.trim()||[`I saw your LinkedIn post about the ${title} role and would like to apply. ${about}`.trim(),'Please find my CV attached. I would welcome the chance to discuss how I can contribute to your team.'].join('\n\n');
+  const closing=['Sincerely,',...(name?[name]:[]),...(cleanSignature(signature)?cleanSignature(signature).split('\n'):[account.address||''])];
+  const full=edited&&cleanLetter(edited)?cleanLetter(edited):[company?`Dear ${company} Hiring Team,`:'Dear Hiring Manager,','',paragraphs,'',...closing].join('\n');
+  const safeName=oneLine(name,60).replace(/[^\p{L}\p{N}_ .-]/gu,'').replace(/^[ .]+|[ .]+$/g,''),type=cv.file_type||'pdf';
+  let attachment=safeName?`${safeName} - CV.${type}`:oneLine(cv.file_name,100).replace(/[^\p{L}\p{N}_ .-]/gu,'').replace(/^[ .]+|[ .]+$/g,'')||`CV.${type}`;if(!attachment.toLowerCase().endsWith(`.${type}`))attachment+=`.${type}`;
+  return {from_address:account.address||null,from_name:name||null,to,subject:oneLine(`Application for ${title}${name?` – ${name}`:''}`,180),body:full+'\n',attachment:cv.file_name?attachment:null,written_by_ai:!!body?.trim()&&!edited};
+}

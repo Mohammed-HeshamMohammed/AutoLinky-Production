@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-16",
+  "scope": "iOS environment and native macOS build verification; no data import",
+  "bundle_id": "com.autolinky.ios",
+  "native_host": [
+    "Swift AppDelegate",
+    "Swift SceneDelegate",
+    "Flutter shared UI"
+  ],
+  "flutter": "3.47.7",
+  "dart": "3.13.5",
+  "ios_deployment_target": "15.0",
+  "local_checks": {
+    "configuration_contract_tests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "plist_and_scheme_xml": "passed",
+    "all_xcode_build_configuration_paths": "passed",
+    "shell_syntax": "passed",
+    "windows_compilation_refusal": "passed",
+    "flutter_locked_pub_get": "passed",
+    "flutter_analyze": "passed: no issues",
+    "workflow_yaml": "passed",
+    "non_screenshot_flutter_tests": 152,
+    "javascript_web_release_build": "passed"
+  },
+  "native_compilation": "passed: Swift host, native plugins and Flutter iOS simulator app",
+  "macos_ci": {
+    "conclusion": "success",
+    "workflow": ".github/workflows/ios-v2.yml",
+    "run_id": 38813034776,
+    "url": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776",
+    "source_commit": "11d6794b1a99146393ba464374e3e92f688ba454",
+    "runner": "macos-26 arm64",
+    "xcode": "26.6 (17F113)",
+    "artifact_id": 12009462026,
+    "artifact_expires_at": "2026-10-22T21:56:31Z"
+  },
+  "simulator_launch": "not run",
+  "signed_ipa": "not produced",
+  "device_sign_in": "not run",
+  "remaining_inputs": [
+    "Apple team and signing for device installation",
+    "native Google OAuth IDs",
+    "reachable HTTPS API for a physical device"
+  ],
+  "verified_at": "2026-10-15T21:59:20.780906+00:00",
+  "firebase_core": "4.15.0",
+  "firebase_auth": "6.7.0",
+  "native_firebase_sdk": "12.19.0",
+  "artifact_verification": {
+    "path": "frontend-v2/shared/.runtime/ios-artifacts/38813034776/AutoLinky-simulator.zip",
+    "bytes": 72881214,
+    "sha256": "90cf3f59e2102de0321b733a717d2f81f8b386117d83a831f0f93bd39771e93a",
+    "zip_crc_check": "passed",
+    "mach_o_architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "compiled_info": {
+      "CFBundleIdentifier": "com.autolinky.ios",
+      "CFBundleShortVersionString": "1.0.1",
+      "CFBundleVersion": "2",
+      "CFBundleSupportedPlatforms": [
+        "iPhoneSimulator"
+      ],
+      "MinimumOSVersion": "15.0",
+      "DTXcode": "2660",
+      "DTXcodeBuild": "17F113"
+    },
+    "embedded_firebase_identity": "matched auto-linky / com.autolinky.ios"
+  }
+}

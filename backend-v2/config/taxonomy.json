@@ -1,0 +1,4625 @@
+{
+  "fields": [
+    [
+      "software",
+      "Software Development",
+      "تطوير البرمجيات",
+      "code"
+    ],
+    [
+      "data_ai",
+      "Data & AI",
+      "البيانات والذكاء الاصطناعي",
+      "insights"
+    ],
+    [
+      "devops_cloud",
+      "DevOps & Cloud",
+      "DevOps والسحابة",
+      "cloud"
+    ],
+    [
+      "networking",
+      "Networking & Telecom",
+      "الشبكات والاتصالات",
+      "lan"
+    ],
+    [
+      "cybersecurity",
+      "Cybersecurity",
+      "الأمن السيبراني",
+      "security"
+    ],
+    [
+      "it_support",
+      "IT Support & Systems",
+      "الدعم الفني والأنظمة",
+      "computer"
+    ],
+    [
+      "qa",
+      "Software Testing & QA",
+      "اختبار البرمجيات",
+      "bug_report"
+    ],
+    [
+      "design",
+      "Design",
+      "التصميم",
+      "palette"
+    ],
+    [
+      "product_project",
+      "Product & Project Management",
+      "إدارة المنتجات والمشاريع",
+      "assignment"
+    ],
+    [
+      "marketing",
+      "Marketing",
+      "التسويق",
+      "campaign"
+    ],
+    [
+      "sales",
+      "Sales & Business Development",
+      "المبيعات وتطوير الأعمال",
+      "trending_up"
+    ],
+    [
+      "customer_service",
+      "Customer Service",
+      "خدمة العملاء",
+      "support_agent"
+    ],
+    [
+      "hr",
+      "Human Resources",
+      "الموارد البشرية",
+      "groups"
+    ],
+    [
+      "accounting_finance",
+      "Accounting & Finance",
+      "المحاسبة والمالية",
+      "account_balance"
+    ],
+    [
+      "administration",
+      "Administration & Operations",
+      "الإدارة والسكرتارية",
+      "business_center"
+    ],
+    [
+      "civil_construction",
+      "Civil & Construction",
+      "الهندسة المدنية والإنشاءات",
+      "apartment"
+    ],
+    [
+      "mechanical",
+      "Mechanical Engineering",
+      "الهندسة الميكانيكية",
+      "precision_manufacturing"
+    ],
+    [
+      "electrical",
+      "Electrical & Electronics",
+      "الهندسة الكهربائية",
+      "bolt"
+    ],
+    [
+      "manufacturing_supply",
+      "Manufacturing & Supply Chain",
+      "التصنيع وسلاسل الإمداد",
+      "inventory"
+    ],
+    [
+      "healthcare",
+      "Healthcare & Pharma",
+      "الرعاية الصحية والصيدلة",
+      "medical_services"
+    ],
+    [
+      "education",
+      "Education & Training",
+      "التعليم والتدريب",
+      "school"
+    ],
+    [
+      "legal",
+      "Legal & Compliance",
+      "القانون والامتثال",
+      "gavel"
+    ],
+    [
+      "content_media",
+      "Content, Language & Media",
+      "المحتوى واللغات والإعلام",
+      "edit_note"
+    ],
+    [
+      "hospitality_tourism",
+      "Hospitality & Tourism",
+      "الضيافة والسياحة",
+      "hotel"
+    ],
+    [
+      "other",
+      "Other",
+      "أخرى",
+      "work"
+    ]
+  ],
+  "relations": [
+    [
+      "networking",
+      "cybersecurity",
+      0.7
+    ],
+    [
+      "networking",
+      "it_support",
+      0.7
+    ],
+    [
+      "networking",
+      "devops_cloud",
+      0.5
+    ],
+    [
+      "networking",
+      "electrical",
+      0.3
+    ],
+    [
+      "cybersecurity",
+      "it_support",
+      0.5
+    ],
+    [
+      "cybersecurity",
+      "devops_cloud",
+      0.4
+    ],
+    [
+      "cybersecurity",
+      "software",
+      0.3
+    ],
+    [
+      "it_support",
+      "devops_cloud",
+      0.5
+    ],
+    [
+      "it_support",
+      "software",
+      0.3
+    ],
+    [
+      "software",
+      "devops_cloud",
+      0.6
+    ],
+    [
+      "software",
+      "qa",
+      0.6
+    ],
+    [
+      "software",
+      "data_ai",
+      0.5
+    ],
+    [
+      "software",
+      "product_project",
+      0.4
+    ],
+    [
+      "software",
+      "design",
+      0.3
+    ],
+    [
+      "data_ai",
+      "devops_cloud",
+      0.4
+    ],
+    [
+      "data_ai",
+      "product_project",
+      0.3
+    ],
+    [
+      "qa",
+      "product_project",
+      0.2
+    ],
+    [
+      "design",
+      "marketing",
+      0.4
+    ],
+    [
+      "design",
+      "content_media",
+      0.4
+    ],
+    [
+      "marketing",
+      "sales",
+      0.5
+    ],
+    [
+      "marketing",
+      "content_media",
+      0.5
+    ],
+    [
+      "sales",
+      "customer_service",
+      0.5
+    ],
+    [
+      "sales",
+      "hospitality_tourism",
+      0.3
+    ],
+    [
+      "customer_service",
+      "hospitality_tourism",
+      0.4
+    ],
+    [
+      "customer_service",
+      "administration",
+      0.3
+    ],
+    [
+      "hr",
+      "administration",
+      0.5
+    ],
+    [
+      "accounting_finance",
+      "administration",
+      0.3
+    ],
+    [
+      "civil_construction",
+      "mechanical",
+      0.3
+    ],
+    [
+      "civil_construction",
+      "electrical",
+      0.3
+    ],
+    [
+      "civil_construction",
+      "manufacturing_supply",
+      0.2
+    ],
+    [
+      "civil_construction",
+      "product_project",
+      0.3
+    ],
+    [
+      "mechanical",
+      "electrical",
+      0.4
+    ],
+    [
+      "mechanical",
+      "manufacturing_supply",
+      0.5
+    ],
+    [
+      "electrical",
+      "manufacturing_supply",
+      0.4
+    ],
+    [
+      "education",
+      "content_media",
+      0.3
+    ]
+  ],
+  "roles": [
+    {
+      "slug": "software_engineer",
+      "field": "software",
+      "en": "Software Engineer",
+      "ar": "مهندس برمجيات",
+      "keywords": [
+        "software engineer",
+        "software developer",
+        "software engineering",
+        "application developer",
+        "programmer",
+        "developer",
+        "staff software engineer",
+        "مهندس برمجيات",
+        "مبرمج",
+        "مطور برمجيات",
+        "مطور",
+        "software development engineer",
+        "member of technical staff",
+        "application development manager",
+        "development manager",
+        "developpeur",
+        "developpeuse"
+      ]
+    },
+    {
+      "slug": "backend_developer",
+      "field": "software",
+      "en": "Backend Developer",
+      "ar": "مطور Backend",
+      "keywords": [
+        "backend developer",
+        "backend engineer",
+        "back end developer",
+        "back end engineer",
+        "backend",
+        "backend software engineer",
+        ".net developer",
+        "dotnet developer",
+        ".net backend developer",
+        "java developer",
+        "java engineer",
+        "python developer",
+        "python engineer",
+        "php developer",
+        "laravel developer",
+        "node js developer",
+        "nodejs developer",
+        "golang developer",
+        "django developer",
+        "ruby developer",
+        "spring boot developer",
+        "api developer",
+        "مطور باك اند",
+        "مطور backend",
+        "developpeur python",
+        "developpeur java",
+        "developpeur php"
+      ]
+    },
+    {
+      "slug": "frontend_developer",
+      "field": "software",
+      "en": "Frontend Developer",
+      "ar": "مطور Frontend",
+      "keywords": [
+        "frontend developer",
+        "front end developer",
+        "frontend engineer",
+        "front end engineer",
+        "frontend",
+        "react developer",
+        "react js developer",
+        "angular developer",
+        "vue developer",
+        "vue js developer",
+        "javascript developer",
+        "web developer",
+        "wordpress developer",
+        "shopify developer",
+        "مطور فرونت اند",
+        "مطور مواقع"
+      ]
+    },
+    {
+      "slug": "fullstack_developer",
+      "field": "software",
+      "en": "Full Stack Developer",
+      "ar": "مطور Full Stack",
+      "keywords": [
+        "full stack developer",
+        "fullstack developer",
+        "full stack engineer",
+        "fullstack engineer",
+        "full stack software engineer",
+        "full stack web developer",
+        "mern stack developer",
+        "mean stack developer",
+        "mern developer",
+        "full stack",
+        "fullstack",
+        "مطور فول ستاك"
+      ]
+    },
+    {
+      "slug": "mobile_developer",
+      "field": "software",
+      "en": "Mobile Developer",
+      "ar": "مطور تطبيقات موبايل",
+      "keywords": [
+        "mobile developer",
+        "mobile engineer",
+        "mobile application developer",
+        "mobile app developer",
+        "flutter developer",
+        "flutter engineer",
+        "android developer",
+        "android engineer",
+        "ios developer",
+        "ios engineer",
+        "react native developer",
+        "kotlin developer",
+        "swift developer",
+        "android systems engineer",
+        "مطور تطبيقات",
+        "مطور فلاتر",
+        "مطور اندرويد"
+      ]
+    },
+    {
+      "slug": "embedded_engineer",
+      "field": "software",
+      "en": "Embedded Software Engineer",
+      "ar": "مهندس أنظمة مدمجة",
+      "keywords": [
+        "embedded software engineer",
+        "embedded engineer",
+        "embedded systems engineer",
+        "embedded developer",
+        "firmware engineer",
+        "embedded software developer",
+        "firmware developer",
+        "embedded linux engineer",
+        "embedded linux developer",
+        "autosar engineer",
+        "autosar developer",
+        "fpga engineer",
+        "fpga design engineer",
+        "embedded c developer"
+      ]
+    },
+    {
+      "slug": "game_developer",
+      "field": "software",
+      "en": "Game Developer",
+      "ar": "مطور ألعاب",
+      "keywords": [
+        "game developer",
+        "unity developer",
+        "unreal developer",
+        "game programmer",
+        "مطور العاب"
+      ]
+    },
+    {
+      "slug": "solution_architect",
+      "field": "software",
+      "en": "Solution Architect",
+      "ar": "معماري حلول",
+      "keywords": [
+        "solution architect",
+        "solutions architect",
+        "software architect",
+        "enterprise architect",
+        "technical architect",
+        "technical lead",
+        "tech lead",
+        "engineering manager",
+        "enterprise solutions engineer",
+        "solutions engineer",
+        "technical integration lead",
+        "integration engineer"
+      ]
+    },
+    {
+      "slug": "erp_developer",
+      "field": "software",
+      "en": "ERP / CRM Developer",
+      "ar": "مطور ERP",
+      "keywords": [
+        "erp developer",
+        "erp consultant",
+        "sap consultant",
+        "sap developer",
+        "abap developer",
+        "odoo developer",
+        "odoo consultant",
+        "oracle technical consultant",
+        "oracle developer",
+        "salesforce developer",
+        "dynamics 365 consultant",
+        "dynamics developer",
+        "implementation consultant",
+        "odoo technical",
+        "cbs engineer",
+        "core banking",
+        "epm",
+        "tagetik",
+        "business central",
+        "enterprise resources planning",
+        "hyperion"
+      ]
+    },
+    {
+      "slug": "data_analyst",
+      "field": "data_ai",
+      "en": "Data Analyst",
+      "ar": "محلل بيانات",
+      "keywords": [
+        "data analyst",
+        "data analytics",
+        "bi analyst",
+        "bi developer",
+        "bi data analyst",
+        "business intelligence",
+        "business intelligence analyst",
+        "power bi developer",
+        "reporting analyst",
+        "business data analyst",
+        "analytics specialist",
+        "محلل بيانات",
+        "data governance analyst",
+        "data validation engineer",
+        "data quality analyst",
+        "data specialist",
+        "insights analyst",
+        "analytics and insights",
+        "customer insights",
+        "business insights",
+        "insights manager"
+      ]
+    },
+    {
+      "slug": "data_scientist",
+      "field": "data_ai",
+      "en": "Data Scientist",
+      "ar": "عالم بيانات",
+      "keywords": [
+        "data scientist",
+        "data science",
+        "applied scientist",
+        "research scientist",
+        "machine learning scientist",
+        "ai ml data scientist",
+        "statistician",
+        "quantitative analyst",
+        "عالم بيانات",
+        "postdoc",
+        "post doctoral",
+        "postdoctoral",
+        "post doctoral associate",
+        "quantitative researcher",
+        "quant researcher",
+        "quantitative engineer",
+        "trading researcher",
+        "decision scientist",
+        "bioinformatics",
+        "science des donnees"
+      ]
+    },
+    {
+      "slug": "data_engineer",
+      "field": "data_ai",
+      "en": "Data Engineer",
+      "ar": "مهندس بيانات",
+      "keywords": [
+        "data engineer",
+        "big data engineer",
+        "etl developer",
+        "data architect",
+        "data modeler",
+        "analytics engineer",
+        "dataops",
+        "data platform engineer",
+        "مهندس بيانات",
+        "architecte data",
+        "data lead",
+        "data ops"
+      ]
+    },
+    {
+      "slug": "ml_engineer",
+      "field": "data_ai",
+      "en": "AI / Machine Learning Engineer",
+      "ar": "مهندس ذكاء اصطناعي",
+      "keywords": [
+        "machine learning engineer",
+        "ml engineer",
+        "ai engineer",
+        "artificial intelligence engineer",
+        "ai ml engineer",
+        "ai and ml engineer",
+        "machine learning developer",
+        "deep learning engineer",
+        "computer vision engineer",
+        "nlp engineer",
+        "mlops engineer",
+        "machine learning mlops engineer",
+        "llm engineer",
+        "generative ai engineer",
+        "genai engineer",
+        "agentic ai engineer",
+        "ai developer",
+        "applied ai engineer",
+        "ai specialist",
+        "artificial intelligence specialist",
+        "artificial intelligence",
+        "ai architect",
+        "genai architect",
+        "ai research engineer",
+        "ai researcher",
+        "research engineer",
+        "forward deployed ai engineer",
+        "forward deployed engineer",
+        "ai software engineer",
+        "ai automation engineer",
+        "ai solutions engineer",
+        "ai product engineer",
+        "ai systems engineer",
+        "ai scientist",
+        "algorithm engineer",
+        "machine learning",
+        "مهندس ذكاء اصطناعي",
+        "ذكاء اصطناعي",
+        "vision engineer",
+        "perception engineer",
+        "ml engineering lead",
+        "ai ml product engineer",
+        "ai development consultant",
+        "ai harness engineer",
+        "ai agent engineer",
+        "inteligencia artificial",
+        "ingenierie ia",
+        "ingenieur ia",
+        "ai engineering",
+        "ai",
+        "ia",
+        "ai consultant",
+        "ai senior consultant",
+        "ai automation specialist",
+        "ai builder",
+        "ai ops engineer",
+        "ai ml ops engineer",
+        "ai engineeer",
+        "ai deployment engineer",
+        "machine learning platform engineer",
+        "ml platform engineer",
+        "machine leaning engineering",
+        "ingenieur en ia",
+        "ia appliquee",
+        "genai specialist",
+        "agentic engineer"
+      ]
+    },
+    {
+      "slug": "database_administrator",
+      "field": "data_ai",
+      "en": "Database Administrator",
+      "ar": "مسؤول قواعد بيانات",
+      "keywords": [
+        "database administrator",
+        "dba",
+        "oracle dba",
+        "sql server dba",
+        "database engineer",
+        "database developer",
+        "sql server engineer",
+        "database management analyst",
+        "database management"
+      ]
+    },
+    {
+      "slug": "devops_engineer",
+      "field": "devops_cloud",
+      "en": "DevOps Engineer",
+      "ar": "مهندس DevOps",
+      "keywords": [
+        "devops engineer",
+        "devops",
+        "site reliability engineer",
+        "sre",
+        "platform engineer",
+        "build engineer",
+        "release engineer",
+        "devsecops engineer",
+        "mlops",
+        "مهندس ديف اوبس",
+        "observability engineer",
+        "openshift engineer",
+        "red hat openshift engineer",
+        "kubernetes engineer"
+      ]
+    },
+    {
+      "slug": "cloud_engineer",
+      "field": "devops_cloud",
+      "en": "Cloud Engineer",
+      "ar": "مهندس سحابة",
+      "keywords": [
+        "cloud engineer",
+        "cloud architect",
+        "cloud specialist",
+        "cloud platform engineer",
+        "cloud administrator",
+        "aws engineer",
+        "aws cloud engineer",
+        "aws cloud specialist",
+        "azure engineer",
+        "gcp engineer",
+        "cloud consultant",
+        "مهندس سحابة"
+      ]
+    },
+    {
+      "slug": "network_engineer",
+      "field": "networking",
+      "en": "Network Engineer",
+      "ar": "مهندس شبكات",
+      "keywords": [
+        "network engineer",
+        "networking engineer",
+        "network specialist",
+        "network consultant",
+        "network presales engineer",
+        "presales network engineer",
+        "network implementation engineer",
+        "network design engineer",
+        "network",
+        "مهندس شبكات",
+        "شبكات"
+      ]
+    },
+    {
+      "slug": "noc_engineer",
+      "field": "networking",
+      "en": "NOC Engineer",
+      "ar": "مهندس NOC",
+      "keywords": [
+        "noc engineer",
+        "noc",
+        "noc lead",
+        "noc analyst",
+        "noc specialist",
+        "noc technician",
+        "network operations center",
+        "network operations engineer"
+      ]
+    },
+    {
+      "slug": "network_administrator",
+      "field": "networking",
+      "en": "Network Administrator",
+      "ar": "مسؤول شبكات",
+      "keywords": [
+        "network administrator",
+        "network admin",
+        "network technician",
+        "فني شبكات"
+      ]
+    },
+    {
+      "slug": "telecom_engineer",
+      "field": "networking",
+      "en": "Telecom Engineer",
+      "ar": "مهندس اتصالات",
+      "keywords": [
+        "telecom engineer",
+        "telecommunications engineer",
+        "telecommunication engineer",
+        "rf engineer",
+        "transmission engineer",
+        "fiber optic engineer",
+        "fiber engineer",
+        "radio network engineer",
+        "wireless engineer",
+        "voip engineer",
+        "unified communications engineer",
+        "مهندس اتصالات",
+        "collaboration engineer",
+        "ip ran engineer",
+        "ran engineer",
+        "rollout engineer",
+        "rf optimization engineer",
+        "rf planning engineer",
+        "rf post processor",
+        "rf post processing engineer",
+        "drive test engineer",
+        "radio engineer",
+        "lte engineer",
+        "5g engineer",
+        "ran integration engineer",
+        "core network engineer",
+        "packet core engineer",
+        "packet switching core engineer",
+        "ims engineer",
+        "microwave engineer",
+        "transmission planning engineer",
+        "wireless network engineer"
+      ]
+    },
+    {
+      "slug": "security_engineer",
+      "field": "cybersecurity",
+      "en": "Security Engineer",
+      "ar": "مهندس أمن معلومات",
+      "keywords": [
+        "security engineer",
+        "cyber security engineer",
+        "cybersecurity engineer",
+        "information security engineer",
+        "network security engineer",
+        "network and security engineer",
+        "security specialist",
+        "cyber security specialist",
+        "cybersecurity specialist",
+        "information security specialist",
+        "security consultant",
+        "security architect",
+        "application security engineer",
+        "cloud security engineer",
+        "network security presales engineer",
+        "cyber security",
+        "cybersecurity",
+        "information security",
+        "مهندس امن معلومات",
+        "امن معلومات",
+        "امن سيبراني",
+        "security support engineer",
+        "network security support engineer"
+      ]
+    },
+    {
+      "slug": "soc_analyst",
+      "field": "cybersecurity",
+      "en": "SOC Analyst",
+      "ar": "محلل SOC",
+      "keywords": [
+        "soc analyst",
+        "soc engineer",
+        "soc",
+        "security operations center",
+        "security operations center analyst",
+        "security analyst",
+        "cyber security analyst",
+        "cybersecurity analyst",
+        "threat analyst",
+        "threat intelligence analyst",
+        "incident responder",
+        "incident response analyst",
+        "محلل امن",
+        "incident response leader",
+        "incident response"
+      ]
+    },
+    {
+      "slug": "penetration_tester",
+      "field": "cybersecurity",
+      "en": "Penetration Tester",
+      "ar": "مختبر اختراق",
+      "keywords": [
+        "penetration tester",
+        "pentester",
+        "pen tester",
+        "ethical hacker",
+        "red team",
+        "offensive security",
+        "vulnerability analyst",
+        "vapt",
+        "مختبر اختراق"
+      ]
+    },
+    {
+      "slug": "grc_specialist",
+      "field": "cybersecurity",
+      "en": "GRC / Information Security Officer",
+      "ar": "أخصائي حوكمة وامتثال أمني",
+      "keywords": [
+        "grc specialist",
+        "grc analyst",
+        "information security officer",
+        "ciso",
+        "security governance",
+        "it audit",
+        "it auditor",
+        "iso 27001",
+        "bcm",
+        "business continuity",
+        "grc"
+      ]
+    },
+    {
+      "slug": "it_support_specialist",
+      "field": "it_support",
+      "en": "IT Support Specialist",
+      "ar": "أخصائي دعم فني",
+      "keywords": [
+        "it support",
+        "it support specialist",
+        "it support engineer",
+        "it helpdesk engineer",
+        "helpdesk",
+        "help desk",
+        "service desk",
+        "desktop support",
+        "it technician",
+        "it specialist",
+        "it engineer",
+        "it officer",
+        "it administrator",
+        "technical support engineer",
+        "it",
+        "دعم فني",
+        "فني دعم",
+        "مهندس دعم فني"
+      ]
+    },
+    {
+      "slug": "system_administrator",
+      "field": "it_support",
+      "en": "System Administrator",
+      "ar": "مسؤول أنظمة",
+      "keywords": [
+        "system administrator",
+        "systems administrator",
+        "sysadmin",
+        "systems engineer",
+        "system engineer",
+        "windows administrator",
+        "linux administrator",
+        "infrastructure engineer",
+        "it infrastructure engineer",
+        "vmware engineer",
+        "microsoft engineer",
+        "mdm specialist",
+        "مسؤول انظمة",
+        "data center engineer",
+        "datacenter engineer",
+        "microsoft 365 engineer",
+        "m365 engineer",
+        "office 365 engineer"
+      ]
+    },
+    {
+      "slug": "application_support",
+      "field": "it_support",
+      "en": "Application Support Engineer",
+      "ar": "مهندس دعم تطبيقات",
+      "keywords": [
+        "application support engineer",
+        "application support specialist",
+        "application support",
+        "production support engineer",
+        "l2 support engineer",
+        "technical support specialist"
+      ]
+    },
+    {
+      "slug": "it_manager",
+      "field": "it_support",
+      "en": "IT Manager",
+      "ar": "مدير تكنولوجيا المعلومات",
+      "keywords": [
+        "it manager",
+        "it director",
+        "head of it",
+        "it section head",
+        "it team leader",
+        "cio",
+        "مدير it"
+      ]
+    },
+    {
+      "slug": "qa_engineer",
+      "field": "qa",
+      "en": "QA / Software Tester",
+      "ar": "مهندس اختبار برمجيات",
+      "keywords": [
+        "qa engineer",
+        "quality assurance engineer",
+        "software tester",
+        "software test engineer",
+        "test engineer",
+        "qa tester",
+        "tester",
+        "automation tester",
+        "test automation engineer",
+        "qa automation engineer",
+        "manual tester",
+        "sdet",
+        "software quality engineer",
+        "code quality engineer",
+        "qa analyst",
+        "مختبر برمجيات",
+        "software testing engineer",
+        "software development engineer in test",
+        "testing engineer"
+      ]
+    },
+    {
+      "slug": "ui_ux_designer",
+      "field": "design",
+      "en": "UI/UX Designer",
+      "ar": "مصمم UI/UX",
+      "keywords": [
+        "ui ux designer",
+        "ux ui designer",
+        "ux designer",
+        "ui designer",
+        "product designer",
+        "ux researcher",
+        "interaction designer",
+        "ui ux",
+        "web designer",
+        "مصمم واجهات",
+        "مصمم ui ux"
+      ]
+    },
+    {
+      "slug": "graphic_designer",
+      "field": "design",
+      "en": "Graphic Designer",
+      "ar": "مصمم جرافيك",
+      "keywords": [
+        "graphic designer",
+        "visual designer",
+        "motion graphic designer",
+        "motion graphics designer",
+        "motion designer",
+        "2d designer",
+        "3d designer",
+        "3d visualizer",
+        "3d artist",
+        "illustrator artist",
+        "art director",
+        "creative director",
+        "designer",
+        "مصمم جرافيك",
+        "مصمم"
+      ]
+    },
+    {
+      "slug": "interior_designer",
+      "field": "design",
+      "en": "Interior Designer",
+      "ar": "مصمم ديكور",
+      "keywords": [
+        "interior designer",
+        "interior design engineer",
+        "architectural and interior designer",
+        "decor engineer",
+        "مصمم ديكور",
+        "مهندس ديكور"
+      ]
+    },
+    {
+      "slug": "project_manager",
+      "field": "product_project",
+      "en": "Project Manager",
+      "ar": "مدير مشروعات",
+      "keywords": [
+        "project manager",
+        "project management engineer",
+        "project coordinator",
+        "program manager",
+        "programme manager",
+        "pmo",
+        "project lead",
+        "it project manager",
+        "project director",
+        "project management",
+        "مدير مشروع",
+        "مدير مشروعات",
+        "change manager",
+        "incident manager",
+        "projects director",
+        "projects manager"
+      ]
+    },
+    {
+      "slug": "product_manager",
+      "field": "product_project",
+      "en": "Product Manager",
+      "ar": "مدير منتج",
+      "keywords": [
+        "product manager",
+        "product owner",
+        "product lead",
+        "technical product manager",
+        "head of product",
+        "مدير منتج",
+        "product coach"
+      ]
+    },
+    {
+      "slug": "business_analyst",
+      "field": "product_project",
+      "en": "Business Analyst",
+      "ar": "محلل أعمال",
+      "keywords": [
+        "business analyst",
+        "systems analyst",
+        "functional analyst",
+        "process analyst",
+        "ai business analyst",
+        "business process analyst",
+        "requirements analyst",
+        "محلل اعمال",
+        "محلل نظم"
+      ]
+    },
+    {
+      "slug": "scrum_master",
+      "field": "product_project",
+      "en": "Scrum Master / Agile Coach",
+      "ar": "Scrum Master",
+      "keywords": [
+        "scrum master",
+        "agile coach",
+        "delivery manager",
+        "agile project manager"
+      ]
+    },
+    {
+      "slug": "digital_marketing_specialist",
+      "field": "marketing",
+      "en": "Digital Marketing Specialist",
+      "ar": "أخصائي تسويق رقمي",
+      "keywords": [
+        "digital marketing",
+        "digital marketing specialist",
+        "digital marketing executive",
+        "performance marketing",
+        "performance marketer",
+        "media buyer",
+        "media buying",
+        "seo specialist",
+        "seo",
+        "sem specialist",
+        "ppc specialist",
+        "paid ads specialist",
+        "growth marketer",
+        "growth marketing",
+        "e commerce specialist",
+        "ecommerce specialist",
+        "email marketing specialist",
+        "تسويق رقمي",
+        "تسويق الكتروني",
+        "ميديا باير",
+        "e commerce manager",
+        "ecommerce manager",
+        "digital platforms specialist"
+      ]
+    },
+    {
+      "slug": "social_media_specialist",
+      "field": "marketing",
+      "en": "Social Media Specialist",
+      "ar": "أخصائي سوشيال ميديا",
+      "keywords": [
+        "social media specialist",
+        "social media",
+        "social media manager",
+        "social media executive",
+        "community manager",
+        "community specialist",
+        "influencer marketing specialist",
+        "influencer marketing",
+        "organic marketing specialist",
+        "سوشيال ميديا"
+      ]
+    },
+    {
+      "slug": "marketing_specialist",
+      "field": "marketing",
+      "en": "Marketing Specialist",
+      "ar": "أخصائي تسويق",
+      "keywords": [
+        "marketing specialist",
+        "marketing executive",
+        "marketing coordinator",
+        "marketing officer",
+        "marketing",
+        "marketing manager",
+        "director of marketing",
+        "head of marketing",
+        "trade marketing",
+        "trade marketing specialist",
+        "brand manager",
+        "brand specialist",
+        "brand and communication specialist",
+        "crm specialist",
+        "public relations",
+        "public relations specialist",
+        "pr specialist",
+        "communications specialist",
+        "events coordinator",
+        "market research",
+        "تسويق",
+        "مسوق",
+        "market intelligence",
+        "customer relationship management specialist",
+        "events specialist",
+        "event manager",
+        "digital commerce"
+      ]
+    },
+    {
+      "slug": "sales_representative",
+      "field": "sales",
+      "en": "Sales Representative",
+      "ar": "مندوب مبيعات",
+      "keywords": [
+        "sales representative",
+        "sales rep",
+        "sales executive",
+        "sales specialist",
+        "sales agent",
+        "salesman",
+        "saleswoman",
+        "sales",
+        "sales consultant",
+        "sales associate",
+        "sales officer",
+        "telesales",
+        "telesales agent",
+        "telesales representative",
+        "telesales specialist",
+        "inside sales",
+        "outdoor sales",
+        "direct sales",
+        "direct sales agent",
+        "direct sales representative",
+        "b2b sales",
+        "b2b sales executive",
+        "retail sales",
+        "retail sales representative",
+        "property consultant",
+        "real estate consultant",
+        "real estate sales",
+        "booking and sales executive",
+        "appointment setter",
+        "lead generation specialist",
+        "preseller",
+        "مندوب مبيعات",
+        "اخصائي مبيعات",
+        "مبيعات",
+        "مستشار عقاري",
+        "مندوب",
+        "salesperson",
+        "renewals specialist",
+        "telemarketing",
+        "telemarketing agent",
+        "parts advisor",
+        "account representative"
+      ]
+    },
+    {
+      "slug": "sales_engineer",
+      "field": "sales",
+      "en": "Sales Engineer",
+      "ar": "مهندس مبيعات",
+      "keywords": [
+        "sales engineer",
+        "presales engineer",
+        "pre sales engineer",
+        "presales",
+        "technical sales engineer",
+        "technical sales",
+        "mechanical sales engineer",
+        "outdoor sales engineer",
+        "sales marketing engineer",
+        "biomedical sales engineer",
+        "application engineer",
+        "مهندس مبيعات"
+      ]
+    },
+    {
+      "slug": "account_manager",
+      "field": "sales",
+      "en": "Account Manager",
+      "ar": "مدير حسابات عملاء",
+      "keywords": [
+        "account manager",
+        "key account manager",
+        "key account specialist",
+        "account executive",
+        "account management specialist",
+        "account management",
+        "sales account manager",
+        "client manager",
+        "relationship manager",
+        "client relationship manager"
+      ]
+    },
+    {
+      "slug": "business_development",
+      "field": "sales",
+      "en": "Business Development",
+      "ar": "تطوير أعمال",
+      "keywords": [
+        "business development",
+        "business development specialist",
+        "business development manager",
+        "business development executive",
+        "business development engineer",
+        "business developer",
+        "partnerships manager",
+        "bd manager",
+        "export sales specialist",
+        "تطوير اعمال",
+        "commercial engineer",
+        "commercial specialist",
+        "commercial and growth",
+        "alliances manager",
+        "alliances field engineer"
+      ]
+    },
+    {
+      "slug": "sales_manager",
+      "field": "sales",
+      "en": "Sales Manager",
+      "ar": "مدير مبيعات",
+      "keywords": [
+        "sales manager",
+        "sales director",
+        "sales supervisor",
+        "sales team leader",
+        "area sales manager",
+        "head of sales",
+        "regional sales manager",
+        "real estate sales manager",
+        "مدير مبيعات",
+        "مشرف مبيعات",
+        "commercial manager",
+        "commercial director",
+        "commercial managing partner",
+        "export manager",
+        "commercial lead"
+      ]
+    },
+    {
+      "slug": "medical_representative",
+      "field": "sales",
+      "en": "Medical Representative",
+      "ar": "مندوب دعاية طبية",
+      "keywords": [
+        "medical representative",
+        "medical sales representative",
+        "medical rep",
+        "pharmaceutical sales",
+        "product specialist",
+        "مندوب دعاية طبية",
+        "مندوب طبي"
+      ]
+    },
+    {
+      "slug": "customer_service_representative",
+      "field": "customer_service",
+      "en": "Customer Service Representative",
+      "ar": "ممثل خدمة عملاء",
+      "keywords": [
+        "customer service",
+        "customer service representative",
+        "customer service agent",
+        "customer service specialist",
+        "customer service advisor",
+        "customer service officer",
+        "customer service consultant",
+        "customer care",
+        "customer care executive",
+        "customer support",
+        "customer support specialist",
+        "call center",
+        "call center agent",
+        "call center representative",
+        "call centre",
+        "contact center",
+        "customer experience",
+        "technical support advisor",
+        "technical support agent",
+        "technical support representative",
+        "csr",
+        "chat support",
+        "bilingual customer service",
+        "customer service manager",
+        "call center manager",
+        "خدمة عملاء",
+        "خدمه عملاء",
+        "كول سنتر",
+        "chat agent",
+        "customer relations",
+        "customer relations representative",
+        "customer complaints",
+        "complaints",
+        "head of customer",
+        "tech support",
+        "technical support",
+        "non voice",
+        "speaker",
+        "voice agent",
+        "service center manager"
+      ]
+    },
+    {
+      "slug": "customer_success",
+      "field": "customer_service",
+      "en": "Customer Success",
+      "ar": "نجاح العملاء",
+      "keywords": [
+        "customer success",
+        "customer success manager",
+        "client success",
+        "customer onboarding specialist"
+      ]
+    },
+    {
+      "slug": "recruiter",
+      "field": "hr",
+      "en": "Recruiter / Talent Acquisition",
+      "ar": "أخصائي توظيف",
+      "keywords": [
+        "recruiter",
+        "talent acquisition",
+        "talent acquisition specialist",
+        "talent acquisition manager",
+        "talent acquisition engineer",
+        "recruitment specialist",
+        "recruitment",
+        "recruitment consultant",
+        "sourcing specialist",
+        "technical recruiter",
+        "tech talent acquisition specialist",
+        "hr recruiter",
+        "headhunter",
+        "توظيف",
+        "اخصائي توظيف"
+      ]
+    },
+    {
+      "slug": "hr_specialist",
+      "field": "hr",
+      "en": "HR Specialist",
+      "ar": "أخصائي موارد بشرية",
+      "keywords": [
+        "hr specialist",
+        "hr generalist",
+        "human resources",
+        "human resources specialist",
+        "hr",
+        "hr officer",
+        "hr coordinator",
+        "hr business partner",
+        "hrbp",
+        "hr manager",
+        "hr director",
+        "hr admin",
+        "hr operations",
+        "hr advisor",
+        "hr operations specialist",
+        "hr operations manager",
+        "hr site specialist",
+        "hr section head",
+        "people partner",
+        "people operations",
+        "od specialist",
+        "organizational development",
+        "talent management",
+        "learning and development",
+        "training specialist",
+        "compensation and benefits",
+        "personnel specialist",
+        "personnel",
+        "employee relations",
+        "موارد بشرية",
+        "شئون عاملين",
+        "شؤون موظفين",
+        "rh",
+        "ressources humaines",
+        "charge administratif rh",
+        "people and culture",
+        "people culture"
+      ]
+    },
+    {
+      "slug": "payroll_specialist",
+      "field": "hr",
+      "en": "Payroll Specialist",
+      "ar": "أخصائي رواتب",
+      "keywords": [
+        "payroll specialist",
+        "payroll",
+        "payroll officer",
+        "payroll accountant",
+        "rewards specialist",
+        "اجور",
+        "paie",
+        "charge de paie",
+        "gestionnaire de paie"
+      ]
+    },
+    {
+      "slug": "accountant",
+      "field": "accounting_finance",
+      "en": "Accountant",
+      "ar": "محاسب",
+      "keywords": [
+        "accountant",
+        "accounting",
+        "general accountant",
+        "staff accountant",
+        "cost accountant",
+        "tax accountant",
+        "treasury accountant",
+        "ap accountant",
+        "ar accountant",
+        "accounts payable",
+        "accounts receivable",
+        "general ledger",
+        "gl accountant",
+        "bookkeeper",
+        "bookkeeping",
+        "chief accountant",
+        "management accountant",
+        "financial accountant",
+        "project accountant",
+        "fund accountant",
+        "accounting specialist",
+        "accounts senior",
+        "accounting analyst",
+        "comptable",
+        "analyste comptable",
+        "boekhouder",
+        "buchhalter",
+        "buchhalterin",
+        "bilanzbuchhalter",
+        "finanzbuchhalter",
+        "bilanzbuchhalterin",
+        "steuerfachangestellter",
+        "contabil",
+        "contador",
+        "contable",
+        "accountancy",
+        "محاسب",
+        "محاسبة",
+        "محاسبه",
+        "accoutant",
+        "tax",
+        "tax specialist",
+        "tax manager",
+        "tax associate",
+        "controllership",
+        "chargeback",
+        "ksiegowosci",
+        "ksiegowa",
+        "ksiegowy",
+        "ke toan",
+        "経理",
+        "account reconciliation",
+        "comptabilite",
+        "analyste comptabilite",
+        "会计",
+        "总账会计",
+        "buchhaltung",
+        "finanzbuchhaltung",
+        "hauptbuchhaltung",
+        "rechnungswesen",
+        "steuerfachkraft",
+        "steuerberater",
+        "mitarbeiter buchhaltung",
+        "contabilidade",
+        "senior accountants",
+        "account payable",
+        "account receivable",
+        "accounts assistant",
+        "accounts executive",
+        "contabilista",
+        "contabilidad"
+      ]
+    },
+    {
+      "slug": "auditor",
+      "field": "accounting_finance",
+      "en": "Auditor",
+      "ar": "مراجع حسابات",
+      "keywords": [
+        "auditor",
+        "internal auditor",
+        "external auditor",
+        "audit",
+        "audit manager",
+        "income auditor",
+        "audit senior",
+        "مراجع",
+        "مدقق حسابات",
+        "مراجع حسابات",
+        "auditeur",
+        "auditeur interne"
+      ]
+    },
+    {
+      "slug": "financial_analyst",
+      "field": "accounting_finance",
+      "en": "Financial Analyst",
+      "ar": "محلل مالي",
+      "keywords": [
+        "financial analyst",
+        "finance analyst",
+        "fp and a",
+        "fpa analyst",
+        "financial planning",
+        "investment analyst",
+        "credit analyst",
+        "finance specialist",
+        "finance executive",
+        "finance associate",
+        "finance coordinator",
+        "financial advisor",
+        "analyste financier",
+        "controlling",
+        "محلل مالي",
+        "finance",
+        "cost analyst",
+        "commercial analyst",
+        "credit officer",
+        "credit investigator",
+        "actuaire",
+        "actuary",
+        "financial reporting analyst",
+        "controleur de gestion",
+        "controle de gestion",
+        "cost management analyst",
+        "regulatory reporting"
+      ]
+    },
+    {
+      "slug": "finance_manager",
+      "field": "accounting_finance",
+      "en": "Finance Manager / Controller",
+      "ar": "مدير مالي",
+      "keywords": [
+        "finance manager",
+        "financial manager",
+        "financial controller",
+        "controller",
+        "head of finance",
+        "director of finance",
+        "finance director",
+        "cfo",
+        "chief financial officer",
+        "plant controller",
+        "accounting manager",
+        "مدير مالي",
+        "مدير حسابات",
+        "accounts manager",
+        "controllership manager",
+        "directeur administratif et financier",
+        "daf",
+        "controleur general",
+        "corporate treasurer"
+      ]
+    },
+    {
+      "slug": "banking_officer",
+      "field": "accounting_finance",
+      "en": "Banking Officer",
+      "ar": "موظف بنك",
+      "keywords": [
+        "bank teller",
+        "teller",
+        "banking",
+        "banking services representative",
+        "personal banker",
+        "banker",
+        "banking program graduate",
+        "treasury",
+        "موظف بنك"
+      ]
+    },
+    {
+      "slug": "collections_specialist",
+      "field": "accounting_finance",
+      "en": "Collections / Cashier",
+      "ar": "تحصيل وخزينة",
+      "keywords": [
+        "debt collector",
+        "collection specialist",
+        "collections specialist",
+        "collector",
+        "cashier",
+        "كاشير",
+        "تحصيل",
+        "خزينة",
+        "recouvrement",
+        "charge de recouvrement",
+        "gestionnaire administratif recouvrement"
+      ]
+    },
+    {
+      "slug": "administrative_assistant",
+      "field": "administration",
+      "en": "Administrative Assistant",
+      "ar": "مساعد إداري",
+      "keywords": [
+        "administrative assistant",
+        "admin assistant",
+        "administrative specialist",
+        "administration specialist",
+        "administrative",
+        "admin",
+        "office assistant",
+        "executive assistant",
+        "personal assistant",
+        "secretary",
+        "office manager",
+        "administrative affairs",
+        "administrative affairs manager",
+        "data entry",
+        "data entry clerk",
+        "document controller",
+        "receptionist",
+        "front desk",
+        "admissions coordinator",
+        "سكرتير",
+        "سكرتيرة",
+        "سكرتارية",
+        "اداري",
+        "مدخل بيانات",
+        "ريسبشن",
+        "ceo assistant",
+        "administrativo",
+        "administrativa",
+        "work space supervisor"
+      ]
+    },
+    {
+      "slug": "operations_specialist",
+      "field": "administration",
+      "en": "Operations Specialist",
+      "ar": "أخصائي عمليات",
+      "keywords": [
+        "operations specialist",
+        "operations manager",
+        "operations coordinator",
+        "business operations manager",
+        "operations executive",
+        "operations",
+        "operations supervisor",
+        "area manager",
+        "branch manager",
+        "عمليات",
+        "fleet manager",
+        "o and m manager",
+        "factory head"
+      ]
+    },
+    {
+      "slug": "facility_security",
+      "field": "administration",
+      "en": "Facilities, Security & Drivers",
+      "ar": "خدمات وأمن وسائقين",
+      "keywords": [
+        "security guard",
+        "security officer",
+        "access security officer",
+        "facility manager",
+        "facilities",
+        "driver",
+        "bus attendant",
+        "office boy",
+        "cleaner",
+        "حارس امن",
+        "فرد امن",
+        "سائق"
+      ]
+    },
+    {
+      "slug": "civil_engineer",
+      "field": "civil_construction",
+      "en": "Civil / Structural Engineer",
+      "ar": "مهندس مدني / إنشائي",
+      "keywords": [
+        "civil engineer",
+        "structural engineer",
+        "structural design engineer",
+        "structural design director",
+        "geotechnical engineer",
+        "bridges design engineer",
+        "road engineer",
+        "highway engineer",
+        "infrastructure civil engineer",
+        "مهندس مدني",
+        "مهندس انشائي",
+        "مهندس مدنى",
+        "steel detailing",
+        "steel detailing engineer",
+        "detailer engineer",
+        "detailer",
+        "infrastructure design engineer",
+        "estimation and steel detailing engineer"
+      ]
+    },
+    {
+      "slug": "site_engineer",
+      "field": "civil_construction",
+      "en": "Site Engineer",
+      "ar": "مهندس موقع",
+      "keywords": [
+        "site engineer",
+        "civil site engineer",
+        "site civil engineer",
+        "construction engineer",
+        "resident engineer",
+        "finishing engineer",
+        "site supervisor",
+        "execution engineer",
+        "project engineer",
+        "qc civil engineer",
+        "qa qc civil engineer",
+        "aluminum facade site engineer",
+        "alteration engineer",
+        "construction manager",
+        "site manager",
+        "مهندس موقع",
+        "مهندس تنفيذ",
+        "projects engineer",
+        "civil projects engineer",
+        "construction worker",
+        "architectural site supervision engineer",
+        "site coordination engineer",
+        "site facade engineer",
+        "facade engineer"
+      ]
+    },
+    {
+      "slug": "technical_office_engineer",
+      "field": "civil_construction",
+      "en": "Technical Office Engineer",
+      "ar": "مهندس مكتب فني",
+      "keywords": [
+        "technical office engineer",
+        "technical office",
+        "civil technical office engineer",
+        "technical office manager",
+        "technical office civil engineer",
+        "structural technical office engineer",
+        "مكتب فني",
+        "مهندس مكتب فني"
+      ]
+    },
+    {
+      "slug": "planning_engineer",
+      "field": "civil_construction",
+      "en": "Planning / Project Control Engineer",
+      "ar": "مهندس تخطيط",
+      "keywords": [
+        "planning engineer",
+        "planner",
+        "project control engineer",
+        "project controls engineer",
+        "project control",
+        "cost control engineer",
+        "cost control",
+        "planning and project control engineer",
+        "scheduler",
+        "مهندس تخطيط"
+      ]
+    },
+    {
+      "slug": "quantity_surveyor",
+      "field": "civil_construction",
+      "en": "Quantity Surveyor / Estimation",
+      "ar": "مهندس حصر وتسعير",
+      "keywords": [
+        "quantity surveyor",
+        "quantity surveyor engineer",
+        "qs engineer",
+        "qs",
+        "estimation engineer",
+        "tender engineer",
+        "tendering engineer",
+        "tender and estimation engineer",
+        "cost estimator",
+        "estimator",
+        "contracts engineer",
+        "contract administrator",
+        "contracts manager",
+        "مهندس حصر",
+        "مهندس تسعير",
+        "claims engineer",
+        "contract engineer",
+        "contract specialist",
+        "tender lv engineer",
+        "estimation and quotations engineer",
+        "tendeing engineer"
+      ]
+    },
+    {
+      "slug": "architect",
+      "field": "civil_construction",
+      "en": "Architect / BIM",
+      "ar": "مهندس معماري",
+      "keywords": [
+        "architect",
+        "architectural engineer",
+        "architecture engineer",
+        "architectural design engineer",
+        "architect design engineer",
+        "architect engineer",
+        "architectural site engineer",
+        "site architect",
+        "architectural technical office engineer",
+        "architecture technical office engineer",
+        "bim engineer",
+        "bim coordinator",
+        "bim coordination engineer",
+        "bim modeler",
+        "bim manager",
+        "bim architect",
+        "bim professional",
+        "architectural bim engineer",
+        "revit modeler",
+        "draftsman",
+        "autocad draftsman",
+        "مهندس معماري",
+        "معماري",
+        "architecture design engineer",
+        "shop drawing engineer"
+      ]
+    },
+    {
+      "slug": "surveyor",
+      "field": "civil_construction",
+      "en": "Land Surveyor",
+      "ar": "مساح",
+      "keywords": [
+        "land surveyor",
+        "surveyor",
+        "survey engineer",
+        "مساح"
+      ]
+    },
+    {
+      "slug": "mechanical_engineer",
+      "field": "mechanical",
+      "en": "Mechanical Engineer",
+      "ar": "مهندس ميكانيكا",
+      "keywords": [
+        "mechanical engineer",
+        "mechanical design engineer",
+        "mechanical site engineer",
+        "site mechanical engineer",
+        "mechanical technical office engineer",
+        "mechanical bim engineer",
+        "bim mechanical engineer",
+        "mechanical power engineer",
+        "mechanical infrastructure design engineer",
+        "mechanical quantity surveyor engineer",
+        "mechanical tendering engineer",
+        "mechanical procurement engineer",
+        "mechanical site executive engineer",
+        "hvac engineer",
+        "hvac design engineer",
+        "mep engineer",
+        "fire fighting engineer",
+        "plumbing engineer",
+        "automotive mechanical engineer",
+        "mechanical",
+        "مهندس ميكانيكا",
+        "مهندس ميكانيكي"
+      ]
+    },
+    {
+      "slug": "maintenance_engineer",
+      "field": "mechanical",
+      "en": "Maintenance / Service Engineer",
+      "ar": "مهندس صيانة",
+      "keywords": [
+        "maintenance engineer",
+        "mechanical maintenance engineer",
+        "maintenance technician",
+        "maintenance supervisor",
+        "service engineer",
+        "after sales engineer",
+        "field service engineer",
+        "installation engineer",
+        "testing and commissioning engineer",
+        "commissioning engineer",
+        "workshop engineer",
+        "reliability engineer",
+        "asset reliability service engineer",
+        "automotive service manager",
+        "area service manager",
+        "technician",
+        "مهندس صيانة",
+        "فني صيانة",
+        "maintenance",
+        "maintenance head"
+      ]
+    },
+    {
+      "slug": "electrical_engineer",
+      "field": "electrical",
+      "en": "Electrical Engineer",
+      "ar": "مهندس كهرباء",
+      "keywords": [
+        "electrical engineer",
+        "electrical design engineer",
+        "electrical site engineer",
+        "site electrical engineer",
+        "electrical technical office engineer",
+        "electrical maintenance engineer",
+        "power engineer",
+        "electronics engineer",
+        "electrical",
+        "electromechanical engineer",
+        "project manager electromechanical",
+        "مهندس كهرباء",
+        "مهندس كهربائي",
+        "cable design engineer",
+        "electric engineer"
+      ]
+    },
+    {
+      "slug": "light_current_engineer",
+      "field": "electrical",
+      "en": "Light Current / ELV Engineer",
+      "ar": "مهندس تيار خفيف",
+      "keywords": [
+        "light current engineer",
+        "low current engineer",
+        "elv engineer",
+        "light current presales engineer",
+        "bms engineer",
+        "bms site engineer",
+        "fire alarm engineer",
+        "cctv engineer",
+        "security systems engineer",
+        "مهندس تيار خفيف",
+        "security design engineer",
+        "elv design engineer",
+        "knx engineer",
+        "lv technical design engineer"
+      ]
+    },
+    {
+      "slug": "automation_engineer",
+      "field": "electrical",
+      "en": "Automation & Control Engineer",
+      "ar": "مهندس تحكم آلي",
+      "keywords": [
+        "automation engineer",
+        "control engineer",
+        "plc engineer",
+        "scada engineer",
+        "instrumentation engineer",
+        "automation and control technical office engineer",
+        "automation and control",
+        "mechatronics engineer",
+        "robotics engineer",
+        "مهندس تحكم"
+      ]
+    },
+    {
+      "slug": "production_engineer",
+      "field": "manufacturing_supply",
+      "en": "Production / Industrial Engineer",
+      "ar": "مهندس إنتاج",
+      "keywords": [
+        "production engineer",
+        "manufacturing engineer",
+        "process engineer",
+        "industrial engineer",
+        "plant manager",
+        "production manager",
+        "production supervisor",
+        "textile spinning service engineer",
+        "textile engineer",
+        "chemical engineer",
+        "مهندس انتاج",
+        "مهندس صناعي"
+      ]
+    },
+    {
+      "slug": "quality_engineer",
+      "field": "manufacturing_supply",
+      "en": "Quality Engineer (QA/QC)",
+      "ar": "مهندس جودة",
+      "keywords": [
+        "quality engineer",
+        "quality control engineer",
+        "qc engineer",
+        "qa qc engineer",
+        "quality control",
+        "quality specialist",
+        "quality assurance specialist",
+        "quality manager",
+        "qc inspector",
+        "qc engineer manager",
+        "quality assurance",
+        "architectural quality engineer",
+        "مهندس جودة",
+        "جودة"
+      ]
+    },
+    {
+      "slug": "supply_chain_specialist",
+      "field": "manufacturing_supply",
+      "en": "Supply Chain / Procurement",
+      "ar": "سلاسل الإمداد والمشتريات",
+      "keywords": [
+        "supply chain",
+        "procurement",
+        "procurement engineer",
+        "procurement specialist",
+        "procurement manager",
+        "purchasing",
+        "purchaser",
+        "buyer",
+        "logistics",
+        "logistics specialist",
+        "warehouse",
+        "inventory",
+        "store keeper",
+        "storekeeper",
+        "material planner",
+        "material planner engineer",
+        "demand planner",
+        "import export",
+        "freight",
+        "shipping",
+        "air freight operations specialist",
+        "مشتريات",
+        "مخازن",
+        "لوجستيات",
+        "supplier qualification",
+        "distribution analyst",
+        "distribution",
+        "supplier",
+        "purchase officer",
+        "purchasing officer",
+        "purchase",
+        "ff and e",
+        "ffe",
+        "import and export specialist",
+        "export and import specialist",
+        "import specialist"
+      ]
+    },
+    {
+      "slug": "hse_engineer",
+      "field": "manufacturing_supply",
+      "en": "HSE / Safety Engineer",
+      "ar": "مهندس سلامة وصحة مهنية",
+      "keywords": [
+        "hse engineer",
+        "hse officer",
+        "hse specialist",
+        "safety engineer",
+        "safety officer",
+        "health and safety",
+        "ehs",
+        "occupational safety",
+        "fire and life safety engineer",
+        "architectural fire and life safety engineer",
+        "مهندس سلامة",
+        "سلامة وصحة مهنية",
+        "hse supervisor",
+        "hsse",
+        "hsse manager"
+      ]
+    },
+    {
+      "slug": "doctor",
+      "field": "healthcare",
+      "en": "Doctor",
+      "ar": "طبيب",
+      "keywords": [
+        "doctor",
+        "physician",
+        "dentist",
+        "surgeon",
+        "medical doctor",
+        "general practitioner",
+        "specialist doctor",
+        "طبيب",
+        "دكتور"
+      ]
+    },
+    {
+      "slug": "nurse",
+      "field": "healthcare",
+      "en": "Nurse",
+      "ar": "ممرض",
+      "keywords": [
+        "nurse",
+        "nursing",
+        "registered nurse",
+        "تمريض",
+        "ممرض",
+        "ممرضة"
+      ]
+    },
+    {
+      "slug": "pharmacist",
+      "field": "healthcare",
+      "en": "Pharmacist",
+      "ar": "صيدلي",
+      "keywords": [
+        "pharmacist",
+        "pharmacy",
+        "clinical pharmacist",
+        "صيدلي",
+        "صيدلية"
+      ]
+    },
+    {
+      "slug": "healthcare_professional",
+      "field": "healthcare",
+      "en": "Healthcare Professional",
+      "ar": "أخصائي رعاية صحية",
+      "keywords": [
+        "healthcare professional",
+        "physiotherapist",
+        "lab technician",
+        "laboratory specialist",
+        "radiologist",
+        "medical",
+        "healthcare",
+        "clinical",
+        "biomedical engineer",
+        "care manager",
+        "caregiver",
+        "dietitian",
+        "اخصائي علاج طبيعي",
+        "معمل",
+        "clinic manager",
+        "hospitalist",
+        "clinic",
+        "ob gyn"
+      ]
+    },
+    {
+      "slug": "teacher",
+      "field": "education",
+      "en": "Teacher / Instructor",
+      "ar": "مدرس / مدرب",
+      "keywords": [
+        "teacher",
+        "instructor",
+        "tutor",
+        "lecturer",
+        "teaching assistant",
+        "teacher assistant",
+        "trainer",
+        "professor",
+        "teaching",
+        "مدرس",
+        "معلم",
+        "مدرب",
+        "student advisor",
+        "assessor",
+        "english assessor"
+      ]
+    },
+    {
+      "slug": "lawyer",
+      "field": "legal",
+      "en": "Lawyer / Legal Counsel",
+      "ar": "محامي / مستشار قانوني",
+      "keywords": [
+        "lawyer",
+        "legal counsel",
+        "legal advisor",
+        "legal specialist",
+        "paralegal",
+        "attorney",
+        "compliance officer",
+        "compliance specialist",
+        "compliance analyst",
+        "legal",
+        "محامي",
+        "مستشار قانوني",
+        "قانوني",
+        "compliance",
+        "compliance section head"
+      ]
+    },
+    {
+      "slug": "content_writer",
+      "field": "content_media",
+      "en": "Content Writer / Translator",
+      "ar": "كاتب محتوى / مترجم",
+      "keywords": [
+        "content writer",
+        "copywriter",
+        "content creator",
+        "content specialist",
+        "content",
+        "editor",
+        "writer",
+        "translator",
+        "interpreter",
+        "localization",
+        "proofreader",
+        "transcription",
+        "transcription expert",
+        "journalist",
+        "مترجم",
+        "كاتب محتوى",
+        "صانع محتوى"
+      ]
+    },
+    {
+      "slug": "video_media",
+      "field": "content_media",
+      "en": "Video & Media Production",
+      "ar": "إنتاج فيديو وإعلام",
+      "keywords": [
+        "video editor",
+        "videographer",
+        "video producer",
+        "photographer",
+        "voice actor",
+        "voice over",
+        "voiceover",
+        "dubbing",
+        "podcast",
+        "مونتير",
+        "مصور"
+      ]
+    },
+    {
+      "slug": "ai_trainer",
+      "field": "content_media",
+      "en": "AI Trainer / Language Specialist",
+      "ar": "مدرب ذكاء اصطناعي / متخصص لغة",
+      "keywords": [
+        "ai trainer",
+        "ai training",
+        "ai training contributor",
+        "data annotator",
+        "annotator",
+        "data annotation",
+        "language specialist",
+        "language expert",
+        "language alignment",
+        "linguist",
+        "rater",
+        "search engine evaluator",
+        "coding specialist"
+      ]
+    },
+    {
+      "slug": "travel_consultant",
+      "field": "hospitality_tourism",
+      "en": "Travel Consultant",
+      "ar": "مستشار سياحي",
+      "keywords": [
+        "travel consultant",
+        "travel advisor",
+        "travel agent",
+        "tour guide",
+        "tourism",
+        "reservation",
+        "reservations agent",
+        "booking agent",
+        "سياحة",
+        "حجوزات",
+        "tour operator",
+        "reservations specialist",
+        "flight attendant",
+        "aviation"
+      ]
+    },
+    {
+      "slug": "hospitality_staff",
+      "field": "hospitality_tourism",
+      "en": "Hotel & Restaurant Staff",
+      "ar": "عاملين فنادق ومطاعم",
+      "keywords": [
+        "hotel",
+        "hotel staff",
+        "front office",
+        "housekeeping",
+        "chef",
+        "cook",
+        "waiter",
+        "barista",
+        "spa receptionist",
+        "restaurant",
+        "فندق",
+        "شيف",
+        "guest relations",
+        "guest relations executive",
+        "guest relations specialist",
+        "hostess"
+      ]
+    }
+  ],
+  "skills": {
+    "software": {
+      "python": [
+        "Python"
+      ],
+      "java": [
+        "Java"
+      ],
+      "javascript": [
+        "JavaScript",
+        "js",
+        "ecmascript"
+      ],
+      "typescript": [
+        "TypeScript"
+      ],
+      "csharp": [
+        "C#",
+        "c sharp"
+      ],
+      "cpp": [
+        "C++",
+        "cpp"
+      ],
+      "dotnet": [
+        ".NET",
+        "dotnet",
+        "asp.net",
+        "asp.net core",
+        ".net core",
+        "net core"
+      ],
+      "php": [
+        "PHP"
+      ],
+      "laravel": [
+        "Laravel"
+      ],
+      "nodejs": [
+        "Node.js",
+        "nodejs",
+        "node js",
+        "express.js",
+        "expressjs"
+      ],
+      "react": [
+        "=React",
+        "react.js",
+        "reactjs",
+        "react js"
+      ],
+      "nextjs": [
+        "Next.js",
+        "nextjs"
+      ],
+      "angular": [
+        "Angular",
+        "angularjs"
+      ],
+      "vue": [
+        "Vue.js",
+        "vue",
+        "vuejs",
+        "nuxt"
+      ],
+      "html_css": [
+        "HTML/CSS",
+        "html",
+        "css",
+        "html5",
+        "css3",
+        "tailwind",
+        "bootstrap",
+        "sass"
+      ],
+      "django": [
+        "Django"
+      ],
+      "flask": [
+        "Flask"
+      ],
+      "fastapi": [
+        "FastAPI"
+      ],
+      "spring": [
+        "Spring Boot",
+        "spring framework",
+        "=Spring"
+      ],
+      "golang": [
+        "Go (Golang)",
+        "golang"
+      ],
+      "ruby": [
+        "Ruby",
+        "ruby on rails",
+        "=Rails"
+      ],
+      "kotlin": [
+        "Kotlin"
+      ],
+      "swift": [
+        "=Swift",
+        "swiftui",
+        "swift programming"
+      ],
+      "flutter": [
+        "Flutter"
+      ],
+      "dart": [
+        "Dart"
+      ],
+      "react_native": [
+        "React Native"
+      ],
+      "android": [
+        "Android",
+        "android sdk",
+        "jetpack compose"
+      ],
+      "ios": [
+        "iOS"
+      ],
+      "rest_api": [
+        "REST APIs",
+        "rest api",
+        "restful",
+        "rest apis",
+        "restful api"
+      ],
+      "graphql": [
+        "GraphQL"
+      ],
+      "microservices": [
+        "Microservices",
+        "microservice"
+      ],
+      "git": [
+        "Git",
+        "github",
+        "gitlab",
+        "bitbucket"
+      ],
+      "oop": [
+        "OOP",
+        "object oriented",
+        "object-oriented programming",
+        "design patterns",
+        "solid principles"
+      ],
+      "data_structures": [
+        "Data Structures & Algorithms",
+        "data structures",
+        "algorithms"
+      ],
+      "unity": [
+        "=Unity",
+        "unity3d",
+        "unity engine"
+      ],
+      "embedded_c": [
+        "Embedded C",
+        "embedded c",
+        "rtos",
+        "microcontrollers",
+        "arm cortex",
+        "stm32",
+        "freertos",
+        "microcontroller",
+        "embedded systems",
+        "embedded software",
+        "firmware development",
+        "esp32",
+        "avr",
+        "atmega",
+        "atmega32",
+        "pic microcontroller",
+        "tm4c",
+        "tiva c",
+        "cortex-m",
+        "arduino",
+        "bare metal"
+      ],
+      "c_lang": [
+        "C",
+        "c programming",
+        "c language",
+        "ansi c"
+      ],
+      "sap_erp": [
+        "SAP",
+        "sap erp",
+        "sap s/4hana",
+        "s/4hana",
+        "sap fico",
+        "sap mm",
+        "abap"
+      ],
+      "odoo": [
+        "Odoo"
+      ],
+      "salesforce": [
+        "Salesforce"
+      ],
+      "wordpress": [
+        "WordPress"
+      ]
+    },
+    "data_ai": {
+      "sql": [
+        "SQL",
+        "t-sql",
+        "pl/sql",
+        "plsql"
+      ],
+      "postgresql": [
+        "PostgreSQL",
+        "postgres"
+      ],
+      "mysql": [
+        "MySQL"
+      ],
+      "sql_server": [
+        "SQL Server",
+        "mssql",
+        "ms sql"
+      ],
+      "oracle_db": [
+        "Oracle Database",
+        "oracle db",
+        "oracle database"
+      ],
+      "mongodb": [
+        "MongoDB",
+        "mongo"
+      ],
+      "redis": [
+        "Redis"
+      ],
+      "excel": [
+        "=Excel",
+        "ms excel",
+        "microsoft excel",
+        "advanced excel",
+        "excel sheets",
+        "اكسيل",
+        "اكسل"
+      ],
+      "power_bi": [
+        "Power BI",
+        "powerbi",
+        "dax",
+        "power query"
+      ],
+      "tableau": [
+        "Tableau"
+      ],
+      "pandas": [
+        "Pandas",
+        "numpy"
+      ],
+      "r_lang": [
+        "R",
+        "r programming",
+        "r language",
+        "rstudio"
+      ],
+      "statistics": [
+        "Statistics",
+        "statistical analysis",
+        "statistical modeling",
+        "a/b testing"
+      ],
+      "machine_learning": [
+        "Machine Learning",
+        "scikit-learn",
+        "sklearn",
+        "xgboost"
+      ],
+      "deep_learning": [
+        "Deep Learning",
+        "neural networks",
+        "cnn",
+        "rnn",
+        "hugging face",
+        "huggingface"
+      ],
+      "pytorch": [
+        "PyTorch"
+      ],
+      "tensorflow": [
+        "TensorFlow",
+        "keras"
+      ],
+      "nlp": [
+        "NLP",
+        "natural language processing"
+      ],
+      "computer_vision": [
+        "Computer Vision",
+        "opencv",
+        "image processing",
+        "object detection"
+      ],
+      "llm": [
+        "LLMs",
+        "llm",
+        "llms",
+        "large language models",
+        "generative ai",
+        "genai",
+        "gpt",
+        "rag",
+        "langchain",
+        "prompt engineering",
+        "fine-tuning",
+        "agentic ai",
+        "ai agents"
+      ],
+      "mlops": [
+        "MLOps",
+        "mlflow",
+        "kubeflow",
+        "model deployment"
+      ],
+      "spark": [
+        "Apache Spark",
+        "spark",
+        "pyspark",
+        "databricks",
+        "hadoop"
+      ],
+      "airflow": [
+        "Airflow",
+        "apache airflow"
+      ],
+      "etl": [
+        "ETL",
+        "elt",
+        "data pipelines",
+        "data pipeline",
+        "data warehouse",
+        "data warehousing",
+        "data modeling"
+      ],
+      "snowflake": [
+        "Snowflake"
+      ],
+      "bigquery": [
+        "BigQuery"
+      ],
+      "kafka": [
+        "Kafka",
+        "apache kafka"
+      ]
+    },
+    "devops_cloud": {
+      "linux": [
+        "Linux",
+        "ubuntu",
+        "centos",
+        "red hat",
+        "rhel",
+        "bash",
+        "shell scripting"
+      ],
+      "docker": [
+        "Docker",
+        "containerization"
+      ],
+      "kubernetes": [
+        "Kubernetes",
+        "k8s",
+        "openshift",
+        "helm"
+      ],
+      "aws": [
+        "AWS",
+        "amazon web services",
+        "ec2",
+        "s3",
+        "lambda"
+      ],
+      "azure": [
+        "Azure",
+        "microsoft azure"
+      ],
+      "gcp": [
+        "Google Cloud",
+        "gcp",
+        "google cloud platform"
+      ],
+      "terraform": [
+        "Terraform",
+        "infrastructure as code",
+        "iac",
+        "cloudformation"
+      ],
+      "ansible": [
+        "Ansible",
+        "puppet",
+        "chef automation"
+      ],
+      "ci_cd": [
+        "CI/CD",
+        "ci cd",
+        "jenkins",
+        "github actions",
+        "gitlab ci",
+        "azure devops",
+        "argocd"
+      ],
+      "monitoring": [
+        "Monitoring",
+        "prometheus",
+        "grafana",
+        "elk",
+        "elasticsearch",
+        "datadog",
+        "zabbix",
+        "nagios"
+      ],
+      "nginx": [
+        "Nginx",
+        "apache http server",
+        "web servers",
+        "iis"
+      ]
+    },
+    "networking": {
+      "ccna": [
+        "CCNA",
+        "cisco certified network associate"
+      ],
+      "ccnp": [
+        "CCNP",
+        "cisco certified network professional"
+      ],
+      "ccie": [
+        "CCIE"
+      ],
+      "cisco": [
+        "Cisco",
+        "cisco ios",
+        "nexus",
+        "catalyst"
+      ],
+      "juniper": [
+        "Juniper",
+        "jncia",
+        "jncis",
+        "junos"
+      ],
+      "mikrotik": [
+        "MikroTik",
+        "mtcna"
+      ],
+      "huawei_network": [
+        "Huawei Networking",
+        "hcia",
+        "hcip",
+        "huawei"
+      ],
+      "routing_switching": [
+        "Routing & Switching",
+        "routing",
+        "switching",
+        "routing and switching",
+        "vlan",
+        "vlans",
+        "stp",
+        "hsrp",
+        "vrrp",
+        "glbp",
+        "lacp",
+        "etherchannel",
+        "spanning tree",
+        "nat",
+        "ethernet",
+        "inter-vlan routing",
+        "routers",
+        "switches"
+      ],
+      "bgp": [
+        "BGP"
+      ],
+      "ospf": [
+        "OSPF",
+        "eigrp"
+      ],
+      "mpls": [
+        "MPLS"
+      ],
+      "sd_wan": [
+        "SD-WAN",
+        "sdwan"
+      ],
+      "tcp_ip": [
+        "TCP/IP",
+        "tcp ip",
+        "dns",
+        "dhcp",
+        "subnetting",
+        "ipv4",
+        "ipv6",
+        "network protocols"
+      ],
+      "wireless": [
+        "Wireless / Wi-Fi",
+        "wifi",
+        "wi-fi",
+        "wlan",
+        "aruba",
+        "ruckus",
+        "ubiquiti",
+        "wireless communication",
+        "wireless communications",
+        "wireless networks",
+        "wireless technologies",
+        "wimax",
+        "802.11"
+      ],
+      "lan_wan": [
+        "LAN/WAN",
+        "lan",
+        "wan",
+        "lan wan",
+        "network infrastructure",
+        "structured cabling",
+        "computer networks",
+        "computer networking",
+        "data networks",
+        "ip networks",
+        "ip networking",
+        "network administration",
+        "network design",
+        "network troubleshooting"
+      ],
+      "voip": [
+        "VoIP",
+        "sip",
+        "avaya",
+        "asterisk",
+        "cisco call manager"
+      ],
+      "fiber_optics": [
+        "Fiber Optics",
+        "fiber optic",
+        "ftth",
+        "gpon",
+        "otdr"
+      ],
+      "load_balancer": [
+        "Load Balancers",
+        "f5",
+        "load balancer",
+        "load balancing"
+      ],
+      "network_monitoring": [
+        "Network Monitoring",
+        "solarwinds",
+        "prtg",
+        "wireshark",
+        "snmp"
+      ],
+      "sdn": [
+        "SDN",
+        "software defined networking",
+        "software-defined networking",
+        "sd-access",
+        "sd access",
+        "cisco dna"
+      ],
+      "mobile_networks": [
+        "Mobile Networks (2G/3G/4G)",
+        "2g",
+        "3g",
+        "4g",
+        "gsm",
+        "umts",
+        "wcdma",
+        "2g/3g/4g",
+        "2g/3g/4g/5g",
+        "mobile networks",
+        "mobile network",
+        "cellular networks",
+        "cellular network"
+      ],
+      "lte": [
+        "LTE / 4G",
+        "lte",
+        "4g lte",
+        "lte-a",
+        "lte advanced",
+        "e-utran",
+        "enodeb",
+        "volte"
+      ],
+      "five_g": [
+        "5G",
+        "5g",
+        "5g nr",
+        "5g networks",
+        "5g network",
+        "gnodeb",
+        "5g sa",
+        "5g nsa"
+      ],
+      "rf_engineering": [
+        "RF Planning & Optimization",
+        "rf",
+        "rf planning",
+        "rf optimization",
+        "rf optimisation",
+        "radio planning",
+        "radio frequency",
+        "drive test",
+        "drive testing",
+        "tems",
+        "atoll",
+        "actix"
+      ],
+      "ran": [
+        "RAN / Open RAN",
+        "=RAN",
+        "radio access network",
+        "open ran",
+        "open-ran",
+        "o-ran",
+        "=ORAN",
+        "ip ran",
+        "near-rt ric",
+        "near rt ric",
+        "srsran"
+      ],
+      "packet_core": [
+        "Packet Core (EPC / 5GC / IMS)",
+        "epc",
+        "5gc",
+        "5g core",
+        "packet core",
+        "evolved packet core",
+        "ims",
+        "open5gs"
+      ],
+      "transmission": [
+        "Transmission (Microwave / SDH / DWDM)",
+        "microwave",
+        "sdh",
+        "dwdm",
+        "pdh",
+        "otn",
+        "microwave links",
+        "transmission network"
+      ],
+      "dsp": [
+        "DSP / Signal Processing",
+        "dsp",
+        "digital signal processing",
+        "signal processing",
+        "ofdm"
+      ],
+      "sdr": [
+        "SDR",
+        "sdr",
+        "software defined radio",
+        "software-defined radio",
+        "gnu radio",
+        "usrp"
+      ]
+    },
+    "cybersecurity": {
+      "firewalls": [
+        "Firewalls",
+        "firewall",
+        "next generation firewall",
+        "ngfw"
+      ],
+      "fortinet": [
+        "Fortinet",
+        "fortigate",
+        "nse",
+        "nse4",
+        "fortianalyzer"
+      ],
+      "palo_alto": [
+        "Palo Alto",
+        "palo alto networks",
+        "pcnse"
+      ],
+      "checkpoint": [
+        "Check Point",
+        "checkpoint",
+        "ccsa"
+      ],
+      "sophos": [
+        "Sophos"
+      ],
+      "vpn": [
+        "VPN",
+        "ipsec",
+        "ssl vpn",
+        "site to site vpn",
+        "dmvpn",
+        "gre",
+        "gre tunnels"
+      ],
+      "network_security": [
+        "Network Security",
+        "network security",
+        "network hardening"
+      ],
+      "siem": [
+        "SIEM",
+        "splunk",
+        "qradar",
+        "arcsight",
+        "sentinel",
+        "wazuh",
+        "elastic siem"
+      ],
+      "edr": [
+        "EDR / XDR",
+        "edr",
+        "xdr",
+        "crowdstrike",
+        "sentinelone",
+        "defender for endpoint"
+      ],
+      "soc_operations": [
+        "SOC Operations",
+        "soc",
+        "security monitoring",
+        "incident response",
+        "threat hunting",
+        "threat intelligence"
+      ],
+      "pentesting": [
+        "Penetration Testing",
+        "penetration testing",
+        "pentesting",
+        "vulnerability assessment",
+        "vapt",
+        "burp suite",
+        "metasploit",
+        "nmap",
+        "kali linux",
+        "owasp"
+      ],
+      "iso_27001": [
+        "ISO 27001",
+        "iso 27001",
+        "iso27001",
+        "isms"
+      ],
+      "security_frameworks": [
+        "Security Frameworks",
+        "nist",
+        "pci dss",
+        "cis controls",
+        "gdpr",
+        "soc 2"
+      ],
+      "iam": [
+        "IAM",
+        "identity and access management",
+        "okta",
+        "privileged access",
+        "cyberark",
+        "active directory security"
+      ],
+      "security_certs": [
+        "Security Certifications",
+        "cissp",
+        "ceh",
+        "oscp",
+        "security+",
+        "comptia security",
+        "cism",
+        "cisa"
+      ],
+      "waf_ddos": [
+        "WAF / DDoS",
+        "waf",
+        "ddos",
+        "imperva",
+        "cloudflare"
+      ]
+    },
+    "it_support": {
+      "windows_server": [
+        "Windows Server",
+        "windows server",
+        "server administration"
+      ],
+      "active_directory": [
+        "Active Directory",
+        "group policy",
+        "gpo",
+        "ldap"
+      ],
+      "office_365": [
+        "Microsoft 365",
+        "office 365",
+        "microsoft 365",
+        "exchange server",
+        "intune",
+        "sharepoint"
+      ],
+      "vmware": [
+        "VMware",
+        "vsphere",
+        "esxi",
+        "hyper-v",
+        "virtualization",
+        "vcenter"
+      ],
+      "itil": [
+        "ITIL",
+        "itsm",
+        "servicenow",
+        "jira service management"
+      ],
+      "hardware_troubleshooting": [
+        "Hardware Troubleshooting",
+        "hardware troubleshooting",
+        "pc maintenance",
+        "printers",
+        "computer hardware",
+        "it troubleshooting"
+      ],
+      "backup": [
+        "Backup & Recovery",
+        "backup and recovery",
+        "veeam",
+        "disaster recovery"
+      ],
+      "comptia": [
+        "CompTIA A+ / N+",
+        "comptia a+",
+        "network+",
+        "comptia network+",
+        "mcsa",
+        "mcse"
+      ]
+    },
+    "qa": {
+      "manual_testing": [
+        "Manual Testing",
+        "manual testing",
+        "test cases",
+        "test plans",
+        "regression testing",
+        "uat"
+      ],
+      "selenium": [
+        "Selenium",
+        "selenium webdriver"
+      ],
+      "test_automation": [
+        "Test Automation",
+        "test automation",
+        "cypress",
+        "playwright",
+        "appium",
+        "robot framework",
+        "pytest",
+        "junit"
+      ],
+      "api_testing": [
+        "API Testing",
+        "postman",
+        "api testing",
+        "rest assured",
+        "soapui"
+      ],
+      "performance_testing": [
+        "Performance Testing",
+        "jmeter",
+        "load testing",
+        "performance testing",
+        "k6"
+      ],
+      "istqb": [
+        "ISTQB"
+      ],
+      "jira": [
+        "Jira",
+        "confluence"
+      ]
+    },
+    "design": {
+      "figma": [
+        "Figma"
+      ],
+      "adobe_xd": [
+        "Adobe XD"
+      ],
+      "photoshop": [
+        "Photoshop",
+        "adobe photoshop"
+      ],
+      "illustrator": [
+        "Illustrator",
+        "adobe illustrator"
+      ],
+      "indesign": [
+        "InDesign",
+        "adobe indesign"
+      ],
+      "after_effects": [
+        "After Effects",
+        "adobe after effects",
+        "motion graphics"
+      ],
+      "premiere": [
+        "Premiere Pro",
+        "adobe premiere",
+        "final cut",
+        "davinci resolve",
+        "video editing"
+      ],
+      "ux_research": [
+        "UX Research",
+        "user research",
+        "usability testing",
+        "wireframing",
+        "wireframes",
+        "prototyping",
+        "user flows"
+      ],
+      "ui_design": [
+        "UI Design",
+        "ui design",
+        "design systems",
+        "responsive design"
+      ],
+      "blender_3d": [
+        "3D Modeling",
+        "blender",
+        "3ds max",
+        "maya",
+        "cinema 4d",
+        "sketchup",
+        "lumion",
+        "v-ray",
+        "vray"
+      ],
+      "canva": [
+        "Canva"
+      ]
+    },
+    "product_project": {
+      "pmp": [
+        "PMP",
+        "pmi",
+        "project management professional"
+      ],
+      "agile_scrum": [
+        "Agile / Scrum",
+        "agile",
+        "scrum",
+        "kanban",
+        "sprint planning"
+      ],
+      "ms_project": [
+        "MS Project",
+        "microsoft project",
+        "ms project"
+      ],
+      "requirements": [
+        "Requirements Analysis",
+        "requirements gathering",
+        "brd",
+        "user stories",
+        "business requirements"
+      ],
+      "bpmn": [
+        "Process Modeling",
+        "bpmn",
+        "process mapping",
+        "uml"
+      ],
+      "risk_management": [
+        "Risk Management",
+        "risk management",
+        "risk assessment"
+      ],
+      "stakeholder_management": [
+        "Stakeholder Management",
+        "stakeholder management"
+      ],
+      "six_sigma": [
+        "Lean / Six Sigma",
+        "six sigma",
+        "=Lean",
+        "lean manufacturing",
+        "lean six sigma",
+        "kaizen",
+        "5s"
+      ]
+    },
+    "marketing": {
+      "seo": [
+        "SEO",
+        "search engine optimization"
+      ],
+      "sem": [
+        "SEM / Google Ads",
+        "sem",
+        "google ads",
+        "adwords",
+        "ppc",
+        "pay per click"
+      ],
+      "meta_ads": [
+        "Meta Ads",
+        "facebook ads",
+        "meta ads",
+        "instagram ads",
+        "media buying",
+        "tiktok ads",
+        "snapchat ads"
+      ],
+      "social_media_marketing": [
+        "Social Media Marketing",
+        "social media marketing",
+        "social media management",
+        "smm"
+      ],
+      "content_marketing": [
+        "Content Marketing",
+        "content marketing",
+        "content strategy",
+        "copywriting"
+      ],
+      "email_marketing": [
+        "Email Marketing",
+        "email marketing",
+        "mailchimp",
+        "email campaigns"
+      ],
+      "google_analytics": [
+        "Google Analytics",
+        "ga4",
+        "google analytics",
+        "google tag manager",
+        "gtm"
+      ],
+      "hubspot": [
+        "HubSpot"
+      ],
+      "brand_management": [
+        "Brand Management",
+        "branding",
+        "brand management",
+        "brand strategy"
+      ],
+      "market_research": [
+        "Market Research",
+        "market research",
+        "market analysis",
+        "competitor analysis"
+      ],
+      "ecommerce": [
+        "E-commerce",
+        "e-commerce",
+        "ecommerce",
+        "shopify",
+        "amazon seller",
+        "woocommerce"
+      ]
+    },
+    "sales": {
+      "crm": [
+        "CRM",
+        "crm",
+        "zoho",
+        "zoho crm",
+        "dynamics crm",
+        "pipedrive"
+      ],
+      "b2b_sales": [
+        "B2B Sales",
+        "b2b",
+        "b2b sales",
+        "corporate sales"
+      ],
+      "b2c_sales": [
+        "B2C Sales",
+        "b2c",
+        "retail sales"
+      ],
+      "cold_calling": [
+        "Cold Calling",
+        "cold calling",
+        "telesales",
+        "outbound calls"
+      ],
+      "negotiation": [
+        "Negotiation",
+        "negotiation",
+        "negotiation skills",
+        "closing deals"
+      ],
+      "lead_generation": [
+        "Lead Generation",
+        "lead generation",
+        "prospecting",
+        "sales pipeline"
+      ],
+      "account_management": [
+        "Account Management",
+        "account management",
+        "key accounts",
+        "client retention"
+      ],
+      "real_estate": [
+        "Real Estate",
+        "real estate",
+        "property sales",
+        "عقارات"
+      ],
+      "target_achievement": [
+        "Sales Targets",
+        "sales targets",
+        "achieving targets",
+        "quota"
+      ]
+    },
+    "customer_service": {
+      "customer_support": [
+        "Customer Support",
+        "customer support",
+        "customer care",
+        "customer handling",
+        "complaints handling"
+      ],
+      "call_center": [
+        "Call Center",
+        "call center",
+        "inbound calls",
+        "contact center"
+      ],
+      "ticketing": [
+        "Ticketing Systems",
+        "zendesk",
+        "freshdesk",
+        "ticketing",
+        "help scout"
+      ],
+      "communication": [
+        "Communication Skills",
+        "communication skills",
+        "interpersonal skills",
+        "مهارات تواصل"
+      ],
+      "live_chat": [
+        "Live Chat Support",
+        "live chat",
+        "chat support",
+        "email support"
+      ]
+    },
+    "hr": {
+      "recruitment": [
+        "Recruitment",
+        "recruitment",
+        "talent acquisition",
+        "headhunting",
+        "candidate sourcing",
+        "cv screening"
+      ],
+      "onboarding": [
+        "Onboarding",
+        "onboarding"
+      ],
+      "payroll": [
+        "Payroll",
+        "payroll",
+        "payroll processing",
+        "رواتب"
+      ],
+      "labor_law": [
+        "Labor Law",
+        "labor law",
+        "labour law",
+        "egyptian labor law",
+        "social insurance",
+        "قانون العمل",
+        "تأمينات اجتماعية"
+      ],
+      "hris": [
+        "HRIS",
+        "hris",
+        "sap successfactors",
+        "successfactors",
+        "workday",
+        "bamboohr",
+        "oracle hcm"
+      ],
+      "compensation_benefits": [
+        "Compensation & Benefits",
+        "compensation and benefits",
+        "c&b",
+        "benefits administration"
+      ],
+      "performance_management": [
+        "Performance Management",
+        "performance management",
+        "performance appraisal"
+      ],
+      "training_development": [
+        "Training & Development",
+        "training and development",
+        "l&d",
+        "learning and development",
+        "training needs analysis"
+      ],
+      "employee_relations": [
+        "Employee Relations",
+        "employee relations",
+        "employee engagement"
+      ],
+      "personnel": [
+        "Personnel Administration",
+        "personnel",
+        "employee files",
+        "time and attendance",
+        "شئون العاملين"
+      ]
+    },
+    "accounting_finance": {
+      "ifrs": [
+        "IFRS",
+        "international financial reporting standards",
+        "eas",
+        "egyptian accounting standards",
+        "us gaap",
+        "gaap"
+      ],
+      "financial_reporting": [
+        "Financial Reporting",
+        "financial reporting",
+        "financial statements",
+        "month end closing",
+        "year end closing",
+        "consolidation",
+        "قوائم مالية"
+      ],
+      "general_ledger": [
+        "General Ledger",
+        "general ledger",
+        "journal entries",
+        "reconciliation",
+        "bank reconciliation",
+        "reconciliations",
+        "قيود يومية",
+        "تسويات بنكية"
+      ],
+      "accounts_payable": [
+        "Accounts Payable",
+        "accounts payable",
+        "vendor payments"
+      ],
+      "accounts_receivable": [
+        "Accounts Receivable",
+        "accounts receivable",
+        "collections",
+        "invoicing"
+      ],
+      "tax": [
+        "Tax",
+        "taxation",
+        "vat",
+        "income tax",
+        "withholding tax",
+        "tax returns",
+        "e-invoicing",
+        "ضرائب",
+        "ضريبة القيمة المضافة"
+      ],
+      "auditing": [
+        "Auditing",
+        "auditing",
+        "internal audit",
+        "external audit",
+        "internal controls",
+        "مراجعة"
+      ],
+      "budgeting": [
+        "Budgeting & Forecasting",
+        "budgeting",
+        "forecasting",
+        "variance analysis",
+        "fp&a"
+      ],
+      "cost_accounting": [
+        "Cost Accounting",
+        "cost accounting",
+        "costing",
+        "cost analysis",
+        "محاسبة تكاليف"
+      ],
+      "financial_analysis": [
+        "Financial Analysis",
+        "financial analysis",
+        "financial modeling",
+        "valuation",
+        "dcf"
+      ],
+      "oracle_financials": [
+        "Oracle Financials",
+        "oracle financials",
+        "oracle erp",
+        "oracle fusion",
+        "oracle ebs"
+      ],
+      "quickbooks": [
+        "QuickBooks",
+        "xero",
+        "=Sage",
+        "peachtree"
+      ],
+      "accounting_software": [
+        "Accounting Software",
+        "accounting software",
+        "erp systems",
+        "dynamics nav",
+        "microsoft dynamics",
+        "netsuite"
+      ],
+      "accounting_certs": [
+        "CMA / CPA / ACCA",
+        "cma",
+        "cpa",
+        "acca",
+        "cfa",
+        "cia",
+        "certified public accountant"
+      ],
+      "treasury": [
+        "Treasury & Cash Management",
+        "treasury",
+        "cash management",
+        "cash flow"
+      ]
+    },
+    "administration": {
+      "ms_office": [
+        "MS Office",
+        "ms office",
+        "microsoft office",
+        "ms word",
+        "microsoft word",
+        "powerpoint",
+        "ms outlook",
+        "office applications"
+      ],
+      "data_entry": [
+        "Data Entry",
+        "data entry",
+        "typing",
+        "typing speed"
+      ],
+      "document_control": [
+        "Document Control",
+        "document control",
+        "archiving"
+      ],
+      "scheduling": [
+        "Scheduling & Coordination",
+        "calendar management",
+        "scheduling",
+        "travel arrangements"
+      ],
+      "operations_management": [
+        "Operations Management",
+        "operations management",
+        "process improvement",
+        "sop",
+        "sops"
+      ]
+    },
+    "civil_construction": {
+      "autocad": [
+        "AutoCAD",
+        "auto cad",
+        "autocad civil 3d",
+        "civil 3d"
+      ],
+      "revit": [
+        "Revit",
+        "autodesk revit"
+      ],
+      "bim": [
+        "BIM",
+        "building information modeling",
+        "navisworks",
+        "bim 360"
+      ],
+      "primavera": [
+        "Primavera P6",
+        "primavera",
+        "p6"
+      ],
+      "etabs_sap2000": [
+        "ETABS / SAP2000",
+        "etabs",
+        "sap2000",
+        "csi safe",
+        "staad pro",
+        "staad",
+        "robot structural"
+      ],
+      "quantity_surveying": [
+        "Quantity Surveying",
+        "quantity surveying",
+        "boq",
+        "bill of quantities",
+        "take off",
+        "takeoff",
+        "حصر كميات",
+        "مقايسات"
+      ],
+      "shop_drawings": [
+        "Shop Drawings",
+        "shop drawings",
+        "as built",
+        "as-built drawings"
+      ],
+      "site_supervision": [
+        "Site Supervision",
+        "site supervision",
+        "construction supervision"
+      ],
+      "fidic": [
+        "FIDIC / Contracts",
+        "fidic",
+        "contract management",
+        "claims management",
+        "variation orders"
+      ],
+      "cost_control": [
+        "Cost Control",
+        "cost control",
+        "earned value",
+        "evm"
+      ],
+      "estimation": [
+        "Estimation & Tendering",
+        "estimation",
+        "tendering",
+        "cost estimation",
+        "تسعير"
+      ],
+      "surveying_tools": [
+        "Surveying",
+        "total station",
+        "gps survey",
+        "land surveying",
+        "gis",
+        "arcgis"
+      ]
+    },
+    "mechanical": {
+      "hvac": [
+        "HVAC",
+        "air conditioning",
+        "chillers",
+        "hap",
+        "hvac design",
+        "تكييف"
+      ],
+      "mep": [
+        "MEP",
+        "mep"
+      ],
+      "fire_fighting": [
+        "Fire Fighting Systems",
+        "fire fighting",
+        "firefighting",
+        "fire protection",
+        "sprinklers",
+        "nfpa"
+      ],
+      "plumbing": [
+        "Plumbing",
+        "plumbing",
+        "drainage",
+        "water supply"
+      ],
+      "solidworks": [
+        "SolidWorks",
+        "solidworks",
+        "catia",
+        "creo",
+        "inventor",
+        "ansys"
+      ],
+      "maintenance_planning": [
+        "Maintenance",
+        "preventive maintenance",
+        "predictive maintenance",
+        "maintenance planning",
+        "cmms",
+        "reliability"
+      ],
+      "mechanical_design": [
+        "Mechanical Design",
+        "mechanical design",
+        "machine design",
+        "gd&t"
+      ],
+      "pumps_compressors": [
+        "Pumps & Compressors",
+        "pumps",
+        "compressors",
+        "rotating equipment",
+        "turbines",
+        "boilers"
+      ]
+    },
+    "electrical": {
+      "electrical_design": [
+        "Electrical Design",
+        "electrical design",
+        "load calculations",
+        "single line diagram",
+        "sld",
+        "lighting design",
+        "dialux",
+        "etap"
+      ],
+      "power_systems": [
+        "Power Systems",
+        "power systems",
+        "power distribution",
+        "switchgear",
+        "transformers",
+        "substations",
+        "low voltage",
+        "medium voltage",
+        "high voltage",
+        "lv",
+        "mv"
+      ],
+      "plc": [
+        "PLC",
+        "plc programming",
+        "siemens plc",
+        "allen bradley",
+        "tia portal",
+        "step 7"
+      ],
+      "scada": [
+        "SCADA / HMI",
+        "scada",
+        "hmi",
+        "dcs",
+        "wincc"
+      ],
+      "instrumentation": [
+        "Instrumentation",
+        "instrumentation",
+        "calibration",
+        "sensors"
+      ],
+      "light_current": [
+        "Light Current / ELV",
+        "light current",
+        "elv",
+        "cctv",
+        "fire alarm",
+        "access control",
+        "bms",
+        "public address",
+        "تيار خفيف"
+      ],
+      "electronics": [
+        "Electronics Design",
+        "pcb design",
+        "altium",
+        "circuit design",
+        "electronic circuits"
+      ],
+      "matlab": [
+        "MATLAB",
+        "matlab",
+        "simulink"
+      ],
+      "fpga_hdl": [
+        "FPGA / Verilog / VHDL",
+        "fpga",
+        "verilog",
+        "vhdl",
+        "systemverilog",
+        "rtl design",
+        "rtl",
+        "quartus",
+        "vivado",
+        "modelsim",
+        "questasim"
+      ],
+      "asic_design": [
+        "ASIC / IC Design",
+        "asic",
+        "ic design",
+        "dft",
+        "static timing analysis",
+        "physical design",
+        "uvm",
+        "design verification"
+      ],
+      "embedded_protocols": [
+        "UART / SPI / I2C / CAN",
+        "uart",
+        "usart",
+        "spi",
+        "i2c",
+        "can bus",
+        "canbus",
+        "can-bus",
+        "can protocol",
+        "can fd",
+        "can/lin",
+        "lin bus",
+        "rs232",
+        "rs485"
+      ],
+      "autosar": [
+        "AUTOSAR / Automotive",
+        "autosar",
+        "misra",
+        "misra c",
+        "iso 26262",
+        "automotive spice",
+        "aspice",
+        "canoe",
+        "vector canoe"
+      ],
+      "embedded_linux": [
+        "Embedded Linux",
+        "embedded linux",
+        "yocto",
+        "buildroot",
+        "linux kernel",
+        "linux device drivers",
+        "device driver development",
+        "u-boot"
+      ],
+      "iot": [
+        "IoT",
+        "iot",
+        "internet of things",
+        "lora",
+        "lorawan",
+        "zigbee",
+        "nb-iot",
+        "mqtt"
+      ],
+      "solar_energy": [
+        "Solar Energy",
+        "solar",
+        "pv systems",
+        "renewable energy",
+        "photovoltaic"
+      ]
+    },
+    "manufacturing_supply": {
+      "iso_9001": [
+        "ISO 9001",
+        "iso 9001",
+        "quality management system",
+        "qms"
+      ],
+      "quality_control": [
+        "Quality Control",
+        "quality control",
+        "inspection",
+        "itp",
+        "ncr",
+        "qa/qc"
+      ],
+      "supply_chain": [
+        "Supply Chain Management",
+        "supply chain",
+        "supply chain management",
+        "scm"
+      ],
+      "procurement_skills": [
+        "Procurement & Purchasing",
+        "procurement",
+        "purchasing",
+        "sourcing vendors",
+        "vendor management",
+        "supplier management",
+        "rfq",
+        "مشتريات"
+      ],
+      "inventory_management": [
+        "Inventory Management",
+        "inventory management",
+        "inventory control",
+        "stock control",
+        "warehouse management",
+        "wms",
+        "مخازن"
+      ],
+      "logistics_skills": [
+        "Logistics & Shipping",
+        "logistics",
+        "freight forwarding",
+        "customs clearance",
+        "import and export",
+        "incoterms"
+      ],
+      "production_planning": [
+        "Production Planning",
+        "production planning",
+        "mrp",
+        "capacity planning"
+      ],
+      "hse": [
+        "HSE / Safety",
+        "hse",
+        "osha",
+        "nebosh",
+        "iosh",
+        "risk assessment hse",
+        "safety management"
+      ],
+      "gmp": [
+        "GMP",
+        "good manufacturing practice",
+        "haccp",
+        "food safety"
+      ]
+    },
+    "healthcare": {
+      "patient_care": [
+        "Patient Care",
+        "patient care",
+        "clinical care",
+        "nursing care"
+      ],
+      "pharmacy_skills": [
+        "Pharmacy",
+        "dispensing",
+        "pharmacology",
+        "drug information",
+        "pharmacovigilance"
+      ],
+      "medical_sales": [
+        "Medical Sales",
+        "medical sales",
+        "pharmaceutical sales",
+        "medical products"
+      ],
+      "clinical_research": [
+        "Clinical Research",
+        "clinical research",
+        "clinical trials",
+        "gcp clinical"
+      ],
+      "medical_terminology": [
+        "Medical Terminology",
+        "medical terminology",
+        "medical coding",
+        "icd-10"
+      ],
+      "bls_acls": [
+        "BLS / ACLS",
+        "bls",
+        "acls",
+        "first aid"
+      ]
+    },
+    "education": {
+      "teaching": [
+        "Teaching",
+        "teaching",
+        "lesson planning",
+        "classroom management",
+        "curriculum development"
+      ],
+      "training_delivery": [
+        "Training Delivery",
+        "training delivery",
+        "presentation skills",
+        "coaching",
+        "mentoring"
+      ],
+      "ielts_toefl": [
+        "IELTS / TOEFL Prep",
+        "ielts",
+        "toefl",
+        "tesol",
+        "celta",
+        "tefl"
+      ],
+      "elearning": [
+        "E-learning",
+        "e-learning",
+        "lms",
+        "moodle",
+        "online teaching"
+      ]
+    },
+    "legal": {
+      "contracts_drafting": [
+        "Contract Drafting",
+        "contract drafting",
+        "legal drafting",
+        "contracts review",
+        "صياغة عقود"
+      ],
+      "compliance": [
+        "Compliance",
+        "compliance",
+        "regulatory compliance",
+        "aml",
+        "kyc",
+        "anti money laundering"
+      ],
+      "corporate_law": [
+        "Corporate Law",
+        "corporate law",
+        "commercial law",
+        "litigation",
+        "قانون تجاري"
+      ]
+    },
+    "content_media": {
+      "content_writing": [
+        "Content Writing",
+        "content writing",
+        "blog writing",
+        "creative writing",
+        "article writing"
+      ],
+      "translation": [
+        "Translation",
+        "translation",
+        "localization",
+        "interpretation",
+        "subtitling",
+        "ترجمة"
+      ],
+      "proofreading": [
+        "Proofreading & Editing",
+        "proofreading",
+        "editing",
+        "copy editing"
+      ],
+      "voice_over": [
+        "Voice Over",
+        "voice over",
+        "voiceover",
+        "dubbing",
+        "narration"
+      ],
+      "photography": [
+        "Photography",
+        "photography",
+        "lightroom"
+      ],
+      "transcription": [
+        "Transcription",
+        "transcription",
+        "annotation",
+        "data labeling",
+        "data annotation"
+      ]
+    },
+    "hospitality_tourism": {
+      "reservations": [
+        "Reservations Systems",
+        "opera pms",
+        "amadeus",
+        "galileo",
+        "sabre",
+        "reservation systems",
+        "booking systems"
+      ],
+      "hospitality": [
+        "Hospitality",
+        "hospitality",
+        "guest relations",
+        "front office operations"
+      ],
+      "food_beverage": [
+        "Food & Beverage",
+        "food and beverage",
+        "f&b",
+        "culinary"
+      ]
+    },
+    "languages": {
+      "english": [
+        "English",
+        "english language",
+        "fluent english",
+        "english fluency",
+        "excellent english",
+        "اللغة الانجليزية",
+        "انجليزي"
+      ],
+      "arabic": [
+        "Arabic",
+        "arabic language",
+        "native arabic",
+        "اللغة العربية"
+      ],
+      "french": [
+        "French",
+        "french language",
+        "fluent french",
+        "français",
+        "فرنساوي",
+        "اللغة الفرنسية"
+      ],
+      "german": [
+        "German",
+        "german language",
+        "deutsch",
+        "fluent german",
+        "الماني",
+        "اللغة الالمانية"
+      ],
+      "spanish": [
+        "Spanish",
+        "spanish language",
+        "español"
+      ],
+      "italian": [
+        "Italian",
+        "italian language"
+      ],
+      "turkish": [
+        "Turkish",
+        "turkish language"
+      ],
+      "chinese": [
+        "Chinese",
+        "mandarin"
+      ]
+    }
+  },
+  "implies": {
+    "ccna": [
+      "routing_switching",
+      "tcp_ip",
+      "lan_wan",
+      "ospf",
+      "cisco"
+    ],
+    "ccnp": [
+      "ccna",
+      "bgp",
+      "mpls"
+    ],
+    "ccie": [
+      "ccnp"
+    ],
+    "juniper": [
+      "routing_switching",
+      "tcp_ip"
+    ],
+    "mikrotik": [
+      "routing_switching",
+      "tcp_ip",
+      "lan_wan"
+    ],
+    "huawei_network": [
+      "routing_switching",
+      "tcp_ip"
+    ],
+    "lte": [
+      "mobile_networks"
+    ],
+    "five_g": [
+      "mobile_networks"
+    ],
+    "ran": [
+      "mobile_networks"
+    ],
+    "packet_core": [
+      "mobile_networks",
+      "tcp_ip"
+    ],
+    "sdr": [
+      "dsp"
+    ],
+    "bgp": [
+      "routing_switching"
+    ],
+    "ospf": [
+      "routing_switching"
+    ],
+    "sd_wan": [
+      "lan_wan",
+      "routing_switching"
+    ],
+    "fortinet": [
+      "firewalls",
+      "vpn"
+    ],
+    "palo_alto": [
+      "firewalls",
+      "vpn"
+    ],
+    "checkpoint": [
+      "firewalls",
+      "vpn"
+    ],
+    "sophos": [
+      "firewalls"
+    ],
+    "siem": [
+      "soc_operations"
+    ],
+    "edr": [
+      "soc_operations"
+    ],
+    "pentesting": [
+      "vpn"
+    ],
+    "security_certs": [
+      "security_frameworks"
+    ],
+    "kubernetes": [
+      "docker",
+      "linux"
+    ],
+    "terraform": [
+      "ci_cd"
+    ],
+    "active_directory": [
+      "windows_server"
+    ],
+    "comptia": [
+      "hardware_troubleshooting",
+      "tcp_ip"
+    ],
+    "typescript": [
+      "javascript"
+    ],
+    "embedded_c": [
+      "c_lang"
+    ],
+    "autosar": [
+      "embedded_c"
+    ],
+    "embedded_linux": [
+      "linux",
+      "embedded_c"
+    ],
+    "react": [
+      "javascript",
+      "html_css"
+    ],
+    "nextjs": [
+      "react"
+    ],
+    "react_native": [
+      "react"
+    ],
+    "angular": [
+      "typescript",
+      "html_css"
+    ],
+    "vue": [
+      "javascript",
+      "html_css"
+    ],
+    "nodejs": [
+      "javascript"
+    ],
+    "django": [
+      "python"
+    ],
+    "flask": [
+      "python"
+    ],
+    "fastapi": [
+      "python",
+      "rest_api"
+    ],
+    "pandas": [
+      "python"
+    ],
+    "laravel": [
+      "php"
+    ],
+    "spring": [
+      "java"
+    ],
+    "dotnet": [
+      "csharp"
+    ],
+    "flutter": [
+      "dart"
+    ],
+    "graphql": [
+      "rest_api"
+    ],
+    "postgresql": [
+      "sql"
+    ],
+    "mysql": [
+      "sql"
+    ],
+    "sql_server": [
+      "sql"
+    ],
+    "oracle_db": [
+      "sql"
+    ],
+    "pytorch": [
+      "deep_learning",
+      "python"
+    ],
+    "tensorflow": [
+      "deep_learning",
+      "python"
+    ],
+    "deep_learning": [
+      "machine_learning"
+    ],
+    "nlp": [
+      "machine_learning"
+    ],
+    "computer_vision": [
+      "machine_learning"
+    ],
+    "llm": [
+      "machine_learning"
+    ],
+    "mlops": [
+      "machine_learning"
+    ],
+    "spark": [
+      "etl"
+    ],
+    "airflow": [
+      "etl"
+    ],
+    "power_bi": [
+      "excel"
+    ],
+    "ifrs": [
+      "financial_reporting"
+    ],
+    "accounting_certs": [
+      "ifrs",
+      "financial_reporting"
+    ],
+    "oracle_financials": [
+      "accounting_software"
+    ],
+    "quickbooks": [
+      "accounting_software"
+    ],
+    "hubspot": [
+      "crm"
+    ],
+    "salesforce": [
+      "crm"
+    ],
+    "selenium": [
+      "test_automation"
+    ],
+    "istqb": [
+      "manual_testing"
+    ],
+    "pmp": [
+      "risk_management",
+      "stakeholder_management"
+    ],
+    "revit": [
+      "bim"
+    ]
+  }
+}

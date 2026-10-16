@@ -1,0 +1,58 @@
+{
+  "verified_at": "2026-10-15T22:22:58.880173+00:00",
+  "date_in_cairo": "2026-10-16",
+  "development_only": true,
+  "production_release": false,
+  "data_import": false,
+  "version": "1.0.1",
+  "build_number": 1001,
+  "source_commit": "0bd5b84a74733ac3370606969ac88817f12b1beb",
+  "run": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38815276584",
+  "release": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1001",
+  "jobs": {
+    "android": "passed",
+    "ios_unsigned_device": "passed",
+    "paired_release_publication": "passed"
+  },
+  "contract_tests": 13,
+  "package_hashes_and_crc": "passed",
+  "embedded_update_source_parity": "passed",
+  "android": {
+    "signing": "persistent development certificate; apksigner verified in CI",
+    "package": "com.autolinky.app",
+    "artifact": {
+      "file": "AutoLinky-1.0.1+1001-development.apk",
+      "sha256": "0ffb3f51de5618b48bc7ffc1562d27dd3ede98e6420586582ab2c4a71a3b4892",
+      "bytes": 63420688,
+      "signing": "development",
+      "installable": true
+    }
+  },
+  "ios": {
+    "signing": "unsigned as requested",
+    "bundle_id": "com.autolinky.ios",
+    "platform": "iPhoneOS",
+    "architecture": "arm64",
+    "artifact": {
+      "file": "AutoLinky-1.0.1+1001-unsigned.ipa",
+      "sha256": "c4f050fce9bb92661ab7d3e6df57be86731b63c5df42745115d7547445cb11b4",
+      "bytes": 11139290,
+      "signing": "unsigned",
+      "installable": false
+    }
+  },
+  "shared_update_source": {
+    "provider": "shorebird",
+    "config": "shorebird.yaml",
+    "track": "stable",
+    "development_engine": "flutter",
+    "ota_active": false,
+    "app_id": "9260c9e9-c773-4b75-b53f-e0d3141fb230",
+    "config_sha256": "f99610af7c5424ccf2872b28b0e8c04b8606cc9c34c1f11ce04b80188433957d"
+  },
+  "api_origin_configured": false,
+  "remaining": [
+    "Set a reachable development API origin for both clients",
+    "Configure Shorebird access and build/register both baselines before OTA patches can be delivered"
+  ]
+}

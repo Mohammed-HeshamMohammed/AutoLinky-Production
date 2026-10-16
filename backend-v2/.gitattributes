@@ -1,0 +1,4 @@
+# Preserve exact SQL bytes: existing migrations include both LF and CRLF files.
+# Checksums must survive Windows and Linux checkouts unchanged.
+database/*.sql -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+database/migrations/*.sql -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

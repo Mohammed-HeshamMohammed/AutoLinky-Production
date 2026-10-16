@@ -1,0 +1,65 @@
+{
+  "verified_at": "2026-10-15T21:12:03.657342+00:00",
+  "backend": {
+    "node": "24.22.0",
+    "syntax_boundary_check": "passed",
+    "unit_tests": 11,
+    "native_postgresql_tests": 20,
+    "postgresql": "17.10",
+    "status": "passed"
+  },
+  "flutter": {
+    "flutter": "3.47.7",
+    "dart": "3.13.5",
+    "analysis": "no issues",
+    "non_screenshot_tests": 152,
+    "javascript_web_release_build": "passed",
+    "native_device_sign_in": "not verified",
+    "verified_at": "2026-10-16T08:43:07.943118+00:00",
+    "firebase_core": "4.15.0",
+    "firebase_auth": "6.7.0",
+    "ios_simulator_native_build": "passed on macos-26 / Xcode 26.6",
+    "ios_build_run": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776",
+    "android_development_release_apk": "passed; persistent development certificate verified in CI",
+    "ios_unsigned_device_ipa": "passed; version 1.0.1 (1003)",
+    "shared_embedded_update_source": "passed for both installers",
+    "mobile_release": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003",
+    "ota_active": false,
+    "mobile_api_origin_configured": false,
+    "mobile_build_run": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916",
+    "separate_platform_projects": "passed under root mobile apps/",
+    "native_root_assets": "passed: Google logo and all four font weights in both downloaded packages",
+    "unified_browser_targets": "both passed under frontend-v2/apps/",
+    "browser_ui": "not verified; browser provider unavailable"
+  },
+  "website": {
+    "http_download_tests": 8,
+    "prerendered_indexable_pages": 22,
+    "build_check": "passed: landing pages and both app bundles",
+    "docker_image": "not built",
+    "unified_frontend_ci": "passed",
+    "browser_app_targets": [
+      "android",
+      "ios"
+    ]
+  },
+  "remote_ci": {
+    "ios": "passed",
+    "backend_website_flutter_linux_jobs": "not run",
+    "mobile_development_release": "passed on retry: https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916",
+    "unified_frontend": "passed: https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872"
+  },
+  "deployed": false,
+  "environment": {
+    "priority": "environment first; production import deferred",
+    "services": "running locally",
+    "restart": "passed",
+    "occupied_port_refusal": "passed; existing process/control preserved",
+    "users": 0,
+    "cvs": 0,
+    "applications": 0,
+    "provider_setup": "pending Firebase Admin/native Google/domain inputs",
+    "primary_frontend": "http://localhost:8080; browser app variants under /app/"
+  },
+  "development_installers_published": true
+}

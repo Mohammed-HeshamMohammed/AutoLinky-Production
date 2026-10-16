@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-16T08:51:18.639Z",
+  "workspaces": [
+    {
+      "name": "reference",
+      "root": "X:\\Autolinky-with-serverbased",
+      "filesChecked": 544,
+      "changed": []
+    },
+    {
+      "name": "production-existing",
+      "root": "X:\\AutoLinky-Production",
+      "filesChecked": 41,
+      "changed": []
+    }
+  ]
+}

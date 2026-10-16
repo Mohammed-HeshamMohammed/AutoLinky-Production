@@ -1,0 +1,195 @@
+{
+  "reference_commit": "2fd91a2",
+  "normalization": [
+    {
+      "text": "Senior Network Engineer (CCNP)",
+      "expected": "senior network engineer ccnp"
+    },
+    {
+      "text": "مهندس الشَّبَكَات والاتصالات",
+      "expected": "مهندس شبكات اتصالات"
+    },
+    {
+      "text": "Python & JavaScript",
+      "expected": "python and javascript"
+    },
+    {
+      "text": "C# / .NET",
+      "expected": "c net"
+    },
+    {
+      "text": "أخصائي الموارد البشرية",
+      "expected": "اخصايي موارد بشريه"
+    },
+    {
+      "text": "مُطوّر برمجيات",
+      "expected": "مطور برمجيات"
+    },
+    {
+      "text": "Sales — Cairo",
+      "expected": "sales cairo"
+    },
+    {
+      "text": "A_B １２３",
+      "expected": "a b 123"
+    },
+    {
+      "text": "البرمجة والبرمجيات",
+      "expected": "برمجه برمجيات"
+    },
+    {
+      "text": "été déjà vu",
+      "expected": "ete deja vu"
+    }
+  ],
+  "titles": [
+    {
+      "text": "Senior Network Engineer (CCNP)",
+      "expected": "network engineer"
+    },
+    {
+      "text": "مهندس الشَّبَكَات والاتصالات",
+      "expected": "مهندس الشَّبَكَات والاتصالات"
+    },
+    {
+      "text": "Python & JavaScript",
+      "expected": "python & javascript"
+    },
+    {
+      "text": "C# / .NET",
+      "expected": "c# / .net"
+    },
+    {
+      "text": "أخصائي الموارد البشرية",
+      "expected": "أخصائي الموارد البشرية"
+    },
+    {
+      "text": "مُطوّر برمجيات",
+      "expected": "مُطوّر برمجيات"
+    },
+    {
+      "text": "Sales — Cairo",
+      "expected": "sales"
+    },
+    {
+      "text": "A_B １２３",
+      "expected": "a_b 123"
+    },
+    {
+      "text": "البرمجة والبرمجيات",
+      "expected": "البرمجة والبرمجيات"
+    },
+    {
+      "text": "été déjà vu",
+      "expected": "été déjà vu"
+    },
+    {
+      "text": "https://example.com",
+      "expected": null
+    },
+    {
+      "text": "Senior Senior Backend Engineer",
+      "expected": "backend engineer"
+    },
+    {
+      "text": "Engineer | Cairo",
+      "expected": "engineer"
+    },
+    {
+      "text": "Junior Developer - Remote",
+      "expected": "developer"
+    },
+    {
+      "text": "Backend [Node.js]",
+      "expected": "backend"
+    },
+    {
+      "text": "a",
+      "expected": null
+    },
+    {
+      "text": "123",
+      "expected": null
+    },
+    {
+      "text": "Lead Engineer",
+      "expected": "lead engineer"
+    },
+    {
+      "text": "مهندس برمجيات",
+      "expected": "مهندس برمجيات"
+    }
+  ],
+  "skills": [
+    {
+      "text": "JavaScript React .NET",
+      "extract": [
+        "javascript",
+        "dotnet",
+        "react"
+      ],
+      "lookup": null
+    },
+    {
+      "text": "react",
+      "extract": [],
+      "lookup": "react"
+    },
+    {
+      "text": "React",
+      "extract": [
+        "react"
+      ],
+      "lookup": "react"
+    },
+    {
+      "text": "C",
+      "extract": [],
+      "lookup": "c_lang"
+    },
+    {
+      "text": "js",
+      "extract": [
+        "javascript"
+      ],
+      "lookup": "javascript"
+    },
+    {
+      "text": "dotnet",
+      "extract": [
+        "dotnet"
+      ],
+      "lookup": "dotnet"
+    },
+    {
+      "text": "notjs",
+      "extract": [],
+      "lookup": null
+    },
+    {
+      "text": "مطور JavaScript",
+      "extract": [
+        "javascript"
+      ],
+      "lookup": null
+    }
+  ],
+  "roles": [
+    {
+      "text": "network engineer",
+      "expected": "network"
+    },
+    {
+      "text": "software engineer sales engineer",
+      "expected": "sales"
+    },
+    {
+      "text": "developer",
+      "expected": "software"
+    },
+    {
+      "text": "sales engineer network engineer",
+      "expected": "network"
+    }
+  ]
+}

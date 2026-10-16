@@ -1,0 +1,439 @@
+  erDiagram
+      direction TB
+      %% Existing public tables plus referenced auth.users key.
+      %% Re-baselined 2026-10-15 at main: adds user_searches (Step 18), user_limits and admin_log (Step 19).
+      auth_users {
+          uuid id PK "external auth.users referenced key only"
+      }
+      linkedin_jobs {
+          text job_id PK
+          text title
+          text company "nullable"
+          text company_url "nullable"
+          text location "nullable"
+          text city "nullable"
+          text country "nullable"
+          boolean is_remote
+          date listed_at "nullable"
+          text job_url
+          text apply_type "nullable"
+          text seniority "nullable"
+          text employment_type "nullable"
+          text job_function "nullable"
+          text industries "nullable"
+          text applicants "nullable"
+          text description "nullable"
+          text search_text "nullable"
+          timestamptz details_fetched_at "nullable"
+          timestamptz first_seen_at
+          timestamptz last_seen_at
+      }
+      hiring_posts {
+          uuid id PK
+          text post_urn UK "nullable"
+          text fingerprint UK
+          text post_url "nullable"
+          text author_url "nullable"
+          text post_text
+          text title "nullable"
+          text level "nullable"
+          text company "nullable"
+          text city "nullable"
+          text country "nullable"
+          boolean is_remote
+          text_array apply_methods
+          text search_text "nullable"
+          timestamptz created_at
+      }
+      api_rate_limits {
+          text bucket PK
+          timestamptz window_start PK
+          integer hits
+      }
+      app_devices {
+          uuid id PK
+          uuid user_id FK
+          text token_hash UK
+          text platform
+          timestamptz created_at
+          timestamptz last_seen_at
+      }
+      app_downloads {
+          bigint id PK
+          timestamptz created_at
+          text kind
+          text version "nullable"
+          text tag "nullable"
+          text device "nullable"
+          text in_app "nullable"
+          boolean is_bot
+          text country "nullable"
+          text referrer "nullable"
+          text source "nullable"
+          text visitor "nullable"
+          text user_agent "nullable"
+      }
+      app_users {
+          uuid id PK,FK
+          text email "nullable"
+          text status
+          timestamptz created_at
+          timestamptz last_seen_at
+      }
+      applications {
+          uuid user_id PK,FK
+          uuid opportunity_id PK
+          text method
+          text status
+          jsonb job
+          text error "nullable"
+          timestamptz created_at
+          timestamptz updated_at
+          boolean auto
+          text recipient "nullable"
+          timestamptz sent_at "nullable"
+          text letter "nullable"
+      }
+      auto_apply {
+          uuid user_id PK,FK
+          boolean enabled
+          integer min_match
+          integer daily_limit
+          timestamptz enabled_at "nullable"
+          timestamptz next_send_at
+          timestamptz paused_until "nullable"
+          text pause_reason "nullable"
+          timestamptz updated_at
+          integer gap_minutes
+      }
+      cover_letters {
+          uuid user_id PK,FK
+          uuid opportunity_id PK
+          text cv_sha256
+          text body
+          text model "nullable"
+          timestamptz created_at
+      }
+      field_relations {
+          text field_a PK,FK
+          text field_b PK,FK
+          real weight
+      }
+      job_fields {
+          text slug PK
+          text name_en
+          text name_ar
+          text icon "nullable"
+          integer sort_order
+          boolean active
+          timestamptz updated_at
+      }
+      job_requirements {
+          text source PK
+          text source_ref PK
+          text content_hash
+          boolean is_job
+          text_array required_raw
+          text_array preferred_raw
+          smallint min_years "nullable"
+          text education "nullable"
+          text model "nullable"
+          timestamptz created_at
+      }
+      job_roles {
+          text slug PK
+          text field FK
+          text name_en
+          text name_ar
+          text_array keywords
+          integer sort_order
+          boolean active
+          timestamptz updated_at
+      }
+      mail_accounts {
+          uuid user_id PK,FK
+          text address
+          text sender_name
+          text secret "legacy Gmail only"
+          text status
+          text error "nullable"
+          timestamptz checked_at "nullable"
+          timestamptz created_at
+          timestamptz updated_at
+          text signature "nullable"
+      }
+      match_cache {
+          uuid user_id PK,FK
+          uuid opportunity_id PK,FK
+          smallint total
+      }
+      match_cache_meta {
+          boolean id PK
+          bigint stats_version
+          timestamptz stats_at
+          integer size
+      }
+      match_cache_queue {
+          uuid opportunity_id PK,FK
+          timestamptz queued_at
+      }
+      match_cache_state {
+          uuid user_id PK,FK
+          timestamptz built_at
+          timestamptz read_at
+          numeric floor
+          boolean complete
+          bigint stats_version
+          boolean dirty
+          bigint marks
+      }
+      opportunities {
+          uuid id PK
+          text source UK
+          text source_ref UK
+          text title
+          text company "nullable"
+          text city "nullable"
+          text country "nullable"
+          text country_code "nullable"
+          text work_mode
+          text level
+          text employment_type
+          text field FK
+          text role FK "nullable"
+          numeric role_confidence
+          text_array skills
+          text_array apply_methods
+          text language
+          text snippet "nullable"
+          text url "nullable"
+          text search_blob
+          timestamptz posted_at
+          timestamptz last_seen_at "nullable"
+          text status
+          text enrich_version
+          timestamptz created_at
+          timestamptz updated_at
+          text title_key
+          text_array title_skills
+          text_array req_skills
+          text_array pref_skills
+          text_array req_unknown
+          smallint min_years "nullable"
+          text education "nullable"
+          boolean requirements_read
+      }
+      post_contacts {
+          uuid id PK
+          uuid post_id FK,UK
+          text type UK
+          text value UK
+          text label "nullable"
+          timestamptz created_at
+      }
+      post_verdicts {
+          text key PK
+          boolean is_hiring
+          timestamptz created_at
+      }
+      requirements_skipped {
+          uuid opportunity_id PK,FK
+          text content_hash
+          timestamptz checked_at
+      }
+      role_affinity {
+          text role_a PK,FK
+          text role_b PK,FK
+          real weight
+      }
+      role_skill_stats {
+          text role PK,FK
+          text skill PK,FK
+          real jobs
+          real share
+          real spec
+          timestamptz updated_at
+      }
+      search_locations {
+          uuid id PK
+          text keyword UK
+          text zone
+          text country "nullable"
+          boolean active "nullable"
+      }
+      search_queries {
+          text search_text PK
+          text title "nullable"
+          text location "nullable"
+          integer runs
+          integer empty_streak
+          integer total_posts
+          integer total_emails
+          integer total_saved
+          integer last_posts "nullable"
+          integer last_emails "nullable"
+          integer last_saved "nullable"
+          double score
+          timestamptz last_run_at "nullable"
+          timestamptz next_run_at "nullable"
+      }
+      search_titles {
+          uuid id PK
+          text title UK
+          boolean active "nullable"
+          timestamptz last_searched_at "nullable"
+          text canonical "nullable"
+          integer users
+          boolean manual
+          timestamptz created_at
+          text_array scopes
+      }
+      skill_candidates {
+          text name_key PK
+          text name
+          integer jobs
+          integer cvs
+          text status
+          text slug FK "nullable"
+          jsonb hints
+          text_array examples
+          text decided_by "nullable"
+          timestamptz decided_at "nullable"
+          boolean reviewed
+          timestamptz created_at
+      }
+      skill_implications {
+          text skill PK,FK
+          text implied PK,FK
+      }
+      skill_stats {
+          text skill PK,FK
+          integer df
+          real weight
+          timestamptz updated_at
+          real share_macro "nullable"
+          real spec_any "nullable"
+      }
+      skills {
+          text slug PK
+          text name
+          text skill_group
+          text_array aliases
+          boolean active
+          timestamptz updated_at
+          boolean learned
+      }
+      subscriptions {
+          text email PK
+          text plan
+          timestamptz starts_at
+          timestamptz ends_at "nullable"
+          text note "nullable"
+          timestamptz created_at
+          timestamptz updated_at
+      }
+      title_classifications {
+          text title_key PK
+          text role FK "nullable"
+          text field FK "nullable"
+          text model "nullable"
+          text example_title "nullable"
+          timestamptz created_at
+      }
+      user_cvs {
+          uuid user_id PK,FK
+          text file_name
+          text file_type
+          integer file_size
+          integer pages "nullable"
+          text sha256
+          text storage_path
+          text text
+          jsonb detected
+          text analysis
+          text model "nullable"
+          integer tokens
+          timestamptz created_at
+          timestamptz analyzed_at
+          text_array links "nullable"
+      }
+      user_profiles {
+          uuid user_id PK,FK
+          text_array target_roles
+          text_array target_fields
+          text_array skills
+          text level "nullable"
+          text_array countries
+          boolean remote_ok
+          text_array languages
+          timestamptz updated_at
+          text headline "nullable"
+          smallint years_experience "nullable"
+          text_array search_titles
+          text_array extra_skills
+          timestamptz created_at
+          text_array search_keys "nullable; generated"
+          text search_scope "nullable"
+      }
+      worker_heartbeats {
+          text name PK
+          timestamptz seen_at
+      }
+      %% Only declared foreign keys below; logical associations are in a separate diagram.
+      app_users ||..o{ app_devices : "user_id"
+      auth_users ||--o| app_users : "id"
+      app_users ||--o{ applications : "user_id"
+      app_users ||--o| auto_apply : "user_id"
+      app_users ||--o{ cover_letters : "user_id"
+      job_fields ||--o{ field_relations : "field_a"
+      job_fields ||--o{ field_relations : "field_b"
+      job_fields ||..o{ job_roles : "field"
+      app_users ||--o| mail_accounts : "user_id"
+      opportunities ||--o{ match_cache : "opportunity_id"
+      opportunities ||--o| match_cache_queue : "opportunity_id"
+      user_profiles ||--o| match_cache_state : "user_id"
+      match_cache_state ||--o{ match_cache : "user_id"
+      job_fields ||..o{ opportunities : "field"
+      job_roles |o..o{ opportunities : "role"
+      hiring_posts ||..o{ post_contacts : "post_id"
+      opportunities ||--o| requirements_skipped : "opportunity_id"
+      job_roles ||--o{ role_affinity : "role_a"
+      job_roles ||--o{ role_affinity : "role_b"
+      job_roles ||--o{ role_skill_stats : "role"
+      skills ||--o{ role_skill_stats : "skill"
+      skills |o..o{ skill_candidates : "slug"
+      skills ||--o{ skill_implications : "implied"
+      skills ||--o{ skill_implications : "skill"
+      skills ||--o| skill_stats : "skill"
+      job_fields |o..o{ title_classifications : "field"
+      job_roles |o..o{ title_classifications : "role"
+      app_users ||--o| user_cvs : "user_id"
+      app_users ||--o| user_profiles : "user_id"
+      user_searches {
+          uuid user_id PK
+          text_array titles
+          text_array searched
+          timestamptz requested_at
+          timestamptz started_at "nullable"
+          timestamptz done_at "nullable"
+      }
+      user_limits {
+          uuid user_id PK,FK
+          integer free_emails "nullable"
+          boolean unlimited
+          integer daily_limit "nullable"
+          boolean daily_unlimited
+          text note "nullable"
+          timestamptz updated_at
+          text updated_by "nullable"
+      }
+      admin_log {
+          bigint id PK
+          timestamptz created_at
+          text admin
+          uuid user_id "nullable; no FK"
+          text email "nullable"
+          text action
+          jsonb details
+      }
+      app_users ||--o| user_limits : "user_id"

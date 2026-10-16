@@ -1,0 +1,282 @@
+[
+  {
+    "method": "GET",
+    "path": "/admin",
+    "source": "backend/routers/admin.py",
+    "handler": "page",
+    "line": 145
+  },
+  {
+    "method": "GET",
+    "path": "/admin/",
+    "source": "backend/routers/admin.py",
+    "handler": "page_slash",
+    "line": 153
+  },
+  {
+    "method": "GET",
+    "path": "/admin/{name}",
+    "source": "backend/routers/admin.py",
+    "handler": "asset",
+    "line": 158
+  },
+  {
+    "method": "POST",
+    "path": "/admin/api/login",
+    "source": "backend/routers/admin.py",
+    "handler": "login",
+    "line": 175
+  },
+  {
+    "method": "GET",
+    "path": "/admin/api/overview",
+    "source": "backend/routers/admin.py",
+    "handler": "overview",
+    "line": 245
+  },
+  {
+    "method": "GET",
+    "path": "/admin/api/users",
+    "source": "backend/routers/admin.py",
+    "handler": "users",
+    "line": 259
+  },
+  {
+    "method": "GET",
+    "path": "/admin/api/users/{user_id}",
+    "source": "backend/routers/admin.py",
+    "handler": "user_detail",
+    "line": 368
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/api/users/{user_id}/limits",
+    "source": "backend/routers/admin.py",
+    "handler": "set_limits",
+    "line": 409
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/api/users/{user_id}/pro",
+    "source": "backend/routers/admin.py",
+    "handler": "pro_on",
+    "line": 428
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/api/users/{user_id}/pro",
+    "source": "backend/routers/admin.py",
+    "handler": "pro_off",
+    "line": 460
+  },
+  {
+    "method": "GET",
+    "path": "/applications",
+    "source": "backend/routers/applications.py",
+    "handler": "list_applications",
+    "line": 117
+  },
+  {
+    "method": "POST",
+    "path": "/applications",
+    "source": "backend/routers/applications.py",
+    "handler": "apply",
+    "line": 147
+  },
+  {
+    "method": "GET",
+    "path": "/applications/email-preview",
+    "source": "backend/routers/applications.py",
+    "handler": "email_preview",
+    "line": 187
+  },
+  {
+    "method": "DELETE",
+    "path": "/applications/{job_id}",
+    "source": "backend/routers/applications.py",
+    "handler": "withdraw",
+    "line": 208
+  },
+  {
+    "method": "POST",
+    "path": "/cv",
+    "source": "backend/routers/cv.py",
+    "handler": "upload_cv",
+    "line": 154
+  },
+  {
+    "method": "GET",
+    "path": "/cv",
+    "source": "backend/routers/cv.py",
+    "handler": "get_cv",
+    "line": 205
+  },
+  {
+    "method": "DELETE",
+    "path": "/cv",
+    "source": "backend/routers/cv.py",
+    "handler": "delete_cv",
+    "line": 213
+  },
+  {
+    "method": "POST",
+    "path": "/cv/reanalyze",
+    "source": "backend/routers/cv.py",
+    "handler": "reanalyze_cv",
+    "line": 225
+  },
+  {
+    "method": "POST",
+    "path": "/devices",
+    "source": "backend/routers/devices.py",
+    "handler": "add_device",
+    "line": 67
+  },
+  {
+    "method": "DELETE",
+    "path": "/devices/{device_id}",
+    "source": "backend/routers/devices.py",
+    "handler": "remove_device",
+    "line": 81
+  },
+  {
+    "method": "GET",
+    "path": "/device/activity",
+    "source": "backend/routers/devices.py",
+    "handler": "device_activity",
+    "line": 114
+  },
+  {
+    "method": "GET",
+    "path": "/auto-apply",
+    "source": "backend/routers/email_apply.py",
+    "handler": "auto_apply_state",
+    "line": 191
+  },
+  {
+    "method": "PUT",
+    "path": "/auto-apply",
+    "source": "backend/routers/email_apply.py",
+    "handler": "set_auto_apply",
+    "line": 196
+  },
+  {
+    "method": "GET",
+    "path": "/auto-apply/activity",
+    "source": "backend/routers/email_apply.py",
+    "handler": "activity",
+    "line": 227
+  },
+  {
+    "method": "PUT",
+    "path": "/mail-account",
+    "source": "backend/routers/email_apply.py",
+    "handler": "connect_mail",
+    "line": 260
+  },
+  {
+    "method": "GET",
+    "path": "/mail-account/signature",
+    "source": "backend/routers/email_apply.py",
+    "handler": "suggested_signature",
+    "line": 304
+  },
+  {
+    "method": "DELETE",
+    "path": "/mail-account",
+    "source": "backend/routers/email_apply.py",
+    "handler": "disconnect_mail",
+    "line": 312
+  },
+  {
+    "method": "GET",
+    "path": "/health",
+    "source": "backend/routers/health.py",
+    "handler": "health_check",
+    "line": 31
+  },
+  {
+    "method": "GET",
+    "path": "/health/ready",
+    "source": "backend/routers/health.py",
+    "handler": "readiness",
+    "line": 65
+  },
+  {
+    "method": "GET",
+    "path": "/jobs",
+    "source": "backend/routers/jobs.py",
+    "handler": "list_jobs",
+    "line": 202
+  },
+  {
+    "method": "GET",
+    "path": "/jobs/matched",
+    "source": "backend/routers/jobs.py",
+    "handler": "matched_jobs",
+    "line": 255
+  },
+  {
+    "method": "GET",
+    "path": "/jobs/matched/new",
+    "source": "backend/routers/jobs.py",
+    "handler": "new_matches",
+    "line": 319
+  },
+  {
+    "method": "GET",
+    "path": "/jobs/filters",
+    "source": "backend/routers/jobs.py",
+    "handler": "job_filters",
+    "line": 347
+  },
+  {
+    "method": "GET",
+    "path": "/jobs/{job_id}",
+    "source": "backend/routers/jobs.py",
+    "handler": "job_detail",
+    "line": 366
+  },
+  {
+    "method": "GET",
+    "path": "/me",
+    "source": "backend/routers/me.py",
+    "handler": "read_current_user",
+    "line": 9
+  },
+  {
+    "method": "GET",
+    "path": "/profile",
+    "source": "backend/routers/profile.py",
+    "handler": "get_profile",
+    "line": 152
+  },
+  {
+    "method": "PUT",
+    "path": "/profile",
+    "source": "backend/routers/profile.py",
+    "handler": "put_profile",
+    "line": 160
+  },
+  {
+    "method": "GET",
+    "path": "/profile/search-status",
+    "source": "backend/routers/profile.py",
+    "handler": "get_search_status",
+    "line": 253
+  },
+  {
+    "method": "POST",
+    "path": "/profile/search-now",
+    "source": "backend/routers/profile.py",
+    "handler": "search_now",
+    "line": 259
+  },
+  {
+    "method": "GET",
+    "path": "/taxonomy",
+    "source": "backend/routers/taxonomy.py",
+    "handler": "get_taxonomy",
+    "line": 74
+  }
+]

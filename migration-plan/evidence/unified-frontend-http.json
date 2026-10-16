@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-16T08:31:14.176Z",
+  "origin": "http://localhost:8080",
+  "status": "passed",
+  "checks": [
+    "en landing-to-app links",
+    "ar landing-to-app links",
+    "android bundle, web Firebase registration, common API, brand/font assets, route reload and private-key exclusion",
+    "ios bundle, web Firebase registration, common API, brand/font assets, route reload and private-key exclusion"
+  ],
+  "browser_ui": "not verified; no browser provider is available",
+  "production_deployed": false
+}

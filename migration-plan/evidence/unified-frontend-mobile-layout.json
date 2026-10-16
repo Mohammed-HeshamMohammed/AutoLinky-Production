@@ -1,0 +1,59 @@
+{
+  "verified_at": "2026-10-16T08:43:07.943118+00:00",
+  "source_commit": "232ef50f36e2677cab2e1c40c2984b85b7697e89",
+  "workflow_fix_commit": "dcc797b",
+  "layout": {
+    "unified_frontend": "frontend-v2/",
+    "native_android": "mobile apps/Android app/",
+    "native_ios": "mobile apps/IOS app/",
+    "shared_package": "mobile apps/shared/"
+  },
+  "routes": [
+    "/",
+    "/ar/",
+    "/app/android/",
+    "/app/ios/"
+  ],
+  "local": {
+    "origin": "http://localhost:8080",
+    "site_pages": 22,
+    "server_tests": 8,
+    "shared_flutter_tests": 152,
+    "configuration_tests": 13,
+    "analysis": [
+      "shared",
+      "android web",
+      "ios web"
+    ],
+    "http_api_and_assets": "passed",
+    "browser_ui": "unavailable: no browser provider",
+    "database_users": 0,
+    "database_cvs": 0,
+    "database_applications": 0
+  },
+  "web_ci": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872",
+  "mobile_ci": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916",
+  "mobile_publication": "passed on attempt 2; authenticated account prepared a draft after GITHUB_TOKEN could not create it for a workflow-changing source commit",
+  "release": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003",
+  "artifacts": {
+    "android": {
+      "file": "AutoLinky-1.0.1+1003-development.apk",
+      "sha256": "52a3cab9376b95b4f073ff0233ba7218c727863254286fc8b8366ad67824b489",
+      "bytes": 64120665,
+      "signing": "development",
+      "installable": true
+    },
+    "ios": {
+      "file": "AutoLinky-1.0.1+1003-unsigned.ipa",
+      "sha256": "171a0d028797061d835f64c5ad30da2ddae19ae3f83d96c437af143c5da0c8b2",
+      "bytes": 11734158,
+      "signing": "unsigned",
+      "installable": false
+    }
+  },
+  "ios_signed": false,
+  "native_ota_active": false,
+  "production_deployed": false,
+  "data_migrated": false,
+  "local_cleanup": "automatic approval review blocked removing the empty old frontend-v2/website directory; it remains empty"
+}

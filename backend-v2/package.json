@@ -1,0 +1,39 @@
+{
+  "name": "autolinky-backend-v2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "env:setup": "node scripts/environment/setup.js",
+    "env:build": "node scripts/environment/build.js",
+    "env:start": "node scripts/environment/start.js",
+    "env:stop": "node scripts/environment/stop.js",
+    "env:status": "node scripts/environment/status.js",
+    "env:verify": "node scripts/environment/verify.js",
+    "identity:reconcile": "node --env-file-if-exists=.env scripts/reconcile-identities.js",
+    "start": "node --env-file-if-exists=.env src/api.js",
+    "dev": "node --env-file-if-exists=.env --watch src/api.js",
+    "sender": "node --env-file-if-exists=.env src/sender.js",
+    "migrate": "node --env-file-if-exists=.env database/migrate.js",
+    "migrate:check": "node --env-file-if-exists=.env database/migrate.js --check",
+    "test": "node --test test/*.test.js",
+    "test:db": "node --test --test-concurrency=1 test/integration/*.test.js",
+    "check": "node scripts/check-source.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "11.3.1",
+    "fastify": "5.12.7",
+    "firebase-admin": "14.5.0",
+    "he": "1.2.0",
+    "nodemailer": "10.1.1",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "embedded-postgres": "17.10.0-beta.17",
+    "fast-check": "4.10.2",
+    "node": "24.22.0"
+  }
+}

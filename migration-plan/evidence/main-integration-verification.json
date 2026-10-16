@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-16",
+  "scope": "Integrate the existing development stack, plans and evidence into main",
+  "backendRuntime": "Node 24.22.0, native ESM JavaScript",
+  "checks": {
+    "backendSourceAndSyntax": "passed",
+    "sqlGitBytePreservation": "All bootstrap/migration SQL bytes match the staged index; scoped Git attributes prevent platform newline conversion and checksum drift",
+    "deterministicPropertyExtractorTests": { "passed": 11, "failed": 0 },
+    "nativePostgresqlIntegrationTests": { "passed": 20, "failed": 0 },
+    "referenceOriginals": { "checked": 544, "changed": 0 },
+    "productionOriginals": { "checked": 41, "changed": 0 },
+    "candidateSecretReview": {
+      "privateKeyOrCredentialTokenFindings": 0,
+      "actualLocalRuntimeSecretCopies": 0,
+      "unexpectedRuntimeOrPrivateBinaryPaths": 0,
+      "note": "Pattern review plus comparison against actual local environment secrets; not a formal security audit. Public Firebase app configuration and deterministic test keys are intentional."
+    }
+  },
+  "architecture": {
+    "status": "proposed",
+    "record": "backend-v2/docs/adr/0001-service-boundaries.md",
+    "recommendation": "One repository, domain modules and private workers, Firebase authentication, initially one private PostgreSQL instance",
+    "fiveIndependentBackendsImplemented": false
+  },
+  "ci": {
+    "combinedBackendAndWeb": "Pending first main run; do not infer success from previous web/native runs",
+    "priorUnifiedWebRun": "38873988872",
+    "priorPairedNativeRun": "38873988916"
+  },
+  "limits": [
+    "No production deployment or data transfer",
+    "No live email or source collection",
+    "No real provider, browser or device acceptance added by this integration",
+    "Generated installers, SDKs, databases, runtime files and private credentials remain ignored"
+  ]
+}

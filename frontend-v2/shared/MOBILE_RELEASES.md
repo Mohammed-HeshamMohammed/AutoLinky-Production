@@ -2,11 +2,11 @@
 
 The current output is an Android release APK signed with a persistent **development** key and an **unsigned iOS device IPA**. Apple certificates and profiles are not required for this development build. The unsigned IPA must be signed before it can be installed on an iPhone.
 
-Verified on 2026-10-16: [development release 1.0.1 (1001)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1001), [successful paired CI run](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38815276584). Both downloaded packages passed SHA-256 and ZIP CRC checks. The iOS package is an unsigned arm64 `iPhoneOS` build, and both embedded update configurations match. The API origin is not configured in this initial release, and OTA patches remain inactive.
+Verified on 2026-10-16: [development release 1.0.1 (1002)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1002), [successful paired CI run](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38850374978). Both downloaded packages passed SHA-256 and ZIP CRC checks. The iOS package is an unsigned arm64 `iPhoneOS` build, and both embedded update configurations match. The API origin is not configured in this initial release, and OTA patches remain inactive.
 
 `.github/workflows/mobile-development.yml` builds both platforms from the same commit. It overrides both packages with the same version name and increasing build number, then publishes them together as a development prerelease in `Mohammed-HeshamMohammed/AutoLinky-Production`. Development prereleases never become the production/latest release.
 
-The native builds now run in `../Android app/` and `../IOS app/`. Common code and release tooling live here. `python tool/mobile_apps.py` prepares ignored per-app copies of canonical assets and Shorebird settings; CI does this before resolving either app. Each app has its own lockfile and output directory. The earlier verified release above predates this folder split.
+The native builds now run in `../Android app/` and `../IOS app/`. Common code and release tooling live here. `python tool/mobile_apps.py` prepares ignored per-app copies of canonical assets and Shorebird settings; CI does this before resolving either app. Each app has its own lockfile and output directory. Release 1.0.1 (1002), from source commit `b46ab38`, verifies this split on both native runners; the earlier 1001 release predates it.
 
 ## Shared source
 

@@ -10,6 +10,8 @@ Firebase Core 4.15.0 and Auth 6.7.0 pin the native Firebase SDK to 12.19.0. This
 
 The native project lives in `../IOS app/ios/`. The shared package and these build/configuration tools live here; the helper enters the iOS app folder for compilation. Its entry point uses the shared Dart package.
 
+The separated `IOS app` project also passed the [paired device build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38850374978), producing the unsigned 1.0.1 (1002) IPA from commit `b46ab38`. This verifies the new native project and shared-package paths.
+
 ## Current verification
 
 The [GitHub macOS build passed](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776) on 2026-10-16 (Cairo), using Xcode 26.6. Source commit: `11d6794b1a99146393ba464374e3e92f688ba454`. The [simulator artifact](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776/artifacts/12009462026) contains version 1.0.1 (2), `com.autolinky.ios`, and arm64/x86_64 binaries. Downloaded ZIP CRC and embedded Firebase identity checks passed. The artifact expires after seven days; the reproducible workflow remains available.

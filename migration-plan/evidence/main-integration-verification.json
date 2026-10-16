@@ -23,7 +23,16 @@
     "fiveIndependentBackendsImplemented": false
   },
   "ci": {
-    "combinedBackendAndWeb": "Pending first main run; do not infer success from previous web/native runs",
+    "combinedBackendAndWeb": {
+      "status": "success",
+      "run": "38876814192",
+      "url": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38876814192",
+      "sourceCommit": "5afd0a4b7c372a274f70bead8d7964812196a345",
+      "branch": "main",
+      "backend": "success: source checks, 11 deterministic tests and 20 PostgreSQL integration tests on Ubuntu",
+      "website": "success: shared app checks, both browser builds, website tests/page verification and unified artifact upload",
+      "note": "Follow-up commits only record documentation/evidence; the checked runtime source is unchanged."
+    },
     "priorUnifiedWebRun": "38873988872",
     "priorPairedNativeRun": "38873988916"
   },

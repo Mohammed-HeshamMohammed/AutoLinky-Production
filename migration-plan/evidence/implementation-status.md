@@ -23,8 +23,10 @@ runtime secrets; none were found. See `main-integration-verification.json`.
 requested identity/app/messaging/collection/data separation. Its status is
 proposed: independently runnable workers in one repository, Firebase sign-in,
 and initially one private PostgreSQL instance. It does not claim five completed
-backends. Main CI is configured for backend and reusable unified frontend checks;
-no production deployment is part of this source integration.
+backends. [Main CI run 38876814192](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38876814192)
+passed backend and reusable unified frontend checks for source `5afd0a4`, including
+both browser app builds. The follow-up commit records documentation/evidence
+only. No production deployment is part of this source integration.
 
 ## Implemented and locally checked
 

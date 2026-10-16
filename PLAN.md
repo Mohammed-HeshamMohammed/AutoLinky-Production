@@ -20,6 +20,13 @@ The user requested that all current implementation and plans be committed to
 commit; generated builds, databases, runtime files and private credentials stay
 ignored. This is a source integration, not a production deployment.
 
+- [x] Integrate all current source and plans into main (`5afd0a4`) and push.
+- [x] Pass combined backend and unified frontend GitHub checks on main:
+  [run 38876814192](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38876814192).
+
+The final follow-up records documentation/evidence only; runtime source matches
+the successful main run.
+
 The proposed division into identity, app API, messaging, collection and data
 processing is evaluated in
 [`backend-v2/docs/adr/0001-service-boundaries.md`](backend-v2/docs/adr/0001-service-boundaries.md).

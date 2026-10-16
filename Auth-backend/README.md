@@ -6,4 +6,6 @@ Owns explicit administrator assignments linked to Firebase-bound app users, encr
 
 Runtime source stays inside this folder. Install pinned dependencies with npm ci, configure an ignored .env using .env.example and run npm start with Node 24.22.0. This Dockerfile builds from this folder alone.
 
+Startup requires the configured Data backend's `/health/ready` endpoint to return HTTP 200. Create the Data DNS record, start Data with its database/schema ready, and then start Auth. A failure logs `code=DATA_SERVICE_NOT_READY`, `setting=DATA_SERVICE_URL` and a safe reason such as `dns`, `connection_refused`, `timeout`, `tls` or `http_status`, with an upstream status or recognized connection code when available. Private URLs, credentials and dependency response bodies are excluded from these startup diagnostics.
+
 See [backend operations and API connections](../Gateway-backene/BACKENDS.md) and [local environment](../Gateway-backene/tooling/ENVIRONMENT.md).

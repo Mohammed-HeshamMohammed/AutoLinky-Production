@@ -51,6 +51,7 @@ import AutoLinkyCore
     }
     func perform(_ operation: () async throws -> Void) async {
         do { try await operation() } catch is CancellationError { } catch {
+            if Task.isCancelled || (error as? URLError)?.code == .cancelled { return }
             if (error as NSError).domain == NSCocoaErrorDomain && (error as NSError).code == NSUserCancelledError { return }
             guard auth.uid == owner else { return }
             if let failure = error as? APIError, failure.status == 401 { try? auth.signOut(); return }

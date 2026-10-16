@@ -5,12 +5,14 @@ This is the web frontend: the original React landing pages, English/Arabic produ
 | URL | Experience |
 | --- | --- |
 | `/`, `/ar/` and the existing content routes | React landing site copied from the original `frontend/` |
+| `/login/`, `/signup/` (and Arabic equivalents) | Website account entry points into the existing Firebase sign-in/onboarding flow |
+| `/dashboard/`, `/jobs/`, `/profile/` | Short links to the corresponding authenticated browser screens |
 | `/app/` | Opens the appropriate browser app, preserving the language query |
 | `/app/android/` | Android app experience in the browser |
 | `/app/ios/` | iOS app experience in the browser |
 | `/download`, `/api/latest` | Existing server-side download/release integration |
 
-Landing and content pages have an Open app link. The browser apps have a Website link and a selector for the other app. Native hosts remain in `../mobile apps/Android app/` and `../mobile apps/IOS app/`. Android and both browser targets consume the Flutter package in `../mobile apps/shared/`. Native iOS is an independent Swift/SwiftUI app and has no Flutter engine or Dart dependency.
+Landing, product and legal pages share the same header with Log in and Create account. The homepage leads with a browser signup action and an existing-account login link; Android download stays available underneath. Login and signup use the same provider screen because Firebase creates a new account on first sign-in; existing sessions continue to matches and new users follow existing onboarding. The account aliases choose the browser variant from the device and preserve English/Arabic; they never accept an external redirect target. The browser apps have a Website link and a selector for the other app. Native hosts remain in `../mobile apps/Android app/` and `../mobile apps/IOS app/`. Android and both browser targets consume the Flutter package in `../mobile apps/shared/`. Native iOS is an independent Swift/SwiftUI app and has no Flutter engine or Dart dependency.
 
 ## Build and run
 
@@ -30,7 +32,7 @@ npm start
 
 `npm run build` builds the React site and both browser apps into one `dist/`. `npm run check` also verifies the prerendered pages, app bases and bundles. Browser API configuration defaults to `VITE_SITE_URL`; this server forwards `/v1/`, `/health` and `/health/ready` to its server-only `API_BASE_URL` gateway origin. Set `APP_API_BASE_URL` only to intentionally use a separate public API origin. `APP_DEFINES` may point to a public Firebase web settings JSON; it must contain only the keys in `../mobile apps/shared/env/example.json`. Native Firebase app IDs and server secrets cannot be used in browser builds. A standalone build with neither site nor API origin shows its configuration screen.
 
-For the isolated local stack using existing assets, run `npm run env:setup` then `npm run env:start` in `../backend-v2/`. The primary frontend is `http://localhost:8080`; the older port 8081 redirects into it. `npm run dev` supports React hot reload and proxies app/download routes to the built Node server on 8080.
+For the isolated local stack using existing assets, run `npm run env:setup` then `npm run env:start` in `../backend-v2/`. The primary frontend is `http://localhost:8080`; the older port 8081 redirects into it. `npm run dev` serves current React source with hot reload and server-rendered landing/content pages on port 8080, alongside existing Flutter browser assets, account aliases, API proxy and download handlers. Local `env:start` uses this source preview so interface changes are visible without a production/mobile build. Production `npm start` continues serving the built `dist/` with the same account routes. No Flutter/Android/Swift build is started by the source preview.
 
 ## Source and deployment
 

@@ -90,7 +90,7 @@ try {
   }
   await child('extractor',process.env.AUTOLINKY_PYTHON||'python',['-B',resolve(backend,'services/cv-extractor/app.py')],backend,
     {HOST:'127.0.0.1',PORT:String(settings.ports.extractor),CV_EXTRACTOR_KEY:settings.extractorKey,PYTHONPATH:resolve(backend,'.runtime/python-deps')});
-  await child('website',process.execPath,['server.js'],resolve(production,'frontend'),{...websiteEnv,HOST:'127.0.0.1',PORT:String(settings.ports.website)});
+  await child('website',process.execPath,['scripts/dev-server.mjs'],resolve(production,'frontend'),{...websiteEnv,HOST:'127.0.0.1',PORT:String(settings.ports.website)});
   clientServer=http.createServer((request,response)=>{
     const url=new URL(request.url,'http://local.client');
     response.writeHead(302,{Location:`http://localhost:${settings.ports.website}/app/android${url.pathname}${url.search}`,'Cache-Control':'no-store'}).end();

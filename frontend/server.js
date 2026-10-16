@@ -6,6 +6,7 @@ import { resolve,sep,extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import download from './api/download.js';
 import latest from './api/latest.js';
+import { accountDestination } from './account-routes.js';
 
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8',
   '.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.ico':'image/x-icon',
@@ -41,6 +42,8 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       if(['/download','/apk'].includes(url.pathname))return await download(req,res);
       if(url.pathname==='/api/latest')return await latest(req,res);
       if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'}).end();return;}
+      const account=accountDestination(url,req.headers['user-agent']);
+      if(account){res.writeHead(302,{Location:account,'Cache-Control':'no-store',Vary:'User-Agent','X-Robots-Tag':'noindex'}).end();return;}
       const pathname=decodeURIComponent(url.pathname);
       if(pathname.includes('\0') || pathname.includes('\\')){res.writeHead(400).end();return;}
       if(pathname==='/app'||pathname==='/app/') {

@@ -2,6 +2,18 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
+## Current: visible website login and account entry (2026-10-16)
+
+The owner could not find login in the unified frontend. The public landing site still led with Android downloads and hid browser access behind Open app.
+
+- [x] Use one shared header with visible Log in/Create account on landing, product and legal pages, including responsive English/Arabic navigation.
+- [x] Make browser signup/login prominent in the homepage hero, content CTAs, free plan and mobile sticky action; preserve downloads and existing content.
+- [x] Add same-origin login/signup/dashboard/jobs/profile aliases into the existing browser account flow, with language/device routing and no external redirect targets.
+- [x] Serve current React source in the local development stack while reusing existing browser app assets; no production/native application build is run.
+- [x] Pass 11 frontend HTTP tests, verify login/signup on all 22 running marketing pages and both browser entry points, and record evidence in `migration-plan/evidence/website-account-entry.json`.
+
+Real provider/account acceptance remains dependent on external Firebase setup; this work makes the existing sign-in flow reachable instead of introducing a second identity system.
+
 ## Current: complete backend source/package split (2026-10-16)
 
 The owner repeated that the backend split must be implemented. The earlier process separation still used a shared role-switching application/dependency set. This follow-up moves the actual controllers, workers and integrations into their owning backends and removes the production monolithic composer.

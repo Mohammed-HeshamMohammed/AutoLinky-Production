@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "node --test test/*.test.js",
-    "dev": "vite --host 0.0.0.0",
+    "dev": "node scripts/dev-server.mjs",
     "build:site": "vite build && node scripts/prerender.mjs",
     "build:apps": "node scripts/build-apps.mjs",
     "build": "npm run build:site && npm run build:apps",

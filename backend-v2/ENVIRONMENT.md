@@ -11,7 +11,7 @@ npm run env:setup
 npm run env:start
 ```
 
-Startup uses existing `frontend/dist/` assets. It never compiles web/mobile apps. If assets are absent, request a build separately. All build/release GitHub workflows are manual only; pushing main does not start a build.
+Startup serves current React source through the development server and reuses the existing Flutter browser assets from `frontend/dist/`. It never runs production web/mobile builds. If assets are absent, request a build separately. All build/release GitHub workflows are manual only; pushing main does not start a build.
 
 In another terminal, use `npm run env:status`, `npm run env:verify`, and `npm run env:stop`. The launcher owns its processes and local PostgreSQL cluster, refuses occupied ports, and retains its database and secrets on stop.
 

@@ -89,12 +89,12 @@ export const PAGES = {
   'how-it-works': {
     en: {
       title: 'How to use Autolinky: from CV to applications',
-      description: 'Follow the four steps to get started with Autolinky on Android: install, upload your CV, connect Gmail, and choose how to apply.',
+      description: 'Get started with Autolinky on the web or Android: create an account, upload your CV, connect Gmail, and choose how to apply.',
       eyebrow: 'How it works',
       heading: 'From your CV to a clearer job search in four steps.',
-      intro: 'Autolinky is designed to reduce the repetitive work of looking for and applying to jobs. Here is what happens after you install the Android app.',
+      intro: 'Autolinky is designed to reduce the repetitive work of looking for and applying to jobs. Start here on the web, or use the Android app with the same account.',
       sections: [
-        { heading: '1. Install and sign in', paragraphs: ['Download the current Android APK and continue with Google to create or access your account. The app asks for the permissions it needs when a feature uses them.'] },
+        { heading: '1. Create your account', paragraphs: ['Create your account on the website and continue with Google. Use AutoLinky in your browser or download the Android app with the same account. The app asks for the permissions it needs when a feature uses them.'] },
         { heading: '2. Upload your CV and review matches', paragraphs: ['Add a PDF or Word CV. Autolinky reads your experience and skills, then compares your profile with collected job posts. Review the match explanation and the original job details before acting.'] },
         { heading: '3. Connect Gmail for email applications', paragraphs: ['If you want to send CVs by email, connect the Gmail address you want recruiters to see, following the in-app steps. Autolinky checks the connection. You can disconnect it later in Settings.'] },
         { heading: '4. Apply manually or turn on Auto Apply', paragraphs: ['Use Send my CV to inspect and edit a cover letter before sending an email application. For other methods, open the WhatsApp chat, form, or site and complete the application there. Auto Apply can send eligible email applications on the server within the limits you choose.'] },
@@ -108,7 +108,7 @@ export const PAGES = {
       description: 'ابدأ مع Autolinky على أندرويد بأربع خطوات: التثبيت، رفع السيرة الذاتية، ربط Gmail، واختيار طريقة التقديم.',
       eyebrow: 'طريقة العمل',
       heading: 'من سيرتك الذاتية إلى بحث أوضح عن الوظائف في أربع خطوات.',
-      intro: 'صُمم Autolinky لتقليل العمل المتكرر عند البحث عن الوظائف والتقديم لها. إليك ما يحدث بعد تثبيت تطبيق أندرويد.',
+      intro: 'صُمم Autolinky لتقليل العمل المتكرر عند البحث عن الوظائف والتقديم لها. ابدأ هنا على الويب أو استخدم تطبيق أندرويد بالحساب نفسه.',
       sections: [
         { heading: '1. ثبّت التطبيق وسجّل الدخول', paragraphs: ['حمّل ملف أندرويد الحالي وتابع باستخدام Google لإنشاء حسابك أو الدخول إليه. يطلب التطبيق الأذونات اللازمة عندما تحتاج إليها إحدى المميزات.'] },
         { heading: '2. ارفع سيرتك وراجع الوظائف', paragraphs: ['أضف سيرة ذاتية PDF أو Word. يقرأ Autolinky خبرتك ومهاراتك ويقارن ملفك بإعلانات الوظائف التي جُمعت. راجع شرح المطابقة وتفاصيل الإعلان الأصلي قبل اتخاذ القرار.'] },

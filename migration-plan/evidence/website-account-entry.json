@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-16T15:02:15.109217+00:00",
+  "base_commit": "9f3e407279cbc7f65b4d8e9dfa2fb4ff454cb186",
+  "scope": "Visible website account access and current-source local preview",
+  "changes": [
+    "Shared website header with Log in/Create account in English and Arabic",
+    "Homepage web-first signup, existing-account login, free-plan and sticky account actions",
+    "Preserved download/product/legal content",
+    "Login/signup/dashboard/jobs/profile aliases to existing browser sign-in/onboarding/session routes",
+    "Local React source preview with existing Flutter assets; production Node server retains static runtime"
+  ],
+  "checks": {
+    "frontend_http_tests": 11,
+    "live_marketing_pages_with_account_links": 22,
+    "existing_browser_signin_variants_checked": 2,
+    "source_and_route_syntax": "passed",
+    "local_service_readiness": "passed",
+    "reference_files_unchanged": 544,
+    "source_inventory_missing_destinations": 0
+  },
+  "app_builds_run": false,
+  "production_web_build_run": false,
+  "mobile_sources_changed": false,
+  "ci_dispatched": false,
+  "vps_deployed": false,
+  "live_firebase_signin_verified": false,
+  "visual_browser_check": "Unavailable; no browser surfaces connected; Codex preview open queued",
+  "provider_inputs": {
+    "project": "auto-linky",
+    "admin": "missing: set GOOGLE_APPLICATION_CREDENTIALS in the local auth.env",
+    "native_google_client_ids": "missing from supplied native files",
+    "localhost_authorized_domain": "must be verified in Firebase by the owner",
+    "local_email_links": "disabled until an approved HTTPS continuation URL is configured"
+  },
+  "source_preview_url": "http://localhost:8080"
+}

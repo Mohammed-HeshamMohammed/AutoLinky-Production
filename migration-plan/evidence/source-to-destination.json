@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T14:43:34.628Z",
+  "generated_at": "2026-10-16T15:03:11.602Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -6129,7 +6129,7 @@
       "destinations": [
         {
           "path": "frontend/Dockerfile",
-          "sha256": "a39208b28e5645180c81ac228072451146714f84dbe2bcae46cc850bed663d07"
+          "sha256": "8291c605c186b985d0c9d3d95735df6a65f901cd01f532587a6dd838850af473"
         }
       ]
     },
@@ -6207,7 +6207,7 @@
       "destinations": [
         {
           "path": "frontend/package.json",
-          "sha256": "03cb5d68694b585b1d4e2f47a8d9e89dfa039d02b5467a10b7992bcf2f37bd2c"
+          "sha256": "0c0c09bbfeaae36b9a52277c023035b15ea8fe7fb043a9bf34ef61bd4b1c1297"
         }
       ]
     },
@@ -6415,7 +6415,7 @@
       "destinations": [
         {
           "path": "frontend/scripts/verify-build.mjs",
-          "sha256": "75504094df3b2670825649d778bf8bfbb5e4ce1823b40723123abd1226a87dd5"
+          "sha256": "33f33c41925891d3be112762f48f002abae7781a12c9cb9c0dc082177e221dbc"
         }
       ]
     },
@@ -6428,7 +6428,7 @@
       "destinations": [
         {
           "path": "frontend/src/ContentPage.jsx",
-          "sha256": "38ad61dbd83479741e98d75c632fdf0dc3f7729328c0ed3d897c61955a81c23a"
+          "sha256": "aaa518134d19bb51d59b48f7d3426f6fdeaa3b798982b8aa2ede1ec9426b2751"
         }
       ]
     },
@@ -6441,7 +6441,7 @@
       "destinations": [
         {
           "path": "frontend/src/PageMarkup.jsx",
-          "sha256": "606eec04a4b7d27afac077bde54622ae17f465d1f91bbb14f225c2593ff0f684"
+          "sha256": "cee1cb129466a044ef5059880832984c038094ba5bc1d1d8f93e39fe88026756"
         }
       ]
     },
@@ -6493,7 +6493,7 @@
       "destinations": [
         {
           "path": "frontend/src/content.js",
-          "sha256": "35ba1f3549a51a4be32840483d89eca444bda70522088592bd21114776d84e3e"
+          "sha256": "59648c1be6ace61c6e4e8220757d3715970374cadc8ca520b5d217026cf8cc80"
         }
       ]
     },
@@ -6545,7 +6545,7 @@
       "destinations": [
         {
           "path": "frontend/src/pageContent.js",
-          "sha256": "b266b53f164f2a764058250149d62a27f3cff5fab39bf79c5d07fde0a12f0710"
+          "sha256": "fc764bf768d22128606f863a89c4a9f0b14575d6a8aab1a41799cc36de6550b5"
         }
       ]
     },
@@ -6571,7 +6571,7 @@
       "destinations": [
         {
           "path": "frontend/src/styles.css",
-          "sha256": "1d108f35e443b53b900aa01706ea02ca782b7236a9fd03084e5e55ba9e836f89"
+          "sha256": "483bc1f57783d4084816ad643aabbfcc10793c629e92970f51a280bdad4f68e7"
         }
       ]
     },

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createServer } from 'vite';
+import { accountPaths } from '../account-routes.js';
 
 const server = await createServer({ mode: 'production', server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
 const { SITE_URL, PAGES } = await server.ssrLoadModule('/src/pageContent.js');
@@ -41,6 +42,7 @@ for (const lang of ['en', 'ar']) for (const slug of slugs) {
 for (const { route, html } of pages) {
   for (const match of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const value = match[1];
+    if(accountPaths.includes(value))continue;
     if ([DOWNLOAD_URL, RELEASE_API_URL].filter(Boolean).some(endpoint => value === endpoint.split(/[?#]/)[0])) continue;
     const target = path.join(root, value.slice(1));
     const exists = fs.existsSync(target) && (fs.statSync(target).isFile() || fs.existsSync(path.join(target, 'index.html')));

@@ -7,6 +7,22 @@ import ios_config
 
 
 class IosConfigurationTests(unittest.TestCase):
+    def test_native_google_server_audience_is_selected_from_public_registration(self):
+        registration = {"project_info": {"project_id": "fixture"}, "client": [{
+            "client_info": {"android_client_info": {"package_name": "com.autolinky.app"}},
+            "oauth_client": [{"client_type": 3, "client_id": "123-web.apps.googleusercontent.com"}],
+            "services": {"appinvite_service": {"other_platform_oauth_client": [
+                {"client_type": 3, "client_id": "123-web.apps.googleusercontent.com"},
+                {"client_type": 2, "client_id": "123-ios.apps.googleusercontent.com"},
+            ]}},
+        }]}
+        self.assertEqual(ios_config.google_web_client_id(registration, "fixture"), "123-web.apps.googleusercontent.com")
+        with self.assertRaisesRegex(ValueError, "same project"):
+            ios_config.google_web_client_id(registration, "another")
+        registration["client"][0]["oauth_client"].append({"client_type": 3, "client_id": "123-other.apps.googleusercontent.com"})
+        with self.assertRaisesRegex(ValueError, "ambiguous"):
+            ios_config.google_web_client_id(registration, "fixture")
+
     def setUp(self):
         self.native = {
             "API_KEY": "public-test-key", "GOOGLE_APP_ID": "1:123:ios:test",

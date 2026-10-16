@@ -26,6 +26,16 @@ class MobileReleaseTests(unittest.TestCase):
         second, _, _ = mobile_release.prepare(2, "b" * 40)
         self.assertGreater(second["build_number"], first["build_number"])
 
+    def test_current_native_registrations_embed_google_audiences_for_their_own_platforms(self):
+        _, android, ios = mobile_release.prepare(1, "a" * 40)
+        native = ios_config.firebase_settings()
+        self.assertTrue(ios_config.OAUTH_ID.fullmatch(android["GOOGLE_WEB_CLIENT_ID"]))
+        self.assertEqual(android["GOOGLE_WEB_CLIENT_ID"], ios["GOOGLE_WEB_CLIENT_ID"])
+        self.assertEqual(android["GOOGLE_IOS_CLIENT_ID"], "")
+        self.assertEqual(ios["GOOGLE_IOS_CLIENT_ID"], native["CLIENT_ID"])
+        callback = ios_config.native_info({}, ios)["CFBundleURLTypes"][0]["CFBundleURLSchemes"][0]
+        self.assertEqual(callback, native["REVERSED_CLIENT_ID"])
+
     def test_real_device_release_still_rejects_missing_api_by_default(self):
         native = ios_config.firebase_settings()
         with self.assertRaises(ValueError):

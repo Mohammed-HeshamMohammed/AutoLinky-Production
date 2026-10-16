@@ -41,7 +41,7 @@ def prepare(run_number, commit, api_url="", client=CLIENT):
     android = next(entry for entry in google["client"] if entry["client_info"]["android_client_info"]["package_name"] == "com.autolinky.app")
     if google["project_info"]["project_id"] != ios["FIREBASE_PROJECT_ID"]:
         raise ValueError("Android and iOS must use the same Firebase project.")
-    android_defines = {**ios, "FIREBASE_API_KEY": android["api_key"][0]["current_key"], "FIREBASE_APP_ID": android["client_info"]["mobilesdk_app_id"]}
+    android_defines = {**ios, "FIREBASE_API_KEY": android["api_key"][0]["current_key"], "FIREBASE_APP_ID": android["client_info"]["mobilesdk_app_id"], "GOOGLE_IOS_CLIENT_ID": ""}
     plan = {
         "schema_version": 1, "channel": policy["channel"], "version": version[1], "build_number": build,
         "tag": "development-v" + version[1] + "+" + str(build), "source_commit": commit,

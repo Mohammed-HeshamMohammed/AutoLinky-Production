@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T09:23:45.645Z",
+  "generated_at": "2026-10-16T10:01:36.021Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -1407,7 +1407,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/README.md",
-          "sha256": "572d4ba84f6b3568f1a65a128164d1b006391766b1aa11a9ca9cfc6ef1194e28"
+          "sha256": "0b7dbbf29384a2621557a245a3b3eedf440ad06b118f368bc84b90228b85f5d9"
         }
       ]
     },
@@ -2460,11 +2460,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2477,11 +2477,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2494,11 +2494,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2511,11 +2511,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2528,11 +2528,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2545,11 +2545,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2562,11 +2562,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2579,11 +2579,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2596,11 +2596,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2613,11 +2613,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2630,11 +2630,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2647,11 +2647,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -2664,11 +2664,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -3071,11 +3071,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -3088,11 +3088,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -3105,11 +3105,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -3122,11 +3122,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -3139,11 +3139,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },
@@ -3156,11 +3156,11 @@
       "destinations": [
         {
           "path": "mobile apps/IOS app/project.yml",
-          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+          "sha256": "aad6547685ab3023454fbf1f6c474c89f66e7864a885cccbee7e70a28a85740f"
         },
         {
           "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
-          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
+          "sha256": "fe06e43ea97f6144023bed755d6845bd08471d805509be3de800fcb4ccc40097"
         }
       ]
     },

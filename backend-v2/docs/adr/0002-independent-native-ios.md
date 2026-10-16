@@ -59,7 +59,9 @@ the browser frontend; the iOS-style web experience remains a separate client.
 1. [x] Implement native screens and independent core/auth/API/state boundaries.
 2. [x] Keep browser/Android code operational and share binary release metadata.
 3. [x] Add native core/UI and package-integrity checks to macOS CI.
-4. [ ] Complete CI/device-build verification and record exact evidence.
+4. [x] Complete CI/device-build verification and record exact evidence in
+   `migration-plan/evidence/native-swift-ios.json` (runtime source `a9d299f`,
+   native CI `38882672521`, paired development release `38882672641`).
 5. [ ] Verify real provider callbacks, signed iPhone installation, background
    behavior, accessibility and comparative device performance when inputs exist.
 

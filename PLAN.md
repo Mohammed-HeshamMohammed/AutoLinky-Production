@@ -26,9 +26,9 @@ original-workspace preservation requirements still apply.
 - [x] Port authentication, API/session isolation, onboarding/profile/CV, jobs and
   matches, application channels/history, Gmail/auto-apply, settings and deletion.
 - [x] Add native activity notifications, bilingual/RTL UI and common binary updates.
-- [ ] Verify core contracts and native UI on a macOS runner; prove packages contain
+- [x] Verify core contracts and native UI on a macOS runner; prove packages contain
   no Flutter/Dart runtime. Build paired Android APK and unsigned native iOS IPA.
-- [ ] Update evidence/docs and commit/push to main. Real provider/device acceptance
+- [x] Update evidence/docs and commit/push to main. Real provider/device acceptance
   still requires the missing provider/origin/signing inputs.
 
 Initial native CI `38880929485` passed eight core tests, four simulator UI tests
@@ -38,6 +38,16 @@ Arabic and fixture-navigation screenshots were inspected. Web CI `38880429327`,
 154 local Flutter tests, 13 configuration/release tests, analysis and the combined
 local web build passed. Final account/activity refinements and package checks
 are verified by the subsequent main runs recorded in native iOS evidence.
+
+Final source `a9d299f` passed [native CI 38882672521](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38882672521):
+10 core tests, four simulator UI tests and a noisy Debug launch measurement
+(4.707-second average; no physical-device or Flutter comparison). The backend
+and combined web workflow passed at `5fb1807`; backend/web runtime is unchanged
+by the final native-only fix. [Paired release CI 38882672641](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38882672641)
+published [1.1.0 (2005)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.1.0%2B2005).
+Downloaded APK/IPA checksums, shared feed, native iPhoneOS arm64 target and
+absence of Flutter/debug fixtures in the unsigned IPA were checked independently.
+The IPA is 2,653,454 bytes. See `migration-plan/evidence/native-swift-ios.json`.
 
 ### Main branch and proposed backend boundaries (2026-10-16)
 

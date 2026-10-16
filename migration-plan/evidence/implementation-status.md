@@ -1,5 +1,27 @@
 # Implementation evidence and remaining work
 
+## Current native client architecture (2026-10-16)
+
+The former Swift-hosted Flutter iOS project is now an independent Swift/SwiftUI
+app under `mobile apps/IOS app/`. Android and the browser variants retain the
+Flutter package. Native iOS owns authentication, API/session state, screens,
+file import, notifications and its Xcode build; it bundles no Flutter/Dart engine.
+Both mobile platforms use one binary release feed and paired version/build.
+
+Source `a9d299f` passed ten native core tests, four simulator UI tests and unsigned
+arm64 device compilation. Downloaded release 1.1.0 (2005) APK/IPA hashes, identities,
+the actual Mach-O iPhoneOS platform, shared release feed and absence of Flutter
+or debug auth fixtures in the unsigned IPA were verified. Native screenshots
+were inspected. The iOS IPA is 2,653,454 bytes. Full evidence and exact CI runs:
+[`native-swift-ios.json`](native-swift-ios.json).
+
+The final Debug simulator launch result averaged 4.707 seconds with 30% relative
+variation; it is not evidence of better performance than Flutter or on devices.
+Real Firebase/native callbacks, signed iPhone installation and device/background
+acceptance remain pending. No production deployment, data transfer, live mail or
+collection occurred. Later historical sections describe the earlier Flutter iOS
+layout; this section supersedes their client architecture details.
+
 This is an ongoing implementation, not a completed migration or a production release. The reference was read at `2fd91a2`; the existing production checkout was at `52a996c`. `source-baseline.json` records the original tracked-file hashes. All code and new documentation are under the production workspace.
 
 ## Current priority: environment first (2026-10-16)

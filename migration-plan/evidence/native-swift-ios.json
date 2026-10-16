@@ -1,0 +1,242 @@
+{
+  "date": "2026-10-16",
+  "status": "native development implementation and build verification complete; real provider/device acceptance remains pending",
+  "source_commit": "a9d299f205346646556e9d4e9d4d5e023f503750",
+  "architecture": {
+    "android": "Flutter/Dart",
+    "ios": "Independent Swift/SwiftUI, no Flutter/Dart runtime",
+    "web": "React landing site plus independent Flutter browser variants",
+    "shared": "Backend contracts, Firebase project/identities, existing branding and one binary release feed"
+  },
+  "native_features": "mobile apps/IOS app/FEATURES.md",
+  "verification": {
+    "initial_native": {
+      "run": "38880929485",
+      "source": "c390f3d",
+      "core_tests": 8,
+      "ui_tests": 4,
+      "result": "success",
+      "screenshots": "English welcome, native fixture match/detail and Arabic RTL setup inspected",
+      "debug_simulator_launch_seconds": {
+        "average": 3.44,
+        "iterations": 3,
+        "not_a_flutter_or_device_comparison": true
+      }
+    },
+    "final_native": {
+      "run": "38882672521",
+      "result": "success",
+      "source": "a9d299f205346646556e9d4e9d4d5e023f503750",
+      "url": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38882672521",
+      "core_tests": 10,
+      "ui_tests": 4,
+      "debug_simulator_launch_seconds": {
+        "average": 4.707,
+        "values": [
+          6.700019,
+          3.828563,
+          3.591434
+        ],
+        "relative_standard_deviation_percent": 30.018,
+        "note": "Noisy Debug simulator measurement; no physical-device or Flutter comparison and no speed improvement claim."
+      },
+      "resolved_dependencies": [
+        {
+          "identity": "abseil-cpp-binary",
+          "version": "1.2024072200.0",
+          "revision": "bbe8b69694d7873315fd3a4ad41efe043e1c07c5"
+        },
+        {
+          "identity": "app-check",
+          "version": "11.3.2",
+          "revision": "97f7d74dd0e8f3d0fe5fc75cc8957aa73bdc948a"
+        },
+        {
+          "identity": "appauth-ios",
+          "version": "2.1.0",
+          "revision": "a7caeda164dc5108bf4649472b28a5af65dc6f33"
+        },
+        {
+          "identity": "firebase-ios-sdk",
+          "version": "12.19.0",
+          "revision": "27eaab3918e0bf78711cf1abf240577176326432"
+        },
+        {
+          "identity": "google-ads-on-device-conversion-ios-sdk",
+          "version": "3.7.0",
+          "revision": "0208e2681ec81f8a9c81084696f60fcce26cb7ee"
+        },
+        {
+          "identity": "googleappmeasurement",
+          "version": "12.19.2",
+          "revision": "b8455dd2ff55cc269fda7a4f9eac6c1e3588c53f"
+        },
+        {
+          "identity": "googledatatransport",
+          "version": "10.1.1",
+          "revision": "ba3358d3c3dbae8ef230b58a46b97ad65e84e974"
+        },
+        {
+          "identity": "googlesignin-ios",
+          "version": "9.1.0",
+          "revision": "913b4005ea26aebe1c97d54e35ad82a515924c71"
+        },
+        {
+          "identity": "googleutilities",
+          "version": "8.1.5",
+          "revision": "5459ee5603def3db0fe14ca522185f42c48d978e"
+        },
+        {
+          "identity": "grpc-binary",
+          "version": "1.69.1",
+          "revision": "75b31c842f664a0f46a2e590a570e370249fd8f6"
+        },
+        {
+          "identity": "gtm-session-fetcher",
+          "version": "3.5.0",
+          "revision": "a2ab612cb980066ee56d90d60d8462992c07f24b"
+        },
+        {
+          "identity": "gtmappauth",
+          "version": "5.0.0",
+          "revision": "56e0ccf09a6dd29dc7e68bdf729598240ca8aa16"
+        },
+        {
+          "identity": "interop-ios-for-google-sdks",
+          "version": "101.0.0",
+          "revision": "040d087ac2267d2ddd4cca36c757d1c6a05fdbfe"
+        },
+        {
+          "identity": "leveldb",
+          "version": "1.22.5",
+          "revision": "a0bc79961d7be727d258d33d5a6b2f1023270ba1"
+        },
+        {
+          "identity": "nanopb",
+          "version": "2.30910.1",
+          "revision": "3851d94a41890dea16dc3db34caf60e585cb4163"
+        },
+        {
+          "identity": "promises",
+          "version": "2.4.1",
+          "revision": "f4a19a3c313dc2616c70bb49d29a799fb16be837"
+        }
+      ],
+      "downloaded_simulator": {
+        "crc": "passed",
+        "bundle": "com.autolinky.ios",
+        "flutter_artifacts": 0
+      }
+    },
+    "main_backend_and_web": {
+      "run": "38882294707",
+      "source": "5fb1807",
+      "result": "success",
+      "note": "Final a9d299f changes only native iOS cancellation handling; backend/web runtime is unchanged."
+    },
+    "local": {
+      "flutter_analysis": "no issues",
+      "flutter_tests": 154,
+      "public_configuration_release_tests": 13,
+      "unified_web_build": "passed, both browser variants and 22 rendered pages",
+      "services": "ready",
+      "database_counts": {
+        "users": 0,
+        "cvs": 0,
+        "applications": 0
+      },
+      "reference_originals": {
+        "checked": 544,
+        "changed": 0
+      },
+      "production_originals": {
+        "checked": 41,
+        "changed": 0
+      }
+    }
+  },
+  "paired_release": {
+    "run": "38882672641",
+    "result": "success",
+    "expected_version": "1.1.0",
+    "expected_build": 2005,
+    "android_signing": "existing persistent development key",
+    "ios_signing": "unsigned, Apple signing deferred",
+    "update_provider": "github-releases",
+    "ota_patches_active": false,
+    "url": "https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.1.0%2B2005",
+    "manifest": {
+      "schema_version": 1,
+      "channel": "development",
+      "version": "1.1.0",
+      "build_number": 2005,
+      "tag": "development-v1.1.0+2005",
+      "source_commit": "a9d299f205346646556e9d4e9d4d5e023f503750",
+      "repository": "Mohammed-HeshamMohammed/AutoLinky-Production",
+      "update_source": {
+        "provider": "github-releases",
+        "config": "../release-source.json",
+        "binary_only": true,
+        "ota_active": false,
+        "android_engine": "flutter",
+        "ios_engine": "native_swift",
+        "repository": "Mohammed-HeshamMohammed/AutoLinky-Production",
+        "channel": "development",
+        "manifest": "autolinky-release.json",
+        "config_sha256": "0c7345cea5300c9cb3977a043d0f39ce6e3cde4a53b15f8b5233042e013c3141"
+      },
+      "api_configured": false,
+      "production": false,
+      "artifacts": {
+        "android": {
+          "file": "AutoLinky-1.1.0+2005-development.apk",
+          "sha256": "1de454be7dda90e42486319f31a2db52e24bde34fef61a1067223751a89f634c",
+          "bytes": 64219624,
+          "signing": "development",
+          "installable": true
+        },
+        "ios": {
+          "file": "AutoLinky-1.1.0+2005-unsigned.ipa",
+          "sha256": "e5aa787b960095b4ab2376e1942a2d96eaa4076481a77cf01e7c6ea39ce8b417",
+          "bytes": 2653454,
+          "signing": "unsigned",
+          "installable": false
+        }
+      }
+    },
+    "downloaded_verification": {
+      "android": {
+        "bytes": 64219624,
+        "sha256": "1de454be7dda90e42486319f31a2db52e24bde34fef61a1067223751a89f634c",
+        "zip_crc": "passed",
+        "feed": "matches common source",
+        "signature": "persistent development certificate verified by CI"
+      },
+      "ios": {
+        "bytes": 2653454,
+        "sha256": "e5aa787b960095b4ab2376e1942a2d96eaa4076481a77cf01e7c6ea39ce8b417",
+        "zip_crc": "passed",
+        "bundle": "com.autolinky.ios",
+        "firebase_project": "auto-linky",
+        "cpu": "arm64",
+        "mach_o_platform": 2,
+        "target": "iPhoneOS device",
+        "flutter_artifacts": 0,
+        "debug_auth_fixture": false,
+        "signed": false,
+        "feed": "matches Android/common source"
+      }
+    }
+  },
+  "remaining_acceptance": [
+    "Real Firebase provider callbacks and configured API origin/Admin credentials",
+    "Signed iPhone installation and actual device/background/file-provider/accessibility acceptance",
+    "Comparative performance/memory testing against Flutter on physical devices"
+  ],
+  "scope_limits": [
+    "No production deployment or data import",
+    "No live email or collection",
+    "Simulator authenticated UI uses explicit Debug-only fixtures; Release package must reject its marker",
+    "All private signing/server credentials and generated outputs remain ignored"
+  ]
+}

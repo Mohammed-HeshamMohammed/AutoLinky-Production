@@ -12,8 +12,8 @@ flutter pub get --enforce-lockfile
 flutter run --dart-define-from-file=../shared/env/android.json
 ```
 
-The preparation command copies shared brand/font assets and the common Shorebird configuration into ignored local inputs. Do not edit those copies. Firebase's Android registration stays in `android/app/google-services.json`; public development profiles stay in `../shared/env/`.
+The preparation command copies shared brand/font assets and the common binary release feed into ignored local inputs. Do not edit those copies. Firebase's Android registration stays in `android/app/google-services.json`; public development profiles stay in `../shared/env/`.
 
 Release APKs require explicit signing settings in ignored `android/key.properties`. The paired GitHub workflow restores the existing persistent development key and builds here; no production key is needed during development. APK output: `build/app/outputs/flutter-apk/app-release.apk`.
 
-See [paired development releases](../shared/MOBILE_RELEASES.md) for the common version, signing and update-source policy. OTA patches and a reachable mobile API remain pending configuration.
+See [paired development releases](../shared/MOBILE_RELEASES.md) for the common version, signing and binary update-source policy. Native Swift iOS reads the same feed with its own implementation. OTA patches are inactive; a reachable mobile API/provider acceptance remains pending configuration.

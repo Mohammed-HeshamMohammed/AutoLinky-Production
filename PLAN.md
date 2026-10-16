@@ -4,7 +4,11 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 
 ## Current: production API links through DNS (2026-10-16)
 
-The owner will create DNS records for all API services. Use the existing `auto-linky.com` domain with configurable `api`, `auth`, `app`, `notify`, `fetching`, `data` and App-owned `extractor` origins. Update production environment examples and publish them to their component branches, preserving service-key and user/MFA authorization. Document the matching Dokploy container ports and HTTPS routing. Local environment files stay local; no DNS records, live deployments or app builds are created here. [DNS and runtime configuration](DNS_DEPLOYMENT.md).
+The owner renamed the Gateway DNS label to `appapi`. Production Gateway origin is `https://appapi.auto-linky.com`; service-specific hostnames and API route paths stay as configured.
+
+- [x] Update the frontend server environment example and all active DNS guides to `appapi`; all 13 frontend tests pass. No build or DNS mutation is performed.
+
+The owner will create DNS records for all API services. Use the existing `auto-linky.com` domain with configurable `appapi`, `auth`, `app`, `notify`, `fetching`, `data` and App-owned `extractor` origins. Update production environment examples and publish them to their component branches, preserving service-key and user/MFA authorization. Document the matching Dokploy container ports and HTTPS routing. Local environment files stay local; no DNS records, live deployments or app builds are created here. [DNS and runtime configuration](DNS_DEPLOYMENT.md).
 
 - [x] Replace production example API origins with HTTPS DNS names, preserve local launcher settings and supply the shared domain/port/environment mapping for every production branch.
 - [x] Pass 20 backend unit tests, 13 frontend tests and six ownership checks. Gateway and private authentication tests exercise the configured HTTPS origins with intercepted transport; live DNS, certificates and deployments remain unverified.

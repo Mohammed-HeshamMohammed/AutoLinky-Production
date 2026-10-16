@@ -1,6 +1,6 @@
 # AutoLinky migration website
 
-An isolated copy of the production React/Vite website. The existing production `frontend/` is unchanged. The unified frontend retains these landing pages and routes both app experiences under /app/; the site, and routes download links through `/download`. `/api/latest` returns shared release metadata; GitHub resolution and statistics run only in server functions.
+The production React/Vite landing site was copied into the unified frontend. The original production `frontend/` is unchanged. Landing and content routes now open the browser apps under `/app/`; downloads still pass through `/download`. `/api/latest` and statistics remain server-side.
 
 ```powershell
 Copy-Item .env.example .env

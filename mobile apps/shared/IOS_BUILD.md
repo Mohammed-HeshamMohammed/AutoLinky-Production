@@ -10,7 +10,7 @@ Firebase Core 4.15.0 and Auth 6.7.0 pin the native Firebase SDK to 12.19.0. This
 
 The native project lives in `../IOS app/ios/`. The shared package and these build/configuration tools live here; the helper enters the iOS app folder for compilation. Its entry point uses the shared Dart package.
 
-The separated `IOS app` project also passed the [paired device build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38850374978), producing the unsigned 1.0.1 (1002) IPA from commit `b46ab38`. This verifies the new native project and shared-package paths.
+The separated `IOS app` project also passed the [paired device build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916), producing the unsigned 1.0.1 (1003) IPA from commit `232ef50`. This verifies the new native project and shared-package paths.
 
 ## Current verification
 

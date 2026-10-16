@@ -2,11 +2,11 @@
 
 The current output is an Android release APK signed with a persistent **development** key and an **unsigned iOS device IPA**. Apple certificates and profiles are not required for this development build. The unsigned IPA must be signed before it can be installed on an iPhone.
 
-Verified on 2026-10-16: [development release 1.0.1 (1002)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1002), [successful paired CI run](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38850374978). Both downloaded packages passed SHA-256 and ZIP CRC checks. The iOS package is an unsigned arm64 `iPhoneOS` build, and both embedded update configurations match. The API origin is not configured in this initial release, and OTA patches remain inactive.
+Verified on 2026-10-16: [development release 1.0.1 (1003)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003), [successful paired CI run](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916). Both downloaded packages passed SHA-256 and ZIP CRC checks. The iOS package is an unsigned arm64 `iPhoneOS` build, and both embedded update configurations match. The API origin is not configured in this initial release, and OTA patches remain inactive.
 
 `.github/workflows/mobile-development.yml` builds both platforms from the same commit. It overrides both packages with the same version name and increasing build number, then publishes them together as a development prerelease in `Mohammed-HeshamMohammed/AutoLinky-Production`. Development prereleases never become the production/latest release.
 
-The native builds now run in `../Android app/` and `../IOS app/`. Common code and release tooling live here. `python tool/mobile_apps.py` prepares ignored per-app copies of canonical assets and Shorebird settings; CI does this before resolving either app. Each app has its own lockfile and output directory. Release 1.0.1 (1002), from source commit `b46ab38`, verifies this split on both native runners; the earlier 1001 release predates it.
+The native builds now run in `../Android app/` and `../IOS app/`. Common code and release tooling live here. `python tool/mobile_apps.py` prepares ignored per-app copies of canonical assets and Shorebird settings; CI does this before resolving either app. Each app has its own lockfile and output directory. Release 1.0.1 (1003), from source commit `232ef50`, verifies the native projects under the root `mobile apps/` folder. Browser counterparts are built by the unified `frontend-v2/` project and use the same shared Dart package.
 
 ## Shared source
 
@@ -40,3 +40,5 @@ Set the repository variable `MOBILE_API_BASE_URL` to a reachable HTTPS developme
 Until an API origin is supplied, development packages deliberately show the existing missing-configuration screen. No fictional public API URL is embedded. Email and Apple sign-in remain disabled in this initial profile until their domain/provider configuration is ready.
 
 Pushes to `codex/ios-build` build and release both development packages. The separate `ios-v2.yml` simulator job remains available for pull requests or manual use. The checked-in workflows and tools are sufficient to reproduce the installers; local runtime keys and build caches remain ignored.
+
+The 1003 publication initially received a 403 from the workflow token. The already connected GitHub account created its draft for the exact tested source commit, then only the failed publication job was rerun. No new token or repository permission was stored. GitHub documents additional authorization requirements for [creating releases that target workflow-changing commits](https://docs.github.com/en/rest/releases/releases#create-a-release).

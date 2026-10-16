@@ -41,3 +41,9 @@ For the full isolated local stack, run `npm run env:build` then `npm run env:sta
 Build Docker from the repository root using `docker build -f frontend-v2/Dockerfile .`, so it can include the shared Dart package outside this folder. The runtime image serves only the final web build and Node handlers on port 8080. The Docker image and VPS deployment have not been verified here. Build-time settings are shown in `.env.example`; keep server-only values out of `APP_DEFINES` and `VITE_*`.
 
 Both browser targets use the registered Firebase web app and common backend. Real sign-in still requires Firebase Admin/provider/domain setup. Browser releases use web deployment and cache revalidation; native Shorebird OTA activation is a separate pending setup. Data migration remains deferred. The original `../frontend/` and the reference checkout are preserved.
+
+## Verified development result
+
+The [clean unified web build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872) passed for source `232ef50`. Its downloaded artifact contains the landing pages and both browser bundles. Local verification passed eight server/download tests, 152 shared app tests, 13 configuration contracts, shared/web analysis, 22 page checks and live HTTP/API/asset checks. Visual browser automation was unavailable in this session; real provider sign-in and production deployment remain pending.
+
+The [native build and release](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916) also passed after the publication-job retry. [Development installers 1.0.1 (1003)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003) retain persistent Android development signing and unsigned iOS output. Their published checksums match the verified native artifacts.

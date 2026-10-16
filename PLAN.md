@@ -8,6 +8,7 @@ The supplied Dokploy log loads the frontend Dockerfile but fails to resolve `fro
 
 - [x] Correct frontend COPY paths and deployment guides; exclude generated browser output from the folder context.
 - [x] Pass all 18 frontend tests, including a regression check that resolves Docker inputs inside the owning frontend folder. Retain the `Production` target and React/native isolation.
+- [x] Remove the optional raw-Vite proxy setting from the deployment environment example. Document both public website domains on container port 8080 and the single canonical public build origin; production does not use `FRONTEND_DEV_ORIGIN`.
 
 Publication scope is `main` and `frontend-production`; verify the published frontend tree and COPY inputs and keep backend branch tips unchanged. No application/container build, workflow dispatch or VPS deployment is run for this correction.
 

@@ -17,6 +17,8 @@ The same React screens adapt to narrow browsers with a navigation drawer and res
 
 Use Node 24. Copy `.env.example` to an ignored `.env`, supply runtime Firebase/gateway values and install dependencies with `npm ci`. `npm run dev` renders current React source with hot reload, API proxy and download handlers; it needs no Flutter SDK, Python build tooling or prebuilt mobile artifacts. The isolated stack also starts this source preview on port 8080; legacy port 8081 redirects to React login.
 
+Only when running raw Vite separately from that integrated server, the optional `FRONTEND_DEV_ORIGIN` points its API/download proxy to the local site server, for example `http://127.0.0.1:8080`. Leave it unset in Dokploy: the production Node server handles those requests directly.
+
 `npm test` checks HTTP contracts, runtime config, API behavior and native-source isolation without building apps. Only when a web build is explicitly requested, `npm run check` builds/prerenders React and verifies the generated pages. `npm start` serves that requested `dist/` output. No build or release workflow runs on push, and this source change launches no build.
 
 ## Runtime configuration and deployment
@@ -24,5 +26,7 @@ Use Node 24. Copy `.env.example` to an ignored `.env`, supply runtime Firebase/g
 `PUBLIC_FIREBASE_*` values are supplied by this server's allowlisted `/api/config` endpoint before React initializes Firebase. Firebase client identifiers are public; Admin, provider, service and statistics secrets remain server-only. `API_BASE_URL` configures the same-origin gateway proxy. Marketing `VITE_*` settings are public build arguments. See [environment ownership](../ENVIRONMENT_VARIABLES.md).
 
 Build context is `frontend/`, with repository-relative Dockerfile `frontend/Dockerfile` (or `Dockerfile` when resolved inside the context). From the repository root, the explicit build command is `docker build -f frontend/Dockerfile --target Production frontend`. Docker copies inputs directly from this owning folder, installs Node dependencies and builds React. Its context excludes local environments, runtime storage, generated output and tests. Runtime port is 8080 and the existing Dokploy target `Production` remains supported. The `frontend-production` branch contains the frontend plus shared repository guides/ignore files and no `mobile apps/` tree. See [production branch rules](../PRODUCTION_BRANCHES.md).
+
+Route both `auto-linky.com` and `www.auto-linky.com` to the same frontend container on port 8080. Set the public build argument `VITE_SITE_URL=https://auto-linky.com` for canonical links and the sitemap; this setting takes one origin.
 
 Administrator assignment, authenticator enforcement and backend authorization are unchanged. See [workspace/admin behavior](DESKTOP_WEB.md). Real provider acceptance, device installation and VPS deployment are separate verification gates.

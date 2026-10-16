@@ -9,6 +9,16 @@ export function workspaceRoute(value){
   return {admin:false,screen:parts[0]==='matches'?'dashboard':parts[0]==='automation'?'auto-apply':parts[0],lang};
 }
 export function workspacePath(screen,lang='en'){return `${lang==='ar'?'/ar':''}/${screen==='auto-apply'?'automation':screen}/`;}
+// Old browser-app bookmarks now open the independent responsive React client.
+export function legacyWorkspaceRedirect(value){
+  const url=value instanceof URL?value:new URL(value,'http://local.web');
+  const match=url.pathname.match(/^\/app(?:\/(android|ios))?(?:\/(.*))?$/);
+  if(!match)return null;
+  const path=(match[2]||'').replace(/\/$/,'');
+  const screens={'':'dashboard',matches:'dashboard',explore:'jobs',jobs:'jobs',profile:'profile',settings:'settings',applications:'applications',cv:'cv','auto-apply':'auto-apply',welcome:'login','welcome/email':'login','welcome/email/verify':'login'};
+  if(!Object.hasOwn(screens,path))return null;
+  return workspacePath(screens[path],url.searchParams.get('lang')==='ar'?'ar':'en')+url.search;
+}
 export function safeWorkspaceNext(value,lang='en'){
   if(typeof value!=='string'||!value.startsWith('/')||value.startsWith('//'))return workspacePath('dashboard',lang);
   const url=new URL(value,'http://local.web'),route=workspaceRoute(url);

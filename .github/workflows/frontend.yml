@@ -14,8 +14,6 @@ jobs:
     env:
       VITE_SITE_URL: https://auto-linky.com
       VITE_WHATSAPP_NUMBER: '201060933358'
-      FLUTTER_SUPPRESS_ANALYTICS: 'true'
-      DART_SUPPRESS_ANALYTICS: 'true'
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -23,21 +21,6 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24.22.0
-      - name: Install pinned Flutter
-        run: |
-          git clone --depth 1 --branch 3.47.7 --single-branch https://github.com/flutter/flutter.git "$RUNNER_TEMP/autolinky-flutter"
-          test "$(git -C "$RUNNER_TEMP/autolinky-flutter" rev-parse HEAD)" = abaf9c523780a608bd46686fd5e53740a07077f8
-          echo "$RUNNER_TEMP/autolinky-flutter/bin" >> "$GITHUB_PATH"
-          echo "AUTOLINKY_FLUTTER_ROOT=$RUNNER_TEMP/autolinky-flutter" >> "$GITHUB_ENV"
-          "$RUNNER_TEMP/autolinky-flutter/bin/flutter" --version
-      - name: Verify shared app code
-        working-directory: mobile apps/shared
-        run: |
-          flutter pub get --enforce-lockfile
-          flutter analyze
-          flutter test --exclude-tags screenshots
-          dart --packages=.dart_tool/package_config.json tool/check_web_firebase.dart
-          python3 -m unittest discover -s tool -p 'test_*.py'
       - name: Build and verify the unified frontend
         working-directory: frontend
         run: |

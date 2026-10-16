@@ -87,17 +87,5 @@ export async function setup(){
     if(name==='fetching')delete saved.PG_DATABASE_URL;
     await writeFile(target,envFile({SERVICE_NAME:name,...values,...saved}),{mode:0o600});
   }
-  const clientEnv=resolve(runtime,'flutter-web.json');
-  {
-    const webFile=resolve(production,'mobile apps/shared/env/web.json');
-    const previousFile=await exists(clientEnv)?clientEnv:webFile;
-    const suppliedWeb=await exists(previousFile)?JSON.parse(await readFile(previousFile,'utf8')):{};
-    const web=Object.fromEntries(Object.entries(suppliedWeb).filter(([key])=>!key.startsWith('FIREBASE_')&&!key.startsWith('GOOGLE_')));
-    web.API_BASE_URL=`http://localhost:${settings.ports.api}`;
-    // Local HTTP development can exercise Google/UI now. Native email links
-    // remain off until an approved HTTPS continuation domain is configured.
-    web.EMAIL_SIGN_IN='false';web.APPLE_SIGN_IN='false';
-    await writeFile(clientEnv,JSON.stringify(web,null,2)+'\n',{mode:0o600});
-  }
   return settings;
 }

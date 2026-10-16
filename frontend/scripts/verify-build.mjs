@@ -57,11 +57,5 @@ assert(open.includes('noindex') && !open.includes('rel="canonical"'), '/open/ mu
 assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').match(/<loc>/g)?.length === pages.length, 'Sitemap count mismatch');
 assert(fs.readFileSync(path.join(root, 'robots.txt'), 'utf8').includes(`${site}/sitemap.xml`), 'Sitemap missing from robots.txt');
 assert(fs.existsSync(path.join(root, '404.html')), 'Missing 404 page');
-for (const variant of ['android', 'ios']) {
-  const app = path.join(root, 'app', variant);
-  const html = fs.readFileSync(path.join(app, 'index.html'), 'utf8');
-  assert(html.includes(`<base href="/app/${variant}/">`), `Wrong app base: ${variant}`);
-  assert(fs.existsSync(path.join(app, 'main.dart.js')), `Missing browser app bundle: ${variant}`);
-  assert(html.includes('noindex'), `Missing app noindex: ${variant}`);
-}
+assert(!fs.existsSync(path.join(root,'app')), 'Retired native browser bundles must not be included in the React output');
 console.log(`Verified ${pages.length} rendered pages, internal links, language alternates, sitemap, and noindex route`);

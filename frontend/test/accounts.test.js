@@ -13,7 +13,7 @@ import { readFile } from 'node:fs/promises';
 Object.assign(process.env,parseEnv(await readFile(new URL('../.env.example',import.meta.url),'utf8')));
 Object.assign(process.env,{PUBLIC_FIREBASE_API_KEY:'public-fixture',PUBLIC_FIREBASE_APP_ID:'1:123:web:fixture',PUBLIC_FIREBASE_MESSAGING_SENDER_ID:'123'});
 
-test('desktop routes preserve public product pages, mobile copies and safe post-login navigation',()=>{
+test('React routes preserve public product pages and safe post-login navigation',()=>{
   assert.deepEqual(workspaceRoute('/ar/jobs/'),{admin:false,screen:'jobs',lang:'ar'});
   assert.deepEqual(workspaceRoute('/admin/'),{admin:true,screen:'overview',lang:'en'});
   for(const screen of ['collector','accounts','search-titles','sender'])assert.deepEqual(workspaceRoute('/ar/admin/'+screen+'/'),{admin:true,screen,lang:'ar'});
@@ -34,7 +34,7 @@ test('production serves private desktop shells and restricted admin CSP',async()
       const csp=response.headers.get('content-security-policy');assert.match(csp,/frame-ancestors 'none'/);assert.match(csp,/script-src 'self' https:\/\/www.gstatic.com;/);assert(!csp.split(';')[1].includes('unsafe-inline'));
     }
     assert.equal((await fetch(origin+'/login/',{method:'POST'})).status,405);
-    assert.equal((await fetch(origin+'/app/',{redirect:'manual'})).headers.get('location'),'/app/android/');
+    assert.equal((await fetch(origin+'/app/',{redirect:'manual'})).headers.get('location'),'/dashboard/');
   }finally{server.closeAllConnections();await new Promise(done=>server.close(done));assert(directory.startsWith(base+sep));await rm(directory,{recursive:true,force:true});}
 });
 

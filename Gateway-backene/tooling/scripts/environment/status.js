@@ -23,7 +23,7 @@ const android=JSON.parse(await readFile(resolve(production,'mobile apps/shared/e
 const ios=JSON.parse(await readFile(resolve(production,'mobile apps/shared/env/ios.json'),'utf8').catch(()=>'{}'));
 const report={checked_at:new Date().toISOString(),scope:'isolated local environment; no production import',services,
   firebase:{project:'auto-linky',admin:adminStatus,native_google_client_ids:android.GOOGLE_WEB_CLIENT_ID&&ios.GOOGLE_IOS_CLIENT_ID?'configured':'missing from supplied native files',
-    localhost_authorized_domain:'must be verified in Firebase by the owner',local_email_links:'desktop form implemented; live continuation/provider acceptance pending; legacy Flutter local flag disabled'},
+    localhost_authorized_domain:'must be verified in Firebase by the owner',local_email_links:'desktop form implemented; live continuation/provider acceptance pending; native links remain off until an approved continuation URL is configured'},
   desktop:{login:`http://localhost:${settings.ports.website}/login/`,admin:`http://localhost:${settings.ports.website}/admin/`,access:'assigned Firebase-bound app user plus mandatory authenticator; legacy standalone setup grants no access'},
   sender:'disabled',collector:'disabled'};
 const db=new pg.Client({connectionString:databaseUrl(settings,'autolinky_api'),connectionTimeoutMillis:2000});

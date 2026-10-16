@@ -2,7 +2,16 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: environment configuration (2026-10-16)
+## Current: React-only web frontend (2026-10-16)
+
+The owner clarified that desktop and phone-browser UI must be implemented in React/JavaScript, independently of native Android Flutter and Swift iOS. All native source stays under `mobile apps/`. This supersedes the earlier Flutter browser-copy architecture and its runtime-loading work below.
+
+- [x] Remove native browser hosts/templates/build scripts from `frontend/`, its Dockerfile and web workflow; retire old generated bundles under ignored mobile runtime storage.
+- [x] Serve responsive React account pages on desktop and phone; redirect known old browser-copy URLs to React, preserve email-link query parameters and reject stale native assets.
+- [x] Remove mobile trees from frontend production publication, preserve owned native configurations and keep native releases independent.
+- [x] Pass 17 frontend checks including native-source/build isolation, 23 backend unit checks and 16 native configuration contracts. Verify desktop flows, phone widths 320/390/768, Arabic RTL, runtime Firebase and admin MFA browser fixtures; retain local stack readiness without building applications.
+
+## Previous: environment configuration (2026-10-16)
 
 - [x] Import the refreshed root Firebase registrations: web values remain in ignored environments, native Google audiences/callbacks derive from their public SDK files, and the Admin credential remains private. Pass all 16 native configuration contracts and local browser configuration initialization; prepare inputs without building apps or claiming real provider acceptance.
 

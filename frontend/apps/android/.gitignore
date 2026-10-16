@@ -1,7 +1,0 @@
-.dart_tool/
-.flutter-plugins-dependencies
-build/
-web/
-assets/
-shorebird.yaml
-*.log

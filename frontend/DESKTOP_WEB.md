@@ -1,10 +1,10 @@
 # Desktop workspace and administration
 
-Implemented 2026-10-16 in the canonical `frontend/`. The desktop client uses the same Firebase project and `/v1` contracts as Android and native Swift iOS. It adds a sidebar, search/filter controls, simultaneous job list/detail, comparison and larger editing forms. The existing browser copies and native projects remain available.
+Implemented 2026-10-16 in the canonical `frontend/`. The desktop client uses the same Firebase project and `/v1` contracts as Android and native Swift iOS. It adds a sidebar, search/filter controls, simultaneous job list/detail, comparison and larger editing forms. The native projects remain independent; the web implementation is responsive React.
 
 ## Routes and behavior
 
-All three web clients use the frontend runtime environment for Firebase: desktop React and the two Flutter browser routes fetch the allowlisted `/api/config`. Firebase web registration is absent from browser build definitions. Native Android/Swift iOS retain their embedded configurations. Existing browser-copy artifacts adopt this source at the next requested web build; no build runs as part of this source change.
+The web client is React-only, with desktop and phone layouts. It reads Firebase configuration from the allowlisted `/api/config` runtime endpoint. It imports no native source. Android Flutter and Swift iOS retain separate embedded configurations under `mobile apps/`. No application build runs as part of this source change.
 
 | Route | Behavior |
 | --- | --- |
@@ -16,7 +16,7 @@ All three web clients use the frontend runtime environment for Firebase: desktop
 | `/profile/`, `/cv/` | Real taxonomy/profile editing, PDF/DOCX upload, analysis and removal. |
 | `/automation/`, `/settings/` | Gmail connection, Auto Apply settings, account/privacy controls. |
 | `/admin/` | Normal AutoLinky login, explicit backend admin assignment, then mandatory authenticator verification. |
-| `/app/android/`, `/app/ios/` | Preserved mobile-style Flutter browser applications. |
+| `/app/android/`, `/app/ios/` | Compatibility redirects into React account routes. |
 
 Prefix routes with `/ar/` for Arabic/RTL. The public `/auto-apply/` product page stays public; signed-in settings use `/automation/`. All 22 marketing pages retain their shared login/signup links. Returning from marketing or crossing the user/admin boundary loads the matching document and security policy; ordinary workspace navigation stays within React.
 

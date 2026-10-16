@@ -61,8 +61,6 @@ async function healthy(url) {
 
 try {
   for(const port of Object.values(settings.ports))await free(port);
-  for(const platform of ['android','ios'])if(!await exists(resolve(production,`frontend/dist/app/${platform}/index.html`)))throw Error('Existing browser assets are missing. Request a web build separately; startup never builds apps.');
-  if(!await exists(resolve(production,'frontend/dist/index.html')))throw Error('Existing website assets are missing. Request a web build separately; startup never builds apps.');
   if(!await exists(resolve(settings.databaseDir,'PG_VERSION')))await cluster.initialise();
   await cluster.start();clusterStarted=true;
   const admin=new pg.Client({host:'127.0.0.1',port:settings.ports.database,user:'postgres',password:settings.passwords.postgres,database:'postgres'});
@@ -96,7 +94,7 @@ try {
   await child('website',process.execPath,['scripts/dev-server.mjs'],resolve(production,'frontend'),{...websiteEnv,HOST:'127.0.0.1',PORT:String(settings.ports.website)});
   clientServer=http.createServer((request,response)=>{
     const url=new URL(request.url,'http://local.client');
-    response.writeHead(302,{Location:`http://localhost:${settings.ports.website}/app/android${url.pathname}${url.search}`,'Cache-Control':'no-store'}).end();
+    response.writeHead(302,{Location:`http://localhost:${settings.ports.website}/login/${url.search}`,'Cache-Control':'no-store'}).end();
   });
   await new Promise((done,reject)=>{clientServer.once('error',reject);clientServer.listen(settings.ports.client,'127.0.0.1',done);});
   control=http.createServer((request,response)=>{

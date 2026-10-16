@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-16",
+  "scope": "Independent React/JavaScript frontend for desktop and phone browsers; native source only under mobile apps",
+  "changes": [
+    "Removed frontend Flutter hosts, browser templates, native build scripts and mobile package imports",
+    "Removed Flutter SDK installation and native source inputs from the frontend Dockerfile and web workflow",
+    "Frontend publication selects only frontend and shared root guides/ignore files",
+    "Known retired browser-copy bookmarks redirect to React while stale native assets return 404",
+    "Retired generated browser binaries/tooling in ignored mobile runtime storage",
+    "Removed the retired browser Firebase loader from Android source; native registrations and release feed are unchanged"
+  ],
+  "validation": {
+    "frontend_tests_passed": 17,
+    "backend_unit_tests_passed": 23,
+    "native_configuration_tests_passed": 16,
+    "dart_source_analysis": "No issues found",
+    "browser_user_fixtures": "Desktop pages and actions, phone navigation/layouts at widths 320/390/768, Arabic RTL",
+    "browser_admin_fixtures": "Assigned-user and authenticator gates, logout and identity changes",
+    "browser_runtime_firebase": "Actual local config endpoint with fixture SDK modules",
+    "local_stack_readiness": true,
+    "native_host_and_registration_changes": false
+  },
+  "limits": {
+    "application_or_container_build": false,
+    "workflow_dispatch": false,
+    "deployment": false,
+    "real_provider_sign_in": false,
+    "production_data_import": false
+  }
+}

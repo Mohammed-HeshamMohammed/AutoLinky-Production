@@ -23,4 +23,4 @@ All local background sending, collection, processing and maintenance remain disa
 
 ## Deployment
 
-Each backend builds from its owning directory. React builds from `frontend/` through its Node-only Dockerfile; the `Production` target and port 8080 remain compatible. [Branch contents](../../PRODUCTION_BRANCHES.md) and [DNS mapping](../../DNS_DEPLOYMENT.md) describe production source publication. This setup does not deploy the VPS, change DNS, run live providers or build native packages.
+Each backend builds from its owning directory and names its runtime target `Production` for Dokploy. React also uses its owning `frontend/` directory as the Docker context, with repository-relative Dockerfile `frontend/Dockerfile`; its `Production` target and port 8080 remain compatible. [Branch contents](../../PRODUCTION_BRANCHES.md) and [DNS mapping](../../DNS_DEPLOYMENT.md) describe production source publication. This setup does not deploy the VPS, change DNS, run live providers or build native packages.

@@ -44,6 +44,8 @@ export async function inspectBoundary(root,name){
     if(lock.packages?.['']?.dependencies?.[dependency]!==version||!lock.packages?.['node_modules/'+dependency])throw Error(`${name}: runtime lock does not contain ${dependency}`);
   }
   const docker=await readFile(resolve(own,'Dockerfile'),'utf8');
+  const targets=[...docker.matchAll(/^FROM\s+\S+\s+AS\s+(\S+)\s*$/gmi)].map(match=>match[1]);
+  if(!targets.includes('Production'))throw Error(`${name}: Docker target Production is missing`);
   const allowed=new Set(['package.json','package-lock.json','index.js','app.js','routes.js','sender.js','reconcile.js','src','lib','database','scripts']);
   const copied=new Set();
   for(const line of docker.split(/\r?\n/).filter(line=>line.startsWith('COPY '))){
@@ -54,7 +56,7 @@ export async function inspectBoundary(root,name){
     }
   }
   if(!copied.has('index.js')||!copied.has('lib'))throw Error(`${name}: image is missing its owned backend`);
-  return {name,directory:backendFolders[name],source_files:visited.size,runtime_dependencies:Object.keys(pkg.dependencies||{}),image:`autolinky-${name}:development`};
+  return {name,directory:backendFolders[name],source_files:visited.size,runtime_dependencies:Object.keys(pkg.dependencies||{}),image:`autolinky-${name}:development`,docker_target:'Production'};
 }
 
 if(process.argv[1]&&pathToFileURL(resolve(process.argv[1])).href===import.meta.url){

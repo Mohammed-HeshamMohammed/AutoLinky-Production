@@ -1,0 +1,165 @@
+{
+  "prepared_at": "2026-10-16T18:17:12.813Z",
+  "source_commit": "c81cbc6d5721cf440fcf982c448b15dc5fdffdd3",
+  "source_branch": "main",
+  "branches": [
+    {
+      "branch": "frontend-production",
+      "folder": "frontend",
+      "extra": [
+        "mobile apps/shared",
+        "mobile apps/release-source.json"
+      ],
+      "context": ".",
+      "parent": "6a7556d6ab78357e037486f37156c00293674ab2",
+      "commit": "3bf803c1c295bba0c27838b807cef8429695cd08",
+      "files": 248,
+      "selected_objects": {
+        "frontend": "7192bdbbedf4669a2054a21c1857bd31f86b4014",
+        "mobile apps/shared": "e05b67d4fa3e937e05ef5fd2f46db326abaad478",
+        "mobile apps/release-source.json": "cb1f3b313ac15dd25a80adb57692d0ed5cdf7ada"
+      },
+      "docker_inputs": [
+        "frontend/package.json",
+        "frontend/package-lock.json",
+        "frontend",
+        "mobile apps/shared",
+        "mobile apps/release-source.json"
+      ]
+    },
+    {
+      "branch": "auth-production",
+      "folder": "Auth-backend",
+      "parent": null,
+      "commit": "be30b345e21b408b88c4e74da5a74b009ce9a03f",
+      "files": 30,
+      "selected_objects": {
+        "Auth-backend": "0e4fbb039ba071a8d6df70e65ee9941334e9fcdb"
+      },
+      "docker_inputs": [
+        "Auth-backend/package.json",
+        "Auth-backend/package-lock.json",
+        "Auth-backend/index.js",
+        "Auth-backend/app.js",
+        "Auth-backend/routes.js",
+        "Auth-backend/reconcile.js",
+        "Auth-backend/lib",
+        "Auth-backend/src",
+        "Auth-backend/scripts"
+      ]
+    },
+    {
+      "branch": "notify-production",
+      "folder": "Notify-backend",
+      "parent": null,
+      "commit": "e7b3881dd89d976c35159ea67b1400b220eac580",
+      "files": 40,
+      "selected_objects": {
+        "Notify-backend": "414291349a27b26928bcd0ab471ae65665262783"
+      },
+      "docker_inputs": [
+        "Notify-backend/package.json",
+        "Notify-backend/package-lock.json",
+        "Notify-backend/index.js",
+        "Notify-backend/app.js",
+        "Notify-backend/routes.js",
+        "Notify-backend/sender.js",
+        "Notify-backend/lib",
+        "Notify-backend/src"
+      ]
+    },
+    {
+      "branch": "app-production",
+      "folder": "App-backend",
+      "parent": null,
+      "commit": "e5dd43dfe266f584b0d6896c20bc95f1c646d851",
+      "files": 42,
+      "selected_objects": {
+        "App-backend": "cb45736f1befaac5fb59b6d55f7c8927aa2b9386"
+      },
+      "docker_inputs": [
+        "App-backend/package.json",
+        "App-backend/package-lock.json",
+        "App-backend/index.js",
+        "App-backend/app.js",
+        "App-backend/routes.js",
+        "App-backend/lib",
+        "App-backend/src"
+      ]
+    },
+    {
+      "branch": "data-production",
+      "folder": "Data-baceknd",
+      "parent": null,
+      "commit": "f6cbd0a8ea2b9068b00391b167d7beb7b85bb0a8",
+      "files": 42,
+      "selected_objects": {
+        "Data-baceknd": "40f27f9feb21e389ff6f332cbf2b6c8b2519c81b"
+      },
+      "docker_inputs": [
+        "Data-baceknd/package.json",
+        "Data-baceknd/package-lock.json",
+        "Data-baceknd/index.js",
+        "Data-baceknd/app.js",
+        "Data-baceknd/lib",
+        "Data-baceknd/src",
+        "Data-baceknd/database"
+      ]
+    },
+    {
+      "branch": "fetching-production",
+      "folder": "Fetching-backend",
+      "parent": null,
+      "commit": "787c4a37d22682f6906c228bcf5b3de67697ed2a",
+      "files": 22,
+      "selected_objects": {
+        "Fetching-backend": "eed4842fa874016ae5f85ae6377ef54449684bbb"
+      },
+      "docker_inputs": [
+        "Fetching-backend/package.json",
+        "Fetching-backend/package-lock.json",
+        "Fetching-backend/index.js",
+        "Fetching-backend/app.js",
+        "Fetching-backend/lib",
+        "Fetching-backend/src"
+      ]
+    },
+    {
+      "branch": "gateway-production",
+      "folder": "Gateway-backene",
+      "parent": null,
+      "commit": "c77567043f977442e37ece57ebc6cffd2a41f8cb",
+      "files": 76,
+      "selected_objects": {
+        "Gateway-backene": "54db1647d65b8d08fbe7f81755cdda9396728c3c"
+      },
+      "docker_inputs": [
+        "Gateway-backene/package.json",
+        "Gateway-backene/package-lock.json",
+        "Gateway-backene/index.js",
+        "Gateway-backene/lib",
+        "Gateway-backene/src"
+      ]
+    }
+  ],
+  "application_build": false,
+  "workflow_dispatch": false,
+  "vps_deployment": false,
+  "published_at": "2026-10-16T18:17:53.638Z",
+  "remote_verification": "all eight branch tips and selected trees verified",
+  "atomic_push": true,
+  "verification": {
+    "frontend_tests": 13,
+    "backend_owned_boundaries": 6,
+    "remote_branch_tips": "verified against origin",
+    "component_trees": "byte-identical Git objects to the source main commit",
+    "docker_copy_inputs": "all repository COPY inputs present in each branch",
+    "credentials": "no private/generated paths or service-account/private-key material found",
+    "main_checkout": "clean at publication"
+  },
+  "frontend_deployment": {
+    "build_context": ".",
+    "dockerfile": "frontend/Dockerfile",
+    "target_port": 8080
+  }
+}

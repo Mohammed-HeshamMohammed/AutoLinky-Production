@@ -8,6 +8,9 @@ The owner requested the frontend update on the existing production branch and a 
 
 The frontend Docker build stage now includes the release-source JSON required by browser preparation. The unified frontend requires repository-root build context and target port 8080. Backend runtimes keep their existing per-folder build contexts and private API connections.
 
+- [x] Publish `frontend-production` and create/push the six backend branches in one normal atomic push, preserving the existing frontend production history.
+- [x] Verify all remote tips, exact component trees, Docker source inputs and credential exclusions. Pass 13 frontend tests and all six backend ownership checks. Leave the working checkout on `main`; no app build, workflow dispatch or VPS deployment ran. [Publication evidence](migration-plan/evidence/production-branches.json).
+
 ## Previous milestone: assigned app-user administrator access (2026-10-16)
 
 The owner requires the actual AutoLinky user to be explicitly assigned an administrator role and to verify an authenticator before opening the backend dashboard. This supersedes the independent username/password administrator model below and in earlier migration proposals.

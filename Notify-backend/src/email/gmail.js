@@ -9,8 +9,13 @@ export function classifyMail(error){
   if(code>=500)return new MailError(command.startsWith('RCPT')?'recipient':'rejected',{code});
   return new MailError('busy',{uncertain:!['CONN','AUTH','EHLO','HELO','STARTTLS'].includes(command)});
 }
-export function gmailTransport({transportFactory=nodemailer.createTransport}={}){
-  const create=(address,password)=>transportFactory({host:'smtp.gmail.com',port:465,secure:true,auth:{user:address,pass:password},connectionTimeout:10000,greetingTimeout:10000,socketTimeout:25000,tls:{minVersion:'TLSv1.2',rejectUnauthorized:true},disableFileAccess:true,disableUrlAccess:true,logger:false,debug:false});
+export function smtpSettings(env=process.env){
+  const host=String(env.SMTP_HOST||'').trim(),port=Number(env.SMTP_PORT),secure=env.SMTP_SECURE;
+  if(!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/i.test(host)||!Number.isInteger(port)||port<1||port>65535||!['true','false'].includes(secure))throw new MailError('smtp_configuration');
+  return {host,port,secure:secure==='true',requireTLS:true};
+}
+export function gmailTransport({transportFactory=nodemailer.createTransport,env=process.env}={}){
+  const create=(address,password)=>transportFactory({...smtpSettings(env),auth:{user:address,pass:password},connectionTimeout:10000,greetingTimeout:10000,socketTimeout:25000,tls:{minVersion:'TLSv1.2',rejectUnauthorized:true},disableFileAccess:true,disableUrlAccess:true,logger:false,debug:false});
   return {
     async verify(address,password){const transport=create(address,password);try{await transport.verify();}catch(error){throw classifyMail(error);}finally{transport.close();}},
     async send(address,password,letter,cv){const transport=create(address,password);try{

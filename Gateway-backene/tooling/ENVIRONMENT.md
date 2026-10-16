@@ -37,6 +37,8 @@ Sending, collection, processing and maintenance stay disabled in the local launc
 
 ## External setup still needed
 
+Environment configuration is documented at [the repository root](../../ENVIRONMENT_VARIABLES.md). The supplied Admin credential has now been validated for the expected project and configured in ignored local Auth storage/profiles. This confirms local configuration only; real account sign-in, provider/domain setup and administrator assignment still need acceptance. Public website Firebase settings are generated into the isolated website environment. AI/SMTP/release defaults come from owning `.env.example` templates; existing private overrides are preserved.
+
 Firebase project auto-linky has web, Android com.autolinky.app and iOS com.autolinky.ios configuration. Put a private Firebase Admin service-account path in auth.env GOOGLE_APPLICATION_CREDENTIALS. Native Google OAuth IDs/fingerprints, authorized origins and email-link/Apple settings remain external acceptance gates. Facebook App Secret belongs only in Firebase provider configuration.
 
 ## Deployment

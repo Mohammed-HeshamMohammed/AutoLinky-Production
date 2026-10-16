@@ -40,6 +40,10 @@ const testEnv = Env(
   apiBaseUrl: 'https://api.test',
   firebaseApiKey: 'public-test-key',
   firebaseAppId: '1:test:web:test',
+  firebaseProjectId: 'fixture-project',
+  firebaseSenderId: '123',
+  firebaseAuthDomain: 'auto-linky.firebaseapp.com',
+  firebaseLinkHost: 'auto-linky.firebaseapp.com',
   emailLinkContinueUrl: 'https://app.test/welcome/email/verify',
   googleWebClientId: 'web-client.apps.googleusercontent.com',
 );

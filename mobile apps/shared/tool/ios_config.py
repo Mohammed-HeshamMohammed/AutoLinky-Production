@@ -22,7 +22,7 @@ PUBLIC_KEYS = {
     "FIREBASE_PROJECT_ID", "FIREBASE_MESSAGING_SENDER_ID", "FIREBASE_APP_ID",
     "FIREBASE_LINK_HOST", "EMAIL_LINK_CONTINUE_URL", "EMAIL_LINK_CUSTOM_DOMAIN",
     "GOOGLE_WEB_CLIENT_ID", "GOOGLE_IOS_CLIENT_ID", "EMAIL_SIGN_IN",
-    "APPLE_SIGN_IN", "TERMS_URL", "PRIVACY_URL",
+    "APPLE_SIGN_IN", "TERMS_URL", "PRIVACY_URL", "SITE_URL",
 }
 OAUTH_ID = re.compile(r"^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$")
 
@@ -52,8 +52,8 @@ def public_settings(native, supplied, *, mode="simulator", api_url=None, validat
         "FIREBASE_APP_ID": native["GOOGLE_APP_ID"],
         "FIREBASE_PROJECT_ID": native["PROJECT_ID"],
         "FIREBASE_MESSAGING_SENDER_ID": native["GCM_SENDER_ID"],
-        "FIREBASE_AUTH_DOMAIN": "auto-linky.firebaseapp.com",
-        "FIREBASE_LINK_HOST": "auto-linky.firebaseapp.com",
+        "FIREBASE_AUTH_DOMAIN": native["PROJECT_ID"] + ".firebaseapp.com",
+        "FIREBASE_LINK_HOST": native["PROJECT_ID"] + ".firebaseapp.com",
         "GOOGLE_IOS_CLIENT_ID": native.get("CLIENT_ID", ""),
         "EMAIL_SIGN_IN": "false",
         "APPLE_SIGN_IN": "false",
@@ -86,6 +86,11 @@ def public_settings(native, supplied, *, mode="simulator", api_url=None, validat
     if ios_id and native.get("REVERSED_CLIENT_ID") not in (None, ".".join(reversed(ios_id.split(".")))):
         raise ValueError("REVERSED_CLIENT_ID differs from the iOS OAuth client ID.")
     if validate:
+        for key in ("SITE_URL", "TERMS_URL", "PRIVACY_URL"):
+            if settings[key]:
+                link = urlparse(settings[key])
+                if link.scheme != "https" or not link.hostname or link.username or link.password:
+                    raise ValueError(key + " must be a public HTTPS URL without credentials.")
         api = urlparse(settings["API_BASE_URL"])
         local_http = mode == "simulator" and api.scheme == "http" and api.hostname in ("localhost", "127.0.0.1", "::1")
         missing_development_api = allow_missing_api and settings["API_BASE_URL"] == ""

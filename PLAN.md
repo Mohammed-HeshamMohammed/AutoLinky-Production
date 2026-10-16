@@ -2,7 +2,16 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: production API links through DNS (2026-10-16)
+## Current: environment configuration (2026-10-16)
+
+- [x] Move desktop Firebase settings to an explicit public runtime environment allowlist; retain private Admin/provider/service keys on servers.
+- [x] Configure AI endpoints/models, SMTP and release-provider addresses through owning environments; require explicit Gateway targets and preserve TLS/no-redirect credential boundaries.
+- [x] Protect downloaded credentials from Git/images, configure the supplied Firebase Admin file in ignored local Auth profiles, and add public mobile environment preparation without building apps.
+- [x] Pass 23 backend unit tests, 41 PostgreSQL integration tests, 17 frontend tests, 14 mobile configuration contracts and the mobile public-environment boundary test; verify source/ownership and actual browser runtime-config initialization plus admin MFA fixtures.
+
+See [environment variables and ownership](ENVIRONMENT_VARIABLES.md). Per-user Gmail/authenticator secrets remain encrypted database records. No app build, production deployment or data migration is performed. Native compilation and actual provider acceptance remain pending.
+
+## Previous: production API links through DNS (2026-10-16)
 
 The owner renamed the Gateway DNS label to `appapi`. Production Gateway origin is `https://appapi.auto-linky.com`; service-specific hostnames and API route paths stay as configured.
 

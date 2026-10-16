@@ -16,7 +16,7 @@ struct SettingsView: View {
                 Toggle(t("Activity notifications"), isOn: Binding(get: { notifications }, set: { value in busy = true; Task { defer { busy = false }; await store.perform { if value { try await ActivityNotifications.enable(api: store.api, uid: store.auth.uid ?? ""); notifications = true } else { await ActivityNotifications.disable(api: store.api); notifications = false } } } }))
                 Text(t("iOS decides when background checks run. You can always refresh applications in the app.")).font(.footnote).foregroundStyle(.secondary)
             }.disabled(busy)
-            Section(t("About")) { LabeledContent(t("Version"), value: "\(store.auth.configuration.version) (\(store.auth.configuration.build))"); NavigationLink(t("Check for updates")) { ReleaseView() }; Link(t("Terms"), destination: store.auth.configuration.legal("terms")); Link(t("Privacy"), destination: store.auth.configuration.legal("privacy")); Link(t("Open website"), destination: URL(string: "https://auto-linky.com")!) }
+            Section(t("About")) { LabeledContent(t("Version"), value: "\(store.auth.configuration.version) (\(store.auth.configuration.build))"); NavigationLink(t("Check for updates")) { ReleaseView() }; if let url = store.auth.configuration.legal("terms") { Link(t("Terms"), destination: url) }; if let url = store.auth.configuration.legal("privacy") { Link(t("Privacy"), destination: url) }; if let site = store.auth.configuration.site { Link(t("Open website"), destination: site) } }
             Section(t("Account")) { Button(t("Sign out")) { signOut = true }; NavigationLink { DeleteAccountView() } label: { Text(t("Delete account")).foregroundStyle(.red) } }
             if busy { ProgressView() }
         }.navigationTitle(t("Settings"))

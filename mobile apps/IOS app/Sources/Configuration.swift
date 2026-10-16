@@ -21,5 +21,6 @@ struct Configuration {
     var appleEnabled: Bool { values["APPLE_SIGN_IN"] == "true" }
     var googleID: String { values["GOOGLE_IOS_CLIENT_ID"] ?? "" }
     var googleEnabled: Bool { !googleID.isEmpty }
-    func legal(_ page: String) -> URL { Security.webURL(values[page == "privacy" ? "PRIVACY_URL" : "TERMS_URL"] ?? "") ?? URL(string: "https://auto-linky.com/\(page)/")! }
+    var site: URL? { Security.webURL(values["SITE_URL"] ?? "") }
+    func legal(_ page: String) -> URL? { Security.webURL(values[page == "privacy" ? "PRIVACY_URL" : "TERMS_URL"] ?? "") ?? site?.appendingPathComponent(page + "/") }
 }

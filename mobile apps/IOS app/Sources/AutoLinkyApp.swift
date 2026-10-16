@@ -94,6 +94,7 @@ struct BrandMark: View {
 }
 
 struct SetupView: View {
+    @EnvironmentObject private var auth: Authentication
     var complete: () -> Void
     @State private var address = Configuration().configuredAPI
     @State private var invalid = false
@@ -114,7 +115,7 @@ struct SetupView: View {
                         UserDefaults.standard.set(address, forKey: "development.api"); complete()
                     }.accessibilityIdentifier("setupContinue")
                 }
-                Section { LanguagePicker(); Link(t("Open website"), destination: URL(string: "https://auto-linky.com")!) }
+                Section { LanguagePicker(); if let site = auth.configuration.site { Link(t("Open website"), destination: site) } }
             }.navigationTitle("AutoLinky")
         }
     }

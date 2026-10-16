@@ -31,11 +31,11 @@ export function loadConfig(env = process.env,{database=true,identity=true}={}) {
     rateLimit:integer(env,'RATE_LIMIT_PER_MINUTE',120,1,10000),
     internalDownloadsKey:env.INTERNAL_DOWNLOADS_KEY || '',
     cvExtractorUrl:env.CV_EXTRACTOR_URL || '',cvExtractorKey:env.CV_EXTRACTOR_KEY || '',
-    cvMaxBytes:4*1024*1024,aiKey:env.AI_API_KEY || '',aiBaseUrl:env.AI_BASE_URL || 'https://openrouter.ai/api/v1',
-    cvModel:env.CV_AI_MODEL || 'google/gemini-2.5-flash',letterModel:env.LETTER_AI_MODEL || 'google/gemini-2.5-flash',
+    cvMaxBytes:4*1024*1024,aiKey:env.AI_API_KEY || '',aiBaseUrl:env.AI_BASE_URL || '',
+    cvModel:env.CV_AI_MODEL || '',letterModel:env.LETTER_AI_MODEL || '',
     mailSecretKey:env.MAIL_SECRET_KEY || '',senderEnabled:flag(env,'SENDER_ENABLED'),collectorEnabled:flag(env,'COLLECTOR_ENABLED'),
     senderHours:env.AUTO_APPLY_HOURS||'0-24',senderTimezone:env.SENDER_TIMEZONE||'Africa/Cairo',
     freeEmails:integer(env,'FREE_EMAILS',20,0,100000),dailyEmails:integer(env,'EMAIL_DAILY_LIMIT',100,1,500),
-    upgradeUrl:env.UPGRADE_URL || 'https://wa.me/201060933358',upgradeMessage:env.UPGRADE_MESSAGE || 'Hello, I want to subscribe',
+    upgradeUrl:env.UPGRADE_URL || '',upgradeMessage:env.UPGRADE_MESSAGE || 'Hello, I want to subscribe',
   });
 }

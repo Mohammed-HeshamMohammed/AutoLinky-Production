@@ -1,4 +1,4 @@
-// GET /download (rewritten here by vercel.json): sends the visitor straight to the newest APK, so the download
+// GET /download: sends the visitor straight to the newest APK, so the download
 // starts at once. One link that never changes, whatever the version.
 //
 //   /download                  the newest APK. Visitors from another app's built-in browser (LinkedIn, Facebook,
@@ -31,7 +31,8 @@ export default async function handler(req, res) {
   // With a fixed asset name (APK_FIXED_NAME) there is nothing to look up: GitHub's own "latest" link answers
   const fixed = fixedAssetUrl();
   const release = fixed ? await latestRelease({ cachedOnly: true }) : await latestRelease();
-  const target = fixed || (release ? release.url : releasesPage);
+  const target = fixed || (release ? release.url : releasesPage());
+  if(!target){res.statusCode=503;res.setHeader('Cache-Control','no-store');res.end('Downloads are not configured');return;}
 
   if (isGet && (fixed || release)) await stats.record(req, { kind: 'download', release, source });
 

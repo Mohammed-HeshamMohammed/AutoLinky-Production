@@ -21,7 +21,7 @@ FROM node:24.22.0-bookworm-slim AS runtime
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=8080
 WORKDIR /app
 COPY --from=build --chown=node:node /app/frontend/dist ./dist
-COPY --from=build --chown=node:node /app/frontend/package.json /app/frontend/server.js /app/frontend/workspace-routes.js /app/frontend/workspace-headers.js ./
+COPY --from=build --chown=node:node /app/frontend/package.json /app/frontend/server.js /app/frontend/workspace-routes.js /app/frontend/workspace-headers.js /app/frontend/public-settings.js ./
 COPY --from=build --chown=node:node /app/frontend/api ./api
 USER node
 EXPOSE 8080

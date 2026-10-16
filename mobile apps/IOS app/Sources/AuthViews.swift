@@ -22,7 +22,10 @@ struct WelcomeView: View {
                         if !auth.configuration.googleEnabled && !auth.configuration.appleEnabled && !auth.configuration.emailEnabled { Text(t("Sign-in providers are awaiting configuration for this development build.")).foregroundStyle(.secondary) }
                         if busy { ProgressView() }
                     }.disabled(busy)
-                    HStack { Link(t("Terms"), destination: auth.configuration.legal("terms")); Text("·"); Link(t("Privacy"), destination: auth.configuration.legal("privacy")) }.font(.footnote)
+                    HStack {
+                        if let terms = auth.configuration.legal("terms") { Link(t("Terms"), destination: terms) }
+                        if let privacy = auth.configuration.legal("privacy") { Link(t("Privacy"), destination: privacy) }
+                    }.font(.footnote)
                     LanguagePicker().padding(.top)
                 }.padding(28).frame(maxWidth: 560).frame(maxWidth: .infinity)
             }.navigationTitle("AutoLinky").navigationBarTitleDisplayMode(.inline)

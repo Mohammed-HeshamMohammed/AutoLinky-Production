@@ -1,5 +1,6 @@
 {
   "API_BASE_URL": "",
+  "SITE_URL": "https://auto-linky.com",
   "FIREBASE_API_KEY": "",
   "FIREBASE_AUTH_DOMAIN": "auto-linky.firebaseapp.com",
   "FIREBASE_PROJECT_ID": "auto-linky",

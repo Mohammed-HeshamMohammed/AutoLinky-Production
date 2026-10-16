@@ -1,0 +1,20 @@
+{
+  "name": "@autolinky/messaging-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env index.js",
+    "dev": "node --env-file-if-exists=.env --watch index.js",
+    "sender": "node --env-file-if-exists=.env sender.js"
+  },
+  "dependencies": {
+    "fastify": "5.12.7",
+    "@fastify/cors": "11.3.1",
+    "pg": "8.23.1",
+    "nodemailer": "10.1.1"
+  }
+}

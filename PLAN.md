@@ -2,7 +2,16 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: React-only web frontend (2026-10-16)
+## Current: frontend Docker context correction (2026-10-16)
+
+The supplied Dokploy log loads the frontend Dockerfile but fails to resolve `frontend/package.json` and `frontend/` inside the selected context. Its 111-byte ignore file matches `frontend/.dockerignore`, indicating the owning frontend folder is already selected. Use `frontend/` as the build context and resolve all local COPY inputs directly within it. Keep the existing `Production` target, runtime port 8080 and React-only source boundary. This supersedes the earlier repository-root context instructions below.
+
+- [x] Correct frontend COPY paths and deployment guides; exclude generated browser output from the folder context.
+- [x] Pass all 18 frontend tests, including a regression check that resolves Docker inputs inside the owning frontend folder. Retain the `Production` target and React/native isolation.
+
+Publication scope is `main` and `frontend-production`; verify the published frontend tree and COPY inputs and keep backend branch tips unchanged. No application/container build, workflow dispatch or VPS deployment is run for this correction.
+
+## Previous: React-only web frontend (2026-10-16)
 
 The owner clarified that desktop and phone-browser UI must be implemented in React/JavaScript, independently of native Android Flutter and Swift iOS. All native source stays under `mobile apps/`. This supersedes the earlier Flutter browser-copy architecture and its runtime-loading work below.
 

@@ -1,0 +1,19 @@
+{
+  "name": "@autolinky/data-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env index.js",
+    "dev": "node --env-file-if-exists=.env --watch index.js",
+    "migrate": "node --env-file-if-exists=.env database/migrate.js",
+    "migrate:check": "node --env-file-if-exists=.env database/migrate.js --check"
+  },
+  "dependencies": {
+    "fastify": "5.12.7",
+    "pg": "8.23.1"
+  }
+}

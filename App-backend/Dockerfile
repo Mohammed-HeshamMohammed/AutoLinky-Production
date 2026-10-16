@@ -1,5 +1,5 @@
 # Context: App-backend/. This backend has no sibling source dependencies.
-FROM node:24.22.0-bookworm-slim
+FROM node:24.22.0-bookworm-slim AS Production
 ENV NODE_ENV=production HOST=0.0.0.0
 WORKDIR /app
 COPY package.json package-lock.json ./

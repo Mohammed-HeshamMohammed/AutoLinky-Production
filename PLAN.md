@@ -2,7 +2,17 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: frontend Docker context correction (2026-10-16)
+## Current: backend Dokploy target compatibility (2026-10-17)
+
+The supplied backend deployment log stops before build execution because Dokploy requests target `Production` and the backend Dockerfile has no named stage. All six Node backend Dockerfiles share this omission. Name each existing runtime stage `Production`, preserving its source inputs, dependencies, user, command and environment-driven port.
+
+- [x] Add the target to Auth, App, Notify, Data, Fetching and Gateway; document per-folder contexts and the shared target setting.
+- [x] Add target validation to the existing ownership check and reproduce the missing-target failure before applying the Dockerfile corrections.
+- [x] Pass all 23 backend unit tests, all six ownership/target checks and backend JavaScript syntax/source checks without building applications.
+
+Publication scope is `main` plus the six backend production branches. Verify each selected service tree and Docker target/inputs against `main`; leave the frontend production branch unchanged. No app/container builds, workflows or deployments are run for this correction.
+
+## Previous: frontend Docker context correction (2026-10-16)
 
 The supplied Dokploy log loads the frontend Dockerfile but fails to resolve `frontend/package.json` and `frontend/` inside the selected context. Its 111-byte ignore file matches `frontend/.dockerignore`, indicating the owning frontend folder is already selected. Use `frontend/` as the build context and resolve all local COPY inputs directly within it. Keep the existing `Production` target, runtime port 8080 and React-only source boundary. This supersedes the earlier repository-root context instructions below.
 

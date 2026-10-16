@@ -1,0 +1,44 @@
+# API domains and deployment configuration
+
+The owner will create DNS records for each API. The production examples use the existing project domain, `auto-linky.com`; every service origin is an environment setting and can be replaced if the final domain differs. DNS records and live Dokploy routes have not been created or verified by this source change.
+
+## Records and Dokploy targets
+
+Create an `A` record for each API host below, pointing to the public IPv4 address of the server hosting that service. If all services run on the same VPS, use that VPS address for every record. In each Dokploy application's Domains tab, add the corresponding full hostname, path `/`, container port below and HTTPS with a valid certificate. Requests use HTTPS port 443; the container ports stay in Dokploy's routing settings.
+
+| DNS host | HTTPS origin | Application | Container port |
+| --- | --- | --- | --- |
+| `api` | `https://api.auto-linky.com` | Gateway | 4100 |
+| `auth` | `https://auth.auto-linky.com` | Auth | 4101 |
+| `app` | `https://app.auto-linky.com` | App | 4102 |
+| `notify` | `https://notify.auto-linky.com` | Notify | 4103 |
+| `fetching` | `https://fetching.auto-linky.com` | Fetching | 4104 |
+| `data` | `https://data.auto-linky.com` | Data | 4105 |
+| `extractor` | `https://extractor.auto-linky.com` | Python CV extractor owned by App | 4001 |
+
+The existing website `auto-linky.com` routes to the frontend on container port 8080. The extractor is a separate process from the Node App API; its source is under `App-backend/extractor/`. Gateway is the `api` hostname, so a second gateway hostname is unnecessary.
+
+DNS resolves the hostname. Dokploy's domain route selects the application and terminates HTTPS. Both parts are needed. Follow the [official Dokploy domain instructions](https://docs.dokploy.com/docs/core/domains/others).
+
+## Runtime links
+
+The frontend server sets `API_BASE_URL=https://api.auto-linky.com`. Desktop `/v1/` and `/admin/api/` requests reach that HTTPS gateway through the existing same-origin frontend proxy. The browser receives the normal Firebase identity token and, after verification, its own MFA session; it receives no inter-service key. Mobile clients can use the same API hostname. The browser app build setting `APP_API_BASE_URL` may stay blank to use the website proxy, or explicitly use `https://api.auto-linky.com` for direct public Gateway requests.
+
+Each backend's `.env.example` now links to the DNS origins in the table:
+
+- Gateway: `AUTH_SERVICE_URL`, `APP_SERVICE_URL`, `MESSAGING_SERVICE_URL` (Notify), `DATA_SERVICE_URL`.
+- Auth: `DATA_SERVICE_URL`.
+- App: `AUTH_SERVICE_URL`, `DATA_SERVICE_URL`, `NOTIFY_SERVICE_URL`, `CV_EXTRACTOR_URL`.
+- Notify: `AUTH_SERVICE_URL`, `DATA_SERVICE_URL`, `APP_SERVICE_URL`.
+- Fetching: `DATA_SERVICE_URL`.
+- Data: `AUTH_SERVICE_URL`, `APP_SERVICE_URL`, `MESSAGING_SERVICE_URL` (Notify), `FETCHING_SERVICE_URL`, `DATA_SERVICE_URL`.
+
+Copy the settings into the corresponding Dokploy runtime environments and supply the existing private credentials there. Hostnames have no path suffix or container-port suffix. The local environment launcher continues to generate its own loopback configuration for development; it does not depend on public DNS.
+
+## Authentication and rollout
+
+Every service keeps its existing caller keys, route-specific keys and Firebase/MFA checks. HTTPS service origins change how a server reaches its peer; they do not grant access. Preserve `X-Service-Key`, `Authorization`, `X-Admin-Session`, `X-Admin-Elevation`, `X-Extractor-Key` and the existing request bodies when configuring reverse proxies. Fetching/Data/Notify controls remain authenticated and disabled by default where their environment switches require it. Databases retain their private PostgreSQL connections.
+
+After DNS, certificates, environments and application deployments are ready, check `/health/ready` on each Node API origin. The extractor's health endpoint is `/health`. Then verify a normal user request through `https://api.auto-linky.com/v1/me` and the assigned-user plus authenticator admin flow. Unauthenticated health responses alone do not prove account access, private service keys, email delivery or a completed data migration.
+
+No app/container build, workflow dispatch, DNS mutation or VPS deployment is performed by publishing these configuration examples.

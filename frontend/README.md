@@ -8,7 +8,7 @@ This is the web frontend: React landing/product/legal pages, a desktop login/wor
 | `/login/`, `/signup/` (and Arabic equivalents) | React Google/email-link sign-in using the same Firebase project |
 | `/dashboard/`, `/jobs/`, `/saved/`, `/compare/`, `/applications/` | Desktop matching, job search/detail, local bookmarks/comparison and server application history |
 | `/profile/`, `/cv/`, `/automation/`, `/settings/` | Desktop profile/CV, Gmail/Auto Apply and account controls |
-| `/admin/` | Separate password + TOTP console with roles and audited user/plan changes |
+| `/admin/` | Assigned AutoLinky account plus mandatory authenticator, with roles and audited user/plan changes |
 | `/app/` | Opens the appropriate browser app, preserving the language query |
 | `/app/android/` | Android app experience in the browser |
 | `/app/ios/` | iOS app experience in the browser |
@@ -45,13 +45,13 @@ For the isolated local stack using existing assets, run `npm run env:setup` then
 - `server.js`: one server for the site and apps, including app-specific reload fallbacks, real asset 404s, WASM MIME types and revalidation for app bundles.
 - `api/`: private download/statistics handlers; secrets stay server-side.
 
-Build Docker from the repository root using `docker build -f frontend/Dockerfile .`, so it can include the shared Dart package outside this folder. The runtime image serves only the final web build and Node handlers on port 8080. The Docker image and VPS deployment have not been verified here. Build-time settings are shown in `.env.example`; keep server-only values out of `APP_DEFINES` and `VITE_*`.
+Build Docker from the repository root using `docker build -f frontend/Dockerfile .`, so it can include the shared Dart package and `mobile apps/release-source.json` outside this folder. The runtime image serves only the final web build and Node handlers on port 8080. The Docker image and VPS deployment have not been verified here. Build-time settings are shown in `.env.example`; keep server-only values out of `APP_DEFINES` and `VITE_*`. The `frontend-production` branch includes these required browser sources; see [branch contents and deployment settings](../PRODUCTION_BRANCHES.md).
 
 Both browser targets use the registered Firebase web app and common backend. Real sign-in still requires Firebase Admin/provider/domain setup. Browser releases use web deployment and cache revalidation. Native iOS is now an independent SwiftUI application; both mobile installers use one binary release feed, and the browser variants continue using their own Flutter web code. Data migration remains deferred. The former frontend is retained at Git commit `52a996c` and in `.runtime/legacy-frontend-before-unification/` at the repository root. This `frontend/` is the single active web folder; the reference checkout remains read-only.
 
 ## Verified development result
 
-Current desktop work passed 13 frontend HTTP/client tests, 20 backend unit tests and 37 PostgreSQL integration tests. Administration now follows reference `9901aa4` with top tabs, Numbers charts, a rich user drawer, allowance/Pro management, operational pauses and search-title controls. Headless Edge verified live local password/TOTP administration and used browser-only fixtures for deeper interactions, user screens, RTL and narrow layout. No build or workflow was run for this update. See [verification scope and remaining Firebase gates](DESKTOP_WEB.md).
+Current desktop work passed 13 frontend HTTP/client tests, 20 backend unit tests and 41 PostgreSQL integration tests. Administration follows reference `9901aa4` with top tabs, Numbers charts, a rich user drawer, allowance/Pro management, operational pauses and search-title controls. Access requires an explicitly assigned Firebase-bound app account plus a verified authenticator on every admin API request. Headless Edge used intercepted Firebase/API fixtures to verify access gates, account switching, console interactions, user screens, RTL and narrow layout; actual PostgreSQL/API tests run separately. Live Firebase sign-in remains pending. No build or workflow was run for this update. See [verification scope and remaining Firebase gates](DESKTOP_WEB.md).
 
 The earlier [clean unified web build](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988872) passed for source `232ef50`. Its downloaded artifact contains the landing pages and both browser bundles; it predates the desktop implementation. Historical checks passed eight server/download tests, 152 shared app tests, 13 configuration contracts, shared/web analysis and 22 page checks. Real provider sign-in and production deployment remain pending.
 

@@ -2,7 +2,13 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: assigned app-user administrator access (2026-10-16)
+## Current: publish frontend and individual backend source branches (2026-10-16)
+
+The owner requested the frontend update on the existing production branch and a separate branch for each backend. Keep `frontend-production` at its existing `frontend/` path, include its shared Flutter browser dependencies and release metadata, and publish each owned backend under its documented component branch. Preserve production branch history and verify the selected directory trees against `main`; do not build applications, dispatch workflows or deploy services. [Branch map and deployment settings](PRODUCTION_BRANCHES.md).
+
+The frontend Docker build stage now includes the release-source JSON required by browser preparation. The unified frontend requires repository-root build context and target port 8080. Backend runtimes keep their existing per-folder build contexts and private API connections.
+
+## Previous milestone: assigned app-user administrator access (2026-10-16)
 
 The owner requires the actual AutoLinky user to be explicitly assigned an administrator role and to verify an authenticator before opening the backend dashboard. This supersedes the independent username/password administrator model below and in earlier migration proposals.
 

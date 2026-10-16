@@ -9,6 +9,7 @@ COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci
 COPY frontend/ ./
 COPY ["mobile apps/shared/", "/app/mobile apps/shared/"]
+COPY ["mobile apps/release-source.json", "/app/mobile apps/release-source.json"]
 ARG VITE_SITE_URL
 ARG VITE_WHATSAPP_NUMBER
 ARG VITE_DOWNLOAD_ENABLED=true

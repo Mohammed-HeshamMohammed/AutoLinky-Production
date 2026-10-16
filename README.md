@@ -20,6 +20,8 @@ From `Gateway-backene/tooling/`, install tooling with `npm ci` and the six backe
 
 Each backend owns all of its runtime code and installs/builds from its own folder. Domain data is exchanged through authenticated private HTTP APIs. There is no `backend-v2/` runtime or shared source dependency between backends.
 
+[Production branch contents and deployment settings](PRODUCTION_BRANCHES.md) cover `frontend-production` and the six individual backend branches.
+
 Builds and release workflows run only on manual request. Startup never builds apps; if web assets are missing, it stops with an explanation. No build or release is triggered by a push or pull request.
 
 Desktop entry: http://localhost:8080/login/; administration: http://localhost:8080/admin/. Only an explicitly assigned AutoLinky user with a verified authenticator can use the console. See [desktop routes, access controls and administrator assignment](frontend/DESKTOP_WEB.md). Live Firebase provider acceptance and assignment of the owner's actual account remain pending.

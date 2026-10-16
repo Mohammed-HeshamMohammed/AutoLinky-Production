@@ -15,8 +15,26 @@ export function apiClient(url,key,{fetcher=fetch}={}){
     return value;
   };
 }
-export async function schemaReadiness(url){
-  try{const origin=new URL(url);if(!['http:','https:'].includes(origin.protocol)||origin.username||origin.password||origin.pathname!=='/'||origin.search||origin.hash)throw Error();
-    const response=await fetch(origin.origin+'/health/ready',{signal:AbortSignal.timeout(3000),redirect:'error'});await response.arrayBuffer();if(!response.ok)throw Error();
-  }catch{throw Error('Data service schema readiness unavailable');}
+function readinessFailure(reason,cause){
+  const codes=['ENOTFOUND','EAI_AGAIN','ECONNREFUSED','ECONNRESET','ETIMEDOUT','UND_ERR_CONNECT_TIMEOUT','ERR_TLS_CERT_ALTNAME_INVALID','CERT_HAS_EXPIRED','DEPTH_ZERO_SELF_SIGNED_CERT','SELF_SIGNED_CERT_IN_CHAIN','UNABLE_TO_VERIFY_LEAF_SIGNATURE'];
+  const candidates=[cause,cause?.cause,...(Array.isArray(cause?.cause?.errors)?cause.cause.errors.slice(0,4):[])];
+  const causeCode=candidates.find(error=>codes.includes(error?.code))?.code;
+  if(reason==='network'&&['ENOTFOUND','EAI_AGAIN'].includes(causeCode))reason='dns';
+  if(reason==='network'&&causeCode==='ECONNREFUSED')reason='connection_refused';
+  if(reason==='network'&&['ETIMEDOUT','UND_ERR_CONNECT_TIMEOUT'].includes(causeCode))reason='timeout';
+  if(reason==='network'&&causeCode&&/CERT|SELF_SIGNED|LEAF_SIGNATURE/.test(causeCode))reason='tls';
+  return Object.assign(new Error('Data service schema readiness unavailable'),{code:'DATA_SERVICE_NOT_READY',reason,...(causeCode?{causeCode}:{})});
+}
+export async function schemaReadiness(url,{fetcher=fetch}={}){
+  let origin;
+  try{
+    origin=new URL(url);
+    if(!['http:','https:'].includes(origin.protocol)||origin.username||origin.password||origin.pathname!=='/'||origin.search||origin.hash)throw Error();
+  }catch{throw readinessFailure('invalid_url');}
+  let response;
+  try{response=await fetcher(origin.origin+'/health/ready',{signal:AbortSignal.timeout(3000),redirect:'error'});}
+  catch(error){throw readinessFailure(['TimeoutError','AbortError'].includes(error?.name)?'timeout':'network',error);}
+  // Only the status is needed. Never retain or log a dependency response body.
+  try{await response.body?.cancel();}catch{}
+  if(!response.ok)throw Object.assign(readinessFailure('http_status'),{upstreamStatus:response.status});
 }

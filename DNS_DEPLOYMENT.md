@@ -22,6 +22,8 @@ DNS resolves the hostname. Dokploy's domain route selects the application and te
 
 ## Runtime links
 
+Copy all required settings from each service's `.env.example`; [environment ownership and client settings](ENVIRONMENT_VARIABLES.md) explains the private/public boundary. The website also requires `PUBLIC_FIREBASE_*` runtime values for desktop sign-in. A hostname alone does not configure a service or Firebase provider.
+
 The frontend server sets `API_BASE_URL=https://appapi.auto-linky.com`. Desktop `/v1/` and `/admin/api/` requests reach that HTTPS gateway through the existing same-origin frontend proxy. The browser receives the normal Firebase identity token and, after verification, its own MFA session; it receives no inter-service key. Mobile clients can use the same API hostname. The browser app build setting `APP_API_BASE_URL` may stay blank to use the website proxy, or explicitly use `https://appapi.auto-linky.com` for direct public Gateway requests.
 
 Each backend's `.env.example` now links to the DNS origins in the table:

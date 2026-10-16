@@ -1,0 +1,67 @@
+{
+  "checked_at": "2026-10-16T19:10:09.371Z",
+  "source_commit": "87132319f91ab4c3245314462d58eb7bc8ada951",
+  "domain": "auto-linky.com",
+  "domain_basis": "existing project production domain; service origins remain environment-configurable",
+  "origins": {
+    "gateway": "https://api.auto-linky.com",
+    "auth": "https://auth.auto-linky.com",
+    "app": "https://app.auto-linky.com",
+    "notify": "https://notify.auto-linky.com",
+    "fetching": "https://fetching.auto-linky.com",
+    "data": "https://data.auto-linky.com",
+    "extractor": "https://extractor.auto-linky.com"
+  },
+  "published_branches": [
+    {
+      "branch": "frontend-production",
+      "commit": "90a545f5b0b6255a6071119d677c731df4b7c985"
+    },
+    {
+      "branch": "auth-production",
+      "commit": "0b3432c5f0660816ac80396dbaae902d6e8bd9a0"
+    },
+    {
+      "branch": "notify-production",
+      "commit": "1a979e3663f202d4add30cdf94c2afd09e9ed58c"
+    },
+    {
+      "branch": "app-production",
+      "commit": "6dbc48180e3417f66e4f77f77ebb31113e5abb47"
+    },
+    {
+      "branch": "data-production",
+      "commit": "318c9adf3e76c1f4e25b979a6cc3dd05b7f471ab"
+    },
+    {
+      "branch": "fetching-production",
+      "commit": "fa301a4d1802c70578dafca0c5bb2898ef2034af"
+    },
+    {
+      "branch": "gateway-production",
+      "commit": "3a56a1a95d3063c2ff4fb9e46925767febfdccb3"
+    }
+  ],
+  "verification": {
+    "backend_unit": 20,
+    "frontend_http_client": 13,
+    "owned_backend_boundaries": 6,
+    "https_routing": "intercepted transport with production Gateway origins and private Auth RPC",
+    "remote_branch_tips": "verified",
+    "selected_source_trees": "exact match",
+    "private_credentials": "existing server-side keys retained; no real credentials published",
+    "local_environment": "loopback configuration retained"
+  },
+  "pending": [
+    "owner-created DNS records",
+    "Dokploy hostname routes and TLS certificates",
+    "copy updated URL settings into deployed runtime environments",
+    "live HTTPS service and authenticated user acceptance"
+  ],
+  "dns_records_changed": false,
+  "live_dns_verified": false,
+  "application_build": false,
+  "container_build": false,
+  "workflow_dispatch": false,
+  "vps_deployment": false
+}

@@ -8,6 +8,7 @@ The owner will create DNS records for all API services. Use the existing `auto-l
 
 - [x] Replace production example API origins with HTTPS DNS names, preserve local launcher settings and supply the shared domain/port/environment mapping for every production branch.
 - [x] Pass 20 backend unit tests, 13 frontend tests and six ownership checks. Gateway and private authentication tests exercise the configured HTTPS origins with intercepted transport; live DNS, certificates and deployments remain unverified.
+- [x] Push `main`, `frontend-production` and all six backend production branches atomically; verify remote tips and exact selected source trees. [Publication and pending DNS setup](migration-plan/evidence/dns-api-links.json).
 
 ## Previous milestone: preserve Dokploy's frontend target (2026-10-16)
 

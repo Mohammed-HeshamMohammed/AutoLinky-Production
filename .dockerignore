@@ -1,0 +1,17 @@
+.git
+migration-plan/
+**/node_modules
+**/.runtime
+**/.dart_tool
+**/.flutter-plugins-dependencies
+**/build
+**/dist
+**/.env*
+!**/.env.example
+**/key.properties
+**/*.p12
+**/*.pfx
+**/*.jks
+**/*.log
+**/.playwright-cli
+frontend/output/playwright/

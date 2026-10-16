@@ -1,0 +1,23 @@
+import { HttpError } from './lib/http/errors.js';
+
+export function registerIdentityRoutes(app,{db,auth,identity,identityData,admin}){
+    app.get('/v1/me',async request=>({user_id:request.user.id,email:request.user.email,
+      admin_role:admin?(await db.query('SELECT role FROM public.admin_accounts WHERE user_id=$1 AND enabled',[request.user.id])).rows[0]?.role||null:null}));
+    app.delete('/v1/me',async(request,reply)=>{
+      auth.invalidate(request.user.firebase_uid);
+      try{await identityData.deleteUser(request.user.id);}
+      catch(error){if(error.message==='deletion_blocked')throw new HttpError(409,'deletion_blocked');throw error;}
+      finally{auth.invalidate(request.user.firebase_uid);}
+      try{await identity.deleteUser(request.user.firebase_uid);await db.query('UPDATE public.identity_deletion_queue SET completed_at=now() WHERE firebase_uid=$1',[request.user.firebase_uid]);}
+      catch(error){if(error.code==='auth/user-not-found')await db.query('UPDATE public.identity_deletion_queue SET completed_at=now() WHERE firebase_uid=$1',[request.user.firebase_uid]);}
+      return reply.code(204).send();
+    });
+}
+
+export function registerAuthSession(app,{auth}){
+  app.post('/internal/v1/session',{schema:{body:{type:'object',additionalProperties:false,required:['method'],properties:{method:{enum:['GET','HEAD','POST','PUT','DELETE','PATCH']}}}}},async request=>{
+    const context={headers:request.headers,method:request.body.method};
+    await auth.authenticate(context);
+    return context.user;
+  });
+}

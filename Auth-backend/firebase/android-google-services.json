@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "218018023814",
+    "project_id": "auto-linky",
+    "storage_bucket": "auto-linky.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218018023814:android:33014edcf4e1270273c407",
+        "android_client_info": {
+          "package_name": "com.autolinky.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWOzI6Zgezrote5jS5vjivAPGLkNiyntE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

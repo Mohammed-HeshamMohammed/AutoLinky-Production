@@ -1,13 +1,16 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildGateway,destination } from '../../src/app.js';
+import { readFile } from 'node:fs/promises';
+import { parseEnv } from 'node:util';
+import { buildGateway,destination,gatewayTargets } from '../../src/app.js';
 import { remoteAuthentication } from '../support/runtime.js';
 import { normalizeRecord } from '../../../Data-baceknd/src/process.js';
 import { fetchProvider } from '../../../Fetching-backend/src/fetch.js';
 import { createAppClient } from '../../../Notify-backend/src/app-client.js';
 import { createIdentityDataClient } from '../../../Auth-backend/src/data-client.js';
 
-const targets=Object.fromEntries(['auth','app','messaging','data'].map(name=>[name,{url:`http://${name}.internal`,key:name.repeat(40)}]));
+const production=parseEnv(await readFile(new URL('../../.env.example',import.meta.url),'utf8'));
+const targets=gatewayTargets({...production,...Object.fromEntries(['auth','app','messaging','data'].map(name=>[name.toUpperCase()+'_SERVICE_KEY',name.repeat(40)]))});
 test('gateway routes contracts, forwards exact CV bytes and replaces untrusted service headers',async()=>{
   const calls=[];
   const app=buildGateway({targets,origins:['https://auto-linky.com'],fetcher:async(url,options)=>{calls.push({url,...options});return new Response(JSON.stringify({ok:true}),{status:201,headers:{'content-type':'application/json','x-request-id':'owned'}});}});
@@ -15,7 +18,7 @@ test('gateway routes contracts, forwards exact CV bytes and replaces untrusted s
     const bytes=Buffer.from([0,255,1,2,3]);
     const result=await app.inject({method:'POST',url:'/v1/cv?name=resume.pdf',payload:bytes,headers:{'content-type':'application/pdf',authorization:'Bearer user','x-service-key':'forged','x-user-id':'forged'}});
     assert.equal(result.statusCode,201);assert.equal(result.headers['x-request-id'],'owned');
-    assert.equal(calls[0].url,'http://app.internal/v1/cv?name=resume.pdf');assert.deepEqual(calls[0].body,bytes);
+    assert.equal(calls[0].url,'https://app.auto-linky.com/v1/cv?name=resume.pdf');assert.deepEqual(calls[0].body,bytes);
     assert.equal(calls[0].headers['x-service-key'],targets.app.key);assert.equal(calls[0].headers['x-user-id'],undefined);
     assert.equal((await app.inject({method:'POST',url:'/internal/v1/session',payload:{method:'DELETE'}})).statusCode,404);
     const previous=calls.length;
@@ -37,7 +40,7 @@ test('a failed messaging dispatch is never automatically retried',async()=>{
 });
 test('authentication RPC carries the original mutation policy and fails closed',async()=>{
   let body;
-  const auth=remoteAuthentication({url:'http://auth.internal',key:'k'.repeat(40),fetcher:async(url,options)=>{body=JSON.parse(options.body);return Response.json({id:'private-user',status:'active'});}});
+  const auth=remoteAuthentication({url:'https://auth.auto-linky.com',key:'k'.repeat(40),fetcher:async(url,options)=>{assert.equal(url,'https://auth.auto-linky.com/internal/v1/session');assert.equal(options.headers['x-service-key'],'k'.repeat(40));body=JSON.parse(options.body);return Response.json({id:'private-user',status:'active'});}});
   const request={method:'DELETE',headers:{authorization:'Bearer valid'}};await auth.authenticate(request);
   assert.deepEqual(body,{method:'DELETE'});assert.equal(request.user.id,'private-user');
   await assert.rejects(auth.authenticate({method:'GET',headers:{}}),{status:401});

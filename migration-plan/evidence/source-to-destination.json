@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T15:03:11.602Z",
+  "generated_at": "2026-10-16T15:10:09.419Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -211,8 +211,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/email/delivery.js",
-          "sha256": "545c01e1d1e231427ba9ad32bbf4cf60e1599a301b466bad821b2ba26914fd68"
+          "path": "Notify-backend/src/email/delivery.js",
+          "sha256": "bc6ce7b180c68472fa6e25bf61555c671f3e9a8323b5653dfac2fed6c857e6cc"
         }
       ]
     },
@@ -224,8 +224,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/auth/src/auth.js",
-          "sha256": "404173b9d1cc269b5ebbfeb84e725166e2b27dc4d611dbb3b41dac541bf16551"
+          "path": "Auth-backend/src/auth.js",
+          "sha256": "47fccd0e0c7939616f9f1e5ac5c36938d91f04709c4efec17ff2f374a5a22d4b"
         }
       ]
     },
@@ -237,8 +237,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/auto-apply.js",
-          "sha256": "c9565294315bc5f906128dc625fa58d8cd3675f446eef41b4388fdf53289879f"
+          "path": "Notify-backend/src/auto-apply.js",
+          "sha256": "578b73f2bc85ed9e0d4dd104713d63f0d51252ae262ea9665cff1085cb024b05"
         }
       ]
     },
@@ -250,7 +250,7 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/billing.js",
+          "path": "Notify-backend/src/billing.js",
           "sha256": "8e6f090300bb604e4f96705368494919a724d91218b069f964043083618c3cec"
         }
       ]
@@ -263,8 +263,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/app/src/catalog.js",
-          "sha256": "241e752b2978339c2387580d8f0fa6eac5501911f64491bdd433410f62cdb188"
+          "path": "App-backend/src/catalog.js",
+          "sha256": "7f97b71e059a0d6bd6347a5b7da13083624a7d72daf93c672af456f66a22f86f"
         }
       ]
     },
@@ -302,11 +302,11 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/app/src/ai/cv-analysis.js",
-          "sha256": "42bbfb4f881d6bd0f66cfe737e24cfc7758d9e5ad6715032e775bf6c7c560090"
+          "path": "App-backend/src/ai/cv-analysis.js",
+          "sha256": "94ee5dcaaa21c8917922b4c62b612d0257895551b549d9c6b254c13beed240b1"
         },
         {
-          "path": "backend-v2/services/app/src/ai/prompts/cv-system.txt",
+          "path": "App-backend/src/ai/prompts/cv-system.txt",
           "sha256": "fbef2a82c291af59c22ced8f39f207ea2f937f2614257df8236cb745a59f2f58"
         }
       ]
@@ -345,11 +345,11 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/ai/cover-letters.js",
-          "sha256": "3d8df8219be1f7c7d2ab44f4ec226a17e00af4c9f6d0ca00e06da1a07987ba85"
+          "path": "Notify-backend/src/ai/cover-letters.js",
+          "sha256": "26856a8693842dee764eecbfabc5f96a93124980e9e713320def9f83704212c3"
         },
         {
-          "path": "backend-v2/services/messaging/src/ai/prompts/letter-system.txt",
+          "path": "Notify-backend/src/ai/prompts/letter-system.txt",
           "sha256": "9d1cdeb47a25671c68ce32f1f24761d8b68935f985f24afe6083cfc96345c507"
         }
       ]
@@ -362,7 +362,7 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/email/secret.js",
+          "path": "Notify-backend/src/email/secret.js",
           "sha256": "defa61b32c2a0f2784d84bf0253d3d04c146845cb5f8769bc0819c13a3cf10e9"
         }
       ]
@@ -375,11 +375,11 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/email/gmail.js",
+          "path": "Notify-backend/src/email/gmail.js",
           "sha256": "da319d84ee2c1be3383acecba940e91896fbcbdf8ef9cca178883cabc95f821f"
         },
         {
-          "path": "backend-v2/services/messaging/src/email/composition.js",
+          "path": "Notify-backend/src/email/composition.js",
           "sha256": "2b36fef6d36f939bf07c43eb7842adde52fbf517957ec5a85011d696c0aa2bef"
         }
       ]
@@ -392,20 +392,20 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/gateway/src/app.js",
-          "sha256": "eeb2f499eb891fb5cc60977c2f91a08df46e9acf7ff5867637ecdec47c49450b"
+          "path": "Gateway-backene/src/app.js",
+          "sha256": "faffb91292258e80dadee987dff60cdbbdaa4040d3e940a14e15801ccc364724"
         },
         {
-          "path": "backend-v2/services/auth/app.js",
-          "sha256": "7ddf5054e13bd7dd9b6008da1b642a61b27964e01667001afcba9c86ae940cda"
+          "path": "Auth-backend/app.js",
+          "sha256": "8e55fc70e37416ab7e441cf301ef3640b0992ba90f12168932b53cd10e7552ed"
         },
         {
-          "path": "backend-v2/services/app/app.js",
-          "sha256": "b2a656c0f7ee80039e74d51b17af2e50d1ba9e3ba8642ad71937ad75bff52df7"
+          "path": "App-backend/app.js",
+          "sha256": "bfe63d37da378f860c1b58ef42ab9ca8141e7c4b3db6e7313eed9ae608d16396"
         },
         {
-          "path": "backend-v2/services/messaging/app.js",
-          "sha256": "0f1285a084639ffe3a90f113dbd3adf7ae7915fe76e53f049d3e89c326d7d464"
+          "path": "Notify-backend/app.js",
+          "sha256": "94323def88420931bd6227ef55c6abb52623299d9e5a1a3bb0e0c57d22ea3fb0"
         }
       ]
     },
@@ -446,8 +446,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/routes/applications.js",
-          "sha256": "f69658aaf0d829329760c7dc858fbfc81cafcee9d4bb5279373bf9888de8055c"
+          "path": "Notify-backend/src/routes/applications.js",
+          "sha256": "831bda6798fde193b12000753015ee98627415cbe58c3b9c50c6be061d4c039f"
         }
       ]
     },
@@ -459,8 +459,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/app/src/routes/cv.js",
-          "sha256": "5e2f77b7a30dea3c935f56fc35d4d0296cc4a338adf4150cf8f0afd12abe9afc"
+          "path": "App-backend/src/routes/cv.js",
+          "sha256": "9a3649c4235b622bb41e91631f1d62844de6280cfdd17bb31da240bfd32c21b5"
         }
       ]
     },
@@ -472,8 +472,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/routes/devices.js",
-          "sha256": "4bd9a70989e1f0ef8881926fa4024cfa7ab5eebee5ac48bb7ec368d3b395f266"
+          "path": "Notify-backend/src/routes/devices.js",
+          "sha256": "ba1cbd7da1026140cbc8de50d8261b98741843f0731fb5109dc7df6b9f9b4246"
         }
       ]
     },
@@ -485,8 +485,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/src/routes/email-apply.js",
-          "sha256": "cc816344cd41fe3cfb894eca3f5740f65c09cc2a4e789e346b9bcfa21ec65ed4"
+          "path": "Notify-backend/src/routes/email-apply.js",
+          "sha256": "751f379056a4db56a785a5a4cc9120f9bcf2e8281eba2af8a86c9fc4c212add8"
         }
       ]
     },
@@ -498,20 +498,20 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/gateway/src/app.js",
-          "sha256": "eeb2f499eb891fb5cc60977c2f91a08df46e9acf7ff5867637ecdec47c49450b"
+          "path": "Gateway-backene/src/app.js",
+          "sha256": "faffb91292258e80dadee987dff60cdbbdaa4040d3e940a14e15801ccc364724"
         },
         {
-          "path": "backend-v2/services/auth/app.js",
-          "sha256": "7ddf5054e13bd7dd9b6008da1b642a61b27964e01667001afcba9c86ae940cda"
+          "path": "Auth-backend/app.js",
+          "sha256": "8e55fc70e37416ab7e441cf301ef3640b0992ba90f12168932b53cd10e7552ed"
         },
         {
-          "path": "backend-v2/services/app/app.js",
-          "sha256": "b2a656c0f7ee80039e74d51b17af2e50d1ba9e3ba8642ad71937ad75bff52df7"
+          "path": "App-backend/app.js",
+          "sha256": "bfe63d37da378f860c1b58ef42ab9ca8141e7c4b3db6e7313eed9ae608d16396"
         },
         {
-          "path": "backend-v2/services/messaging/app.js",
-          "sha256": "0f1285a084639ffe3a90f113dbd3adf7ae7915fe76e53f049d3e89c326d7d464"
+          "path": "Notify-backend/app.js",
+          "sha256": "94323def88420931bd6227ef55c6abb52623299d9e5a1a3bb0e0c57d22ea3fb0"
         }
       ]
     },
@@ -523,8 +523,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/app/src/routes/jobs.js",
-          "sha256": "4e6f2cb27b185ebbb7c11fcc9814357ecb87823f22fb43cb41911fa97eda1949"
+          "path": "App-backend/src/routes/jobs.js",
+          "sha256": "6148facff7c63b0459b16a2e425c57313bf8ea5c43846b1cea06abe97af7bc93"
         }
       ]
     },
@@ -536,20 +536,20 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/gateway/src/app.js",
-          "sha256": "eeb2f499eb891fb5cc60977c2f91a08df46e9acf7ff5867637ecdec47c49450b"
+          "path": "Gateway-backene/src/app.js",
+          "sha256": "faffb91292258e80dadee987dff60cdbbdaa4040d3e940a14e15801ccc364724"
         },
         {
-          "path": "backend-v2/services/auth/app.js",
-          "sha256": "7ddf5054e13bd7dd9b6008da1b642a61b27964e01667001afcba9c86ae940cda"
+          "path": "Auth-backend/app.js",
+          "sha256": "8e55fc70e37416ab7e441cf301ef3640b0992ba90f12168932b53cd10e7552ed"
         },
         {
-          "path": "backend-v2/services/app/app.js",
-          "sha256": "b2a656c0f7ee80039e74d51b17af2e50d1ba9e3ba8642ad71937ad75bff52df7"
+          "path": "App-backend/app.js",
+          "sha256": "bfe63d37da378f860c1b58ef42ab9ca8141e7c4b3db6e7313eed9ae608d16396"
         },
         {
-          "path": "backend-v2/services/messaging/app.js",
-          "sha256": "0f1285a084639ffe3a90f113dbd3adf7ae7915fe76e53f049d3e89c326d7d464"
+          "path": "Notify-backend/app.js",
+          "sha256": "94323def88420931bd6227ef55c6abb52623299d9e5a1a3bb0e0c57d22ea3fb0"
         }
       ]
     },
@@ -561,8 +561,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/app/src/routes/profile.js",
-          "sha256": "fa0cde50676326eea5943db30fdfe929069ef52934d11207a88133dc02a75540"
+          "path": "App-backend/src/routes/profile.js",
+          "sha256": "332d20e5ce6e9b3e45f0540c1a6bcb3c235a0e3af485aa13902d0b69b4fd3b41"
         }
       ]
     },
@@ -574,7 +574,7 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/app/src/routes/catalog.js",
+          "path": "App-backend/src/routes/catalog.js",
           "sha256": "d62fb3a22ab02f7ac4bb378510abe842163760e0c5c6770c3e2a17b7dd5dcfa4"
         }
       ]
@@ -587,8 +587,8 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/messaging/sender.js",
-          "sha256": "0a51757cbfbadcec039733894e02f7bac3949ada63ee10caf4cce3befdbbf571"
+          "path": "Notify-backend/sender.js",
+          "sha256": "cba109c05dd569f6fc10f7c4cd42b3b18006f8459ad520791ff3d9507ac97405"
         }
       ]
     },
@@ -746,11 +746,11 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/fetching/src/collector/job-parser.js",
+          "path": "Fetching-backend/src/collector/job-parser.js",
           "sha256": "209ab0b901057d7df7bbfbd8826d537b3c70b8a3b2291f3f47742878399b0e3f"
         },
         {
-          "path": "backend-v2/services/fetching/src/collector/job-age.js",
+          "path": "Fetching-backend/src/collector/job-age.js",
           "sha256": "576d8cf273ed4b1a74e4b961c00f87bf8025de48460575abd716f7b4958b61ef"
         }
       ]
@@ -771,7 +771,7 @@
       "note": "A source module can cover more behavior than the mapped implementation. This is not full parity certification.",
       "destinations": [
         {
-          "path": "backend-v2/services/fetching/src/collector/post-parser.js",
+          "path": "Fetching-backend/src/collector/post-parser.js",
           "sha256": "0491a8c1e0860ad8b49c7a2bd5feef1ce9b13d3e0007184cc79f97eca5628195"
         }
       ]

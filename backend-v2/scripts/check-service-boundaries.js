@@ -2,8 +2,9 @@ import { readdir,readFile,realpath } from 'node:fs/promises';
 import { resolve,relative,sep } from 'node:path';
 import { fileURLToPath,pathToFileURL } from 'node:url';
 import { isBuiltin } from 'node:module';
+import { backendFolders } from '../shared/layout.js';
 
-export const backendNames=['gateway','auth','app','messaging','fetching','data'];
+export const backendNames=Object.keys(backendFolders);
 const inside=(path,folder)=>path===folder||path.startsWith(folder+sep);
 async function sources(folder){
   const found=[];
@@ -17,7 +18,8 @@ async function sources(folder){
 
 export async function inspectBoundary(root,name){
   root=await realpath(root);
-  const own=resolve(root,'services',name),shared=resolve(root,'shared'),database=resolve(root,'database');
+  if(!Object.hasOwn(backendFolders,name))throw Error(`Unknown backend: ${name}`);
+  const own=resolve(root,backendFolders[name]),shared=resolve(root,'backend-v2/shared'),database=resolve(root,'backend-v2/database');
   const pkg=JSON.parse(await readFile(resolve(own,'package.json'),'utf8'));
   const pending=await sources(own),visited=new Set();
   while(pending.length){
@@ -42,12 +44,21 @@ export async function inspectBoundary(root,name){
     if(lock.packages?.['']?.dependencies?.[dependency]!==version||!lock.packages?.['node_modules/'+dependency])throw Error(`${name}: runtime lock does not contain ${dependency}`);
   }
   const docker=await readFile(resolve(own,'Dockerfile'),'utf8');
-  for(const match of docker.matchAll(/services\/([a-z-]+)/g))if(match[1]!==name)throw Error(`${name}: image copies another backend`);
-  return {name,source_files:visited.size,runtime_dependencies:Object.keys(pkg.dependencies||{}),image:`autolinky-${name}:development`};
+  const allowed=new Set([backendFolders[name],`${backendFolders[name]}/package.json`,`${backendFolders[name]}/package-lock.json`,'backend-v2/shared','backend-v2/database']);
+  const copied=new Set();
+  for(const line of docker.split(/\r?\n/).filter(line=>line.startsWith('COPY '))){
+    const args=line.split(/\s+/).slice(1).filter(arg=>!arg.startsWith('--'));
+    for(const source of args.slice(0,-1)){
+      if(!allowed.has(source))throw Error(`${name}: image copies unowned source ${source}`);
+      copied.add(source);
+    }
+  }
+  if(!copied.has(backendFolders[name]))throw Error(`${name}: image is missing its owned backend`);
+  return {name,directory:backendFolders[name],source_files:visited.size,runtime_dependencies:Object.keys(pkg.dependencies||{}),image:`autolinky-${name}:development`};
 }
 
 if(process.argv[1]&&pathToFileURL(resolve(process.argv[1])).href===import.meta.url){
-  const root=fileURLToPath(new URL('../',import.meta.url));
+  const root=fileURLToPath(new URL('../../',import.meta.url));
   for(const name of backendNames)console.log(JSON.stringify(await inspectBoundary(root,name)));
   console.log('Independent backend source, runtime dependency and image boundaries passed');
 }

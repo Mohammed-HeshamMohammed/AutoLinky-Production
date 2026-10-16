@@ -24,6 +24,7 @@ jobs:
         with:
           python-version: '3.13'
       - run: npm ci
+      - run: npm run install:backends
       - run: python -m pip install -r test/requirements.txt
       - run: npm run check && npm test && npm run test:db
   website:

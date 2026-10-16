@@ -1,1 +1,1 @@
-import '../services/gateway/index.js';
+import '../../Gateway-backene/index.js';

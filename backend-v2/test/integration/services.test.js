@@ -3,16 +3,16 @@ import assert from 'node:assert/strict';
 import pg from 'pg';
 import { randomUUID,createHash } from 'node:crypto';
 import { testDatabase } from '../helpers/database.js';
-import { buildAuth } from '../../services/auth/app.js';
-import { buildAppBackend } from '../../services/app/app.js';
-import { buildMessaging } from '../../services/messaging/app.js';
+import { buildAuth } from '../../../Auth-backend/app.js';
+import { buildAppBackend } from '../../../App-backend/app.js';
+import { buildMessaging } from '../../../Notify-backend/app.js';
 import { loadConfig } from '../../shared/config.js';
-import { buildGateway } from '../../services/gateway/src/app.js';
+import { buildGateway } from '../../../Gateway-backene/src/app.js';
 import { remoteAuthentication,requireServiceKey } from '../../shared/runtime.js';
-import { buildFetching } from '../../services/fetching/app.js';
-import { buildData } from '../../services/data/app.js';
-import { processBatch } from '../../services/data/src/process.js';
-import { MailError } from '../../services/messaging/src/email/gmail.js';
+import { buildFetching } from '../../../Fetching-backend/app.js';
+import { buildData } from '../../../Data-baceknd/app.js';
+import { processBatch } from '../../../Data-baceknd/src/process.js';
+import { MailError } from '../../../Notify-backend/src/email/gmail.js';
 
 let cluster,gateway,auth,app,messaging,fetching,data,smtpCalls=0;
 const pools={},key='split-service-test-'.repeat(3),identity={verify:async token=>{

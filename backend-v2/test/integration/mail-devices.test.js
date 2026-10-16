@@ -5,7 +5,7 @@ import { randomBytes,randomUUID,createHash } from 'node:crypto';
 import { testDatabase } from '../helpers/database.js';
 import { buildApp } from '../helpers/application.js';
 import { loadConfig } from '../../shared/config.js';
-import { MailError } from '../../services/messaging/src/email/gmail.js';
+import { MailError } from '../../../Notify-backend/src/email/gmail.js';
 
 let cluster,app,db,user,job,calls=0,mode='ok';
 const key=randomBytes(32).toString('base64url');

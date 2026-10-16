@@ -7,9 +7,13 @@ Environment setup comes before data import. The reference checkout stays read-on
 From `X:\AutoLinky-Production\backend-v2`:
 
 ```powershell
+npm ci
+npm run install:backends
 npm run env:setup
 npm run env:start
 ```
+
+The Node services run from the root-level `Auth-backend/`, `Notify-backend/`, `App-backend/`, `Data-baceknd/`, `Gateway-backene/` and `Fetching-backend/` folders. `install:backends` installs each pinned runtime package separately without lifecycle scripts or builds. Repeat it after changing a backend lockfile. Shared SQL, tests and the ignored local profiles remain here in `backend-v2/`.
 
 Startup serves current React source through the development server and reuses the existing Flutter browser assets from `frontend/dist/`. It never runs production web/mobile builds. If assets are absent, request a build separately. All build/release GitHub workflows are manual only; pushing main does not start a build.
 
@@ -36,7 +40,7 @@ Gateway has no database or Firebase Admin credential. Auth receives its own data
 
 Local setup creates only schema/reference seeds, not production users or CVs. Sender, collection, data processing and maintenance remain disabled in this local launcher even if inherited shell variables enable them. Private operations must be activated separately and deliberately. There is no data migration or live SMTP/API collection in verification.
 
-Use pinned Node 24.22.0. `npm ci` installs the local Node and PostgreSQL test runtimes. Install extractor dependencies into `.runtime/python-deps` using `python -m pip install --target .runtime/python-deps -r services/cv-extractor/requirements.txt`; `AUTOLINKY_PYTHON` can select another Python environment. Flutter is needed only for an explicitly requested web/Android build; Swift iOS uses a macOS runner.
+Use pinned Node 24.22.0. `npm ci` installs the local Node and PostgreSQL test runtimes; `npm run install:backends` installs dependencies in the six repository-root backends. Install extractor dependencies into `.runtime/python-deps` using `python -m pip install --target .runtime/python-deps -r services/cv-extractor/requirements.txt`; `AUTOLINKY_PYTHON` can select another Python environment. Flutter is needed only for an explicitly requested web/Android build; Swift iOS uses a macOS runner.
 
 ## Provider inputs still needed
 

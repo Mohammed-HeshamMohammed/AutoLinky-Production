@@ -1,0 +1,209 @@
+{
+  "checked_at": "2026-10-16T15:11:28.206Z",
+  "base_commit": "875187ed0d15e5d9f1f5ac1d9ac2ae0222013f0c",
+  "scope": "Physical relocation of all six Node backend implementations to repository-root folders",
+  "services": [
+    {
+      "name": "gateway",
+      "directory": "Gateway-backene",
+      "source_files": 5,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors"
+      ],
+      "image": "autolinky-gateway:development",
+      "previous_directory": "backend-v2/services/gateway",
+      "unchanged_package_and_lock_data": true,
+      "hashes": {
+        "package.json": "f77c4248fb65a77db88b1e1d5b8c06191ae02673d0a0ce971988f83d37c34171",
+        "package-lock.json": "1e6d06c446be76620e86545eb56a6d653a72522a8eed8ae511f34d3c98bb669e",
+        "Dockerfile": "4626383e0126ba3b01130287fde7b24e4098fa7bf5a98f978a67cb20dc277b2f"
+      }
+    },
+    {
+      "name": "auth",
+      "directory": "Auth-backend",
+      "source_files": 14,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors",
+        "pg",
+        "firebase-admin"
+      ],
+      "image": "autolinky-auth:development",
+      "previous_directory": "backend-v2/services/auth",
+      "unchanged_package_and_lock_data": true,
+      "hashes": {
+        "package.json": "efba61f263312efc539db5fc329d19dcb2debfe059fba83586875dd54a7709a4",
+        "package-lock.json": "2f7d372fa6d57a65bfa5a90556da77722e0c07931639b2ec66b04b7bf254cc5e",
+        "Dockerfile": "3878c01e3bbf9a6ca83c4f692b045b6e3b0022830558db497f3fa9072986865a"
+      }
+    },
+    {
+      "name": "app",
+      "directory": "App-backend",
+      "source_files": 25,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors",
+        "pg"
+      ],
+      "image": "autolinky-app:development",
+      "previous_directory": "backend-v2/services/app",
+      "unchanged_package_and_lock_data": true,
+      "hashes": {
+        "package.json": "36ba7b77292fc11e67d9aa9ac1484e5ad87fc26777eca5bd1766f55ea174a8be",
+        "package-lock.json": "80e36d2a5e626e7643d986159f6c090cde078f43944ad064cefb1944224a6476",
+        "Dockerfile": "86d156b07dbe91772119f8eb3ace2f4bc757461b99506d7081c04e5c3d9c6600"
+      }
+    },
+    {
+      "name": "messaging",
+      "directory": "Notify-backend",
+      "source_files": 27,
+      "runtime_dependencies": [
+        "fastify",
+        "@fastify/cors",
+        "pg",
+        "nodemailer"
+      ],
+      "image": "autolinky-messaging:development",
+      "previous_directory": "backend-v2/services/messaging",
+      "unchanged_package_and_lock_data": true,
+      "hashes": {
+        "package.json": "9a99f6bd48829b7f712d32a2ce2a7957c62c46c24a988214677f68154adef7f8",
+        "package-lock.json": "ccab202cb6c20f84e65ec28b428318c4f59266a196bbc82ef4e1eba0e25743d8",
+        "Dockerfile": "7000b68ad1adc77d7defef939d34c268bd00ea8a84067667f71a541c895bfc45"
+      }
+    },
+    {
+      "name": "fetching",
+      "directory": "Fetching-backend",
+      "source_files": 13,
+      "runtime_dependencies": [
+        "fastify",
+        "pg",
+        "he"
+      ],
+      "image": "autolinky-fetching:development",
+      "previous_directory": "backend-v2/services/fetching",
+      "unchanged_package_and_lock_data": true,
+      "hashes": {
+        "package.json": "9bb032f7560da921a6a6b7c29f7d104342c8c785bb5591696419b2a66ff2a4e0",
+        "package-lock.json": "cd32d26c904f4636df76194d50ca63d59ed7255384de7aa7edb83bffd8bbf943",
+        "Dockerfile": "4bacfc14b0c23a75cc470a41ecfe076bc6f471e56868c91a5e601719995ae5ea"
+      }
+    },
+    {
+      "name": "data",
+      "directory": "Data-baceknd",
+      "source_files": 9,
+      "runtime_dependencies": [
+        "fastify",
+        "pg"
+      ],
+      "image": "autolinky-data:development",
+      "previous_directory": "backend-v2/services/data",
+      "unchanged_package_and_lock_data": true,
+      "hashes": {
+        "package.json": "0e9ad81054784ee9159f535b401a0922e0ab25feb7172cacac973f0725f1e038",
+        "package-lock.json": "b3eb0e9d3b0b81219bca0ec32a4c335302ad0765a81958b162bb0056f6a96785",
+        "Dockerfile": "fa95fee0426b7ffc4154edc1836e3487749ec9a6bd8ea6cab172b9e6f903039c"
+      }
+    }
+  ],
+  "retained_infrastructure": "backend-v2/shared, database, scripts, test and ignored local profiles; Python extractor remains backend-v2/services/cv-extractor",
+  "remaining_nested_service_directories": [
+    "cv-extractor"
+  ],
+  "dependency_installation": "npm run install:backends: six successful npm ci --omit=dev --ignore-scripts installs using unchanged runtime lock data",
+  "checks": {
+    "unit_tests": 17,
+    "postgres_integration_tests": 25,
+    "backend_native_js_syntax": "passed",
+    "cross_backend_source_and_dependency_boundaries": "passed",
+    "compose": {
+      "yaml_and_root_context_paths": "passed",
+      "distinct_backend_images": 6,
+      "sender_uses_notify_image": true,
+      "only_gateway_published": true,
+      "docker_image_build_performed": false
+    },
+    "unchanged_source_trees": [
+      "backend-v2/database",
+      "frontend",
+      "mobile apps"
+    ],
+    "source_inventory": 585,
+    "missing_mapped_destinations": 0,
+    "workspace_preservation": [
+      {
+        "name": "reference",
+        "filesChecked": 544,
+        "changed": 0
+      },
+      {
+        "name": "production-existing",
+        "filesChecked": 41,
+        "changed": 0
+      }
+    ],
+    "local_services": [
+      {
+        "name": "api",
+        "url": "http://127.0.0.1:4100/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "extractor",
+        "url": "http://127.0.0.1:4001/health",
+        "status": "ready"
+      },
+      {
+        "name": "website",
+        "url": "http://localhost:8080/",
+        "status": "ready"
+      },
+      {
+        "name": "client",
+        "url": "http://localhost:8081/",
+        "status": "ready"
+      },
+      {
+        "name": "auth",
+        "url": "http://127.0.0.1:4101/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "app",
+        "url": "http://127.0.0.1:4102/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "messaging",
+        "url": "http://127.0.0.1:4103/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "fetching",
+        "url": "http://127.0.0.1:4104/health/ready",
+        "status": "ready"
+      },
+      {
+        "name": "data",
+        "url": "http://127.0.0.1:4105/health/ready",
+        "status": "ready"
+      }
+    ],
+    "local_environment_verification": "passed"
+  },
+  "app_build_performed": false,
+  "workflow_dispatched": false,
+  "production_data_imported": false,
+  "vps_deployment_performed": false,
+  "limitations": [
+    "Container paths and YAML were checked without a Docker image build or deployment.",
+    "Real Firebase/provider acceptance still requires external Admin/native OAuth/domain configuration.",
+    "Provider-specific collection, feed promotion and APNs/FCM delivery remain later work."
+  ]
+}

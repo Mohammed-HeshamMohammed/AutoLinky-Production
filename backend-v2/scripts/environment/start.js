@@ -10,6 +10,7 @@ import { timingSafeEqual } from 'node:crypto';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { migrate } from '../../database/migrate.js';
 import { setup,backend,production,runtime,controlFile,exists,databaseUrl } from './config.js';
+import { backendFolders } from '../../shared/layout.js';
 
 const settings=await setup(),children=[],logs=[];
 let stopping=false,clusterStarted=false,controlOwned=false,control,clientServer;
@@ -86,7 +87,7 @@ try {
     if(name!=='gateway'&&values.PG_DATABASE_URL!==databaseUrl(settings,'autolinky_'+name))throw Error(`The ${name} profile must use its isolated role/database`);
     // Do not leak an inherited superuser URL, Firebase credential, mail key or
     // provider token into another service's process.
-    await child(name,process.execPath,[`services/${name}/index.js`],backend,{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});
+    await child(name,process.execPath,['index.js'],resolve(production,backendFolders[name]),{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});
   }
   await child('extractor',process.env.AUTOLINKY_PYTHON||'python',['-B',resolve(backend,'services/cv-extractor/app.py')],backend,
     {HOST:'127.0.0.1',PORT:String(settings.ports.extractor),CV_EXTRACTOR_KEY:settings.extractorKey,PYTHONPATH:resolve(backend,'.runtime/python-deps')});

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import fc from 'fast-check';
-import * as sq from '../services/fetching/src/collector/search-query.js';
+import * as sq from '../../Fetching-backend/src/collector/search-query.js';
 const fixture=JSON.parse(await readFile(new URL('fixtures/search-query-parity.json',import.meta.url),'utf8'));
 test('search phrases, Unicode cleanup, country grouping and exact query labels match the original Python outputs',()=>{
   for(const item of fixture.cases) {

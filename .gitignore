@@ -1,2 +1,8 @@
 /.runtime/
 /build/
+**/node_modules/
+**/.env
+**/.env.*
+!**/.env.example
+**/coverage/
+**/*.log

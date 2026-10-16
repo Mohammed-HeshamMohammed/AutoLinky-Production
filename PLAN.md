@@ -2,6 +2,18 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
+## Current: root backend folders (2026-10-16)
+
+The owner clarified that each backend must be a folder directly inside the repository root. This supersedes the nested `backend-v2/services/` Node layout below; the folder names preserve the owner's requested spelling.
+
+- [x] Physically move each implementation, entry point, configuration example, package/lockfile and Dockerfile to `Auth-backend/`, `Notify-backend/`, `App-backend/`, `Data-baceknd/`, `Gateway-backene/` and `Fetching-backend/`.
+- [x] Update imports, independent dependency installation, startup commands, container contexts, CI configuration and source mapping for the root layout.
+- [x] Retain SQL/shared infrastructure, private local profiles, orchestration and tests under `backend-v2/`; keep the Python extractor in its existing private boundary.
+- [x] Pass 17 unit and 25 PostgreSQL integration tests, source/package boundaries, six real runtime dependency installs, Compose YAML/path checks and local environment verification. Reference preservation: 544 reference and 41 retained original production files unchanged. Evidence: `migration-plan/evidence/root-backend-layout.json`.
+- [x] Integrate the verified root layout into main; application and release workflows remain manual only.
+
+No application build, workflow dispatch, data import or VPS deployment is requested.
+
 ## Current: visible website login and account entry (2026-10-16)
 
 The owner could not find login in the unified frontend. The public landing site still led with Android downloads and hid browser access behind Open app.
@@ -42,7 +54,8 @@ The service split does not finish provider-specific collection, server push noti
 ## Layout
 
 - `migration-plan/`: copied specification at reference commit `2fd91a2`; source hashes and route inventory are under `evidence/`.
-- `backend-v2/`: new native-ESM JavaScript API, SQL, workers, Python extraction/inference boundaries, tests and deployment files.
+- `Auth-backend/`, `Notify-backend/`, `App-backend/`, `Data-baceknd/`, `Gateway-backene/`, `Fetching-backend/`: independent root-level Node backend implementations and runtime packages.
+- `backend-v2/`: shared native-ESM infrastructure, SQL migrations, Python extraction/inference boundaries, tests, local profiles and orchestration/deployment files.
 - `mobile apps/Android app/`: Android Flutter entry point and Kotlin/Gradle host. The browser counterpart lives in frontend/apps/android/.
 - `mobile apps/IOS app/`: independent native Swift/SwiftUI app, core Swift package, native resources/tests and Xcode build. Its browser counterpart remains separately implemented in frontend/apps/ios/.
 - `mobile apps/shared/`: Flutter screens/logic for Android and browser entry points, plus common public release/configuration tools. Native iOS does not depend on its Dart package.

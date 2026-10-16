@@ -2,6 +2,13 @@
 .flutter-plugins-dependencies
 build/
 .runtime/
+Core/.build/
+AutoLinky.xcodeproj/
+Resources/PublicSettings.json
+Resources/release-source.json
+*.xcresult/
+__pycache__/
+*.pyc
 assets/
 shorebird.yaml
 *.iml

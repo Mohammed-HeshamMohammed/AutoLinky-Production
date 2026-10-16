@@ -1,0 +1,70 @@
+name: AutoLinky
+options:
+  deploymentTarget:
+    iOS: '17.0'
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    SWIFT_STRICT_CONCURRENCY: targeted
+    DEVELOPMENT_TEAM: ''
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: true
+    MARKETING_VERSION: '1.1.0'
+    CURRENT_PROJECT_VERSION: '2000'
+packages:
+  AutoLinkyCore:
+    path: Core
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    exactVersion: 12.19.0
+  GoogleSignIn:
+    url: https://github.com/google/GoogleSignIn-iOS
+    exactVersion: 9.1.0
+targets:
+  AutoLinky:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+      - path: Resources
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.autolinky.ios
+        INFOPLIST_FILE: .runtime/native/Info.plist
+        CODE_SIGN_ENTITLEMENTS: AutoLinky.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: '1,2'
+        SUPPORTS_MACCATALYST: false
+    dependencies:
+      - package: AutoLinkyCore
+      - package: Firebase
+        product: FirebaseAuth
+      - package: Firebase
+        product: FirebaseCore
+      - package: GoogleSignIn
+        product: GoogleSignIn
+  AutoLinkyUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.autolinky.ios.uitests
+        GENERATE_INFOPLIST_FILE: true
+    dependencies:
+      - target: AutoLinky
+schemes:
+  AutoLinky:
+    build:
+      targets:
+        AutoLinky: all
+        AutoLinkyUITests: [test]
+    test:
+      targets: [AutoLinkyUITests]
+      gatherCoverageData: true
+    run:
+      config: Debug
+    archive:
+      config: Release

@@ -9,6 +9,7 @@ from pathlib import Path
 import plistlib
 import re
 import sys
+import runpy
 from urllib.parse import urlparse
 
 
@@ -27,7 +28,7 @@ OAUTH_ID = re.compile(r"^[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$")
 
 
 def firebase_settings(client=IOS_APP):
-    with (client / "ios/Runner/GoogleService-Info.plist").open("rb") as source:
+    with (client / "Resources/GoogleService-Info.plist").open("rb") as source:
         native = plistlib.load(source)
     if native.get("BUNDLE_ID") != BUNDLE_ID or native.get("PROJECT_ID") != "auto-linky":
         raise ValueError("The Firebase plist must register auto-linky / com.autolinky.ios.")
@@ -141,11 +142,8 @@ def main():
         supplied = xcode_defines(os.environ.get("DART_DEFINES", "")) if args.xcode else {}
         if args.defines:
             supplied = json.loads(args.defines.read_text(encoding="utf-8-sig"))
-        settings = public_settings(firebase_settings(), supplied, mode=args.mode, api_url=args.api_url, validate=not args.xcode)
-        with (IOS_APP / "ios/Runner/Info.plist").open("rb") as source:
-            info = native_info(plistlib.load(source), settings)
-        with (IOS_APP / "ios/Flutter/AutoLinky-Info.plist").open("wb") as output:
-            plistlib.dump(info, output, sort_keys=False)
+        native = runpy.run_path(str(IOS_APP / "scripts/prepare.py"))
+        settings, _ = native["prepare"](supplied, args.mode, args.api_url)
         if not args.xcode:
             output = CLIENT / ".runtime/ios/defines.json"
             output.parent.mkdir(parents=True, exist_ok=True)

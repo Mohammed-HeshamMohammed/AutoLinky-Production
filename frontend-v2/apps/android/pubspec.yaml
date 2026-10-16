@@ -1,7 +1,7 @@
 name: autolinky_web_android
 description: The AutoLinky Android app experience in the unified web frontend.
 publish_to: 'none'
-version: 1.0.1+2
+version: 1.1.0+2000
 environment:
   sdk: ^3.13.5
 dependencies:

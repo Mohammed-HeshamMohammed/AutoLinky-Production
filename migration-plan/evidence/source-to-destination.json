@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-16T08:44:01.371Z",
+  "generated_at": "2026-10-16T09:23:45.645Z",
   "scope": "Source inventory and destination pointers, not a completion certificate",
   "reference_commit": "2fd91a2aa91bc403d3f73a608150fa5c3e602120",
   "files": [
@@ -212,7 +212,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/email/delivery.js",
-          "sha256": "2de7ccc1712449cdf0daf689c9c4a1ffb0a29c3c4a28c1bcbe688b9ff7da04f5"
+          "sha256": "603ddcf9e66f6e462e6487f7a6a28f25a0bf0b571918742122aac26799ce4ee7"
         }
       ]
     },
@@ -225,7 +225,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/auth.js",
-          "sha256": "4193cb1c61b483ba326741c7660481cbf5c1d0c562b0416985114886eb357161"
+          "sha256": "be05069ff6f381fd86b00ee6779ee871d5dd7163f279afc4214c6cdfa6a52130"
         }
       ]
     },
@@ -238,7 +238,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/workers/auto-apply.js",
-          "sha256": "609ca937bdb46afbfa3a28024ebd7453f963aa7723fbd3e05bc3ef70fd9ef94b"
+          "sha256": "ab89eff11ede00d47d2426dba3adfaadf4fe4b327ae9525d81cc0788cfefd6f3"
         }
       ]
     },
@@ -251,7 +251,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/services/billing.js",
-          "sha256": "8e6f090300bb604e4f96705368494919a724d91218b069f964043083618c3cec"
+          "sha256": "3c6f0c96bb3aa5867421acf64c1dc4e5d3f329e0e2d4a35ac08d2f465174c378"
         }
       ]
     },
@@ -264,7 +264,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/services/catalog.js",
-          "sha256": "e5b4294360fc617b8ef5bf65e5e3a997a4544bf4728b02af3425d4d182b86666"
+          "sha256": "8f973d9f22afd3371f0f866843d7585cf26e3447879b68ef9839da41f08c7cb3"
         }
       ]
     },
@@ -277,7 +277,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/config.js",
-          "sha256": "3f2dba0386124ead1b5377d64e516866b68f55191dee27c9fe947c9c41d555be"
+          "sha256": "c40f7644a0143210424848c8461d7496369c76136af39cbad388da57ba361072"
         }
       ]
     },
@@ -290,7 +290,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/shared/countries.js",
-          "sha256": "cddf466d5478f25398f647ea0320cbe2994f9b15db09133b453768f13c63b65b"
+          "sha256": "cbd981c71e4887bfd089e837019220f4cdc8137d885afb6cd957abde47025fd1"
         }
       ]
     },
@@ -303,7 +303,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/ai/cv-analysis.js",
-          "sha256": "97a26c9614d33ecc20d06aab2ac5c8c697a20b78bbc5d7b4f4f558955d29f318"
+          "sha256": "bad0950ee94f44a5dcca7a1cf261f6c18da6776848eea0fc7c5feb3efc5193dd"
         },
         {
           "path": "backend-v2/src/ai/prompts/cv-system.txt",
@@ -333,7 +333,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/db/client.js",
-          "sha256": "75b2faf9ce2990770a7810f7bc9051b8d9fb5d234abcdf8812e0e2adc1fd9ca9"
+          "sha256": "ea106b7f51d5524a96b10447a718235b0c64c7888eda539c4b7af5017e9e4ddc"
         }
       ]
     },
@@ -346,7 +346,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/ai/cover-letters.js",
-          "sha256": "df081c8ce1e6ecc65174525db82581535e23e2a0b3f3214ed201ee43e220655e"
+          "sha256": "75d5d9e70d5c1ccda26b1db5fc9422b0ecb8066b22cfb179c1f718439cbc48db"
         },
         {
           "path": "backend-v2/src/ai/prompts/letter-system.txt",
@@ -363,7 +363,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/email/secret.js",
-          "sha256": "defa61b32c2a0f2784d84bf0253d3d04c146845cb5f8769bc0819c13a3cf10e9"
+          "sha256": "161af7c9f83e8b392f6abd0870533128867dfb2323c769aa3def160be2053649"
         }
       ]
     },
@@ -376,11 +376,11 @@
       "destinations": [
         {
           "path": "backend-v2/src/email/gmail.js",
-          "sha256": "da319d84ee2c1be3383acecba940e91896fbcbdf8ef9cca178883cabc95f821f"
+          "sha256": "b22e301c0d0a83f81784b753188fa3046bd23cdab63c2d08bc4f95aeb04cd43a"
         },
         {
           "path": "backend-v2/src/email/composition.js",
-          "sha256": "2b36fef6d36f939bf07c43eb7842adde52fbf517957ec5a85011d696c0aa2bef"
+          "sha256": "53bda2fe46bf7fe87340d585fd52d8f8f097d496d334dc1fbb8120df088238dc"
         }
       ]
     },
@@ -393,7 +393,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/app.js",
-          "sha256": "5bc3c5f347291ec9dfa5bf4c48da79b1d72fc15046bf9fc3e36ef978a5c3cfe6"
+          "sha256": "ea88385d8c7f18e6f721ce600d0bbf6c83244cac19a56fd3a7076f104cbc7747"
         }
       ]
     },
@@ -406,7 +406,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/rate-limit.js",
-          "sha256": "397f19916ebe67c61fddbcd641fbf7597ec16e6c78b15c4b531ef97a8b0e3fe6"
+          "sha256": "e8a9ee7b453ce3a1fbb28f381342d8c953191a2ae13d610a676b60e3d80fabc5"
         }
       ]
     },
@@ -435,7 +435,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/applications.js",
-          "sha256": "0aa902faeac4889cec7e570e8ec97892987604f500e47e71120817bb08abf571"
+          "sha256": "11f69844c84a243056b9ea4838c58c7babad0e8eddf2ff2f9ae7d52179cfc817"
         }
       ]
     },
@@ -448,7 +448,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/cv.js",
-          "sha256": "ddd1376d29053ffe7ef8ea07f60c4ce165bd50ebbbff08279aa29ab732b52cb1"
+          "sha256": "113934d15173bd617d47856967bbc68a240c16c72f518755d343736854dfe6e4"
         }
       ]
     },
@@ -461,7 +461,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/devices.js",
-          "sha256": "25e3b73db01ada1b79a1d286322e11b9e94052f9f18cbad227ff6d6f605dd767"
+          "sha256": "c43d55ac3a0f2aa1964ec8cb3ee216bd07d06e7c54ae53c86a6771a57c374fbe"
         }
       ]
     },
@@ -474,7 +474,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/email-apply.js",
-          "sha256": "626a516467d709180ee20dad11fabe3b843c49ae55b3b4657246131be18f00c9"
+          "sha256": "e438dd2f06d866bb3a917e0eac15b61dc7295f23b1b2e76e4730ded1a90eed11"
         }
       ]
     },
@@ -487,7 +487,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/app.js",
-          "sha256": "5bc3c5f347291ec9dfa5bf4c48da79b1d72fc15046bf9fc3e36ef978a5c3cfe6"
+          "sha256": "ea88385d8c7f18e6f721ce600d0bbf6c83244cac19a56fd3a7076f104cbc7747"
         }
       ]
     },
@@ -500,7 +500,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/jobs.js",
-          "sha256": "5daae3c5c10869210ba83e9349ff1e5164127685cf93424d08f5e4940d39f9de"
+          "sha256": "9ab059b74f7f90fd9084500a833992efd75bad349b7d6a916319354aa58234e7"
         }
       ]
     },
@@ -513,7 +513,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/app.js",
-          "sha256": "5bc3c5f347291ec9dfa5bf4c48da79b1d72fc15046bf9fc3e36ef978a5c3cfe6"
+          "sha256": "ea88385d8c7f18e6f721ce600d0bbf6c83244cac19a56fd3a7076f104cbc7747"
         }
       ]
     },
@@ -526,7 +526,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/profile.js",
-          "sha256": "7c83d0d6440b82c6249330853f6a4ad1a0a36ff67cc961ed8cf6f5406efef628"
+          "sha256": "916ada41d78b69b007e90b6cd42f7f3adeb82000f1e1bb6fa6e1dacba9bfab2b"
         }
       ]
     },
@@ -539,7 +539,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/http/routes/catalog.js",
-          "sha256": "d62fb3a22ab02f7ac4bb378510abe842163760e0c5c6770c3e2a17b7dd5dcfa4"
+          "sha256": "bcae71f13192a726b20d6b3a709ece2e36768e0d0df9ccc33e7954941db9d39b"
         }
       ]
     },
@@ -552,7 +552,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/sender.js",
-          "sha256": "a444152e5e3b19b8ea163b02ce2f6cc2aa28cfcd5db5b26bfb0d898b6d7ed9ab"
+          "sha256": "c8bd78cef8113b6981a7a73521d895cd0ec28926d19ace0b065eb1660a2de156"
         }
       ]
     },
@@ -565,7 +565,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/shared/skillmatch.js",
-          "sha256": "cb640d44faa25cd0d05822cf9355dda011a58e2bc2f7fdebda2aa5f3b80d4d7a"
+          "sha256": "4f2a03714d84c7bed456a687c3bfdce84b15703a732054a9a02fad68aa6bfb79"
         }
       ]
     },
@@ -578,7 +578,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/shared/text.js",
-          "sha256": "7d290b6257a570d20e395c1e77967afc22d67f2a952a0d034624ffae9f675382"
+          "sha256": "200b51261c630120a94cc75ccfe3e19e70cfb341a1cc5d7fd2ad25e7d214db0e"
         }
       ]
     },
@@ -711,11 +711,11 @@
       "destinations": [
         {
           "path": "backend-v2/src/collector/job-parser.js",
-          "sha256": "209ab0b901057d7df7bbfbd8826d537b3c70b8a3b2291f3f47742878399b0e3f"
+          "sha256": "771c9df7a265a29b39f6c3a91ae1a9b50aad86fd610ffab008960b97967e0577"
         },
         {
           "path": "backend-v2/src/collector/job-age.js",
-          "sha256": "576d8cf273ed4b1a74e4b961c00f87bf8025de48460575abd716f7b4958b61ef"
+          "sha256": "6f728ec0c3f7a3b4dfeebad5e022377fdfb21801900de5dc8508fc0c30e90bcb"
         }
       ]
     },
@@ -736,7 +736,7 @@
       "destinations": [
         {
           "path": "backend-v2/src/collector/post-parser.js",
-          "sha256": "0491a8c1e0860ad8b49c7a2bd5feef1ce9b13d3e0007184cc79f97eca5628195"
+          "sha256": "4e6d8d7d5f195df49682f9e513220210a5461c903cd6fb66ec940abacd0117b9"
         }
       ]
     },
@@ -991,7 +991,7 @@
       "destinations": [
         {
           "path": "migration-plan/ai-token-efficiency.md",
-          "sha256": "856a2d9a583d01bd16f19c705256919e5c307860ac220e53cc6bb9953df9c33f"
+          "sha256": "715875c3dec336e6e35f64b7c84131a4cd3c82959dcd63763e98fe5a74128215"
         }
       ]
     },
@@ -1004,7 +1004,7 @@
       "destinations": [
         {
           "path": "migration-plan/backend-after-migration.md",
-          "sha256": "d30da480b795c34d2ad7881c029ab4c5227917e75256d118de1ff3ecfff6751c"
+          "sha256": "b99ac39f6965770f834179d5e4626eb07078f2d851ca9413bd13e9b456738652"
         }
       ]
     },
@@ -1017,7 +1017,7 @@
       "destinations": [
         {
           "path": "migration-plan/caching-and-optimization.md",
-          "sha256": "363d6232c19a4726a8532b1c490d7669a9f8fcf839dec611b46f5e2cd0a76d12"
+          "sha256": "0b724de9769778734b83071f591766dbd3bfd8746a042934cbeeb2ffca3ec28a"
         }
       ]
     },
@@ -1121,7 +1121,7 @@
       "destinations": [
         {
           "path": "migration-plan/python-to-nodejs.md",
-          "sha256": "dcdb892952a08fab23da67bf1c8923a42ce6bc87ded9c4f5b767d6642fb042f2"
+          "sha256": "5dc591ab3e12f47b3ada31f77661beb182d33d982ecbb13b30df79837049f981"
         }
       ]
     },
@@ -1147,7 +1147,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/adm.py",
-          "sha256": "27cafad3b2955e25504d0f43d4c580abbe69eca2902b3d0ab733e643a2638df6"
+          "sha256": "eb49b22ae3834917d60ae950512ccd7916d3719d7c3e846397ac340d35c2e474"
         }
       ]
     },
@@ -1160,7 +1160,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/ai_efficiency_integration.py",
-          "sha256": "7b03eac9a5605a1780304a2b3b965dceaf4888f32f5c9502357517c939ead32f"
+          "sha256": "4ac219ed61efb81d54a14a8a06a59adbba6fcca848e96ebb8f4615916b77d5b8"
         }
       ]
     },
@@ -1173,7 +1173,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/autolinky-auth-plan-update.py",
-          "sha256": "b00d6719c57d902223e67447aa04e9a3b4a9cf7aba81f2ece364209d41a30f7b"
+          "sha256": "66942088299883a2c6e90df4a7506a17982d884543b0c116a902ba861a2ac137"
         }
       ]
     },
@@ -1186,7 +1186,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/autolinky-plan-deduplicate.py",
-          "sha256": "d8071c29a9259c2ddffb917f40807104ea491d640c4413391861dcf62bfd1e67"
+          "sha256": "d62f88220b6390d8f31e466eb16f33fdc4177dc29095babee6d6e57d92d1b27b"
         }
       ]
     },
@@ -1199,7 +1199,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/autolinky-plan-refresh-20261014.py",
-          "sha256": "01e197fb78c6f94c8cdffac3b615d93b6edc402e45d4fef8041b1e66359941b5"
+          "sha256": "2b81893ce8d77b3b621c7770d4b4531464512df5f8aa06a0c722a5fecbadd447"
         }
       ]
     },
@@ -1212,7 +1212,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/cols.py",
-          "sha256": "cf609da975b34e3bb97ba738c3c1dc922346dc00b27f21c377b1a85453f0c95d"
+          "sha256": "230974a9e18efdb07c77799d97b834dbb6e71734c624b216ec8a68c291070a58"
         }
       ]
     },
@@ -1225,7 +1225,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/eff.py",
-          "sha256": "8bcfc2653b4a4e722ba5ba3895c10546391984783615b3edc12d2f004d8024cd"
+          "sha256": "d90292f74bf6f6af3324cddd1c5f4ac741acf24775942e6dd4991554dd6cd503"
         }
       ]
     },
@@ -1238,7 +1238,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/engine_integration.py",
-          "sha256": "377092e84e05dc8ad387bae4a196178507505934017f28268955766966109bf2"
+          "sha256": "bc59ce61dc3fbf32bd761b676ebfa2524b8b309804c4f695de953b4a2852ce90"
         }
       ]
     },
@@ -1251,7 +1251,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/fix.py",
-          "sha256": "0ede2e4f0ebf99a1c280d851de11e807dbc2ec803878184f4311b222b7d2a93d"
+          "sha256": "5b20cdac9a989a5477259a9a2b5048486dd0db11b91fb1173731052cb016a86b"
         }
       ]
     },
@@ -1264,7 +1264,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/fix2.py",
-          "sha256": "76df9864a8d18b88ec8b0d932c23e9ffafdeaaa3a1a713ae4fddce35ac847ea7"
+          "sha256": "74765ecc2d9fdbe12d36a4599a0aedccd935381a1d957afbdf53faa6414a4c16"
         }
       ]
     },
@@ -1277,7 +1277,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/fix3.py",
-          "sha256": "c1aa7ac9af4b912678764279963775d63c93bee5c97a2a9135394375cddc9913"
+          "sha256": "234543a621a3fa94249bd81ec163412735ac68b4931bbc651beea0d427d3b098"
         }
       ]
     },
@@ -1290,7 +1290,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/fix4.py",
-          "sha256": "c62fbd2aef12b06c3e096ec5fd4078c267a8675f5e938fd8ec1933e469fa64dc"
+          "sha256": "5188c5ccfead7a98126b199396a087568d92ea9dceb5fe3135e067bd104aff19"
         }
       ]
     },
@@ -1303,7 +1303,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/last.py",
-          "sha256": "9a1d637a057c627edf8b7b8f7ff7a7a666cd496e37513fd36a459686d27ccb16"
+          "sha256": "a9bd45c5d23d872d54b7bdcbae4402d25acc143df9389dcd9d0767f3fee7be91"
         }
       ]
     },
@@ -1316,7 +1316,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/repl.py",
-          "sha256": "c39b657f78eb739d4ce5f33895d55e77a47737c6c68f60903f1e2625d64102cb"
+          "sha256": "9564f6b5fa50de052841c439a1f2a34845e7d16b9a5146aad5bd5b5d572aef97"
         }
       ]
     },
@@ -1329,7 +1329,7 @@
       "destinations": [
         {
           "path": "migration-plan/scripts/thread.py",
-          "sha256": "3d201486b2403e96762c03152af104408e4feb3a0124dd35eb1a2139c19c347c"
+          "sha256": "e696341d844b95e9a2b71f7da0ff4b55cb1276708c3d978ed460e7d3a02edaa4"
         }
       ]
     },
@@ -1342,7 +1342,7 @@
       "destinations": [
         {
           "path": "migration-plan/search-concurrency.md",
-          "sha256": "036d6cfafce36bcb696b17624a0ae8e78deb74cddf3bb98fdde5f8f850d3dc7e"
+          "sha256": "3783193352b083a42a41c55fedd186180f5154b802b5c3cbdf1527e626974fc2"
         }
       ]
     },
@@ -1368,7 +1368,7 @@
       "destinations": [
         {
           "path": "migration-plan/sql-mapping.md",
-          "sha256": "7291bfbeb0af673ea2a6ae2a2203f519c02dc5732857f2b11b9e2f4f3787b0f9"
+          "sha256": "5e6a4812902a952bdbf58fa1ccce19218b543852584d9c61cba4323d0aa9724c"
         }
       ]
     },
@@ -1446,7 +1446,7 @@
       "destinations": [
         {
           "path": "mobile apps/Android app/android/app/build.gradle.kts",
-          "sha256": "5b4dbbba4ad85d20d9ae979a6449ccc9750f9bcd9971402e5c9452fbedf47dc4"
+          "sha256": "0986c0ca02cf28568d052a0f3e31bf5f937b06765d0bb0020900d68339d0bec0"
         }
       ]
     },
@@ -1485,7 +1485,7 @@
       "destinations": [
         {
           "path": "mobile apps/Android app/android/app/src/main/AndroidManifest.xml",
-          "sha256": "9e069cdfdca9b4068f1282c8df8ad8641f949d72ad0cb8a76ed1abe0c46cf313"
+          "sha256": "1d614ae27eae2003bab7dd609836f73f047880fe038d8f6194fb8d752e547659"
         }
       ]
     },
@@ -2161,7 +2161,7 @@
       "destinations": [
         {
           "path": "mobile apps/Android app/android/app/src/main/res/values-night-v31/styles.xml",
-          "sha256": "327f21adeb20377892f2c7c4d01fe4f87a33b4f980934988fd2e92bf8dda31e3"
+          "sha256": "52168a9a7aef2fc4d57a60f2715315f2178858a37be079b1df9319c5db6a1ff3"
         }
       ]
     },
@@ -2187,7 +2187,7 @@
       "destinations": [
         {
           "path": "mobile apps/Android app/android/app/src/main/res/values-v31/styles.xml",
-          "sha256": "0fd561a59413eb2a8259c7630f6c73ae2a3bcb01f72f05a90270318f8b6f02e2"
+          "sha256": "ca765b0d1ffe2d182410f59484254737961e82bf3c7530063f808c9bb1ed0c7a"
         }
       ]
     },
@@ -2265,7 +2265,7 @@
       "destinations": [
         {
           "path": "mobile apps/Android app/android/settings.gradle.kts",
-          "sha256": "01da3a67507743e529d69c05ba1c30a7be8b89361816d74339813adb0d9514ee"
+          "sha256": "35469e2ab618aeff82638a0840459eee2349f3b9096721bccafc6587ca8a9f1e"
         }
       ]
     },
@@ -2434,7 +2434,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/assets/fonts/OFL.txt",
-          "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+          "sha256": "3ff4395aeb203050b3d4e775861cf0b93b598e0a6d2b16f0eb41df3350b15695"
         }
       ]
     },
@@ -2455,12 +2455,16 @@
       "workspace": "reference",
       "source": "mobile/ios/.gitignore",
       "source_sha256": "e85b4db8ba6ed14708e5f7d3c60336e5a3067ce11329b84aa8ba5d98603ee253",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/.gitignore",
-          "sha256": "48f16c3af3cbf0e7f27e117663663b6de99e9e0141ca10c32ff8a0bb3460e344"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2468,12 +2472,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Flutter/AppFrameworkInfo.plist",
       "source_sha256": "e51cfa76fca1ae586244b43bf97423577315d2906394c1e7768ef43b8d23e161",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Flutter/AppFrameworkInfo.plist",
-          "sha256": "e51cfa76fca1ae586244b43bf97423577315d2906394c1e7768ef43b8d23e161"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2481,12 +2489,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Flutter/Debug.xcconfig",
       "source_sha256": "c0d1da54718e75f2028962b689258ecc741abf7cdaed50483aa5225264d0a7d7",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Flutter/Debug.xcconfig",
-          "sha256": "c0d1da54718e75f2028962b689258ecc741abf7cdaed50483aa5225264d0a7d7"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2494,12 +2506,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Flutter/Release.xcconfig",
       "source_sha256": "c0d1da54718e75f2028962b689258ecc741abf7cdaed50483aa5225264d0a7d7",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Flutter/Release.xcconfig",
-          "sha256": "c0d1da54718e75f2028962b689258ecc741abf7cdaed50483aa5225264d0a7d7"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2507,12 +2523,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcodeproj/project.pbxproj",
       "source_sha256": "e27499cf29a80a863dbc4331133b903dc4870ea76a56b7dca128b0692d5bdbe0",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcodeproj/project.pbxproj",
-          "sha256": "520f8ed9a70c313b604007da022df2580a071cf9e15c0ec581513062fbd7f0bd"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2520,12 +2540,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
       "source_sha256": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
-          "sha256": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2533,12 +2557,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
       "source_sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
-          "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2546,12 +2574,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
       "source_sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
-          "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2559,12 +2591,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme",
       "source_sha256": "a46c0d064503db8bf9f452b492c61fdf76f9febb8894005fe30b2facec21e550",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme",
-          "sha256": "6b90c0497d2e44780c7d29cca37ad27c79f8487f101bddd00b87445b5989c55d"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2572,12 +2608,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcworkspace/contents.xcworkspacedata",
       "source_sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcworkspace/contents.xcworkspacedata",
-          "sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2585,12 +2625,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
       "source_sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
-          "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2598,12 +2642,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
       "source_sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
-          "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2611,12 +2659,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/AppDelegate.swift",
       "source_sha256": "54a5e98d6c3e8a79413ad50607b83aac8ded8828bc913eda1fe86bb33a66cd5d",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/AppDelegate.swift",
-          "sha256": "54a5e98d6c3e8a79413ad50607b83aac8ded8828bc913eda1fe86bb33a66cd5d"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -2624,11 +2676,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json",
       "source_sha256": "59aee64f32dab46ad775da6ea2f3fc4efe6e8a78289a9185cd0d2d7e055845dd",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json",
           "sha256": "59aee64f32dab46ad775da6ea2f3fc4efe6e8a78289a9185cd0d2d7e055845dd"
         }
       ]
@@ -2637,11 +2689,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png",
       "source_sha256": "ab9e6ccadbde49c19d0c6cef1549e76034fd61bf75913fe5ebdf007f0cdad60e",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png",
           "sha256": "ab9e6ccadbde49c19d0c6cef1549e76034fd61bf75913fe5ebdf007f0cdad60e"
         }
       ]
@@ -2650,11 +2702,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png",
       "source_sha256": "ee95e4c9ee41962ce925499dd111feda7e6144f602bf0822432886239c186f25",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png",
           "sha256": "ee95e4c9ee41962ce925499dd111feda7e6144f602bf0822432886239c186f25"
         }
       ]
@@ -2663,11 +2715,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png",
       "source_sha256": "25a625aaba5051aca1f2b3a9472a97b6a7e7a44a1dea7050e98158775c040215",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png",
           "sha256": "25a625aaba5051aca1f2b3a9472a97b6a7e7a44a1dea7050e98158775c040215"
         }
       ]
@@ -2676,11 +2728,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png",
       "source_sha256": "d600fca8716249a4fbaa5c442a0924dcbdb2b156ec899212f10f1a78a4f590e7",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png",
           "sha256": "d600fca8716249a4fbaa5c442a0924dcbdb2b156ec899212f10f1a78a4f590e7"
         }
       ]
@@ -2689,11 +2741,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png",
       "source_sha256": "c06c81c3057365d269c1ded88fb8f40d0e9b457b79f2c6ae68c67743ed1203db",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png",
           "sha256": "c06c81c3057365d269c1ded88fb8f40d0e9b457b79f2c6ae68c67743ed1203db"
         }
       ]
@@ -2702,11 +2754,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png",
       "source_sha256": "87bc9737d5af1b8faebac8fb98cfdd2f85f804a94b5f6e51ffb5c90f83de7bca",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png",
           "sha256": "87bc9737d5af1b8faebac8fb98cfdd2f85f804a94b5f6e51ffb5c90f83de7bca"
         }
       ]
@@ -2715,11 +2767,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png",
       "source_sha256": "121df698ddf289719212d26d6bea9348fc4518011520dafc9c9ca3b2e0da6533",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png",
           "sha256": "121df698ddf289719212d26d6bea9348fc4518011520dafc9c9ca3b2e0da6533"
         }
       ]
@@ -2728,11 +2780,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png",
       "source_sha256": "25a625aaba5051aca1f2b3a9472a97b6a7e7a44a1dea7050e98158775c040215",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png",
           "sha256": "25a625aaba5051aca1f2b3a9472a97b6a7e7a44a1dea7050e98158775c040215"
         }
       ]
@@ -2741,11 +2793,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png",
       "source_sha256": "a4f6c2a94f1b66bbf8eaf1b25c30f34bee051ba90514fea92760eb63958e50d1",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png",
           "sha256": "a4f6c2a94f1b66bbf8eaf1b25c30f34bee051ba90514fea92760eb63958e50d1"
         }
       ]
@@ -2754,11 +2806,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png",
       "source_sha256": "4fb1815801af3766d0f57f9f44e7dc0cf6ddde7fffb3c4556c7198a842bf70dd",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png",
           "sha256": "4fb1815801af3766d0f57f9f44e7dc0cf6ddde7fffb3c4556c7198a842bf70dd"
         }
       ]
@@ -2767,11 +2819,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png",
       "source_sha256": "9a9b5904c6403529ffd6b018ed59dd3d5fb8ade8ca51ed51b4ca2affa638281a",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png",
           "sha256": "9a9b5904c6403529ffd6b018ed59dd3d5fb8ade8ca51ed51b4ca2affa638281a"
         }
       ]
@@ -2780,11 +2832,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png",
       "source_sha256": "1b90954591a1c259194bd0c26019cf36bbefaf05e3724f3f4cc156205dea6635",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png",
           "sha256": "1b90954591a1c259194bd0c26019cf36bbefaf05e3724f3f4cc156205dea6635"
         }
       ]
@@ -2793,11 +2845,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png",
       "source_sha256": "db5e39c208346008b42982e66bade35bf283229fbfb18f6c31cc46793ed200ba",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png",
           "sha256": "db5e39c208346008b42982e66bade35bf283229fbfb18f6c31cc46793ed200ba"
         }
       ]
@@ -2806,11 +2858,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png",
       "source_sha256": "0af53ba2392b9d464b92d19ce0af36b07226584780043ae8ed141d0f8cb60939",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png",
           "sha256": "0af53ba2392b9d464b92d19ce0af36b07226584780043ae8ed141d0f8cb60939"
         }
       ]
@@ -2819,11 +2871,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png",
       "source_sha256": "4fb1815801af3766d0f57f9f44e7dc0cf6ddde7fffb3c4556c7198a842bf70dd",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png",
           "sha256": "4fb1815801af3766d0f57f9f44e7dc0cf6ddde7fffb3c4556c7198a842bf70dd"
         }
       ]
@@ -2832,11 +2884,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png",
       "source_sha256": "d4f5cc3060c16ee5a4bb64c415203e1375c2db65b14b1be62abb7dcd3e62fa84",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png",
           "sha256": "d4f5cc3060c16ee5a4bb64c415203e1375c2db65b14b1be62abb7dcd3e62fa84"
         }
       ]
@@ -2845,11 +2897,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png",
       "source_sha256": "ea30212704506a3c4b2727d79d3110cede74c7c09ef2a62a36734e3d26adc8ae",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png",
           "sha256": "ea30212704506a3c4b2727d79d3110cede74c7c09ef2a62a36734e3d26adc8ae"
         }
       ]
@@ -2858,11 +2910,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png",
       "source_sha256": "ec2f2d50949206c09e817d0e8ee245070d5fc3ff6be006063b12f869798fc223",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png",
           "sha256": "ec2f2d50949206c09e817d0e8ee245070d5fc3ff6be006063b12f869798fc223"
         }
       ]
@@ -2871,11 +2923,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png",
       "source_sha256": "381b734e81e6dd600e1a68dcf196ba2f7e9cf526cea083f1a61ca35dea66271b",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png",
           "sha256": "381b734e81e6dd600e1a68dcf196ba2f7e9cf526cea083f1a61ca35dea66271b"
         }
       ]
@@ -2884,11 +2936,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png",
       "source_sha256": "167aea333ddda104e1bf7b0794c94ffb5d0fa9a8461410624399edf4b3191754",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png",
           "sha256": "167aea333ddda104e1bf7b0794c94ffb5d0fa9a8461410624399edf4b3191754"
         }
       ]
@@ -2897,11 +2949,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png",
       "source_sha256": "e2ffc9feea57f3d8a4147da11bad69005c06c7e0c435002167ce7c8ba9bc789b",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png",
           "sha256": "e2ffc9feea57f3d8a4147da11bad69005c06c7e0c435002167ce7c8ba9bc789b"
         }
       ]
@@ -2910,11 +2962,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchBackground.imageset/Contents.json",
       "source_sha256": "60660b725c8b1465fabfe61f7b6a15109fe2d877e252e8db087763f209cf8c29",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchBackground.imageset/Contents.json",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchBackground.imageset/Contents.json",
           "sha256": "60660b725c8b1465fabfe61f7b6a15109fe2d877e252e8db087763f209cf8c29"
         }
       ]
@@ -2923,11 +2975,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchBackground.imageset/background.png",
       "source_sha256": "c1457bb8e70d1d5b1b20b1904690eaff8b6d5ab82a6702435abefb7a88fe4763",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchBackground.imageset/background.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchBackground.imageset/background.png",
           "sha256": "c1457bb8e70d1d5b1b20b1904690eaff8b6d5ab82a6702435abefb7a88fe4763"
         }
       ]
@@ -2936,11 +2988,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchBackground.imageset/darkbackground.png",
       "source_sha256": "4783a30e1fc04971a88640fae5564a2171ccc8630cf6836ae436ccd0f213d364",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchBackground.imageset/darkbackground.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchBackground.imageset/darkbackground.png",
           "sha256": "4783a30e1fc04971a88640fae5564a2171ccc8630cf6836ae436ccd0f213d364"
         }
       ]
@@ -2949,11 +3001,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json",
       "source_sha256": "c2f13dc361d694bd1ca94caba655f3446a031e74f2d70c5f4d6fd813d9a72365",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchImage.imageset/Contents.json",
           "sha256": "c2f13dc361d694bd1ca94caba655f3446a031e74f2d70c5f4d6fd813d9a72365"
         }
       ]
@@ -2962,11 +3014,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png",
       "source_sha256": "0e916e1ca42006af445dd1a34f859952d8393bdde64f2aaa34d29b2ffcb10def",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchImage.imageset/LaunchImage.png",
           "sha256": "0e916e1ca42006af445dd1a34f859952d8393bdde64f2aaa34d29b2ffcb10def"
         }
       ]
@@ -2975,11 +3027,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png",
       "source_sha256": "05b571cb9ea54ea95aec5513333d6d5a8660bc7164fe74bc8f3bac4ed0b1ae4c",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png",
           "sha256": "05b571cb9ea54ea95aec5513333d6d5a8660bc7164fe74bc8f3bac4ed0b1ae4c"
         }
       ]
@@ -2988,11 +3040,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png",
       "source_sha256": "89b6f91ace39e5723c7ca7281421bbedc4ad4a8c179457af7c2c40276f10f394",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png",
           "sha256": "89b6f91ace39e5723c7ca7281421bbedc4ad4a8c179457af7c2c40276f10f394"
         }
       ]
@@ -3001,11 +3053,11 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
       "source_sha256": "853ac958e2416fe2540f6f61165283a3618b71a7ba5f85f65ac41c2158dfcd21",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "preserved_ios_branding",
+      "note": "Original icon/image resources in the independent Swift app.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
+          "path": "mobile apps/IOS app/Resources/Assets.xcassets/LaunchImage.imageset/README.md",
           "sha256": "853ac958e2416fe2540f6f61165283a3618b71a7ba5f85f65ac41c2158dfcd21"
         }
       ]
@@ -3014,12 +3066,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Base.lproj/LaunchScreen.storyboard",
       "source_sha256": "5321c1c14e4ebf3bc009c276b86f84a8e86282c59821082a9775ca3b27f8a5e1",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Base.lproj/LaunchScreen.storyboard",
-          "sha256": "5321c1c14e4ebf3bc009c276b86f84a8e86282c59821082a9775ca3b27f8a5e1"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -3027,12 +3083,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Base.lproj/Main.storyboard",
       "source_sha256": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Base.lproj/Main.storyboard",
-          "sha256": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -3040,12 +3100,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Info.plist",
       "source_sha256": "e35c412d2f86ca85ce51b42ad0633fa757aab874acc11702d02ba48e9f45a677",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Info.plist",
-          "sha256": "bbd17472b436ad592e8fcb188310fca6d02fe58ffac168141936dd6809565eb8"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -3053,12 +3117,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/Runner-Bridging-Header.h",
       "source_sha256": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/Runner-Bridging-Header.h",
-          "sha256": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -3066,12 +3134,16 @@
       "workspace": "reference",
       "source": "mobile/ios/Runner/SceneDelegate.swift",
       "source_sha256": "edce811c671ca0a6ccb14753e14e16deb0d89a0adf4f1b685e362d87d8f4c366",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/Runner/SceneDelegate.swift",
-          "sha256": "edce811c671ca0a6ccb14753e14e16deb0d89a0adf4f1b685e362d87d8f4c366"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -3079,12 +3151,16 @@
       "workspace": "reference",
       "source": "mobile/ios/RunnerTests/RunnerTests.swift",
       "source_sha256": "c0e04141287eb7f9c9f3d31cf5be8cb626a9ea71351206c9121578e8b8f480c3",
-      "status": "ios_swift_platform_project",
-      "note": "Swift/Xcode host; Flutter screens and update configuration come from shared.",
+      "status": "replaced_with_native_swiftui",
+      "note": "The Flutter runner is replaced by an independent native app. See native feature and verification evidence; a destination pointer is not parity certification.",
       "destinations": [
         {
-          "path": "mobile apps/IOS app/ios/RunnerTests/RunnerTests.swift",
-          "sha256": "c0e04141287eb7f9c9f3d31cf5be8cb626a9ea71351206c9121578e8b8f480c3"
+          "path": "mobile apps/IOS app/project.yml",
+          "sha256": "fcb841ec9d105842e9795d58ce67ff2e86fc26789dde830cc49e9d3782155ffc"
+        },
+        {
+          "path": "mobile apps/IOS app/Sources/AutoLinkyApp.swift",
+          "sha256": "28aa981bb6945ca98ee4d28464a8af8cab5c11568e1e19b66cbafbf12871cf86"
         }
       ]
     },
@@ -3136,7 +3212,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/app/router.dart",
-          "sha256": "f20e18ab2f9c7d732449eabb9a55fa29802245ce4d964539da7c09351fc7f454"
+          "sha256": "5c8fd3288bddd7e0eb59047843c056f245af53bb70bffbb7aa94afd9f7fad58d"
         }
       ]
     },
@@ -3149,7 +3225,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/core/config/env.dart",
-          "sha256": "46cc6819f325465a0c2213c146b29d01c0cb0e3a847072f3d55c5a1058fa2c00"
+          "sha256": "525b3d20a6f41b31e7b75a6e972f919e2643d6a6bd0419516eaa2e880f1dd590"
         }
       ]
     },
@@ -3175,7 +3251,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/core/errors/app_failure.dart",
-          "sha256": "70781e3e7c8c92d0640fa3a3e08ee4da4c5d7c7906eba95ead4c2c8bd37a3be0"
+          "sha256": "2981c660727d718e33dacf25d744eac27d11628d68de27e04da7e979a110f9cc"
         }
       ]
     },
@@ -3214,7 +3290,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/core/network/api_client.dart",
-          "sha256": "8443e9f9027b96a3e1b167f83ceedafa8c3f2f02c04d9eb3d15fca9d18560a6c"
+          "sha256": "502324efee82ee168ae7ae3f93ae87ad4b1231867e4e2a31fa442bbb1170e856"
         }
       ]
     },
@@ -3253,7 +3329,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/core/storage/email_link_store.dart",
-          "sha256": "3a0f0a279fbf55dfb58a459366df1c07dc92d6572408021f011f66aeb83d1b5f"
+          "sha256": "586804ffa946d46ac7bc49addaab062313c17b4fe7d9c47008d71c233bfb7042"
         }
       ]
     },
@@ -3435,7 +3511,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/applications/application/applications_providers.dart",
-          "sha256": "0f7d349db5b8eea44c0d3653ae187d27777dd729debb8cf273543c7b105e16cf"
+          "sha256": "44572e5e07136b5f041262a8ff22c6a798fc2d1f932ff898be1e901919c5f6b0"
         }
       ]
     },
@@ -3474,7 +3550,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auth/application/auth_providers.dart",
-          "sha256": "0d84b9b11413b94b62e975c35893d8bcc2ca605bf5f0ff846109b515a1e586ef"
+          "sha256": "7ebc21defcebad93ae3d2831f04ba27d2bce8299cbe613de8d48634c1b25610c"
         }
       ]
     },
@@ -3487,7 +3563,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auth/data/auth_repository.dart",
-          "sha256": "d615f622417e99c00cb470f39f0e19f8f11022f5f1f348967a5b13c781c1216b"
+          "sha256": "ba3fecf506a87f189d37952bccbb38fb7f697b4423ba4f477e5b07148f87f6fb"
         }
       ]
     },
@@ -3500,7 +3576,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auth/presentation/email_screen.dart",
-          "sha256": "55728f8fdc7b96681c70688c88e0065c735cd200ce70387433ac1de6092bd732"
+          "sha256": "b9b1d3de9d504cf26221f0547b651f991c9e28fbbf28cc58e4a41bcb7cf79975"
         }
       ]
     },
@@ -3513,7 +3589,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auth/presentation/email_link_screen.dart",
-          "sha256": "f92c4aa1b0b652452ad43ee37c8c52eb4de12d893ffa4f71e2786bd3e4fbad6b"
+          "sha256": "b443556c621b1447ce780e80be2bf0e38b6b84a74cfcf88dba0f43d612d1f1f9"
         }
       ]
     },
@@ -3656,7 +3732,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auto_apply/presentation/gmail_screen.dart",
-          "sha256": "cc60903855ac40c50ba60367bb3c51c7f61977bc0abac61d9d7168a2201710af"
+          "sha256": "2039672cb63fc45355edf8ac97a681a0ae773996f403b139da3d9ce3b921a5c4"
         }
       ]
     },
@@ -3669,7 +3745,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auto_apply/presentation/gmail_setup_screen.dart",
-          "sha256": "188eef9edc30f13e2b49c5d2ad2430268c5497ab3ab074fb170188b8e586069d"
+          "sha256": "bb14ffc5ad048bf62fff23c80e55f49cc991a5cd75e881aacc04ca3c0864cf5e"
         }
       ]
     },
@@ -3682,7 +3758,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/auto_apply/presentation/pro_celebration.dart",
-          "sha256": "25c9ac0194ddb0b83c24188ce169681d72cd6f64b6ae89441f4d2949406864e7"
+          "sha256": "1add3530d48c84e25f987e2a98d817c66167861feaf39aa6165c8d1007203cbc"
         }
       ]
     },
@@ -3721,7 +3797,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/home/presentation/home_shell.dart",
-          "sha256": "9548960667c4d3c269b49295a5f2c24c705ea1016667f5428446d0db2d8801ab"
+          "sha256": "1a9fb93fb624b92566384e077bc33be0b1028e888d2d65e99eff18f0c067d54a"
         }
       ]
     },
@@ -3747,7 +3823,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/jobs/application/jobs_providers.dart",
-          "sha256": "122fb60ffe0e3b1c47b043ae280da7509641f39b17c60242a7c02fbd4e2d4c9a"
+          "sha256": "375374c134e3eee506c7235cbcbf6fb5a663e4bfd9d4f2aace00919362d2e623"
         }
       ]
     },
@@ -4033,7 +4109,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/profile/application/profile_providers.dart",
-          "sha256": "71da1fd8de8801c52235da622e009ad37c95659b5f9a1199766bcfb4679a2e90"
+          "sha256": "0656a5c3866015c80bc5ce20dc42c62e95ab7efaa0bd2966ac265220e1732954"
         }
       ]
     },
@@ -4046,7 +4122,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/profile/data/account_repository.dart",
-          "sha256": "017b136f1138c9f749f0be4ecd0e4c9c5b4285410b3cbf55582846738230328c"
+          "sha256": "d29f8145b1accd203fa1748479d09c4531b9ef25eea9caed0e9ffba6c13315f4"
         }
       ]
     },
@@ -4124,7 +4200,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/lib/features/profile/presentation/profile_screen.dart",
-          "sha256": "460c304755da44c66dac5b443eacf425003fcf73b9bb57bcb7a99baa409ef8c5"
+          "sha256": "4eac71e1b80582e20905fdccf5a7ac9e3d49bab3090feaf1ef1e6a4a95a195ad"
         }
       ]
     },
@@ -4332,7 +4408,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/pubspec.yaml",
-          "sha256": "c484af528a6fe4a21824db526c9c967c5243ab682a58285f5d49af717496833b"
+          "sha256": "d4e2fabaa404c5c498b58ab2fad177932de8683ad634a2d99f71868c16bff2ec"
         }
       ]
     },
@@ -4371,7 +4447,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/core/api_client_test.dart",
-          "sha256": "fe2762e2fd2754d90c254602df6effeed66e240ba72dce5a8cd57f1138a8b6fd"
+          "sha256": "cbb36668c0a04a102ea5ebf7b6611a750b6adafbdea2528862f4d2e795513c92"
         }
       ]
     },
@@ -4397,7 +4473,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/core/title_key_test.dart",
-          "sha256": "27e9df7dc1f28f878ffbd6b9f86a8e307589a5206cdfe9b049e5a11aaf378c2f"
+          "sha256": "ef5fe863f708c09070c4cb8110d172f90b0282c8ab77de074fdfc50cdd230120"
         }
       ]
     },
@@ -4423,7 +4499,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/features/auth_repository_test.dart",
-          "sha256": "6dd4343fcaf29972342887bba80fcf4a505977ed0482191b99a042a1f77557fb"
+          "sha256": "33af3b86a3c306fc89e1e5ddbbdbc06e116037507b80c7da6b2e0507d7b457ef"
         }
       ]
     },
@@ -4436,7 +4512,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/features/auth_screens_test.dart",
-          "sha256": "1fdf895fd0731cb53071ea60c5f000260bd0703c4237264e04158078b594b4fd"
+          "sha256": "014c59714f6b7841938b266a573b7e96a68e61e5fd9280838e52982a7f4ad031"
         }
       ]
     },
@@ -4475,7 +4551,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/features/plan_test.dart",
-          "sha256": "24fa4f3913dd75f1dd7253f1631c46aef284afed19cb80eded6105b987f8c97b"
+          "sha256": "4fbd15527cfd1fd16e018e578308e8e249b75263fe089430adaf894d16b794cb"
         }
       ]
     },
@@ -4540,7 +4616,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/helpers.dart",
-          "sha256": "6075b9d5c25f93be492c66d168103af066725cc3d37da308a787fcc78964042e"
+          "sha256": "ce2af867b8629ed64903ba7f6edefa3b10ed6da38928cf001873f4acca21c552"
         }
       ]
     },
@@ -4553,7 +4629,7 @@
       "destinations": [
         {
           "path": "mobile apps/shared/test/screenshots/screenshots_test.dart",
-          "sha256": "ed8bd71956a70bd7cd4f816fa743c4f3a3d4b62f8cd29bd6d0b754da5bd416a1"
+          "sha256": "57df43fc7c61ad5f910067ef09c475baafd8f3f9e9f6a3a513753ce49e191730"
         }
       ]
     },
@@ -5798,7 +5874,7 @@
       "destinations": [
         {
           "path": "frontend-v2/api/_release.js",
-          "sha256": "d511e6523209c324ddfd65966bb3d243a95044b3686437c36482f3abf40553ea"
+          "sha256": "0b57563977af22127ce73f59c992cc562ef5a65bbc1297f1cb88b9fea0a234a5"
         }
       ]
     },
@@ -5811,7 +5887,7 @@
       "destinations": [
         {
           "path": "frontend-v2/api/_stats.js",
-          "sha256": "bdc7772b97913fbfd9e5dc4202c5b3af3b7910cecfeba42f8afe9215d0379c39"
+          "sha256": "6bc6694ab7d9e50bfd04d4e87bbd76dafd59762cc5b9e6772194b4aec0f398e7"
         }
       ]
     },
@@ -5824,7 +5900,7 @@
       "destinations": [
         {
           "path": "frontend-v2/api/download.js",
-          "sha256": "69d24c8a3b8c8db86dedf8fa48ea752e6f19987559c8b138a393af6c6039e25b"
+          "sha256": "567891251b06fd8f462fb0c5ef5b291b3b847d7f744fd0e1b2bae622fb53383e"
         }
       ]
     },
@@ -5837,7 +5913,7 @@
       "destinations": [
         {
           "path": "frontend-v2/api/latest.js",
-          "sha256": "ceb62ee398cc56feacccd98a2f8e9f959c04bc8077d49adfae344f3710912017"
+          "sha256": "57957eb45a8ea35e514f08bc0ca0e6b8bb4b8d97e5510ab83254b5d3700943c2"
         }
       ]
     },
@@ -6017,7 +6093,7 @@
       "destinations": [
         {
           "path": "frontend-v2/Dockerfile",
-          "sha256": "733f1236904077667b8eefdb7c7bb1c6f153dca82cc69fe45d16e393ee9dd4a9"
+          "sha256": "3b48304b758b45da504e43183c27f0be8a2ffe7f9ce640da7e0fe0bfcf37cdc7"
         }
       ]
     },
@@ -6043,7 +6119,7 @@
       "destinations": [
         {
           "path": "frontend-v2/index.html",
-          "sha256": "f6a04e25ff993983d9271d548b9a4461eddf1a1cff9ca4f144bebfbe77d36f28"
+          "sha256": "df7c5345b4aa5d406a132891ed8428e4a5288cdd749b01be20ba4d9d10ddf697"
         }
       ]
     },
@@ -6056,7 +6132,7 @@
       "destinations": [
         {
           "path": "frontend-v2/nginx.conf.example",
-          "sha256": "e3ac8b0a579ddf5e15c785bcfbf985d545d23e154e82373ddce4c1d94f132c9b"
+          "sha256": "d8c5aa27a5da8661cef5e83a2e696d222121c845e07e2b409aac047ea53dc780"
         }
       ]
     },
@@ -6264,7 +6340,7 @@
       "destinations": [
         {
           "path": "frontend-v2/public/assets/qr-download.svg",
-          "sha256": "add47b9ac0d909b2dfbab9bd456fd0fd852b7cdf7720c4c9b32d1cde6e19af32"
+          "sha256": "5e43128da893ea37c2b2b787ed6c2ebebfa0c95efd3e047bc0479b272ef1f7fb"
         }
       ]
     },
@@ -6277,7 +6353,7 @@
       "destinations": [
         {
           "path": "frontend-v2/public/site.webmanifest",
-          "sha256": "bbe699bdcc94e530a2dbfa0a9462295c2c940b05eab3d4306762f19c310e61ec"
+          "sha256": "52a4a0b90fb54814b9e9dfe8564215d62fbfbc91d26afdd3747956194b9a051d"
         }
       ]
     },
@@ -6355,7 +6431,7 @@
       "destinations": [
         {
           "path": "frontend-v2/src/WhatsAppIcon.jsx",
-          "sha256": "311219c2e1b49c425b32e8c3b014bb6b85234e738c6c2cea93e338781f4bb5bc"
+          "sha256": "182145e09a957150fdc951fcd9166d645e6a6267eb84318b8ae537118a86f0ac"
         }
       ]
     },
@@ -6368,7 +6444,7 @@
       "destinations": [
         {
           "path": "frontend-v2/src/config.js",
-          "sha256": "833cd73ec9cd1c7c81d7b7b1ff0a5b9f31cb9858f642ed9bb231436e981b7622"
+          "sha256": "9be61da1e24b7cf1f93e5dcd2f753e2821f2da261a7ff845d5e2c8f311f853d1"
         }
       ]
     },
@@ -6420,7 +6496,7 @@
       "destinations": [
         {
           "path": "frontend-v2/src/main.jsx",
-          "sha256": "96332f941193e9e532e1a35d4b59c54f17e03c64b4067e0d2fb3299ab4bdbd81"
+          "sha256": "807956185d192709b2d2b371b179c2d84ac5b259c215a542121857a4303064d1"
         }
       ]
     },
@@ -6472,7 +6548,7 @@
       "destinations": [
         {
           "path": "frontend-v2/src/usePageNavigation.js",
-          "sha256": "c575e6795cd9e4ee34ed4491ecbc5045e6eae63287dbbf7d78f0d66f7457bf25"
+          "sha256": "4e4c988624f23b3858d2a758ac7fba5d15f8f6ae9668ac3acc15a43c35f28362"
         }
       ]
     },
@@ -6485,7 +6561,7 @@
       "destinations": [
         {
           "path": "frontend-v2/src/useSiteMotion.js",
-          "sha256": "0f7d515a9837ca178ecf69252a2ed3bfe0ecbfb5c7b15f28c5398d69cf75b69a"
+          "sha256": "e90d180697515f58a9a96c7b268fa252bbf1f0c0ba6bbd846ef48b0191ba3440"
         }
       ]
     }

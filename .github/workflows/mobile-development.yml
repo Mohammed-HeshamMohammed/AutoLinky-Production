@@ -91,11 +91,8 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
-      - name: Install pinned Flutter
-        run: |
-          git clone --depth 1 --branch 3.47.7 --single-branch https://github.com/flutter/flutter.git "$RUNNER_TEMP/autolinky-flutter"
-          test "$(git -C "$RUNNER_TEMP/autolinky-flutter" rev-parse HEAD)" = abaf9c523780a608bd46686fd5e53740a07077f8
-          echo "$RUNNER_TEMP/autolinky-flutter/bin" >> "$GITHUB_PATH"
+      - name: Install native project generator
+        run: brew install xcodegen
       - name: Prepare common version and platform settings
         id: release
         run: python3 tool/mobile_release.py prepare
@@ -103,16 +100,14 @@ jobs:
         env:
           VERSION: ${{ steps.release.outputs.version }}
           BUILD_NUMBER: ${{ steps.release.outputs.build_number }}
-          FLUTTER_SWIFT_PACKAGE_MANAGER: 'true'
+          IOS_PUBLIC_SETTINGS: ${{ github.workspace }}/mobile apps/shared/.runtime/mobile/ios.json
         run: |
           cd "../IOS app"
-          flutter --version
-          flutter pub get --enforce-lockfile
-          flutter build ios --release --no-codesign --build-name "$VERSION" --build-number "$BUILD_NUMBER" --dart-define-from-file=../shared/.runtime/mobile/ios.json
+          bash scripts/build.sh device
       - name: Package unsigned device IPA
         run: |
           mkdir -p .runtime/mobile/package/Payload build/mobile-unsigned
-          ditto "../IOS app/build/ios/iphoneos/Runner.app" .runtime/mobile/package/Payload/Runner.app
+          ditto "../IOS app/.runtime/DerivedData/Build/Products/Release-iphoneos/AutoLinky.app" .runtime/mobile/package/Payload/AutoLinky.app
           ditto -c -k --sequesterRsrc --keepParent .runtime/mobile/package/Payload build/mobile-unsigned/AutoLinky-unsigned.ipa
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

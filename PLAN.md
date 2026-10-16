@@ -13,6 +13,24 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 
 ## Execution
 
+### Fully native Swift iOS client (2026-10-16)
+
+The owner approved independent native platform implementations: Android keeps
+Flutter; iOS becomes Swift/SwiftUI with no Flutter/Dart engine or shared Dart
+runtime code. The web variants remain browser applications. Shared items are
+API contracts, Firebase project/identities, original branding and one binary
+release feed. iOS remains unsigned for development. Environment-first and
+original-workspace preservation requirements still apply.
+
+- [ ] Replace the Flutter iOS runner with a native SwiftUI app and isolated build.
+- [ ] Port authentication, API/session isolation, onboarding/profile/CV, jobs and
+  matches, application channels/history, Gmail/auto-apply, settings and deletion.
+- [ ] Add native activity notifications, bilingual/RTL UI and common binary updates.
+- [ ] Verify core contracts and native UI on a macOS runner; prove packages contain
+  no Flutter/Dart runtime. Build paired Android APK and unsigned native iOS IPA.
+- [ ] Update evidence/docs and commit/push to main. Real provider/device acceptance
+  still requires the missing provider/origin/signing inputs.
+
 ### Main branch and proposed backend boundaries (2026-10-16)
 
 The user requested that all current implementation and plans be committed to

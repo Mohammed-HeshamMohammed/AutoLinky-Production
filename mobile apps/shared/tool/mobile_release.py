@@ -9,6 +9,7 @@ import plistlib
 import re
 import shutil
 import sys
+import struct
 import zipfile
 
 import ios_config
@@ -20,11 +21,11 @@ RUNTIME = CLIENT / ".runtime/mobile"
 
 def update_source(client=CLIENT):
     policy = json.loads((client / "mobile-release.json").read_text())
-    text = (client / policy["updates"]["config"]).read_text()
-    app = re.search(r"(?m)^app_id:\s*([0-9a-f-]{36})\s*$", text)
-    if not app or not re.search(r"(?m)^auto_update:\s*true\s*$", text):
-        raise ValueError("Both apps require one shared Shorebird app ID and auto-update configuration.")
-    return {**policy["updates"], "app_id": app[1], "config_sha256": hashlib.sha256(text.encode()).hexdigest()}
+    source = json.loads((client / policy["updates"]["config"]).read_text())
+    if source["repository"] != policy["repository"] or source["channel"] != policy["channel"] or source["manifest"] != "autolinky-release.json":
+        raise ValueError("Both apps require the same binary release feed.")
+    digest = hashlib.sha256(json.dumps(source, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return {**policy["updates"], **source, "config_sha256": digest}
 
 
 def prepare(run_number, commit, api_url="", client=CLIENT):
@@ -51,19 +52,26 @@ def prepare(run_number, commit, api_url="", client=CLIENT):
 
 
 def validate_packages(apk, ipa, plan):
-    expected = (CLIENT / "shorebird.yaml").read_text().encode()
+    expected = json.loads((CLIENT.parent / "release-source.json").read_text())
     with zipfile.ZipFile(apk) as package:
-        if package.read("assets/flutter_assets/shorebird.yaml").decode().replace("\r\n", "\n").encode() != expected:
+        if json.loads(package.read("assets/flutter_assets/assets/brand/release-source.json")) != expected:
             raise ValueError("Android update source differs from the shared configuration.")
     with zipfile.ZipFile(ipa) as package:
-        if package.read("Payload/Runner.app/Frameworks/App.framework/flutter_assets/shorebird.yaml").decode().replace("\r\n", "\n").encode() != expected:
+        if json.loads(package.read("Payload/AutoLinky.app/release-source.json")) != expected:
             raise ValueError("iOS update source differs from Android.")
-        info = plistlib.loads(package.read("Payload/Runner.app/Info.plist"))
+        if any(re.search(r"(?:Flutter|App)\.framework|flutter_assets|\.dart(?:$|/)|libflutter", name, re.I) for name in package.namelist()):
+            raise ValueError("The native Swift iOS package must not contain a Flutter/Dart runtime.")
+        info = plistlib.loads(package.read("Payload/AutoLinky.app/Info.plist"))
         if (info["CFBundleIdentifier"], info["CFBundleShortVersionString"], str(info["CFBundleVersion"])) != ("com.autolinky.ios", plan["version"], str(plan["build_number"])):
             raise ValueError("iOS identity/version differs from the common release.")
         if info["CFBundleSupportedPlatforms"] != ["iPhoneOS"]:
             raise ValueError("The iOS release must contain a device build, not a simulator build.")
-        if "Payload/Runner.app/_CodeSignature/CodeResources" in package.namelist():
+        binary = package.read("Payload/AutoLinky.app/" + info["CFBundleExecutable"])
+        if binary[:4] != b'\xcf\xfa\xed\xfe' or struct.unpack('<I', binary[4:8])[0] != 0x0100000c:
+            raise ValueError("The Swift iOS executable must be a native arm64 Mach-O device binary.")
+        if b'FlutterEngine' in binary or b'fixture-token' in binary:
+            raise ValueError("The release contains a forbidden engine or debug fixture.")
+        if "Payload/AutoLinky.app/_CodeSignature/CodeResources" in package.namelist():
             raise ValueError("Development iOS output must remain unsigned.")
 
 
@@ -113,10 +121,10 @@ def main():
         (destination / "sha256sums.txt").write_text("".join(value["sha256"] + "  " + value["file"] + "\n" for value in artifacts.values()))
         (RUNTIME / "release-notes.md").write_text(
             "Development build from `" + plan["source_commit"] + "`.\n\n"
-            "Both packages use version " + plan["version"] + " (" + str(plan["build_number"]) + ") and the same update-source configuration.\n\n"
+            "Both packages use version " + plan["version"] + " (" + str(plan["build_number"]) + ") and the same binary release feed.\n\n"
             "- Android: installable APK signed with the persistent development key.\n"
-            "- iOS: unsigned device IPA; signing is required before iPhone installation.\n"
-            "- OTA patches are not active in these plain Flutter development builds; no Shorebird release or patch was published.\n"
+            "- iOS: independent native SwiftUI arm64 app, unsigned; signing is required before iPhone installation. No Flutter/Dart engine is bundled.\n"
+            "- Updates use platform binaries from one release manifest. Swift iOS does not use Dart/Shorebird patches.\n"
             + ("\nAPI origin is not configured yet; the app shows its setup screen.\n" if not plan["api_configured"] else "")
         )
         print("Verified and assembled both development packages with one release manifest.")

@@ -1,4 +1,4 @@
-"""Prepare shared assets for the separate Android and iOS Flutter projects."""
+"""Prepare Android/browser Flutter inputs; iOS is an independent Swift app."""
 
 from pathlib import Path
 import re
@@ -13,7 +13,7 @@ WEB_APPS = {platform: WEB / "apps" / platform for platform in APPS}
 
 def prepare_apps(web=False):
     version = re.search(r"(?m)^version:\s*(\S+)", (SHARED / "pubspec.yaml").read_text())[1]
-    for platform, app in (WEB_APPS if web else APPS).items():
+    for platform, app in (WEB_APPS if web else {"android": APPS["android"]}).items():
         specification = (app / "pubspec.yaml").read_text()
         if not re.search(r"(?m)^version:\s*" + re.escape(version) + r"\s*$", specification):
             raise ValueError(platform + " pubspec version must match shared/pubspec.yaml.")
@@ -26,7 +26,8 @@ def prepare_apps(web=False):
         shutil.copyfile(SHARED / "shorebird.yaml", app / "shorebird.yaml")
         if web:
             shutil.copytree(WEB / "web-template", app / "web", dirs_exist_ok=True)
-    print("Prepared " + ("both browser apps" if web else "Android app and IOS app") + " from one shared package.")
+        shutil.copyfile(SHARED.parent / "release-source.json", app / "assets/brand/release-source.json")
+    print("Prepared " + ("both browser apps" if web else "Android Flutter app") + "; native Swift iOS is built independently.")
 
 
 if __name__ == "__main__":

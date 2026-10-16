@@ -1,12 +1,12 @@
-name: iOS v2 build
+name: Native Swift iOS checks
 on:
   workflow_dispatch:
   pull_request:
-    paths: ['mobile apps/shared/**', 'mobile apps/IOS app/**', '.github/workflows/ios-v2.yml', '!mobile apps/shared/**/*.md', '!mobile apps/IOS app/**/*.md']
+    paths: ['mobile apps/IOS app/**', 'mobile apps/release-source.json', '.github/workflows/ios-v2.yml', '!**/*.md']
 permissions:
   contents: read
 concurrency:
-  group: ios-v2-${{ github.ref }}
+  group: ios-native-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ios:
@@ -14,34 +14,38 @@ jobs:
     timeout-minutes: 45
     defaults:
       run:
-        working-directory: mobile apps/shared
-    env:
-      FLUTTER_SUPPRESS_ANALYTICS: 'true'
-      DART_SUPPRESS_ANALYTICS: 'true'
-      PUB_CACHE: ${{ github.workspace }}/.runtime/pub-cache
+        working-directory: mobile apps/IOS app
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: '3.13'
-      - name: Install pinned Flutter SDK
+      - name: Verify native core contracts
+        run: swift test --package-path Core
+      - name: Install native project generator
+        run: brew install xcodegen
+      - name: Prepare native project
         run: |
-          git clone --depth 1 --branch 3.47.7 --single-branch https://github.com/flutter/flutter.git "$RUNNER_TEMP/autolinky-flutter"
-          test "$(git -C "$RUNNER_TEMP/autolinky-flutter" rev-parse HEAD)" = abaf9c523780a608bd46686fd5e53740a07077f8
-          echo "$RUNNER_TEMP/autolinky-flutter/bin" >> "$GITHUB_PATH"
-      - name: Check native configuration contracts
-        run: python3 -m unittest discover -s tool -p 'test_ios_config.py'
-      - name: Build Swift host and Flutter iOS simulator app
-        run: bash tool/build_ios.sh simulator
-      - name: Verify bundle identity and package simulator app
+          python3 scripts/prepare.py --mode simulator --api-url ''
+          xcodegen generate
+      - name: Compile and test native SwiftUI app
         run: |
-          test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "../IOS app/build/ios/iphonesimulator/Runner.app"/Info.plist)" = com.autolinky.ios
-          ditto -c -k --sequesterRsrc --keepParent "../IOS app/build/ios/iphonesimulator/Runner.app" "../IOS app/build/ios/AutoLinky-simulator.zip"
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+          device=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; print(next(d["udid"] for ds in json.load(sys.stdin)["devices"].values() for d in ds if "iPhone" in d["name"]))')
+          xcodebuild -project AutoLinky.xcodeproj -scheme AutoLinky -configuration Debug -destination "platform=iOS Simulator,id=$device" -derivedDataPath .runtime/DerivedData -resultBundlePath .runtime/NativeTests.xcresult CODE_SIGNING_ALLOWED=NO test
+      - name: Package simulator app
+        run: ditto -c -k --sequesterRsrc --keepParent .runtime/DerivedData/Build/Products/Debug-iphonesimulator/AutoLinky.app .runtime/AutoLinky-simulator.zip
+      - name: Export native UI screenshots
+        if: always()
+        run: |
+          if test -d .runtime/NativeTests.xcresult; then
+            xcrun xcresulttool export attachments --path .runtime/NativeTests.xcresult --output-path .runtime/screenshots
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
         with:
-          name: AutoLinky-iOS-simulator
-          path: mobile apps/IOS app/build/ios/AutoLinky-simulator.zip
-          if-no-files-found: error
+          name: AutoLinky-native-iOS-verification
+          path: |
+            mobile apps/IOS app/.runtime/AutoLinky-simulator.zip
+            mobile apps/IOS app/.runtime/NativeTests.xcresult
+            mobile apps/IOS app/.runtime/screenshots
+          if-no-files-found: warn
           retention-days: 7

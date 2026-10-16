@@ -8,6 +8,7 @@ import '../../../app/router.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/updates/app_updates.dart';
+import '../../../core/updates/binary_updates.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../auto_apply/application/auto_apply_watcher.dart';
 import '../../auto_apply/presentation/pro_celebration.dart';
@@ -52,9 +53,9 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     final shell = widget.shell;
     final l10n = context.l10n;
     return Scaffold(
-      body: UpdateNoticeHost(
+      body: BinaryUpdateNoticeHost(child: UpdateNoticeHost(
         child: ProCelebrationHost(child: AutoApplyWatcher(child: shell)),
-      ),
+      )),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(
           border: Border(top: BorderSide(color: context.colors.outlineVariant)),

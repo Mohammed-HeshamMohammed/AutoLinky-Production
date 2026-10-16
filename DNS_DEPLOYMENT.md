@@ -20,6 +20,10 @@ The existing website `auto-linky.com` routes to the frontend on container port 8
 
 DNS resolves the hostname. Dokploy's domain route selects the application and terminates HTTPS. Both parts are needed. Follow the [official Dokploy domain instructions](https://docs.dokploy.com/docs/core/domains/others).
 
+Start Data with a reachable private PostgreSQL database and the required schema before starting Auth, App, Notify or Fetching. Those services check the configured `DATA_SERVICE_URL` at `/health/ready` during startup. In particular, `data.auto-linky.com` needs its own working DNS record and Dokploy route on container port 4105, and the endpoint must return HTTP 200. Once the dependencies are ready, start the remaining services and check Gateway readiness.
+
+A startup log with `code=DATA_SERVICE_NOT_READY` names `DATA_SERVICE_URL` as the setting to check. `reason=dns` and `cause_code=ENOTFOUND` indicate a hostname lookup failure; `connection_refused`, `timeout` and `tls` distinguish connection failures; `http_status` includes the bounded `upstream_status` such as 502 or 503. A plain `Service startup failed` line from an older image omits these details. The current logger emits only allowlisted diagnostics and never the dependency response body, raw error message, private URL or credentials.
+
 ## Runtime links
 
 Copy all required settings from each service's `.env.example`; [environment ownership and client settings](ENVIRONMENT_VARIABLES.md) explains the private/public boundary. The website also requires `PUBLIC_FIREBASE_*` runtime values for desktop sign-in. A hostname alone does not configure a service or Firebase provider.

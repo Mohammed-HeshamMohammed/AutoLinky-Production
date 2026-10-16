@@ -1,0 +1,3 @@
+export function urnTime(urn){const match=/^urn:li:(?:activity|ugcPost|share):(\d{15,20})$/.exec(urn||'');if(!match)return null;const n=Number(BigInt(match[1])>>22n),date=new Date(n);return Number.isFinite(+date)?date:null;}
+export function postTooOld(urn,now=new Date()){const date=urnTime(urn);return date!==null&&+date<+now-14*86400000;}
+export function listingTooOld(value,today=new Date()){const date=typeof value==='string'&&/^\d{4}-\d{2}-\d{2}/.test(value)?new Date(value.slice(0,10)+'T00:00:00Z'):null;if(!date||!Number.isFinite(+date)||date.toISOString().slice(0,10)!==value.slice(0,10))return false;return +date<+new Date(today.toISOString().slice(0,10)+'T00:00:00Z')-14*86400000;}

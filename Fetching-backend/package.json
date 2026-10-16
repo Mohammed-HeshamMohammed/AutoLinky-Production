@@ -1,0 +1,17 @@
+{
+  "name": "@autolinky/fetching-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env index.js",
+    "dev": "node --env-file-if-exists=.env --watch index.js"
+  },
+  "dependencies": {
+    "fastify": "5.12.7",
+    "he": "1.2.0"
+  }
+}

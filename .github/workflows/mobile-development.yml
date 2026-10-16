@@ -8,7 +8,7 @@ on:
         type: string
   push:
     branches: ['codex/ios-build']
-    paths: ['frontend-v2/shared/**', 'frontend-v2/Android app/**', 'frontend-v2/IOS app/**', '.github/workflows/mobile-development.yml', '!frontend-v2/shared/**/*.md', '!frontend-v2/Android app/**/*.md', '!frontend-v2/IOS app/**/*.md']
+    paths: ['mobile apps/shared/**', 'mobile apps/Android app/**', 'mobile apps/IOS app/**', '.github/workflows/mobile-development.yml', '!mobile apps/shared/**/*.md', '!mobile apps/Android app/**/*.md', '!mobile apps/IOS app/**/*.md']
 permissions:
   contents: read
 concurrency:
@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 45
     defaults:
       run:
-        working-directory: frontend-v2/shared
+        working-directory: mobile apps/shared
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: AutoLinky-Android-development
-          path: frontend-v2/Android app/build/app/outputs/flutter-apk/app-release.apk
+          path: mobile apps/Android app/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 7
   ios:
@@ -86,7 +86,7 @@ jobs:
     timeout-minutes: 45
     defaults:
       run:
-        working-directory: frontend-v2/shared
+        working-directory: mobile apps/shared
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -117,7 +117,7 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: AutoLinky-iOS-unsigned
-          path: frontend-v2/shared/build/mobile-unsigned/AutoLinky-unsigned.ipa
+          path: mobile apps/shared/build/mobile-unsigned/AutoLinky-unsigned.ipa
           if-no-files-found: error
           retention-days: 7
   release:
@@ -128,7 +128,7 @@ jobs:
       contents: write
     defaults:
       run:
-        working-directory: frontend-v2/shared
+        working-directory: mobile apps/shared
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -139,7 +139,7 @@ jobs:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: AutoLinky-*
-          path: frontend-v2/shared/.runtime/mobile/downloads
+          path: mobile apps/shared/.runtime/mobile/downloads
       - name: Verify both packages and create shared manifest
         run: python3 tool/mobile_release.py assemble
       - name: Publish development prerelease with both installers

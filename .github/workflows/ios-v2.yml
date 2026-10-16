@@ -2,7 +2,7 @@ name: iOS v2 build
 on:
   workflow_dispatch:
   pull_request:
-    paths: ['frontend-v2/shared/**', 'frontend-v2/IOS app/**', '.github/workflows/ios-v2.yml', '!frontend-v2/shared/**/*.md', '!frontend-v2/IOS app/**/*.md']
+    paths: ['mobile apps/shared/**', 'mobile apps/IOS app/**', '.github/workflows/ios-v2.yml', '!mobile apps/shared/**/*.md', '!mobile apps/IOS app/**/*.md']
 permissions:
   contents: read
 concurrency:
@@ -14,11 +14,11 @@ jobs:
     timeout-minutes: 45
     defaults:
       run:
-        working-directory: frontend-v2/shared
+        working-directory: mobile apps/shared
     env:
       FLUTTER_SUPPRESS_ANALYTICS: 'true'
       DART_SUPPRESS_ANALYTICS: 'true'
-      PUB_CACHE: ${{ github.workspace }}/frontend-v2/shared/.runtime/pub-cache
+      PUB_CACHE: ${{ runner.temp }}/autolinky-pub-cache
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -42,6 +42,6 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: AutoLinky-iOS-simulator
-          path: frontend-v2/IOS app/build/ios/AutoLinky-simulator.zip
+          path: mobile apps/IOS app/build/ios/AutoLinky-simulator.zip
           if-no-files-found: error
           retention-days: 7

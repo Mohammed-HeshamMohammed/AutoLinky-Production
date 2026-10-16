@@ -1,0 +1,13 @@
+{
+  "name": "Autolinky",
+  "short_name": "Autolinky",
+  "description": "AI job matching and application assistant for Android",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#070b1d",
+  "theme_color": "#070b1d",
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

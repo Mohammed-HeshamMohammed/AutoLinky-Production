@@ -33,11 +33,6 @@ enum ActivityNotifications {
         let request = BGAppRefreshTaskRequest(identifier: taskIdentifier); request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
         try? BGTaskScheduler.shared.submit(request)
     }
-    @MainActor static func check(api: APIClient, uid: String) async {
-        guard !uid.isEmpty, UserDefaults.standard.bool(forKey: "notifications") else { return }
-        let after = UserDefaults.standard.string(forKey: "activity.after.\(uid)") ?? Date().ISO8601Format()
-        do { let result = try await api.request("/v1/auto-apply/activity", query: [.init(name: "after", value: after)]); try Task.checkCancellation(); await publish(result, uid: uid) } catch { }
-    }
     static func refresh() async {
         defer { schedule() }
         guard UserDefaults.standard.bool(forKey: "notifications"), let value = Keychain.read("activity-device"), let bytes = value.data(using: .utf8), let record = try? JSONDecoder().decode(JSON.self, from: bytes), let base = Security.apiBase(record["base"].text), record["token"].text.hasPrefix("dv1_") else { return }
@@ -55,18 +50,26 @@ enum ActivityNotifications {
             await publish(result, uid: uid)
         } catch { }
     }
-    @MainActor private static func publish(_ result: JSON, uid: String) async {
+    @MainActor static func publish(_ result: JSON, uid: String) async {
         guard UserDefaults.standard.bool(forKey: "notifications"), let record = Keychain.read("activity-device"), let raw = record.data(using: .utf8), (try? JSONDecoder().decode(JSON.self, from: raw))?["uid"].text == uid else { return }
-        for item in result["items"].items {
+        let old = UserDefaults.standard.string(forKey: "activity.after.\(uid)") ?? ""
+        let formatter = ISO8601DateFormatter(); formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let oldDate = formatter.date(from: old) ?? .distantPast
+        let nowDate = formatter.date(from: result["now"].text) ?? .distantPast
+        guard nowDate >= oldDate else { return }
+        // Advance before awaiting notifications so a simultaneous foreground/background
+        // response cannot deliver the same batch twice.
+        if !result["now"].text.isEmpty { UserDefaults.standard.set(result["now"].text, forKey: "activity.after.\(uid)") }
+        for item in result["items"].items where (formatter.date(from: item["at"].text) ?? .distantPast) > oldDate {
+            guard !Task.isCancelled, Keychain.read("activity-device") == record else { return }
             let content = UNMutableNotificationContent()
             content.title = t(item["status"].text == "sent" ? "Application sent" : "Application needs attention")
             content.body = item["title"].text; content.sound = .default
             try? await UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: item["job_id"].text + "-" + item["status"].text, content: content, trigger: nil))
         }
-        if result["new_matches"].integer > 0 {
+        if result["new_matches"].integer > 0 && nowDate > oldDate && Keychain.read("activity-device") == record {
             let content = UNMutableNotificationContent(); content.title = t("New matching jobs"); content.body = t("Open AutoLinky to see your latest opportunities.")
             try? await UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "new-matches", content: content, trigger: nil))
         }
-        if !result["now"].text.isEmpty { UserDefaults.standard.set(result["now"].text, forKey: "activity.after.\(uid)") }
     }
 }

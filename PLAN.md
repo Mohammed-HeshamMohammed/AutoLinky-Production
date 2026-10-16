@@ -7,8 +7,8 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 - `migration-plan/`: copied specification at reference commit `2fd91a2`; source hashes and route inventory are under `evidence/`.
 - `backend-v2/`: new native-ESM JavaScript API, SQL, workers, Python extraction/inference boundaries, tests and deployment files.
 - `mobile apps/Android app/`: Android Flutter entry point and Kotlin/Gradle host. The browser counterpart lives in frontend-v2/apps/android/.
-- `mobile apps/IOS app/`: iOS Flutter entry point and Swift/Xcode host. The browser counterpart lives in frontend-v2/apps/ios/.
-- `mobile apps/shared/`: common Flutter screens, app logic, assets, translations, profiles, tests and release tools. Native and web entry points use this package.
+- `mobile apps/IOS app/`: independent native Swift/SwiftUI app, core Swift package, native resources/tests and Xcode build. Its browser counterpart remains separately implemented in frontend-v2/apps/ios/.
+- `mobile apps/shared/`: Flutter screens/logic for Android and browser entry points, plus common public release/configuration tools. Native iOS does not depend on its Dart package.
 - `frontend-v2/`: unified landing site plus Android/iOS browser app targets.
 
 ## Execution
@@ -22,14 +22,22 @@ API contracts, Firebase project/identities, original branding and one binary
 release feed. iOS remains unsigned for development. Environment-first and
 original-workspace preservation requirements still apply.
 
-- [ ] Replace the Flutter iOS runner with a native SwiftUI app and isolated build.
-- [ ] Port authentication, API/session isolation, onboarding/profile/CV, jobs and
+- [x] Replace the Flutter iOS runner with a native SwiftUI app and isolated build.
+- [x] Port authentication, API/session isolation, onboarding/profile/CV, jobs and
   matches, application channels/history, Gmail/auto-apply, settings and deletion.
-- [ ] Add native activity notifications, bilingual/RTL UI and common binary updates.
+- [x] Add native activity notifications, bilingual/RTL UI and common binary updates.
 - [ ] Verify core contracts and native UI on a macOS runner; prove packages contain
   no Flutter/Dart runtime. Build paired Android APK and unsigned native iOS IPA.
 - [ ] Update evidence/docs and commit/push to main. Real provider/device acceptance
   still requires the missing provider/origin/signing inputs.
+
+Initial native CI `38880929485` passed eight core tests, four simulator UI tests
+and a Debug simulator launch baseline (3.440 seconds average across three
+iterations, not a comparison with Flutter or a physical-device result). English,
+Arabic and fixture-navigation screenshots were inspected. Web CI `38880429327`,
+154 local Flutter tests, 13 configuration/release tests, analysis and the combined
+local web build passed. Final account/activity refinements and package checks
+are verified by the subsequent main runs recorded in native iOS evidence.
 
 ### Main branch and proposed backend boundaries (2026-10-16)
 
@@ -54,7 +62,7 @@ maintenance remains controlled operations work. The ADR is a proposal; the
 current API/sender/extractor structure is not five completed services. Feature
 ports, live provider traffic, production data transfer and cutover remain gated.
 
-### Unified web frontend and separate mobile apps (2026-10-16)
+### Historical: unified web frontend and separate mobile apps (2026-10-16)
 
 The user's latest layout supersedes the earlier placement of native projects inside frontend-v2. `frontend-v2/` is one web frontend containing the original landing pages and both browser app experiences, served from one origin. `mobile apps/Android app/`, `mobile apps/IOS app/` and `mobile apps/shared/` contain the native projects and the one shared Flutter package. The frontend browser entry points depend on that package rather than duplicating app logic.
 
@@ -68,7 +76,7 @@ The user's latest layout supersedes the earlier placement of native projects ins
 
 The iOS app retains its Swift host with Flutter screens. Android development signing and unsigned-iOS policy are preserved. Web CI `38873988872` and mobile CI `38873988916` passed for source `232ef50`; development installers 1.0.1 (1003) are published and their checksums match the verified native artifacts. Local frontend/API checks passed on port 8080. Native API/OTA, actual Firebase provider acceptance and production deployment remain pending. No data migration or production activation is included.
 
-### Separate mobile project folders (2026-10-16)
+### Historical: separate mobile project folders (2026-10-16)
 
 The former `frontend-v2/client/` has been split into the Android and iOS project folders above, with one shared Flutter package. Native identities, persistent Android development signing and unsigned-iOS policy stay the same. Build workflows and environment/source-mapping tools use the new paths. Assets and Shorebird settings are copied from the shared source into ignored app inputs before builds. No SwiftUI rewrite or data migration is included.
 
@@ -92,7 +100,7 @@ Local environment: unified website and browser apps at `http://localhost:8080`, 
 
 The broader implementation checklist below is retained for later phases.
 
-### iOS build environment (2026-10-16)
+### Historical: Flutter iOS build environment (2026-10-16)
 
 - [x] Keep the Swift iOS host and the selected `com.autolinky.ios` identity in the new client.
 - [x] Add Keychain Sharing, explicit Swift Package Manager configuration and generated Google callback wiring.
@@ -103,7 +111,7 @@ The broader implementation checklist below is retained for later phases.
 
 Instructions and current limits: `mobile apps/shared/IOS_BUILD.md`. [Xcode 26.6 build passed](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38813034776) for source commit `11d6794`; the downloaded simulator ZIP passed CRC, bundle/Firebase identity and arm64/x86_64 Mach-O checks. A signed device IPA and device sign-in remain unverified. Data migration remains deferred.
 
-### Paired mobile development releases (2026-10-16)
+### Historical: paired Flutter mobile development releases (2026-10-16)
 
 The user selected unsigned iOS output for development; Apple signing is deferred. Android uses one persistent development signing key, held only in ignored runtime storage and GitHub secrets. Both platforms share one version/commit, one development release manifest and the same embedded Shorebird update configuration. Plain Flutter development packages do not yet receive OTA patches; Shorebird account/baseline setup remains pending.
 

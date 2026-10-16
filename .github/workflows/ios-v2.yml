@@ -50,5 +50,7 @@ jobs:
             mobile apps/IOS app/.runtime/AutoLinky-simulator.zip
             mobile apps/IOS app/.runtime/NativeTests.xcresult
             mobile apps/IOS app/.runtime/screenshots
+            mobile apps/IOS app/AutoLinky.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 7

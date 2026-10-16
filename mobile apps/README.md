@@ -1,11 +1,27 @@
-# AutoLinky mobile apps
+# AutoLinky mobile clients
 
-Native application projects live outside the web frontend:
+| Folder | Runtime | Owns |
+| --- | --- | --- |
+| `Android app/` | Flutter/Dart with Android host | Android entry point, Gradle, installer and development signing |
+| `IOS app/` | Native Swift/SwiftUI | Independent native UI, Firebase auth, networking, files, notifications, Xcode build |
+| `shared/` | Dart/Flutter | Android and browser screens/logic; shared release/configuration tools |
+| `release-source.json` | Public metadata | One repository/channel/manifest for platform binary updates |
 
-- `Android app/`: Android Flutter entry point, Kotlin/Gradle host, Firebase Android registration and APK output.
-- `IOS app/`: Swift/Xcode host, Flutter entry point, Firebase iOS registration and iPhone build output.
-- `shared/`: one common Flutter package containing screens, business logic, assets, localization, profiles, tests and native release tools.
+The native iOS app neither depends on the shared Dart package nor bundles a
+Flutter engine. The iOS-style browser experience is a separate Flutter web app
+in `../frontend-v2/apps/ios/`; Android's browser experience is alongside it.
+Both browser apps stay integrated with the landing site.
 
-The unified web frontend in `../frontend-v2/` depends on this same shared package. Its browser counterparts are `../frontend-v2/apps/android/` and `../frontend-v2/apps/ios/`; their web hosts are generated from the frontend's `web-template/`. No native source is stored in the frontend folder.
+The clients share backend API contracts, the Firebase project, brand resources
+and release metadata. Python build helpers can reuse public configuration checks;
+those tools are not an application runtime. Each mobile binary has its own code.
 
-Run `python shared/tool/mobile_apps.py` here before native builds. It prepares ignored assets and the shared Shorebird configuration. Both native apps retain the same version/update policy; Android uses the existing persistent development key, and iOS remains unsigned during development. Private keys and caches remain in ignored runtime directories. See each app README and `shared/MOBILE_RELEASES.md` for build commands and verification limits.
+Android uses the persistent development certificate; iOS remains unsigned.
+Paired builds use one version/build/source commit, one release manifest and
+platform-specific checksums. The native iOS package is checked for absence of
+Flutter/Dart artifacts and for an arm64 Mach-O executable. Swift updates are
+binary releases; no Dart/Shorebird patch runtime is included in iOS.
+
+See each app README and `shared/MOBILE_RELEASES.md`. All private keys, generated
+settings, SDKs, caches and app build output remain ignored. Production data
+transfer, deployment and actual device/provider acceptance are separate gates.

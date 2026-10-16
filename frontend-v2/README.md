@@ -40,7 +40,7 @@ For the full isolated local stack, run `npm run env:build` then `npm run env:sta
 
 Build Docker from the repository root using `docker build -f frontend-v2/Dockerfile .`, so it can include the shared Dart package outside this folder. The runtime image serves only the final web build and Node handlers on port 8080. The Docker image and VPS deployment have not been verified here. Build-time settings are shown in `.env.example`; keep server-only values out of `APP_DEFINES` and `VITE_*`.
 
-Both browser targets use the registered Firebase web app and common backend. Real sign-in still requires Firebase Admin/provider/domain setup. Browser releases use web deployment and cache revalidation; native Shorebird OTA activation is a separate pending setup. Data migration remains deferred. The original `../frontend/` and the reference checkout are preserved.
+Both browser targets use the registered Firebase web app and common backend. Real sign-in still requires Firebase Admin/provider/domain setup. Browser releases use web deployment and cache revalidation. Native iOS is now an independent SwiftUI application; both mobile installers use one binary release feed, and the browser variants continue using their own Flutter web code. Data migration remains deferred. The original `../frontend/` and the reference checkout are preserved.
 
 ## Verified development result
 

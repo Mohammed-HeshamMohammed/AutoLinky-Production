@@ -27,6 +27,7 @@ enum Keychain {
 @MainActor final class Authentication: ObservableObject {
     @Published private(set) var uid: String?
     @Published private(set) var email: String = ""
+    @Published private(set) var initialized = false
     @Published var busy = false
     @Published var message: String?
     @Published var incomingLink: String?
@@ -36,14 +37,14 @@ enum Keychain {
     init(configuration: Configuration) {
         self.configuration = configuration
         #if DEBUG
-        if DebugFixtures.enabled { uid = "fixture-user"; email = "ui-test@example.com"; return }
+        if DebugFixtures.enabled { uid = "fixture-user"; email = "ui-test@example.com"; initialized = true; return }
         #endif
         listener = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             Task { @MainActor in
                 if let saved = Keychain.read("activity-device"), let data = saved.data(using: .utf8), let device = try? JSONDecoder().decode(JSON.self, from: data), device["uid"].text != user?.uid {
                     await ActivityNotifications.disable(api: nil)
                 }
-                self?.uid = user?.uid; self?.email = user?.email ?? ""
+                self?.uid = user?.uid; self?.email = user?.email ?? ""; self?.initialized = true
             }
         }
     }

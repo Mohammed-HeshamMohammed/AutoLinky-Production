@@ -91,6 +91,8 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Verify independent Swift core contracts
+        run: swift test --package-path "../IOS app/Core"
       - name: Install native project generator
         run: brew install xcodegen
       - name: Prepare common version and platform settings

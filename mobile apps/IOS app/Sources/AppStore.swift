@@ -16,6 +16,7 @@ import AutoLinkyCore
     @Published var showOnboarding = false
     @Published var revision = 0
     private let owner: String
+    private var activityAfter = Date(timeIntervalSinceNow: -60).ISO8601Format()
     init(auth: Authentication, api: APIClient? = nil, owner: String) {
         self.auth = auth; self.owner = owner
         var session = IsolatedSession.make()
@@ -86,4 +87,11 @@ import AutoLinkyCore
     }
     func refreshAuto() async throws { let result = try await api.request("/v1/auto-apply"); try validateOwner(); autoApply = result }
     func setAuto(_ fields: [String: JSON]) async throws { let result = try await api.request("/v1/auto-apply", method: "PUT", json: .object(fields)); try validateOwner(); autoApply = result }
+    func checkActivity() async throws {
+        let result = try await api.request("/v1/auto-apply/activity", query: [.init(name: "after", value: activityAfter)])
+        try validateOwner()
+        if !result["now"].text.isEmpty { activityAfter = result["now"].text }
+        if !result["items"].items.isEmpty || result["new_matches"].integer > 0 { revision += 1 }
+        await ActivityNotifications.publish(result, uid: owner)
+    }
 }

@@ -1,44 +1,36 @@
-# Paired development releases
+# Paired development installers
 
-The current output is an Android release APK signed with a persistent **development** key and an **unsigned iOS device IPA**. Apple certificates and profiles are not required for this development build. The unsigned IPA must be signed before it can be installed on an iPhone.
+Android is Flutter; iOS is an independent native SwiftUI app. Both use the public
+`mobile apps/release-source.json` repository/channel/manifest and the common
+`shared/pubspec.yaml` version/build policy. The iOS app does not consume Dart
+screens or require Flutter tooling. The iOS-style web application remains separate.
 
-Verified on 2026-10-16: [development release 1.0.1 (1003)](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/releases/tag/development-v1.0.1%2B1003), [successful paired CI run](https://github.com/Mohammed-HeshamMohammed/AutoLinky-Production/actions/runs/38873988916). Both downloaded packages passed SHA-256 and ZIP CRC checks. The iOS package is an unsigned arm64 `iPhoneOS` build, and both embedded update configurations match. The API origin is not configured in this initial release, and OTA patches remain inactive.
+`mobile-development.yml` builds Android on Ubuntu and unsigned Swift iOS on macOS.
+Each main code change or manual dispatch creates a new common build number.
+Keep the shared pubspec build base monotonic; the workflow run number is added.
+The current series is 1.1.0 with base 2000, above the prior Flutter-iOS builds.
 
-`.github/workflows/mobile-development.yml` builds both platforms from the same commit. It overrides both packages with the same version name and increasing build number, then publishes them together as a development prerelease in `Mohammed-HeshamMohammed/AutoLinky-Production`. Development prereleases never become the production/latest release.
+The Android signing key remains the existing persistent development key in
+GitHub secrets and ignored local runtime. No Apple signing key is required for
+the development IPA. Signing is required before iPhone installation.
 
-The native builds now run in `../Android app/` and `../IOS app/`. Common code and release tooling live here. `python tool/mobile_apps.py` prepares ignored per-app copies of canonical assets and Shorebird settings; CI does this before resolving either app. Each app has its own lockfile and output directory. Release 1.0.1 (1003), from source commit `232ef50`, verifies the native projects under the root `mobile apps/` folder. Browser counterparts are built by the unified `frontend-v2/` project and use the same shared Dart package.
+A release is published only after both packages pass identity/version and source
+checks. APK contents and the native IPA embed the same release-source object.
+The IPA must contain a native arm64 Mach-O executable, the registered iOS bundle
+ID, the common version/build and no Flutter/Dart engine/assets or debug auth
+fixture marker. One manifest lists both files, signing/installability flags,
+source commit, byte sizes and SHA-256 hashes. Published releases are immutable;
+the helper refuses to replace an already published tag.
 
-## Shared source
+The native Settings update page and Android's release update banner discover
+binary updates from this feed. They validate repository/channel, asset path,
+artifact filename and checksum metadata. Downloads open in the system browser;
+no downloaded executable or code patch is run inside either app. There is no
+active Shorebird patch release. GitHub API/network/rate-limit failures do not
+prevent normal app use. Browser updates use website deployment/cache revalidation.
 
-`mobile-release.json` is the common release policy. `pubspec.yaml` owns the version name. `shorebird.yaml` owns the single Shorebird app ID; neither platform gets a separate updater configuration. Packaging checks the **actual embedded Shorebird configuration in both APK and IPA**, along with their version/identity, before publication.
-
-Each paired release contains:
-
-- `AutoLinky-VERSION+BUILD-development.apk`
-- `AutoLinky-VERSION+BUILD-unsigned.ipa`
-- `autolinky-release.json`: both downloads, SHA-256 checksums, signing status, shared update source and source commit.
-- `sha256sums.txt`
-
-Both platform jobs must succeed. Uploads go to a draft first, and the prerelease becomes visible only after all four assets are present. The workflow refuses to replace a previously published release.
-
-## Current update behavior
-
-These development installers use the standard Flutter engine. **Shorebird OTA patches are not active yet**; the shared Shorebird configuration alone cannot activate them. No Shorebird token exists in this repository, and this workflow does not publish a Shorebird baseline or patch.
-
-When Shorebird access is configured, both platform baselines must use the same app ID, version, Flutter version and patch track. Use Shorebird builds for both platforms and preserve the same shared configuration. Native SDK or asset changes need new installers. The current plain Flutter installers must first be replaced by Shorebird-built baselines before code patches can reach them. See [Shorebird releases](https://docs.shorebird.dev/code-push/release/) and [CI without iOS signing](https://docs.shorebird.dev/code-push/ci/generic/#build-without-code-signing-in-restricted-environments).
-
-## Development signing
-
-The private Android development PKCS#12 file and its password are retained under ignored `.runtime/development-signing/`. GitHub Actions uses `ANDROID_DEV_KEYSTORE_BASE64` and `ANDROID_DEV_KEYSTORE_PASSWORD`; `ANDROID_DEV_CERT_SHA256` is the public certificate fingerprint used to verify each APK. Reusing this key lets one development APK update the previous development APK.
-
-Never regenerate that key for each CI runner. Gradle refuses a release APK without explicit signing settings, and CI verifies the certificate instead of silently using a new runner's debug key. No iOS signing key has been created.
-
-## API configuration
-
-Set the repository variable `MOBILE_API_BASE_URL` to a reachable HTTPS development API origin, or supply `api_base_url` when manually dispatching the workflow after it is on the default branch. Both profiles use that same API origin and the existing registered Firebase project, with each platform's own Firebase app ID.
-
-Until an API origin is supplied, development packages deliberately show the existing missing-configuration screen. No fictional public API URL is embedded. Email and Apple sign-in remain disabled in this initial profile until their domain/provider configuration is ready.
-
-Pushes to `codex/ios-build` build and release both development packages. The separate `ios-v2.yml` simulator job remains available for pull requests or manual use. The checked-in workflows and tools are sufficient to reproduce the installers; local runtime keys and build caches remain ignored.
-
-The 1003 publication initially received a 403 from the workflow token. The already connected GitHub account created its draft for the exact tested source commit, then only the failed publication job was rerun. No new token or repository permission was stored. GitHub documents additional authorization requirements for [creating releases that target workflow-changing commits](https://docs.github.com/en/rest/releases/releases#create-a-release).
+A mobile API URL can be supplied through the workflow input or repository
+`MOBILE_API_BASE_URL` variable. Otherwise the build shows setup instructions.
+Only reachable HTTPS is accepted for device APIs. API/provider/signing acceptance
+and real device background behavior remain separate from compilation and fixture
+tests. No production deployment, live mail, collection or data migration occurs.

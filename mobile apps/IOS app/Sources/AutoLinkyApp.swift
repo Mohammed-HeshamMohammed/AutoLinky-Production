@@ -1,6 +1,7 @@
 import SwiftUI
 import FirebaseCore
 import BackgroundTasks
+import UserNotifications
 import AutoLinkyCore
 
 @main struct AutoLinkyApp: App {
@@ -25,14 +26,16 @@ import AutoLinkyCore
     }
 }
 
-final class AppDelegate: NSObject, UIApplicationDelegate {
+final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
         BGTaskScheduler.shared.register(forTaskWithIdentifier: ActivityNotifications.taskIdentifier, using: nil) { task in
             let work = Task { await ActivityNotifications.refresh(); task.setTaskCompleted(success: !Task.isCancelled) }
             task.expirationHandler = { work.cancel() }
         }
         return true
     }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) { completionHandler([.banner, .sound]) }
 }
 
 struct RootView: View {
@@ -41,6 +44,7 @@ struct RootView: View {
     var body: some View {
         Group {
             if !configured { SetupView { configured = true } }
+            else if !auth.initialized { ProgressView(t("Loading your account…")) }
             else if let uid = auth.uid { SignedInView(auth: auth, uid: uid).id(uid) }
             else { WelcomeView() }
         }
@@ -77,7 +81,7 @@ struct SignedInView: View {
             while !Task.isCancelled {
                 await store.perform {
                     try await store.refreshAuto()
-                    if store.autoApply["enabled"].flag { await ActivityNotifications.check(api: store.api, uid: store.auth.uid ?? "") }
+                    if store.autoApply["enabled"].flag || UserDefaults.standard.bool(forKey: "notifications") { try await store.checkActivity() }
                 }
                 do { try await Task.sleep(for: .seconds(60)) } catch { return }
             }

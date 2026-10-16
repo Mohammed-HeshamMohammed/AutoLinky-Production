@@ -71,7 +71,7 @@ class BinaryUpdateNoticeHost extends ConsumerStatefulWidget {
 class _BinaryUpdateNoticeHostState extends ConsumerState<BinaryUpdateNoticeHost> {
   int? dismissed;
   @override Widget build(BuildContext context) {
-    final update = ref.watch(binaryReleaseProvider).value;
+    final update = ref.watch(binaryReleaseProvider).asData?.value;
     final arabic = Localizations.localeOf(context).languageCode == 'ar';
     return Column(children: [
       if (update != null && update.build != dismissed) SafeArea(bottom: false, child: MaterialBanner(

@@ -83,7 +83,7 @@ struct ApplicationsView: View {
             }
             if busy { ProgressView() }
             if cursor != nil && !busy { Button(t("Load more")) { Task { await load(reset: false) } } }
-        }.navigationTitle(t("Applications")).task { await load(reset: true) }.refreshable { await load(reset: true) }
+        }.navigationTitle(t("Applications")).task(id: store.revision) { await load(reset: true) }.refreshable { await load(reset: true) }
     }
     private func load(reset: Bool) async { busy = true; error = nil; defer { busy = false }; do { let result = try await store.api.request("/v1/applications", query: !reset && cursor != nil ? [.init(name: "cursor", value: cursor)] : []); try store.validateOwner(); var ids = Set((reset ? [] : items).map { $0["job"]["id"].text }); items = (reset ? [] : items) + result["items"].items.filter { ids.insert($0["job"]["id"].text).inserted }; cursor = result["next_cursor"].text.isEmpty ? nil : result["next_cursor"].text } catch { if !Task.isCancelled { self.error = AppStore.message(error) } } }
 }

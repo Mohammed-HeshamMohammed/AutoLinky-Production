@@ -7,7 +7,12 @@ export async function boundedJSON(response,maxBytes=256000){
 export class AIClient{
   constructor(config,{fetcher=fetch}={}){this.config=config;this.fetcher=fetcher;this.usage={input:0,output:0,cached:0,calls:0};}
   async ask({model,messages,maxTokens=1200,json=true,timeout=45000,temperature=0}){
-    if(!this.config.aiKey)throw new AIUnavailable('AI not configured');
+    if(!this.config.aiKey||!this.config.aiBaseUrl||!model)throw new AIUnavailable('AI not configured');
+    try{
+      const url=new URL(this.config.aiBaseUrl);
+      const local=!this.config.production&&url.protocol==='http:'&&['localhost','127.0.0.1','[::1]'].includes(url.hostname);
+      if((url.protocol!=='https:'&&!local)||url.username||url.password||url.search||url.hash)throw Error();
+    }catch{throw new AIUnavailable('AI provider URL is invalid');}
     let last;
     for(let attempt=0;attempt<2;attempt++){
       try{

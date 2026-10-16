@@ -10,3 +10,8 @@
 **/__pycache__/
 **/*.pyc
 /frontend/output/playwright/
+# Downloaded credentials and public registration inputs stay local.
+**/*firebase-adminsdk*.json
+/IOS-GoogleService-Info.plist
+/android-google-services.json
+/web-google-servies.json

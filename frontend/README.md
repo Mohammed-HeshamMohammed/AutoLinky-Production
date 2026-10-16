@@ -49,7 +49,7 @@ Build Docker from the repository root using `docker build -f frontend/Dockerfile
 
 Both browser targets use the registered Firebase web app and common backend. Real sign-in still requires Firebase Admin/provider/domain setup. Browser releases use web deployment and cache revalidation. Native iOS is now an independent SwiftUI application; both mobile installers use one binary release feed, and the browser variants continue using their own Flutter web code. Data migration remains deferred. The former frontend is retained at Git commit `52a996c` and in `.runtime/legacy-frontend-before-unification/` at the repository root. This `frontend/` is the single active web folder; the reference checkout remains read-only.
 
-For production DNS, the server-only `API_BASE_URL` example is `https://api.auto-linky.com`. The desktop continues using the same-origin proxy, which reaches Gateway through that hostname. The local launcher supplies its own loopback origin. [DNS records and service links](../DNS_DEPLOYMENT.md) lists the API hostnames the owner will configure.
+For production DNS, the server-only `API_BASE_URL` example is `https://appapi.auto-linky.com`. The desktop continues using the same-origin proxy, which reaches Gateway through that hostname. The local launcher supplies its own loopback origin. [DNS records and service links](../DNS_DEPLOYMENT.md) lists the API hostnames the owner will configure.
 
 ## Verified development result
 

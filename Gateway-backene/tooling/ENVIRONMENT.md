@@ -37,6 +37,8 @@ Sending, collection, processing and maintenance stay disabled in the local launc
 
 ## External setup still needed
 
+The owner's root registration downloads have been imported: web values, including measurement ID, are in ignored frontend/local environments; refreshed native SDK files provide Google client IDs and callback preparation. The local Admin copy matches the supplied private service account. Configuration checks and browser initialization pass; real sign-in/provider acceptance, Android signing fingerprints, reachable native API and the explicit administrator assignment remain deployment/device gates. No native build or live sign-in was attempted.
+
 For a fresh local profile, supply `PUBLIC_FIREBASE_*` in ignored `frontend/.env` or the isolated `website.env`; no tracked web Firebase registration supplies hidden defaults. Existing profiles keep their configured values. The desktop and both browser copies use the same runtime `/api/config` after the browser copies' next requested build. Native Firebase files remain embedded inputs.
 
 Environment configuration is documented at [the repository root](../../ENVIRONMENT_VARIABLES.md). The supplied Admin credential has now been validated for the expected project and configured in ignored local Auth storage/profiles. This confirms local configuration only; real account sign-in, provider/domain setup and administrator assignment still need acceptance. Public website Firebase settings are generated into the isolated website environment. AI/SMTP/release defaults come from owning `.env.example` templates; existing private overrides are preserved.

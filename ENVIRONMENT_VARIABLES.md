@@ -47,6 +47,8 @@ Marketing `VITE_SITE_URL`, `VITE_WHATSAPP_NUMBER`, `VITE_DOWNLOAD_ENABLED` and F
 
 ## Android and independent Swift iOS
 
+The refreshed Android JSON and iOS plist now include native Google OAuth registration. Native preparation derives the shared Google server audience from the public Android registration, uses the iOS plist's client ID/callback for Swift, and omits the iOS-only client ID from Android defines. These public identifiers are embedded at the next requested native build. Web Firebase registration continues to come only from frontend runtime environments. No Firebase Admin key is included in native inputs.
+
 Native clients need public settings embedded at packaging time; they cannot read a VPS `.env`. Existing public platform registration files remain SDK inputs. Android Flutter and Swift iOS retain their own app IDs/binaries and the common `mobile apps/release-source.json` update feed.
 
 To prepare public mobile JSON **without building**, use Node 24 from `mobile apps/shared/`:

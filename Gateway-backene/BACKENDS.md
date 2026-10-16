@@ -37,7 +37,7 @@ The launcher runs an isolated local PostgreSQL database, all six Node backends, 
 
 ## Deployment preparation
 
-Production API links use `https://api.auto-linky.com`, `https://auth.auto-linky.com`, `https://app.auto-linky.com`, `https://notify.auto-linky.com`, `https://fetching.auto-linky.com` and `https://data.auto-linky.com`, with `https://extractor.auto-linky.com` for the separate CV process. The owner creates the DNS records and Dokploy HTTPS routes. [DNS deployment mapping](../DNS_DEPLOYMENT.md) lists every port and environment link. Existing private caller keys remain required across these HTTPS connections; local tooling retains its own loopback configuration.
+Production API links use `https://appapi.auto-linky.com`, `https://auth.auto-linky.com`, `https://app.auto-linky.com`, `https://notify.auto-linky.com`, `https://fetching.auto-linky.com` and `https://data.auto-linky.com`, with `https://extractor.auto-linky.com` for the separate CV process. The owner creates the DNS records and Dokploy HTTPS routes. [DNS deployment mapping](../DNS_DEPLOYMENT.md) lists every port and environment link. Existing private caller keys remain required across these HTTPS connections; local tooling retains its own loopback configuration.
 
 `Gateway-backene/compose.yml` uses six independent images with each build context set to that backend's own folder. The optional sender reuses only Notify's image. Only the gateway publishes a loopback port; a TLS reverse proxy is required for an external deployment. Examples for running a future reviewed build from the repository root are `docker build -f Auth-backend/Dockerfile Auth-backend` and `docker compose -f Gateway-backene/compose.yml config`.
 

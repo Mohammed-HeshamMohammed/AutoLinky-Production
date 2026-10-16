@@ -2,7 +2,14 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: preserve Dokploy's frontend target (2026-10-16)
+## Current: production API links through DNS (2026-10-16)
+
+The owner will create DNS records for all API services. Use the existing `auto-linky.com` domain with configurable `api`, `auth`, `app`, `notify`, `fetching`, `data` and App-owned `extractor` origins. Update production environment examples and publish them to their component branches, preserving service-key and user/MFA authorization. Document the matching Dokploy container ports and HTTPS routing. Local environment files stay local; no DNS records, live deployments or app builds are created here. [DNS and runtime configuration](DNS_DEPLOYMENT.md).
+
+- [x] Replace production example API origins with HTTPS DNS names, preserve local launcher settings and supply the shared domain/port/environment mapping for every production branch.
+- [x] Pass 20 backend unit tests, 13 frontend tests and six ownership checks. Gateway and private authentication tests exercise the configured HTTPS origins with intercepted transport; live DNS, certificates and deployments remain unverified.
+
+## Previous milestone: preserve Dokploy's frontend target (2026-10-16)
 
 The deployment log fails before executing build steps because Dokploy requests target `Production`, while the unified Dockerfile only defined `build` and `runtime`. Add a final `Production` alias inheriting `runtime` so the existing target setting resolves to the complete Node image. Publish this compatibility fix to `main` and `frontend-production`; leave backend branch tips unchanged. Validate target resolution and the existing frontend tests without running an application/container build or dispatching a deployment.
 

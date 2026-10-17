@@ -4,15 +4,16 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 
 ## Current: shared console connection and automatic schema initialization (2026-10-17)
 
-The owner's latest direction supersedes the unimplemented physical split: console consumers use the same `PG_DATABASE_URL` as the application against the existing Database-User `postgres` database. The backend initializes missing schemas and applies new migration files on startup. Destructive wipe/recreate scope remains pending clarification because it removes stored records.
+The owner's latest direction supersedes the unimplemented physical split: console consumers use the same `PG_DATABASE_URL` as the application against the existing Database-User `postgres` database. The backend initializes missing schemas and applies new migration files on startup. The owner selected option 1: preserve records and apply migrations, with no automatic wipe/recreate in any environment.
 
 - [x] Share Data's connection pool between internal and console routes; ignore the retired console URL and close the pool once. Remove separate console configuration from local profile generation.
 - [x] Add migration 0014 with bounded Data console permissions while retaining Auth ownership, assigned-user/MFA gates and private-field restrictions.
 - [x] Add automatic empty-schema bootstrap and ordered upgrades under advisory locks, privileged private setup configuration and atomic migration/ledger commits.
 - [x] Verify concurrent initialization, unchanged restarts, existing-user preservation, failed-upgrade rollback/retry and refusal to overwrite unmanaged tables.
 - [x] Pass all 33 backend unit tests, 47 PostgreSQL integration tests, six service ownership checks and JavaScript source checks.
+- [x] Record the owner's data-preserving update policy in the architecture, runtime configuration guide and Data setup instructions. Existing behavior already follows this policy; no runtime change is required.
 
-Publication scope is main and the matching production source trees, including the updated frontend setup guide; UI code is unchanged. Decision and implementation boundaries: [shared database architecture](Data-baceknd/database/ARCHITECTURE.md). No app builds, live PostgreSQL writes, migrations, resets or deployment have been performed. Automatic destructive reset is not implemented while clarification is pending.
+Publication scope is main and the matching production source trees, including the updated frontend setup guide; UI code is unchanged. Decision and implementation boundaries: [shared database architecture](Data-baceknd/database/ARCHITECTURE.md). No app builds, live PostgreSQL writes, migrations, resets or deployment have been performed. Automatic destructive reset is prohibited by the selected policy.
 
 ## Previous: reuse existing Dokploy PostgreSQL (2026-10-17)
 

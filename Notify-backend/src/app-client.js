@@ -1,5 +1,5 @@
 import { apiClient } from '../lib/api.js';
-export function createAppClient({url=process.env.APP_SERVICE_URL,key=process.env.APP_READ_KEY,fetcher}={}){
+export function createAppClient({url='https://appapi.auto-linky.com',key=process.env.APP_READ_KEY,fetcher}={}){
   const call=apiClient(url,key,{fetcher});
   return {
     snapshot:(user_id,include_bytes=false)=>call('/internal/v1/messaging/snapshot',{user_id,include_bytes}),

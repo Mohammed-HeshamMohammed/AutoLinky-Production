@@ -46,7 +46,7 @@ export async function inspectBoundary(root,name){
   const docker=await readFile(resolve(own,'Dockerfile'),'utf8');
   const targets=[...docker.matchAll(/^FROM\s+\S+\s+AS\s+(\S+)\s*$/gmi)].map(match=>match[1]);
   if(!targets.includes('Production'))throw Error(`${name}: Docker target Production is missing`);
-  const allowed=new Set(['package.json','package-lock.json','index.js','app.js','routes.js','sender.js','reconcile.js','src','lib','database','scripts']);
+  const allowed=new Set(['package.json','package-lock.json','index.js','app.js','routes.js','sender.js','reconcile.js','src','lib','database','scripts',...(name==='app'?['extractor','extractor/requirements.txt']:[])]);
   const copied=new Set();
   for(const line of docker.split(/\r?\n/).filter(line=>line.startsWith('COPY '))){
     const args=line.split(/\s+/).slice(1).filter(arg=>!arg.startsWith('--'));
@@ -56,6 +56,7 @@ export async function inspectBoundary(root,name){
     }
   }
   if(!copied.has('index.js')||!copied.has('lib'))throw Error(`${name}: image is missing its owned backend`);
+  if(name==='app'&&(!copied.has('extractor')||!copied.has('extractor/requirements.txt')||!docker.includes('python3 -m venv')||!docker.includes('pip install --no-cache-dir -r extractor/requirements.txt')))throw Error('app: image is missing its on-demand parser or pinned Python dependencies');
   return {name,directory:backendFolders[name],source_files:visited.size,runtime_dependencies:Object.keys(pkg.dependencies||{}),image:`autolinky-${name}:development`,docker_target:'Production'};
 }
 

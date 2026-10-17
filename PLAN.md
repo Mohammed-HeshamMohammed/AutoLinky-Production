@@ -384,3 +384,13 @@ Mark tasks complete only for implemented, tested behavior. A source copy or scaf
 Production activation requires external inputs/evidence: a production export and identity/CV manifests, Firebase project/providers/service credentials, target VPS/DNS/backup access, real Android/iPhone sign-in checks, store releases, measured load, restore and cutover rehearsals. Never manufacture these results or run live collection/email as parity testing.
 
 The checked-in reference plans describe all releases and remain historical specifications. Release 1 keeps Gmail behavior; platform-mail schema and behavior belong to a separate opt-in migration/activation step. New backend JavaScript source, tests and tools use `.js` with native ESM, without a TypeScript compilation step.
+
+## On-demand CV parsing (2026-10-17)
+
+The owner requested that CV extraction run only when needed. App now starts its owned Python worker directly for each valid PDF/Word upload, receives bounded JSON through pipes and lets the worker exit afterward. This supersedes the separate extractor HTTP server, hostname, port and URL/key settings. The App Docker target includes Python, its virtual environment, pinned parser dependencies and worker source; the sole background startup remains Node.
+
+- [x] Remove the HTTP bridge and retired configuration from service config, examples and local launcher/status/verification.
+- [x] Keep one active parser per App process, a 10-second deadline, a 300 KB output cap and validation of file type, size, SHA-256, text, links and page count. Exclude application credentials from the worker environment.
+- [x] Pass 42 backend unit tests, including real PDF/Word parsing, idle/exit behavior, malformed/encrypted inputs, timeout termination, concurrency limits, missing Python and invalid/excess output; pass 47 PostgreSQL integration tests, all six service ownership checks and JavaScript syntax checks.
+
+Publish only this backend change and matching guides to main and backend production branches. Unrelated dashboard work stays outside this commit and no frontend production publication is part of this change. No app/container build, workflow dispatch, VPS deployment, email transmission or production database mutation was performed. App must be redeployed from this Docker source before production CV parsing uses the on-demand worker.

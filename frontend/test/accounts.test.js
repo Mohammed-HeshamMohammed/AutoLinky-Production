@@ -31,7 +31,7 @@ test('production serves private desktop shells and restricted admin CSP',async()
   try{
     for(const path of ['/login/','/signup/','/dashboard/','/jobs/','/ar/profile/','/admin/','/admin/users/','/admin/collector/','/admin/search-titles/','/ar/admin/sender/']){
       const response=await fetch(origin+path,{redirect:'manual'});assert.equal(response.status,200);assert.match(await response.text(),/Workspace shell/);assert.equal(response.headers.get('cache-control'),'no-store');assert.match(response.headers.get('x-robots-tag'),/noindex/);assert.equal(response.headers.get('x-frame-options'),'DENY');
-      const csp=response.headers.get('content-security-policy');assert.match(csp,/frame-ancestors 'none'/);assert.match(csp,/script-src 'self' https:\/\/www.gstatic.com;/);assert(!csp.split(';')[1].includes('unsafe-inline'));
+      const csp=response.headers.get('content-security-policy');assert.match(csp,/frame-ancestors 'none'/);assert.match(csp,/script-src 'self' https:\/\/apis.google.com https:\/\/www.gstatic.com;/);assert(!csp.split(';')[1].includes('unsafe-inline'));
     }
     assert.equal((await fetch(origin+'/login/',{method:'POST'})).status,405);
     assert.equal((await fetch(origin+'/app/',{redirect:'manual'})).headers.get('location'),'/dashboard/');

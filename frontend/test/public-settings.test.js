@@ -24,6 +24,6 @@ test('public configuration rejects script injection and credential URLs; CSP fol
   for(const changes of [{PUBLIC_FIREBASE_APP_ID:'1:123:ios:fixture'},{PUBLIC_FIREBASE_APP_ID:'1:456:web:fixture'},{PUBLIC_FIREBASE_MEASUREMENT_ID:'private-value'},{PUBLIC_FIREBASE_AUTH_DOMAIN:"auth.invalid; script-src *"},{PUBLIC_FIREBASE_SDK_BASE_URL:'javascript:alert(1)'},{PUBLIC_FIREBASE_SDK_BASE_URL:'https://name:secret@sdk.invalid/'},{PUBLIC_FIREBASE_SDK_BASE_URL:'https://sdk.invalid/?key=private'},{PUBLIC_FIREBASE_SDK_BASE_URL:'http://sdk.invalid/'}])assert.equal(availablePublicSettings({...publicEnv,...changes}),null);
   assert.equal(publicSettings({...publicEnv,PUBLIC_FIREBASE_MEASUREMENT_ID:'G-FIXTURE123'}).firebase.measurementId,'G-FIXTURE123');
   const csp=workspaceHeaders({settings:publicSettings(publicEnv)})['Content-Security-Policy'];
-  assert.match(csp,/script-src 'self' https:\/\/sdk.fixture.invalid;/);assert.match(csp,/frame-src https:\/\/accounts.google.com https:\/\/auth.fixture.invalid;/);
+  assert.match(csp,/script-src 'self' https:\/\/apis.google.com https:\/\/sdk.fixture.invalid;/);assert.match(csp,/frame-src https:\/\/accounts.google.com https:\/\/auth.fixture.invalid;/);
   assert(!csp.includes('auto-linky'));assert(!workspaceHeaders()['Content-Security-Policy'].includes('sdk.fixture.invalid'));
 });

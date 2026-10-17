@@ -41,6 +41,8 @@ export function remoteAuthentication({url,key,fetcher=fetch}){
 
 const startupMessages={
   DATA_SERVICE_NOT_READY:'Data readiness check failed; check DATA_SERVICE_URL and make the Data backend ready before starting this service.',
+  DATABASE_SCHEMA_NOT_READY:'Database schema differs from this release; verify the database target, bootstrap and reviewed Data migrations before startup.',
+  ENOENT:'A required runtime file or directory is missing from the deployed image.',
   EADDRINUSE:'The configured HOST/PORT is already in use.',
   EADDRNOTAVAIL:'HOST is not available in this container.',
   EACCES:'The process cannot bind to the configured HOST/PORT.',
@@ -52,22 +54,42 @@ const startupMessages={
   '28P01':'PostgreSQL authentication failed; check the private database credentials.',
   '28000':'PostgreSQL rejected the configured database role.',
   '3D000':'The configured PostgreSQL database does not exist.',
+  '3F000':'A required PostgreSQL schema is missing; check the database target, bootstrap and Data migrations.',
   '42501':'The database role lacks required permissions.',
   '42P01':'A required database table is missing; check Data migrations.',
   '42883':'A required database function is missing; check Data migrations.',
   '53300':'PostgreSQL has no available connections.',
   '57P03':'PostgreSQL is not ready to accept connections.',
 };
+function startupCause(error){
+  const pending=[error],seen=new Set();
+  for(let i=0;i<pending.length&&i<16;i++){
+    const current=pending[i];
+    if(!current||typeof current!=='object'||seen.has(current))continue;
+    seen.add(current);
+    if(typeof current.code==='string'&&Object.hasOwn(startupMessages,current.code))return current;
+    // These exact messages come from the pinned PostgreSQL driver, which omits a timeout code.
+    if(['Connection terminated due to connection timeout','timeout exceeded when trying to connect','timeout expired'].includes(current.message))return {code:'ETIMEDOUT'};
+    if(current.cause)pending.push(current.cause);
+    if(Array.isArray(current.errors))pending.push(...current.errors.slice(0,4));
+  }
+  return error;
+}
 export function startupDiagnostic(error){
-  const code=typeof error?.code==='string'&&Object.hasOwn(startupMessages,error.code)?error.code:undefined;
+  const source=startupCause(error);
+  const code=typeof source?.code==='string'&&Object.hasOwn(startupMessages,source.code)?source.code:undefined;
   const type=['Error','TypeError','RangeError','AggregateError','FastifyError'].includes(error?.name)?error.name:'Error';
   const fields={type,...(code?{code}:{}),detail:startupMessages[code]||'Startup failed; check the service runtime settings and required dependencies.'};
   if(code==='DATA_SERVICE_NOT_READY'){
     fields.dependency='data';fields.setting='DATA_SERVICE_URL';
-    fields.reason=['invalid_url','dns','connection_refused','timeout','tls','network','http_status'].includes(error.reason)?error.reason:'unavailable';
-    if(Number.isInteger(error.upstreamStatus)&&error.upstreamStatus>=100&&error.upstreamStatus<=599)fields.upstream_status=error.upstreamStatus;
+    fields.reason=['invalid_url','dns','connection_refused','timeout','tls','network','http_status'].includes(source.reason)?source.reason:'unavailable';
+    if(Number.isInteger(source.upstreamStatus)&&source.upstreamStatus>=100&&source.upstreamStatus<=599)fields.upstream_status=source.upstreamStatus;
     const causes=['ENOTFOUND','EAI_AGAIN','ECONNREFUSED','ECONNRESET','ETIMEDOUT','UND_ERR_CONNECT_TIMEOUT','ERR_TLS_CERT_ALTNAME_INVALID','CERT_HAS_EXPIRED','DEPTH_ZERO_SELF_SIGNED_CERT','SELF_SIGNED_CERT_IN_CHAIN','UNABLE_TO_VERIFY_LEAF_SIGNATURE'];
-    if(causes.includes(error.causeCode))fields.cause_code=error.causeCode;
+    if(causes.includes(source.causeCode))fields.cause_code=source.causeCode;
+  }
+  if(code==='DATABASE_SCHEMA_NOT_READY'){
+    fields.dependency='database';fields.setting='PG_DATABASE_URL';
+    fields.reason=['missing_state','catalog_drift','migration_count','migration_mismatch'].includes(source.reason)?source.reason:'unavailable';
   }
   return fields;
 }

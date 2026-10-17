@@ -16,8 +16,13 @@ export async function checkMigrations(db) {
   const expected = await migrationFiles();
   const { rows } = await db.query('SELECT * FROM migrator.runtime_schema_status()');
   const state = rows[0];
-  if (!state || state.actual !== state.expected || state.migrations?.length !== expected.length || state.migrations.some((row,i) => row.name !== expected[i].name || row.checksum !== expected[i].checksum)) {
-    throw new Error('Database schema differs from this release; run reviewed migrations before startup');
+  let reason;
+  if (!state) reason='missing_state';
+  else if (state.actual !== state.expected) reason='catalog_drift';
+  else if (!Array.isArray(state.migrations) || state.migrations.length !== expected.length) reason='migration_count';
+  else if (state.migrations.some((row,i) => row?.name !== expected[i].name || row?.checksum !== expected[i].checksum)) reason='migration_mismatch';
+  if (reason) {
+    throw Object.assign(new Error('Database schema differs from this release; run reviewed migrations before startup'),{code:'DATABASE_SCHEMA_NOT_READY',reason});
   }
 }
 

@@ -89,8 +89,6 @@ try {
     await child(name,process.execPath,entry,resolve(production,backendFolders[name]),{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});
     if(name==='data')await healthy(`http://127.0.0.1:${settings.ports.data}/health/ready`);
   }
-  await child('extractor',process.env.AUTOLINKY_PYTHON||'python',['-B',resolve(production,'App-backend/extractor/app.py')],resolve(production,'App-backend'),
-    {HOST:'127.0.0.1',PORT:String(settings.ports.extractor),CV_EXTRACTOR_KEY:settings.extractorKey,PYTHONPATH:resolve(backend,'.runtime/python-deps')});
   await child('website',process.execPath,['scripts/dev-server.mjs'],resolve(production,'frontend'),{...websiteEnv,HOST:'127.0.0.1',PORT:String(settings.ports.website)});
   clientServer=http.createServer((request,response)=>{
     const url=new URL(request.url,'http://local.client');
@@ -111,7 +109,7 @@ try {
     await unlink(controlFile);
   }
   await writeFile(controlFile,JSON.stringify({pid:process.pid,port:control.address().port})+'\n',{mode:0o600,flag:'wx'});controlOwned=true;
-  await Promise.all([healthy(`http://127.0.0.1:${settings.ports.api}/health/ready`),healthy(`http://127.0.0.1:${settings.ports.extractor}/health`),
+  await Promise.all([healthy(`http://127.0.0.1:${settings.ports.api}/health/ready`),
     healthy(`http://127.0.0.1:${settings.ports.website}/`),healthy(`http://127.0.0.1:${settings.ports.client}/`),
     ...['auth','app','messaging','fetching','data'].map(name=>healthy(`http://127.0.0.1:${settings.ports[name]}/health/ready`))]);
   console.log(`Environment ready. Client http://localhost:${settings.ports.client} | Website http://localhost:${settings.ports.website} | API http://localhost:${settings.ports.api}/health/ready`);

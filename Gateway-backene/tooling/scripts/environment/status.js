@@ -5,7 +5,7 @@ import pg from 'pg';
 import { readSettings,runtime,production,exists,databaseUrl } from './config.js';
 const settings=await readSettings();
 const services=await Promise.all([
-  ['api',`http://127.0.0.1:${settings.ports.api}/health/ready`],['extractor',`http://127.0.0.1:${settings.ports.extractor}/health`],
+  ['api',`http://127.0.0.1:${settings.ports.api}/health/ready`],
   ['website',`http://localhost:${settings.ports.website}/`],['client',`http://localhost:${settings.ports.client}/`],
   ...['auth','app','messaging','fetching','data'].map(name=>[name,`http://127.0.0.1:${settings.ports[name]}/health/ready`]),
 ].map(async([name,url])=>{

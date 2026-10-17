@@ -9,7 +9,7 @@ npm run env:setup
 npm run env:start
 ```
 
-The launcher starts the six APIs, local PostgreSQL and the App-owned Python CV extractor, then serves the current responsive React frontend on `http://localhost:8080`. Compatibility port 8081 redirects to React login. Development startup needs frontend Node dependencies and source, and never builds an application. It does not require Flutter, mobile files or existing native/browser bundles. Python belongs to CV extraction, not the web build.
+The launcher starts the six APIs and local PostgreSQL, then serves the current responsive React frontend on `http://localhost:8080`. App launches its Python CV worker only during uploads; there is no persistent extractor process or port. Install Python and the pinned `App-backend/extractor/requirements.txt` before testing actual parsing. Compatibility port 8081 redirects to React login. Development startup needs frontend Node dependencies and source, and never builds an application. It does not require Flutter, mobile files or existing native/browser bundles. Python belongs to CV extraction, not the web build.
 
 Use `npm run env:verify` for readiness, API/CORS/private authorization, React routes and compatibility redirects. `npm run env:stop` stops only the owned stack and retains local configuration/database state. `npm run env:build` is an explicit React web build command; do not run it unless a build is requested.
 

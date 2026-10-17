@@ -20,6 +20,14 @@ The service examples are the complete starting templates. Existing private crede
 
 Gmail app passwords and authenticator seeds belong to individual users. They remain encrypted database records; `MAIL_SECRET_KEY` and `ADMIN_TOTP_KEY` are environment-held encryption keys. Moving those records into one global `.env` would break account isolation. A Facebook App Secret remains in Firebase's Facebook provider configuration and never enters browser/mobile settings.
 
+## Existing Dokploy PostgreSQL
+
+The owner uses the existing Database-User service and its database named `postgres`. Backend examples use `/postgres`; the former `/autolinky` suffix was an example and no database with that name is required. Copy Database-User's Internal Host and internal port 5432 from Dokploy's [database connection panel](https://docs.dokploy.com/docs/core/databases/connection). The Internal Connection URL identifies the host, database and administrator credential; use the restricted owning role and its privately provisioned password for each runtime URL. A public API domain or external PostgreSQL port is unnecessary for connections between these applications and the database on the same network.
+
+Auth, App, Notify and Data connect to this same host/database using `autolinky_auth`, `autolinky_app`, `autolinky_messaging` and `autolinky_data`, respectively. Data's `CONSOLE_DATABASE_URL` uses `autolinky_console_data` against that same host/database so its console can query live app records. The separate existing Database-Console PostgreSQL service remains unchanged; pointing the console URL there would not make the application tables or live records available. Gateway and Fetching use private APIs rather than database URLs.
+
+These are connection templates, not initialization. The target database still needs the reviewed Data bootstrap, all 13 migrations and provisioned login passwords. Check existing contents and the production snapshot procedure before applying schema changes. The database administrator credential stays in private operations configuration; browser, mobile and runtime service environments do not receive it.
+
 ## Firebase runtime settings for all web clients
 
 Set these in the **frontend runtime** environment:

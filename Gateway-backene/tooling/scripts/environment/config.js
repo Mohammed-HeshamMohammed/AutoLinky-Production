@@ -36,7 +36,6 @@ export async function setup(){
     settings.serviceKeys[name]||=randomBytes(32).toString('hex');
   }
   for(const name of ['appRead','notifyRead','ingestion','identityData','admin','fetchAdmin','notifyAdmin'])settings.serviceKeys[name]||=randomBytes(32).toString('hex');
-  settings.passwords.autolinky_console_data||=randomBytes(24).toString('hex');
   settings.adminSessionSecret||=randomBytes(32).toString('hex');settings.adminTotpKey||=randomBytes(32).toString('base64url');
   await writeFile(settingsFile,JSON.stringify(settings,null,2)+'\n',{mode:0o600});
   const defaults=async folder=>parseEnv(await readFile(resolve(production,folder,'.env.example'),'utf8'));
@@ -79,12 +78,13 @@ export async function setup(){
     ...select(['LETTER_AI_MODEL','SMTP_HOST','SMTP_PORT','SMTP_SECURE','FREE_EMAILS','EMAIL_DAILY_LIMIT','AUTO_APPLY_HOURS','SENDER_TIMEZONE','UPGRADE_URL','UPGRADE_MESSAGE'])};
   for(const [name,values] of Object.entries({gateway,auth,app,messaging,
     fetching:{...common,PORT:settings.ports.fetching,SERVICE_KEY:settings.serviceKeys.fetching,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,FETCHING_ADMIN_KEY:settings.serviceKeys.fetchAdmin,COLLECTOR_ENABLED:'false',FETCH_PROVIDERS_JSON:'{}'},
-    data:{...common,PORT:settings.ports.data,PG_DATABASE_URL:databaseUrl(settings,'autolinky_data'),CONSOLE_DATABASE_URL:databaseUrl(settings,'autolinky_console_data'),SERVICE_KEY:settings.serviceKeys.data,
+    data:{...common,PORT:settings.ports.data,PG_DATABASE_URL:databaseUrl(settings,'autolinky_data'),SERVICE_KEY:settings.serviceKeys.data,
       AUTH_SERVICE_URL:authClient.AUTH_SERVICE_URL,AUTH_ADMIN_KEY:settings.serviceKeys.admin,NOTIFY_ADMIN_KEY:settings.serviceKeys.notifyAdmin,FETCHING_ADMIN_KEY:settings.serviceKeys.fetchAdmin,APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,MESSAGING_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,FETCHING_SERVICE_URL:`http://127.0.0.1:${settings.ports.fetching}`,
       DATA_IDENTITY_KEY:settings.serviceKeys.identityData,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'}})){
     const target=resolve(runtime,`${name}.env`);
     const saved=await exists(target)?parseEnv(await readFile(target,'utf8')):{};
     if(name==='fetching')delete saved.PG_DATABASE_URL;
+    if(name==='data')delete saved.CONSOLE_DATABASE_URL;
     await writeFile(target,envFile({SERVICE_NAME:name,...values,...saved}),{mode:0o600});
   }
   return settings;

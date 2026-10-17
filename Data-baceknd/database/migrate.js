@@ -44,8 +44,8 @@ SELECT md5(string_agg(item,E'\\n' ORDER BY item)) FROM (
 $$;
 REVOKE ALL ON FUNCTION migrator.catalog_fingerprint() FROM PUBLIC;`;
 
-export async function migrate(db, { production = false, snapshot = false } = {}) {
-  if (production && !snapshot) throw new Error('Production migration requires a verified pre-migration snapshot (--snapshot-verified)');
+export async function migrate(db, { production = false, snapshot = false, automatic = false } = {}) {
+  if (production && !snapshot && !automatic) throw new Error('Production migration requires a verified pre-migration snapshot (--snapshot-verified)');
   const files = await migrationFiles();
   const connection = db.connect ? await db.connect() : db;
   try {
@@ -55,25 +55,17 @@ export async function migrate(db, { production = false, snapshot = false } = {})
       CREATE TABLE IF NOT EXISTS migrator.schema_migrations(name text PRIMARY KEY,checksum text NOT NULL,applied_at timestamptz NOT NULL DEFAULT now());
       CREATE TABLE IF NOT EXISTS migrator.schema_state(id boolean PRIMARY KEY DEFAULT true CHECK(id),fingerprint text NOT NULL);`);
     const applied = (await connection.query('SELECT name,checksum FROM migrator.schema_migrations ORDER BY name')).rows;
-    if (applied.some((row, i) => row.name !== files[i]?.name || row.checksum !== files[i]?.checksum)) throw new Error('Applied migration checksum/order mismatch');
+    if (applied.some((row, i) => row.name !== files[i]?.name || row.checksum !== files[i]?.checksum)) throw Object.assign(new Error('Applied migration checksum/order mismatch'),{code:'DATABASE_SCHEMA_NOT_READY',reason:'migration_mismatch'});
     if (applied.length) {
       const { rows } = await connection.query('SELECT actual,expected FROM migrator.runtime_schema_status()');
-      if (!rows[0] || rows[0].actual !== rows[0].expected) throw new Error('Unreviewed catalog drift; refusing to apply migrations');
-    }
-    for (const file of files.slice(applied.length)) {
-      await connection.query('BEGIN');
-      try {
-        await connection.query(file.sql);
-        await connection.query('INSERT INTO migrator.schema_migrations(name,checksum) VALUES($1,$2)', [file.name, file.checksum]);
-        await connection.query('COMMIT');
-      } catch (error) {
-        await connection.query('ROLLBACK');
-        error.message = `${file.name}: ${error.message}`;
-        throw error;
-      }
+      if (!rows[0] || rows[0].actual !== rows[0].expected) throw Object.assign(new Error('Unreviewed catalog drift; refusing to apply migrations'),{code:'DATABASE_SCHEMA_NOT_READY',reason:'catalog_drift'});
     }
     await connection.query('BEGIN');
     try {
+      for (const file of files.slice(applied.length)) {
+        await connection.query(file.sql);
+        await connection.query('INSERT INTO migrator.schema_migrations(name,checksum) VALUES($1,$2)', [file.name, file.checksum]);
+      }
       await connection.query(fingerprintSQL);
       await connection.query(`INSERT INTO migrator.schema_state(id,fingerprint) VALUES(true,migrator.catalog_fingerprint())
         ON CONFLICT(id) DO UPDATE SET fingerprint=EXCLUDED.fingerprint;

@@ -72,7 +72,7 @@ try {
   try {
     // These objects belong exclusively to this task's local cluster.
     await bootstrap.query(await readFile(resolve(production,'Data-baceknd/database/bootstrap.sql'),'utf8'));
-    for(const role of ['autolinky_migrator','autolinky_api','autolinky_ops','autolinky_auth','autolinky_app','autolinky_messaging','autolinky_fetching','autolinky_data','autolinky_console_data']) {
+    for(const role of ['autolinky_migrator','autolinky_api','autolinky_ops','autolinky_auth','autolinky_app','autolinky_messaging','autolinky_fetching','autolinky_data']) {
       const {rows}=await bootstrap.query("SELECT format('ALTER ROLE %I LOGIN PASSWORD %L',$1::text,$2::text) AS sql",[role,settings.passwords[role]]);
       await bootstrap.query(rows[0].sql);
     }
@@ -83,7 +83,6 @@ try {
   for(const name of ['data','auth','app','messaging','fetching','gateway']){
     const values=parseEnv(await readFile(resolve(runtime,`${name}.env`),'utf8'));
     if(!['gateway','fetching'].includes(name)&&values.PG_DATABASE_URL!==databaseUrl(settings,'autolinky_'+name))throw Error(`The ${name} profile must use its isolated role/database`);
-    if(name==='data'&&values.CONSOLE_DATABASE_URL!==databaseUrl(settings,'autolinky_console_data'))throw Error('Console data must use the isolated console role/database');
     // Do not leak an inherited superuser URL, Firebase credential, mail key or
     // provider token into another service's process.
     await child(name,process.execPath,['index.js'],resolve(production,backendFolders[name]),{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});

@@ -27,12 +27,12 @@ before(async()=>{
   const config=loadConfig();
   auth=buildAuth({config,db:pools.auth,identity:{verify:async(token,sensitive)=>{verified.push({token,sensitive});const names={'owner-app-token':['owner-uid','owner@example.com'],'viewer-app-token':['viewer-uid','viewer@example.com'],'real-app-fixture':['app-user','person@example.com']};if(!names[token]||revoked&&token==='owner-app-token')throw Object.assign(Error('invalid'),{code:revoked?'auth/id-token-revoked':'auth/invalid-id-token'});return {uid:names[token][0],email:names[token][1],email_verified:true};}},identityData:{deleteUser:async()=>{}},schemaCheck:async()=>{},serviceKey:key,adminServiceKey:adminKey,adminOptions:{secret,totpKey:totpKey.toString('base64url'),now:()=>clock}});
   await auth.listen({host:'127.0.0.1',port:0});const authURL=`http://127.0.0.1:${auth.server.address().port}`;
-  data=buildData({env:{SERVICE_KEY:key,DATA_IDENTITY_KEY:key,DATA_INGESTION_KEY:key},db:pools.data,consoleDb:adminDb,adminProvider:remoteAdmin({url:authURL,key:adminKey})});await data.listen({host:'127.0.0.1',port:0});
+  data=buildData({env:{SERVICE_KEY:key,DATA_IDENTITY_KEY:key,DATA_INGESTION_KEY:key},db:pools.data,adminProvider:remoteAdmin({url:authURL,key:adminKey})});await data.listen({host:'127.0.0.1',port:0});
   const dataURL=`http://127.0.0.1:${data.server.address().port}`;
   gateway=buildGateway({targets:{auth:{url:authURL,key},data:{url:dataURL,key}}});
 });
 beforeEach(async()=>{await cluster.db.query("DELETE FROM public.api_rate_limits WHERE bucket LIKE 'admin:login:%'");});
-after(async()=>{await gateway?.close();await data?.close();await auth?.close();await cluster?.close();});
+after(async()=>{await gateway?.close();await data?.close();await auth?.close();await adminDb?.end();await cluster?.close();});
 test('only an assigned app user plus its verified authenticator can open administrator data',async()=>{
   const first=await call('/admin/api/login',{token:null,method:'POST',payload:{}});assert.equal(first.statusCode,200,first.body);
   assert.equal(first.json().enrollment,undefined);

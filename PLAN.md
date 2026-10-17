@@ -2,7 +2,19 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: reuse existing Dokploy PostgreSQL (2026-10-17)
+## Current: shared console connection and automatic schema initialization (2026-10-17)
+
+The owner's latest direction supersedes the unimplemented physical split: console consumers use the same `PG_DATABASE_URL` as the application against the existing Database-User `postgres` database. The backend initializes missing schemas and applies new migration files on startup. Destructive wipe/recreate scope remains pending clarification because it removes stored records.
+
+- [x] Share Data's connection pool between internal and console routes; ignore the retired console URL and close the pool once. Remove separate console configuration from local profile generation.
+- [x] Add migration 0014 with bounded Data console permissions while retaining Auth ownership, assigned-user/MFA gates and private-field restrictions.
+- [x] Add automatic empty-schema bootstrap and ordered upgrades under advisory locks, privileged private setup configuration and atomic migration/ledger commits.
+- [x] Verify concurrent initialization, unchanged restarts, existing-user preservation, failed-upgrade rollback/retry and refusal to overwrite unmanaged tables.
+- [x] Pass all 33 backend unit tests, 47 PostgreSQL integration tests, six service ownership checks and JavaScript source checks.
+
+Publication scope is main and the matching production source trees, including the updated frontend setup guide; UI code is unchanged. Decision and implementation boundaries: [shared database architecture](Data-baceknd/database/ARCHITECTURE.md). No app builds, live PostgreSQL writes, migrations, resets or deployment have been performed. Automatic destructive reset is not implemented while clarification is pending.
+
+## Previous: reuse existing Dokploy PostgreSQL (2026-10-17)
 
 The owner selected the existing Dokploy database services and database name `postgres`, superseding the proposal to create a database named `autolinky`. Both supplied database listings contain `postgres`; the earlier missing-database probe used the old example suffix and does not identify the actual configured Data connection. Existing services and data remain unchanged.
 

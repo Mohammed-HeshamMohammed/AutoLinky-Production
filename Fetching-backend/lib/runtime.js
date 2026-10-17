@@ -42,6 +42,8 @@ export function remoteAuthentication({url,key,fetcher=fetch}){
 const startupMessages={
   DATA_SERVICE_NOT_READY:'Data readiness check failed; check DATA_SERVICE_URL and make the Data backend ready before starting this service.',
   DATABASE_SCHEMA_NOT_READY:'Database schema differs from this release; verify the database target, bootstrap and reviewed Data migrations before startup.',
+  SCHEMA_BOOTSTRAP_CONFIG:'Check PG_DATABASE_URL, the private PG_MIGRATOR_URL for that same database, AUTO_SCHEMA_MIGRATIONS and DATABASE_RUNTIME_PASSWORDS_JSON.',
+  SCHEMA_INIT_NOT_EMPTY:'The target has unmanaged tables. Automatic initialization will not overwrite them; review its existing schema first.',
   ENOENT:'A required runtime file or directory is missing from the deployed image.',
   EADDRINUSE:'The configured HOST/PORT is already in use.',
   EADDRNOTAVAIL:'HOST is not available in this container.',

@@ -9,7 +9,7 @@ import { registerConsole } from './src/console.js';
 import { remoteAdmin } from './src/console-auth.js';
 import { initializeDatabase } from './database/initialize.js';
 
-export function buildData({env=process.env,db,consoleDb,adminProvider,logger=false}={}){
+export function buildData({env=process.env,db,consoleDb,adminProvider,appURL='https://appapi.auto-linky.com',logger=false}={}){
   const config=loadConfig(env,{identity:false});db||=createDatabase(config);
   const app=createOperations({role:'data',db,key:env.SERVICE_KEY,routeKeys:{[ingestionPath]:env.DATA_INGESTION_KEY,[identityPath]:env.DATA_IDENTITY_KEY,'/internal/v1/collection/control':env.DATA_INGESTION_KEY},bodyLimit:4*1024*1024+16384,logger,schemaSetup:env.PG_DATABASE_URL?()=>initializeDatabase(env,{runtimeDb:db}):undefined});
   registerIngestion(app,db);
@@ -17,7 +17,7 @@ export function buildData({env=process.env,db,consoleDb,adminProvider,logger=fal
   if(consoleDb||adminProvider||env.AUTH_ADMIN_KEY){
     consoleDb||=db;
     const auth=adminProvider||remoteAdmin({url:env.AUTH_SERVICE_URL,key:env.AUTH_ADMIN_KEY});
-    registerConsole(app,{db:consoleDb,auth,serviceURLs:{auth:env.AUTH_SERVICE_URL,app:env.APP_SERVICE_URL,messaging:env.MESSAGING_SERVICE_URL,fetching:env.FETCHING_SERVICE_URL,data:env.DATA_SERVICE_URL},operationServices:{fetching:env.FETCHING_SERVICE_URL,fetchingKey:env.FETCHING_ADMIN_KEY,messaging:env.MESSAGING_SERVICE_URL,messagingKey:env.NOTIFY_ADMIN_KEY}});
+    registerConsole(app,{db:consoleDb,auth,serviceURLs:{auth:env.AUTH_SERVICE_URL,app:appURL,messaging:env.MESSAGING_SERVICE_URL,fetching:env.FETCHING_SERVICE_URL,data:env.DATA_SERVICE_URL},operationServices:{fetching:env.FETCHING_SERVICE_URL,fetchingKey:env.FETCHING_ADMIN_KEY,messaging:env.MESSAGING_SERVICE_URL,messagingKey:env.NOTIFY_ADMIN_KEY}});
     if(consoleDb!==db)app.addHook('onClose',()=>consoleDb.end?.());
   }
   app.get('/internal/v1/data/status',async()=>({batches:(await db.query('SELECT status,count(*)::integer AS count FROM public.ingestion_batches GROUP BY status')).rows,records:(await db.query('SELECT count(*)::integer AS count FROM public.provider_records')).rows[0].count}));

@@ -65,26 +65,27 @@ export async function setup(){
   const authClient={AUTH_SERVICE_URL:`http://127.0.0.1:${settings.ports.auth}`,AUTH_SERVICE_KEY:settings.serviceKeys.auth};
   const gateway={...common,PORT:settings.ports.api,...authClient,...select(Object.keys(previous).filter(name=>name.startsWith('SERVICE_NOTICE'))),
     DATA_SERVICE_KEY:settings.serviceKeys.data,
-    APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,APP_SERVICE_KEY:settings.serviceKeys.app,
+    APP_SERVICE_KEY:settings.serviceKeys.app,
     MESSAGING_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,MESSAGING_SERVICE_KEY:settings.serviceKeys.messaging};
   const app={...common,...authClient,PORT:settings.ports.app,PG_DATABASE_URL:databaseUrl(settings,'autolinky_app'),SERVICE_KEY:settings.serviceKeys.app,APP_READ_KEY:settings.serviceKeys.appRead,
     NOTIFY_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,NOTIFY_READ_KEY:settings.serviceKeys.notifyRead,
     INTERNAL_DOWNLOADS_KEY:settings.statsKey,CV_EXTRACTOR_URL:backendEnv.CV_EXTRACTOR_URL,CV_EXTRACTOR_KEY:settings.extractorKey,
     AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||appDefaults.AI_BASE_URL,CV_AI_MODEL:previous.CV_AI_MODEL||appDefaults.CV_AI_MODEL};
   const messaging={...common,...authClient,PORT:settings.ports.messaging,PG_DATABASE_URL:databaseUrl(settings,'autolinky_messaging'),SERVICE_KEY:settings.serviceKeys.messaging,NOTIFY_READ_KEY:settings.serviceKeys.notifyRead,NOTIFY_ADMIN_KEY:settings.serviceKeys.notifyAdmin,
-    APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,APP_READ_KEY:settings.serviceKeys.appRead,
+    APP_READ_KEY:settings.serviceKeys.appRead,
     MAIL_SECRET_KEY:previous.MAIL_SECRET_KEY||settings.mailKey,SENDER_ENABLED:'false',AI_API_KEY:previous.AI_API_KEY||'',AI_BASE_URL:previous.AI_BASE_URL||notifyDefaults.AI_BASE_URL,
     LETTER_AI_MODEL:notifyDefaults.LETTER_AI_MODEL,SMTP_HOST:notifyDefaults.SMTP_HOST,SMTP_PORT:notifyDefaults.SMTP_PORT,SMTP_SECURE:notifyDefaults.SMTP_SECURE,UPGRADE_URL:notifyDefaults.UPGRADE_URL,
     ...select(['LETTER_AI_MODEL','SMTP_HOST','SMTP_PORT','SMTP_SECURE','FREE_EMAILS','EMAIL_DAILY_LIMIT','AUTO_APPLY_HOURS','SENDER_TIMEZONE','UPGRADE_URL','UPGRADE_MESSAGE'])};
   for(const [name,values] of Object.entries({gateway,auth,app,messaging,
     fetching:{...common,PORT:settings.ports.fetching,SERVICE_KEY:settings.serviceKeys.fetching,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,FETCHING_ADMIN_KEY:settings.serviceKeys.fetchAdmin,COLLECTOR_ENABLED:'false',FETCH_PROVIDERS_JSON:'{}'},
     data:{...common,PORT:settings.ports.data,PG_DATABASE_URL:databaseUrl(settings,'autolinky_data'),SERVICE_KEY:settings.serviceKeys.data,
-      AUTH_SERVICE_URL:authClient.AUTH_SERVICE_URL,AUTH_ADMIN_KEY:settings.serviceKeys.admin,NOTIFY_ADMIN_KEY:settings.serviceKeys.notifyAdmin,FETCHING_ADMIN_KEY:settings.serviceKeys.fetchAdmin,APP_SERVICE_URL:`http://127.0.0.1:${settings.ports.app}`,MESSAGING_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,FETCHING_SERVICE_URL:`http://127.0.0.1:${settings.ports.fetching}`,
+      AUTH_SERVICE_URL:authClient.AUTH_SERVICE_URL,AUTH_ADMIN_KEY:settings.serviceKeys.admin,NOTIFY_ADMIN_KEY:settings.serviceKeys.notifyAdmin,FETCHING_ADMIN_KEY:settings.serviceKeys.fetchAdmin,MESSAGING_SERVICE_URL:`http://127.0.0.1:${settings.ports.messaging}`,FETCHING_SERVICE_URL:`http://127.0.0.1:${settings.ports.fetching}`,
       DATA_IDENTITY_KEY:settings.serviceKeys.identityData,DATA_INGESTION_KEY:settings.serviceKeys.ingestion,DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'}})){
     const target=resolve(runtime,`${name}.env`);
     const saved=await exists(target)?parseEnv(await readFile(target,'utf8')):{};
     if(name==='fetching')delete saved.PG_DATABASE_URL;
     if(name==='data')delete saved.CONSOLE_DATABASE_URL;
+    delete saved.APP_SERVICE_URL;
     await writeFile(target,envFile({SERVICE_NAME:name,...values,...saved}),{mode:0o600});
   }
   return settings;

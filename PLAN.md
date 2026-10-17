@@ -2,7 +2,17 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: shared console connection and automatic schema initialization (2026-10-17)
+## Current: fixed App backend origin (2026-10-17)
+
+The owner clarified that `appapi.auto-linky.com` belongs to App, then requested that its address come from code instead of environments. Gateway, Notify/sender and Data's admin health view use the fixed `https://appapi.auto-linky.com` origin. This supersedes the earlier Gateway hostname interpretation. Private caller keys remain in environments. The frontend keeps its working Gateway connection; the mobile example uses the public website proxy. Local tooling injects App's loopback address directly, without a URL environment variable. No app builds or live environment/DNS/database mutations are authorized by this change.
+
+- [x] Fix App's production origin in every consumer and retire `APP_SERVICE_URL` from templates and local profiles.
+- [x] Retain explicit isolated development/test wiring and the existing service-key, Firebase and admin MFA gates.
+- [x] Verify fixed routing, ignored stale variables and explicit local API injection; pass 37 backend unit tests, 47 PostgreSQL integration tests, 18 frontend tests and all six service ownership checks.
+
+Publication targets main and the matching production source trees. The live pre-publication check reports App ready at `appapi` while the website's Gateway still reports App unavailable; the source fix requires redeploying Gateway, Notify and Data before authenticated production behavior can be verified. No app build, workflow dispatch or deployment is performed here.
+
+## Previous: shared console connection and automatic schema initialization (2026-10-17)
 
 The owner's latest direction supersedes the unimplemented physical split: console consumers use the same `PG_DATABASE_URL` as the application against the existing Database-User `postgres` database. The backend initializes missing schemas and applies new migration files on startup. The owner selected option 1: preserve records and apply migrations, with no automatic wipe/recreate in any environment.
 
@@ -91,11 +101,11 @@ See [environment variables and ownership](ENVIRONMENT_VARIABLES.md). Per-user Gm
 
 ## Previous: production API links through DNS (2026-10-16)
 
-The owner renamed the Gateway DNS label to `appapi`. Production Gateway origin is `https://appapi.auto-linky.com`; service-specific hostnames and API route paths stay as configured.
+Historical correction: this stage incorrectly interpreted `appapi` as Gateway. The owner confirmed on 2026-10-17 that `https://appapi.auto-linky.com` is App's origin. The current fixed-origin implementation above supersedes those example settings.
 
 - [x] Update the frontend server environment example and all active DNS guides to `appapi`; all 13 frontend tests pass. No build or DNS mutation is performed.
 
-The owner will create DNS records for all API services. Use the existing `auto-linky.com` domain with configurable `appapi`, `auth`, `app`, `notify`, `fetching`, `data` and App-owned `extractor` origins. Update production environment examples and publish them to their component branches, preserving service-key and user/MFA authorization. Document the matching Dokploy container ports and HTTPS routing. Local environment files stay local; no DNS records, live deployments or app builds are created here. [DNS and runtime configuration](DNS_DEPLOYMENT.md).
+The owner manages DNS records for API services under `auto-linky.com`. The corrected current map assigns `appapi` to App; Auth, Notify, Fetching, Data and the App-owned extractor retain their own origins. Gateway retains its existing connection from the website. Preserve service-key and user/MFA authorization and the matching Dokploy container ports. Local environment files stay local; no DNS records, live deployments or app builds are created here. [DNS and runtime configuration](DNS_DEPLOYMENT.md).
 
 - [x] Replace production example API origins with HTTPS DNS names, preserve local launcher settings and supply the shared domain/port/environment mapping for every production branch.
 - [x] Pass 20 backend unit tests, 13 frontend tests and six ownership checks. Gateway and private authentication tests exercise the configured HTTPS origins with intercepted transport; live DNS, certificates and deployments remain unverified.

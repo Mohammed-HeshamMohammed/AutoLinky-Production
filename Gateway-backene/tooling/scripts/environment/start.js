@@ -85,7 +85,8 @@ try {
     if(!['gateway','fetching'].includes(name)&&values.PG_DATABASE_URL!==databaseUrl(settings,'autolinky_'+name))throw Error(`The ${name} profile must use its isolated role/database`);
     // Do not leak an inherited superuser URL, Firebase credential, mail key or
     // provider token into another service's process.
-    await child(name,process.execPath,['index.js'],resolve(production,backendFolders[name]),{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});
+    const entry=['gateway','messaging','data'].includes(name)?[resolve(backend,'scripts/environment/service.js'),name]:['index.js'];
+    await child(name,process.execPath,entry,resolve(production,backendFolders[name]),{...values,NODE_ENV:'development',HOST:'127.0.0.1',SENDER_ENABLED:'false',COLLECTOR_ENABLED:'false',DATA_PROCESSING_ENABLED:'false',DATA_MAINTENANCE_ENABLED:'false'});
     if(name==='data')await healthy(`http://127.0.0.1:${settings.ports.data}/health/ready`);
   }
   await child('extractor',process.env.AUTOLINKY_PYTHON||'python',['-B',resolve(production,'App-backend/extractor/app.py')],resolve(production,'App-backend'),

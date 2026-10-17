@@ -2,7 +2,18 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: diagnose backend startup dependencies (2026-10-17)
+## Current: diagnose Data backend crash loops (2026-10-17)
+
+The supplied service list confirms the Node Data application exists with zero running replicas, while its PostgreSQL containers are running. The Data task exits with code 1 and a generic startup diagnostic. This does not establish the underlying database or schema failure. Missing PostgreSQL schemas, untyped schema mismatches, wrapped network errors and driver timeouts currently lose their actionable classification.
+
+- [x] Reproduce missing-schema and untyped-readiness diagnostic failures with focused regression tests.
+- [x] Preserve allowlisted PostgreSQL missing-schema/file codes, exact pinned-driver timeout classification and bounded nested connection causes in all independently owned runtime handlers. Never log raw messages, URLs, catalog contents or credentials.
+- [x] Give Data schema mismatches typed reasons while retaining the read-only check and startup rejection. Cover missing state, catalog drift, missing/mismatched migrations, successful checks and unchanged database query failures.
+- [x] Pass all 31 backend unit tests, all six ownership/target checks and backend JavaScript source checks.
+
+Publication scope is main and the six backend production branches, with exact selected-tree verification. The actual VPS cause, database target/roles/schema and live recovery remain unverified. Source publication does not run an application build, deployment, database migration or data import. Frontend and mobile source stay unchanged.
+
+## Previous: diagnose backend startup dependencies (2026-10-17)
 
 The supplied Auth runtime log shows only `type=Error` and `Service startup failed`: the existing handler drops the underlying dependency detail. Auth checks Data readiness before listening. Live checks found `data.auto-linky.com` returned NXDOMAIN through both Google and Cloudflare public DNS, which prevents this configured dependency check from succeeding. Production DNS, the Data route/database/schema and subsequent service startup remain operator actions.
 

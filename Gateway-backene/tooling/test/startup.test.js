@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { backendFolders } from '../support/layout.js';
+import { checkMigrations,migrationFiles } from '../../../Data-baceknd/database/migrate.js';
 
 const runtimes=await Promise.all(Object.values(backendFolders).map(async folder=>({folder,...await import(`../../../${folder}/lib/runtime.js`)})));
 const clients=await Promise.all(['Auth-backend','App-backend','Notify-backend','Fetching-backend'].map(async folder=>({folder,...await import(`../../../${folder}/lib/api.js`)})));
@@ -88,5 +89,58 @@ test('startup failure closes the app, exits unsuccessfully and logs only safe de
       for(const [signal,listeners] of Object.entries(originalSignals))for(const listener of process.listeners(signal))if(!listeners.has(listener))process.removeListener(signal,listener);
       process.exitCode=originalExitCode;
     }
+  }
+});
+
+test('startup diagnostics recognize missing schemas, driver timeouts and nested connection errors safely',()=>{
+  const coded=code=>Object.assign(new Error(secret),{code});
+  const cyclic=new Error(secret);cyclic.cause=cyclic;
+  const cases=[
+    [coded('3F000'),'3F000'],
+    [coded('ENOENT'),'ENOENT'],
+    [new Error('Connection terminated due to connection timeout',{cause:coded('ECONNRESET')}),'ETIMEDOUT'],
+    [new Error('timeout exceeded when trying to connect'),'ETIMEDOUT'],
+    [new Error(secret,{cause:new AggregateError([coded('ECONNREFUSED')],secret)}),'ECONNREFUSED'],
+    [cyclic,undefined],
+    [coded(secret),undefined],
+  ];
+  for(const {startupDiagnostic} of runtimes)for(const [error,code] of cases){
+    const fields=startupDiagnostic(error);
+    assert.equal(fields.code,code);assert(!JSON.stringify(fields).includes(secret));
+    if(code==='3F000')assert(fields.detail.includes('schema'));
+  }
+});
+
+test('Data schema readiness identifies mismatches without exposing catalog values or changing the database',async()=>{
+  const migrations=(await migrationFiles()).map(({name,checksum})=>({name,checksum}));
+  const ready={actual:'fixture-fingerprint',expected:'fixture-fingerprint',migrations};
+  const cases=[
+    [[], 'missing_state'],
+    [[{...ready,actual:secret}], 'catalog_drift'],
+    [[{...ready,migrations:null}], 'migration_count'],
+    [[{...ready,migrations:migrations.slice(1)}], 'migration_count'],
+    [[{...ready,migrations:migrations.map((row,i)=>i?row:{...row,checksum:secret})}], 'migration_mismatch'],
+  ];
+  for(const [rows,reason] of cases){
+    let queries=0;
+    await assert.rejects(checkMigrations({query:async sql=>{queries++;assert.equal(sql,'SELECT * FROM migrator.runtime_schema_status()');return {rows};}}),error=>{
+      assert.equal(error.code,'DATABASE_SCHEMA_NOT_READY');assert.equal(error.reason,reason);
+      assert(!JSON.stringify(error).includes(secret));assert(!error.message.includes(secret));
+      for(const {startupDiagnostic} of runtimes){
+        const fields=startupDiagnostic(error);
+        assert.equal(fields.code,'DATABASE_SCHEMA_NOT_READY');assert.equal(fields.dependency,'database');
+        assert.equal(fields.setting,'PG_DATABASE_URL');assert.equal(fields.reason,reason);
+        assert(!JSON.stringify(fields).includes(secret));
+      }
+      return true;
+    });
+    assert.equal(queries,1);
+  }
+  await checkMigrations({query:async()=>({rows:[ready]})});
+  const failure=Object.assign(new Error(secret),{code:'28P01'});
+  await assert.rejects(checkMigrations({query:async()=>{throw failure;}}),error=>error===failure);
+  for(const {startupDiagnostic} of runtimes){
+    const fields=startupDiagnostic({code:'DATABASE_SCHEMA_NOT_READY',reason:secret,message:secret});
+    assert.equal(fields.reason,'unavailable');assert(!JSON.stringify(fields).includes(secret));
   }
 });

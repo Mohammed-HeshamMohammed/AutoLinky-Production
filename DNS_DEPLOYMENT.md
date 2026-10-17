@@ -22,6 +22,8 @@ DNS resolves the hostname. Dokploy's domain route selects the application and te
 
 Start Data with a reachable private PostgreSQL database and the required schema before starting Auth, App, Notify or Fetching. Those services check the configured `DATA_SERVICE_URL` at `/health/ready` during startup. In particular, `data.auto-linky.com` needs its own working DNS record and Dokploy route on container port 4105, and the endpoint must return HTTP 200. Once the dependencies are ready, start the remaining services and check Gateway readiness.
 
+Data and the dashboard use one `PG_DATABASE_URL` against Database-User's existing `postgres` database; a separate console URL is not used. Data can initialize an empty database and apply all 14 migrations before listening. Set its private `PG_MIGRATOR_URL`, `DATABASE_RUNTIME_PASSWORDS_JSON` and `AUTO_SCHEMA_MIGRATIONS` as described in [environment configuration](ENVIRONMENT_VARIABLES.md). Readiness requests only check schema state. Schema changes do not trigger record wipes.
+
 A startup log with `code=DATA_SERVICE_NOT_READY` names `DATA_SERVICE_URL` as the setting to check. `reason=dns` and `cause_code=ENOTFOUND` indicate a hostname lookup failure; `connection_refused`, `timeout` and `tls` distinguish connection failures; `http_status` includes the bounded `upstream_status` such as 502 or 503. A plain `Service startup failed` line from an older image omits these details. The current logger emits only allowlisted diagnostics and never the dependency response body, raw error message, private URL or credentials.
 
 ## Runtime links

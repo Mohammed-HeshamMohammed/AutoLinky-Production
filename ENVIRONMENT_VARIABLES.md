@@ -7,14 +7,14 @@ Each service owns its environment. Copy its `.env.example` to an ignored `.env` 
 | Owner | Private values and configurable connections |
 | --- | --- |
 | `Auth-backend` | PostgreSQL, Firebase project/Admin credential path, Data URL/identity key, service key, admin session/encryption/RPC keys |
-| `Notify-backend` | PostgreSQL, Auth/Data/App URLs and scoped keys, `MAIL_SECRET_KEY`, `AI_API_KEY`, `AI_BASE_URL`, `LETTER_AI_MODEL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `UPGRADE_URL`, sender limits and activation flags |
+| `Notify-backend` | PostgreSQL, Auth/Data URLs and scoped keys, `APP_READ_KEY`, `MAIL_SECRET_KEY`, `AI_API_KEY`, `AI_BASE_URL`, `LETTER_AI_MODEL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `UPGRADE_URL`, sender limits and activation flags |
 | `App-backend` | PostgreSQL, Auth/Data/Notify URLs and scoped keys, download key, `CV_EXTRACTOR_URL`, `CV_EXTRACTOR_KEY`, `AI_API_KEY`, `AI_BASE_URL`, `CV_AI_MODEL` |
 | `Data-baceknd` | One runtime PostgreSQL connection for data/console, private setup/migration connection and initial login passwords, scoped identity/ingestion/admin keys, service URLs, maintenance/processing flags |
 | `Fetching-backend` | `FETCH_PROVIDERS_JSON` with approved HTTPS URLs/provider tokens/bounded settings, Data URL/ingestion key, service/admin keys and collector flags |
-| `Gateway-backene` | Auth/App/Notify/Data URLs and caller keys, exact CORS origins, rate limit and maintenance notices |
+| `Gateway-backene` | Auth/Notify/Data URLs and caller keys including `APP_SERVICE_KEY`, exact CORS origins, rate limit and maintenance notices |
 | `frontend` server | `API_BASE_URL`, `STATS_KEY`, `STATS_SALT`, `GITHUB_TOKEN`, `RELEASES_REPO`, `GITHUB_API_BASE_URL`, `GITHUB_WEB_BASE_URL`, optional `APK_FIXED_NAME` |
 
-The service examples are the complete starting templates. Existing private credentials already use environment variables; the remaining deployment-specific AI defaults, SMTP host, release addresses and desktop Firebase configuration now use them too. Gateway requires every target URL explicitly. AI requires an endpoint, credential and selected model. SMTP always verifies TLS, using mandatory STARTTLS when implicit TLS is off. Provider token requests never follow redirects.
+The service examples are the complete starting templates. Existing private credentials already use environment variables; deployment-specific AI defaults, SMTP host, release addresses and desktop Firebase configuration use them too. App's origin is fixed in Gateway, Notify and Data source at `https://appapi.auto-linky.com`, as requested by the owner. `APP_SERVICE_URL` is retired and ignored, including stale values. The other Gateway targets still require explicit URLs. All caller keys stay private in environments. Local tooling injects its own loopback App address directly without an App URL environment variable. AI requires an endpoint, credential and selected model. SMTP always verifies TLS, using mandatory STARTTLS when implicit TLS is off. Provider token requests never follow redirects.
 
 `GOOGLE_APPLICATION_CREDENTIALS` is a path to a private Firebase Admin JSON mounted only into Auth, for example `/run/secrets/firebase-admin.json`. Keep the file outside the image and Git. Downloaded `*firebase-adminsdk*.json` files and this task's root registration downloads are excluded from Git and Docker context. Only a private local Auth copy and its ignored profiles were configured here; branch publication does not upload that credential.
 

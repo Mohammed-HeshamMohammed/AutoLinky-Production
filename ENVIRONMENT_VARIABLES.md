@@ -9,7 +9,7 @@ Each service owns its environment. Copy its `.env.example` to an ignored `.env` 
 | `Auth-backend` | PostgreSQL, Firebase project/Admin credential path, Data URL/identity key, service key, admin session/encryption/RPC keys |
 | `Notify-backend` | PostgreSQL, Auth/Data/App URLs and scoped keys, `MAIL_SECRET_KEY`, `AI_API_KEY`, `AI_BASE_URL`, `LETTER_AI_MODEL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `UPGRADE_URL`, sender limits and activation flags |
 | `App-backend` | PostgreSQL, Auth/Data/Notify URLs and scoped keys, download key, `CV_EXTRACTOR_URL`, `CV_EXTRACTOR_KEY`, `AI_API_KEY`, `AI_BASE_URL`, `CV_AI_MODEL` |
-| `Data-baceknd` | PostgreSQL/console/migration/operations connections, scoped identity/ingestion/admin keys, service URLs, maintenance/processing flags |
+| `Data-baceknd` | One runtime PostgreSQL connection for data/console, private setup/migration connection and initial login passwords, scoped identity/ingestion/admin keys, service URLs, maintenance/processing flags |
 | `Fetching-backend` | `FETCH_PROVIDERS_JSON` with approved HTTPS URLs/provider tokens/bounded settings, Data URL/ingestion key, service/admin keys and collector flags |
 | `Gateway-backene` | Auth/App/Notify/Data URLs and caller keys, exact CORS origins, rate limit and maintenance notices |
 | `frontend` server | `API_BASE_URL`, `STATS_KEY`, `STATS_SALT`, `GITHUB_TOKEN`, `RELEASES_REPO`, `GITHUB_API_BASE_URL`, `GITHUB_WEB_BASE_URL`, optional `APK_FIXED_NAME` |
@@ -19,6 +19,16 @@ The service examples are the complete starting templates. Existing private crede
 `GOOGLE_APPLICATION_CREDENTIALS` is a path to a private Firebase Admin JSON mounted only into Auth, for example `/run/secrets/firebase-admin.json`. Keep the file outside the image and Git. Downloaded `*firebase-adminsdk*.json` files and this task's root registration downloads are excluded from Git and Docker context. Only a private local Auth copy and its ignored profiles were configured here; branch publication does not upload that credential.
 
 Gmail app passwords and authenticator seeds belong to individual users. They remain encrypted database records; `MAIL_SECRET_KEY` and `ADMIN_TOTP_KEY` are environment-held encryption keys. Moving those records into one global `.env` would break account isolation. A Facebook App Secret remains in Firebase's Facebook provider configuration and never enters browser/mobile settings.
+
+## Existing Dokploy PostgreSQL
+
+The owner uses the existing Database-User service and its database named `postgres`. Backend examples use `/postgres`; the former `/autolinky` suffix was an example and no database with that name is required. Copy Database-User's Internal Host and internal port 5432 from Dokploy's [database connection panel](https://docs.dokploy.com/docs/core/databases/connection). The Internal Connection URL identifies the host, database and administrator credential; use the restricted owning role and its privately provisioned password for each runtime URL. A public API domain or external PostgreSQL port is unnecessary for connections between these applications and the database on the same network.
+
+Auth, App, Notify and Data connect to this same host/database using `autolinky_auth`, `autolinky_app`, `autolinky_messaging` and `autolinky_data`, respectively. Data's console routes reuse its `PG_DATABASE_URL` and pool. Remove the retired `CONSOLE_DATABASE_URL` from deployment settings; existing values are ignored. The separate Database-Console PostgreSQL service remains unchanged. Gateway and Fetching use private APIs rather than database URLs.
+
+Data initializes missing schemas and applies new migration files on startup when `AUTO_SCHEMA_MIGRATIONS=true` (the default). Configure its private `PG_MIGRATOR_URL` with Database-User's Internal Connection URL for initial bootstrap; it must identify the same physical host/database as Data's runtime URL. First bootstrap needs an administrator connection. Set `DATABASE_RUNTIME_PASSWORDS_JSON` with the Auth/App/Notify role passwords matching those services' `PG_DATABASE_URL` settings; Data's own role password comes from its runtime URL. A provisioned migration login can handle later upgrades. These privileged setup values belong only in Data's private environment, never in the frontend, mobile inputs or another runtime service.
+
+All 14 migrations run under the migration role and database advisory lock. Pending SQL and ledger changes commit together, and failed migrations roll back. Restarting an already current database performs readiness checks without setup DDL. Health probes do not migrate. Setting `AUTO_SCHEMA_MIGRATIONS=false` makes startup check-only. Automatic updates preserve records and reject unmanaged existing tables, edited applied migrations and unexpected catalog drift; automatic wipe/recreate remains pending clarification. The manual migration CLI's production snapshot gate is retained.
 
 ## Firebase runtime settings for all web clients
 

@@ -12,11 +12,12 @@ export function destination(path){
   return null;
 }
 
-export function gatewayTargets(env=process.env){
+export function gatewayTargets(env=process.env,{appURL='https://appapi.auto-linky.com'}={}){
   return Object.fromEntries(['auth','app','messaging','data'].map(name=>{
     const prefix=name.toUpperCase();
-    if(!env[`${prefix}_SERVICE_URL`])throw Error(`${prefix}_SERVICE_URL is required`);
-    const url=privateOrigin(env[`${prefix}_SERVICE_URL`]),key=env[`${prefix}_SERVICE_KEY`];
+    const origin=name==='app'?appURL:env[`${prefix}_SERVICE_URL`];
+    if(!origin)throw Error(`${prefix}_SERVICE_URL is required`);
+    const url=privateOrigin(origin),key=env[`${prefix}_SERVICE_KEY`];
     if(!key||key.length<32)throw Error(`${prefix}_SERVICE_KEY is required`);
     return [name,{url,key}];
   }));

@@ -18,7 +18,7 @@ test('gateway routes contracts, forwards exact CV bytes and replaces untrusted s
     const bytes=Buffer.from([0,255,1,2,3]);
     const result=await app.inject({method:'POST',url:'/v1/cv?name=resume.pdf',payload:bytes,headers:{'content-type':'application/pdf',authorization:'Bearer user','x-service-key':'forged','x-user-id':'forged'}});
     assert.equal(result.statusCode,201);assert.equal(result.headers['x-request-id'],'owned');
-    assert.equal(calls[0].url,'https://app.auto-linky.com/v1/cv?name=resume.pdf');assert.deepEqual(calls[0].body,bytes);
+    assert.equal(calls[0].url,'https://appapi.auto-linky.com/v1/cv?name=resume.pdf');assert.deepEqual(calls[0].body,bytes);
     assert.equal(calls[0].headers['x-service-key'],targets.app.key);assert.equal(calls[0].headers['x-user-id'],undefined);
     assert.equal((await app.inject({method:'POST',url:'/internal/v1/session',payload:{method:'DELETE'}})).statusCode,404);
     const previous=calls.length;

@@ -1,6 +1,6 @@
 # API domains and deployment configuration
 
-The owner will create DNS records for each API. The production examples use the existing project domain, `auto-linky.com`; every service origin is an environment setting and can be replaced if the final domain differs. DNS records and live Dokploy routes have not been created or verified by this source change.
+The production services use the existing project domain, `auto-linky.com`. App's address is fixed in source at `https://appapi.auto-linky.com`; the other service connections remain environment settings. The owner manages DNS records and Dokploy routes.
 
 ## Records and Dokploy targets
 
@@ -8,15 +8,15 @@ Create an `A` record for each API host below, pointing to the public IPv4 addres
 
 | DNS host | HTTPS origin | Application | Container port |
 | --- | --- | --- | --- |
-| `appapi` | `https://appapi.auto-linky.com` | Gateway | 4100 |
+| Gateway's existing internal address or separately assigned hostname | Preserve the frontend's working Gateway origin | Gateway | 4100 |
 | `auth` | `https://auth.auto-linky.com` | Auth | 4101 |
-| `app` | `https://app.auto-linky.com` | App | 4102 |
+| `appapi` | `https://appapi.auto-linky.com` | App | 4102 |
 | `notify` | `https://notify.auto-linky.com` | Notify | 4103 |
 | `fetching` | `https://fetching.auto-linky.com` | Fetching | 4104 |
 | `data` | `https://data.auto-linky.com` | Data | 4105 |
 | `extractor` | `https://extractor.auto-linky.com` | Python CV extractor owned by App | 4001 |
 
-The existing website `auto-linky.com` routes to the frontend on container port 8080. The extractor is a separate process from the Node App API; its source is under `App-backend/extractor/`. Gateway is the `appapi` hostname, so a second gateway hostname is unnecessary.
+The existing website `auto-linky.com` routes to the frontend on container port 8080. The extractor is a separate process from the Node App API; its source is under `App-backend/extractor/`. `appapi` belongs to App, not Gateway. Preserve the frontend's currently working Gateway connection; do not point it directly at App or create an `app` record from the retired examples.
 
 DNS resolves the hostname. Dokploy's domain route selects the application and terminates HTTPS. Both parts are needed. Follow the [official Dokploy domain instructions](https://docs.dokploy.com/docs/core/domains/others).
 
@@ -30,16 +30,18 @@ A startup log with `code=DATA_SERVICE_NOT_READY` names `DATA_SERVICE_URL` as the
 
 Copy all required settings from each service's `.env.example`; [environment ownership and client settings](ENVIRONMENT_VARIABLES.md) explains the private/public boundary. The website also requires `PUBLIC_FIREBASE_*` runtime values for desktop sign-in. A hostname alone does not configure a service or Firebase provider.
 
-The frontend server sets `API_BASE_URL=https://appapi.auto-linky.com`. Desktop `/v1/` and `/admin/api/` requests reach that HTTPS gateway through the existing same-origin frontend proxy. The browser receives the normal Firebase identity token and, after verification, its own MFA session; it receives no inter-service key. Mobile clients can use the same API hostname. The responsive React client uses the website proxy on both desktop and phone browsers; native apps embed their own public Gateway origin.
+The frontend server's `API_BASE_URL` must target Gateway on port 4100, using its existing internal Docker address or a separately configured HTTPS origin. Keep its working deployment value. Desktop `/v1/` and `/admin/api/` requests reach Gateway through the existing same-origin frontend proxy. The browser receives the normal Firebase identity token and, after verification, its own MFA session; it receives no inter-service key. The responsive React client uses this proxy on both desktop and phone browsers. Native clients can use `https://auto-linky.com`, which exposes these same Gateway routes through the website proxy.
+
+Gateway, Notify (including its sender) and Data's console health view use the fixed App origin `https://appapi.auto-linky.com`. They ignore any old `APP_SERVICE_URL` variable; remove it from deployment environments to avoid confusion. `APP_SERVICE_KEY` and `APP_READ_KEY` remain private environment values and must match App's corresponding keys. Local tooling injects a loopback App address directly in code; production entry points always use the fixed HTTPS address.
 
 Each backend's `.env.example` now links to the DNS origins in the table:
 
-- Gateway: `AUTH_SERVICE_URL`, `APP_SERVICE_URL`, `MESSAGING_SERVICE_URL` (Notify), `DATA_SERVICE_URL`.
+- Gateway: `AUTH_SERVICE_URL`, `MESSAGING_SERVICE_URL` (Notify), `DATA_SERVICE_URL`.
 - Auth: `DATA_SERVICE_URL`.
 - App: `AUTH_SERVICE_URL`, `DATA_SERVICE_URL`, `NOTIFY_SERVICE_URL`, `CV_EXTRACTOR_URL`.
-- Notify: `AUTH_SERVICE_URL`, `DATA_SERVICE_URL`, `APP_SERVICE_URL`.
+- Notify: `AUTH_SERVICE_URL`, `DATA_SERVICE_URL`.
 - Fetching: `DATA_SERVICE_URL`.
-- Data: `AUTH_SERVICE_URL`, `APP_SERVICE_URL`, `MESSAGING_SERVICE_URL` (Notify), `FETCHING_SERVICE_URL`, `DATA_SERVICE_URL`.
+- Data: `AUTH_SERVICE_URL`, `MESSAGING_SERVICE_URL` (Notify), `FETCHING_SERVICE_URL`, `DATA_SERVICE_URL`.
 
 Copy the settings into the corresponding Dokploy runtime environments and supply the existing private credentials there. Hostnames have no path suffix or container-port suffix. The local environment launcher continues to generate its own loopback configuration for development; it does not depend on public DNS.
 
@@ -47,6 +49,6 @@ Copy the settings into the corresponding Dokploy runtime environments and supply
 
 Every service keeps its existing caller keys, route-specific keys and Firebase/MFA checks. HTTPS service origins change how a server reaches its peer; they do not grant access. Preserve `X-Service-Key`, `Authorization`, `X-Admin-Session`, `X-Admin-Elevation`, `X-Extractor-Key` and the existing request bodies when configuring reverse proxies. Fetching/Data/Notify controls remain authenticated and disabled by default where their environment switches require it. Databases retain their private PostgreSQL connections.
 
-After DNS, certificates, environments and application deployments are ready, check `/health/ready` on each Node API origin. The extractor's health endpoint is `/health`. Then verify a normal user request through `https://appapi.auto-linky.com/v1/me` and the assigned-user plus authenticator admin flow. Unauthenticated health responses alone do not prove account access, private service keys, email delivery or a completed data migration.
+After updating the affected source deployments, check `https://appapi.auto-linky.com/health/ready` and `https://auto-linky.com/health/ready`; Gateway's services map must report App as ready. The extractor's health endpoint is `/health`. Then verify a signed-in user request through `https://auto-linky.com/v1/me`, profile/CV/jobs/auto-apply and the assigned-user plus authenticator admin flow. Unauthenticated health responses alone do not prove account access, private service keys, email delivery or a completed data migration.
 
 No app/container build, workflow dispatch, DNS mutation or VPS deployment is performed by publishing these configuration examples.

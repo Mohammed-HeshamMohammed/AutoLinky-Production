@@ -2,7 +2,17 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: diagnose Data backend crash loops (2026-10-17)
+## Current: reuse existing Dokploy PostgreSQL (2026-10-17)
+
+The owner selected the existing Dokploy database services and database name `postgres`, superseding the proposal to create a database named `autolinky`. Both supplied database listings contain `postgres`; the earlier missing-database probe used the old example suffix and does not identify the actual configured Data connection. Existing services and data remain unchanged.
+
+- [x] Update Auth/App/Notify/Data connection templates to `/postgres` with an explicit Database-User Internal Host placeholder and preserve separate restricted roles. Align private operations examples with that database name.
+- [x] Document that the current console queries live application records through a separate role in the same database; the separate Database-Console instance does not automatically share data.
+- [x] Retain required bootstrap/migrations and private role provisioning as production operations; no automatic initialization or administrator runtime credentials.
+
+Publication scope is main and the six backend production branches. Validate the dotenv/URL fields and exact published trees without building apps. Private live URLs, existing database schemas/roles, migrations and live recovery remain unverified.
+
+## Previous: diagnose Data backend crash loops (2026-10-17)
 
 The supplied service list confirms the Node Data application exists with zero running replicas, while its PostgreSQL containers are running. The Data task exits with code 1 and a generic startup diagnostic. This does not establish the underlying database or schema failure. Missing PostgreSQL schemas, untyped schema mismatches, wrapped network errors and driver timeouts currently lose their actionable classification.
 

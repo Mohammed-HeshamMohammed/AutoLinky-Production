@@ -9,7 +9,9 @@ The owner requested the landing page's new visual direction for both dashboards 
 - [x] Apply the charcoal continuous sidebar/masthead, ivory content sheet, sage controls and editorial typography across personal and administration workspaces, EN/AR and light/dark.
 - [x] Recompose personal overview/jobs/profile/CV/Auto Apply and administration metrics/charts/operations while retaining existing account, application and verified management flows.
 - [x] Verify both workspaces, responsive navigation, states, safeguards and public-site regressions; pass 47 built-runtime functional checks, 90 design checks, nine state checks, two sticky-detail checks, 19 frontend tests and the 22-page build.
-- [ ] Commit the authorized landing/logo/mobile/dashboard work to main, synchronize the allowed frontend-production snapshot, fast-forward push and verify remote tree parity. Confirm unchanged backend production trees.
+- [x] Commit the authorized landing/logo/mobile/dashboard work to main (`2c97c5a`), publish the allowed frontend-production snapshot (`ccfa194`) with its previous tip as parent, and verify remote commits and exact service-folder tree parity for all seven production branches. The six backend branches remain current without new source changes.
+
+Git source publication is verified. VPS deployment, native installers and live provider acceptance are separate and are not claimed by these local UI checks.
 
 ## Previous: mobile editorial redesign (2026-10-18)
 

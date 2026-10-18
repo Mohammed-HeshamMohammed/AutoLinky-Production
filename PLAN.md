@@ -9,7 +9,7 @@ The owner clarified that missing text means the print on the papers inside the f
 - [x] Confirm the print/fonts are present and isolate the legibility problem to the camera scale; keep the existing fictional sample documents and real-paper material.
 - [x] Add deliberate close-ups of the CV and repeated application fields, with smooth camera movement and double-resolution 2000 × 2828 print. Preserve 60fps and the current app/phone scenes; fade the sage caption before it can cover the form fields.
 - [x] Independently inspect encoded print at 260px and actual browser phone/desktop sizes. Pass all 1440 decoded frames, uniform 60fps/GOP6, 19 close-up display checks, 37 current-media/forward/reverse cases, 23 frontend tests and the 22-page production build. Five repeated frames occur during the deliberate short header dwell.
-- [ ] Publish to main and frontend-production, verify the live film and refresh the source/web packages.
+- [x] Publish source main (`836a93f`) and frontend-production (`de588cf`), verify remote tips and exact frontend-tree parity, and verify the live movie matches the decoded render byte for byte. All 19 live English/Arabic phone/desktop close-up checks pass. Refresh and independently verify the complete source and standalone web packages: 869 source files, 976/99 payload files, current media, CRC and SHA-256 checks all pass.
 
 ## Previous: browser branding, film smoothness and visible website copy (2026-10-18)
 

@@ -6,13 +6,13 @@ import {resolve} from 'node:path';
 export async function renderDocuments({createCanvas,loadImage,GlobalFonts}){
   const data=JSON.parse(await readFile(resolve('scripts/film-document-content.json'),'utf8'));
   const material=await loadImage(resolve('scripts/assets/paper-sheet.png'));
-  GlobalFonts.registerFromPath(resolve('scripts/assets/Manrope-Print-400.ttf'),'DocumentBody');
-  GlobalFonts.registerFromPath(resolve('scripts/assets/Manrope-Print-700.ttf'),'DocumentHeading');
+  if(!GlobalFonts.registerFromPath(resolve('scripts/assets/Manrope-Print-400.ttf'),'DocumentBody')||!GlobalFonts.registerFromPath(resolve('scripts/assets/Manrope-Print-700.ttf'),'DocumentHeading'))throw Error('Document print fonts could not be registered');
   const {page,candidate}=data,{width,height,margin}=page;
+  const printScale=2;
   const out=resolve('public/assets/film/documents');await mkdir(out,{recursive:true});
   const images={},metrics=[];
   for(const kind of ['cv','cover-letter','application-1','application-2','application-3']){
-    const canvas=createCanvas(width,height),c=canvas.getContext('2d');
+    const canvas=createCanvas(width*printScale,height*printScale),c=canvas.getContext('2d');c.scale(printScale,printScale);
     // Use only the flat paper face; the generated cutout fringe is outside it.
     c.drawImage(material,90,153,875,1188,0,0,width,height);
     const right=width-margin,bodyWidth=width-margin*2;
@@ -89,8 +89,8 @@ export async function renderDocuments({createCanvas,loadImage,GlobalFonts}){
     if(contentBottom>height-100)throw Error(`${kind}: document content overlaps footer (${contentBottom})`);
     line(height-76);text(page.footer,margin,height-43,13,550,page.mutedInk);
     c.textAlign='right';text('1 / 1',right,height-43,13,450,page.mutedInk);c.textAlign='left';
-    const bytes=await canvas.encode('webp',94);await writeFile(resolve(out,`${kind}.webp`),bytes);
-    images[kind]=canvas;metrics.push({kind,width,height,contentBottom,footerY:height-43,bytes:bytes.length});
+    const bytes=await canvas.encode('webp',100);await writeFile(resolve(out,`${kind}.webp`),bytes);
+    images[kind]=canvas;metrics.push({kind,width:canvas.width,height:canvas.height,layoutWidth:width,layoutHeight:height,printScale,contentBottom,footerY:height-43,bytes:bytes.length});
   }
   await writeFile(resolve('output/playwright/film-documents-qa.json'),JSON.stringify({paperMaterial:'scripts/assets/paper-sheet.png',sourceCrop:{x:90,y:153,width:875,height:1188},fictionalSampleData:true,documents:metrics},null,2)+'\n');
   return images;

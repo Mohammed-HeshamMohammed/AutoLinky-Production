@@ -20,6 +20,8 @@ const images=await Promise.all(['profile','for-you','auto-apply'].map(name=>load
 const matchDetail=await loadImage(resolve('public/assets/app/for-you.webp'));
 const W=1080,H=1080,FPS=60,DURATION=24,CHAPTER_SECONDS=4,DISSOLVE_SECONDS=.8;
 const GOP=6,CRF=22;
+const previewOnly=process.argv.includes('--preview-only');
+const PAPER_LAYOUT_WIDTH=1000,MACRO_PAPER_WIDTH=2600,PHONE_PREVIEW_WIDTH=300;
 const canvas=createCanvas(W,H),ctx=canvas.getContext('2d');
 const C={bg:'#171c19',paper:'#eeeade',ink:'#252d28',dim:'#94a095',line:'#343d36',sage:'#bed2a8',blue:'#315bd6'};
 const clamp=x=>Math.max(0,Math.min(1,x));
@@ -35,6 +37,17 @@ function paper(x,y,w,rotation=0,kind='cv',shade=1){
   // Back sheets remain opaque: a physical stack, with slight studio falloff.
   if(shade<1){ctx.fillStyle=`rgba(23,28,25,${1-shade})`;ctx.fillRect(-w/2,-h/2,w,h);}
   ctx.restore();
+}
+function printedCloseup(kind,seconds,{startWidth,startX,startY,startRotation,topStart,topEnd}){
+  // Establish the physical sheet before the camera approaches its left column.
+  // This is a crop of the actual printed document, never replacement UI text.
+  const push=ease((seconds-.6)/1.3),pan=ease((seconds-2.05)/1.7);
+  const width=mix(startWidth,MACRO_PAPER_WIDTH,push),height=width*1.414;
+  const leftAtMacro=100-88*MACRO_PAPER_WIDTH/PAPER_LAYOUT_WIDTH;
+  const x=mix(startX,leftAtMacro+MACRO_PAPER_WIDTH/2,push);
+  const top=mix(startY-startWidth*1.414/2,mix(topStart,topEnd,pan),push);
+  paper(x,top+height/2,width,mix(startRotation,0,push),kind);
+  return push;
 }
 function phone(image,x,y,width,rotation=0,alpha=1,zoom=1){
   const outerWidth=width+18,scale=outerWidth/device.width,height=outerWidth*device.height/device.width;
@@ -62,21 +75,31 @@ function backdrop(time){
   caption('A LITTLE LESS BUSYWORK',1004,1018,'right');
 }
 function scene(index,t){
-  // Each shot has a short handle on either side of its chapter. Both shots
-  // keep moving while the centered dissolve crosses the chapter boundary.
+  // Each shot has handles around its centered dissolve. The document camera
+  // briefly settles for reading; device shots keep their moving handles.
   const handle=DISSOLVE_SECONDS/(2*CHAPTER_SECONDS);
   const phase=clamp((t+handle)/(1+2*handle));
   const p=ease(phase),drift=Math.sin(phase*Math.PI)*10;
   if(index===0){
+    const seconds=t*CHAPTER_SECONDS,push=ease((seconds-.6)/1.3);
+    ctx.save();ctx.globalAlpha*=1-push;
     paper(682+drift,483,365,.13+mix(.02,-.02,p),'application-1',.86);
     paper(359-drift,584,365,-.16,'cover-letter',.94);
-    paper(545,536-mix(0,18,p),405,mix(-.04,.025,p),'cv');
+    ctx.restore();
+    printedCloseup('cv',seconds,{startWidth:405,startX:545,startY:536-mix(0,18,p),startRotation:mix(-.04,.025,p),topStart:-180,topEnd:-920});
+    ctx.save();ctx.globalAlpha*=1-push;
     caption('THE EXPERIENCE IS YOURS.',98,924);
+    ctx.restore();
   }else if(index===1){
+    const seconds=t*CHAPTER_SECONDS,push=ease((seconds-.6)/1.3);
+    ctx.save();ctx.globalAlpha*=1-push;
     paper(mix(310,215,p),mix(410,385,p),330,-.17,'application-2',.92);
     paper(mix(770,855,p),mix(440,460,p),330,.15,'application-3',.92);
-    paper(535,560,390,mix(.07,-.035,p),'application-1');
+    ctx.restore();
+    printedCloseup('application-1',seconds,{startWidth:390,startX:535,startY:560,startRotation:mix(.07,-.035,p),topStart:-950,topEnd:-1760});
+    ctx.save();ctx.globalAlpha*=1-ease((seconds-.6)/.35);
     rect(330,852,420,59,3,C.sage);text('Same details. Another form.',362,890,22,C.ink,600);
+    ctx.restore();
   }else if(index===2){
     paper(mix(362,243,p),610,310,mix(-.1,-.16,p),'cv',.94);
     phone(images[0],mix(620,605,p),mix(559,529,p),328,mix(.05,.015,p));
@@ -111,6 +134,27 @@ function frame(seconds){
     ctx.save();ctx.globalAlpha=1-fade;scene(previous,(seconds-previous*CHAPTER_SECONDS)/CHAPTER_SECONDS);ctx.restore();
     ctx.save();ctx.globalAlpha=fade;scene(next,(seconds-next*CHAPTER_SECONDS)/CHAPTER_SECONDS);ctx.restore();
   }else scene(chapter,(seconds-chapter*CHAPTER_SECONDS)/CHAPTER_SECONDS);
+}
+const framing={
+  source:'Actual supersampled printed document canvases; no substitute overlay text',
+  phonePreviewWidth:PHONE_PREVIEW_WIDTH,filmWidth:W,macroPaperWidth:MACRO_PAPER_WIDTH,
+  establishingSeconds:.6,pushSeconds:1.3,panStartsAtSeconds:2.05,panSeconds:1.7,
+  macroCssSizes:Object.fromEntries([300,260].map(displayWidth=>[displayWidth,Object.fromEntries([['cvName',47],['cvRole',29],['cvJobTitle',24],['formValue',23],['formLabel',16]].map(([name,size])=>[name,Number((size*MACRO_PAPER_WIDTH/PAPER_LAYOUT_WIDTH*displayWidth/W).toFixed(2))]))])),
+  chapters:[{chapter:1,kind:'cv',topStart:-180,topEnd:-920,readableLines:['Sara Ali','Network Engineer','EXPERIENCE','Network Engineer','Northline Networks / Cairo, Egypt']},{chapter:2,kind:'application-1',topStart:-950,topEnd:-1760,readableLines:['Full name','Sara Ali','Email address','sara.ali@example.com','Current position','Network Engineer','Relevant experience','3 years','Core skills','BGP, OSPF, routing and switching']}]
+};
+await writeFile(resolve('output/playwright/film-paper-framing-qa.json'),JSON.stringify(framing,null,2)+'\n');
+if(previewOnly){
+  const previews=resolve('output/playwright/film-paper-preview');await mkdir(previews,{recursive:true});
+  for(const seconds of [0,1.3,2.05,2.8,3.5,4.6,5.3,6.05,6.8,7.5]){
+    frame(seconds);const name=`${String(seconds).replace('.','-')}s`;
+    await writeFile(resolve(previews,`${name}-1080.webp`),await canvas.encode('webp',100));
+    for(const size of [PHONE_PREVIEW_WIDTH,260]){
+      const phone=createCanvas(size,size);phone.getContext('2d').drawImage(canvas,0,0,size,size);
+      await writeFile(resolve(previews,`${name}-${size}.webp`),await phone.encode('webp',100));
+    }
+  }
+  process.stdout.write(`Rendered paper close-up previews in ${previews}\n`);
+  process.exit(0);
 }
 const ffmpeg=spawn(resolve(option('--ffmpeg')),['-hide_banner','-loglevel','warning','-y','-f','rawvideo','-pixel_format','rgba','-video_size',`${W}x${H}`,'-framerate',String(FPS),'-i','pipe:0','-an','-c:v','libx264','-preset','medium','-crf',String(CRF),'-pix_fmt','yuv420p','-g',String(GOP),'-keyint_min',String(GOP),'-sc_threshold','0','-bf','0','-movflags','+faststart',resolve(out,'autolinky-story.mp4')],{stdio:['pipe','ignore','inherit'],windowsHide:true});
 const finished=once(ffmpeg,'close');ffmpeg.stdin.on('error',()=>{});

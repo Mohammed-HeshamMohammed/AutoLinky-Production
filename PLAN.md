@@ -2,7 +2,15 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: dashboard editorial redesign and branch publication (2026-10-18)
+## Current: complete the workspace opening logo (2026-10-18)
+
+The owner reported that fast loading cuts the opening logo formation short.
+
+- [x] Keep the personal/admin opening logo mounted until its formation completes and authentication is ready; preserve immediate error handling, sign-out redirects and reduced motion. Sidebar branding stays complete instead of starting a second drawing.
+- [x] Pass 21 startup lifecycle checks against both source and the production build: fast/slow authentication, navigation, errors/retry, role refresh, sign-out redirects, EN/AR, reduced motion and unchanged public formation. All 19 frontend tests and the 22-page build pass.
+- [ ] Publish the focused fix to main and frontend-production and verify remote source parity.
+
+## Previous: dashboard editorial redesign and branch publication (2026-10-18)
 
 The owner requested the landing page's new visual direction for both dashboards and publication to main and production branches.
 

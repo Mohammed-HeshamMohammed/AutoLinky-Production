@@ -35,20 +35,23 @@ function Formation({prefix}){
   </svg>;
 }
 
-export function BrandWordmark({height=30,animate=true}){
+export function BrandWordmark({height=30,animate=true,onComplete}){
   const element=useRef(null),played=useRef(false),[phase,setPhase]=useState('static');
+  const completion=useRef(onComplete),notified=useRef(false);
   const prefix=`brand-${useId().replace(/[^a-zA-Z0-9_-]/g,'')}`;
+  useEffect(()=>{completion.current=onComplete;},[onComplete]);
   useEffect(()=>{
-    if(!animate)return;
+    const finish=()=>{if(!notified.current){notified.current=true;completion.current?.();}};
+    if(!animate){setPhase('static');finish();return;}
     const preference=matchMedia('(prefers-reduced-motion: reduce)');
     let timer,observer;
     const start=()=>{
       if(played.current||preference.matches)return;
       played.current=true;observer?.disconnect();setPhase('forming');
-      timer=setTimeout(()=>setPhase('formed'),brandFormation.duration*1000);
+      timer=setTimeout(()=>{setPhase('formed');finish();},brandFormation.duration*1000);
     };
-    const update=()=>{if(preference.matches){played.current=true;clearTimeout(timer);observer?.disconnect();setPhase('static');}};
-    if(preference.matches)played.current=true;
+    const update=()=>{if(preference.matches){played.current=true;clearTimeout(timer);observer?.disconnect();setPhase('static');finish();}};
+    if(preference.matches){played.current=true;finish();}
     else if('IntersectionObserver' in window){
       observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>.1))start();},{threshold:.1});
       observer.observe(element.current);

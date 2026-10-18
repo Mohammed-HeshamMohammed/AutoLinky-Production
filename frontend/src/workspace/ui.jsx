@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { friendlyError } from './api.js';
 import { BrandWordmark } from '../BrandMark';
-export function Brand(){return <a className="ws-brand" href="/" aria-label="AutoLinky home"><BrandWordmark height={29}/></a>;}
+export function Brand({animate=true,onComplete}){return <a className="ws-brand" href="/" aria-label="AutoLinky home"><BrandWordmark height={29} animate={animate} onComplete={onComplete}/></a>;}
 export function Notice({children,tone='info'}){return <div className={`ws-notice ${tone}`} role={tone==='error'?'alert':'status'}>{children}</div>;}
 export function Empty({title,children,action}){return <div className="ws-empty"><h3>{title}</h3><p>{children}</p>{action}</div>;}
 export function Loading({label='Loading your workspace…'}){return <div className="ws-loading" role="status"><span className="ws-spinner"/>{label}</div>;}

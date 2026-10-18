@@ -42,20 +42,24 @@ export function WorkspaceShell({route,url,navigate,session,children}){
 }
 function UserApp(props){
   const session=useSession(),{route,url,navigate}=props,ar=route.lang==='ar';
+  const [introComplete,setIntroComplete]=useState(false);
+  useEffect(()=>{if(session.status==='error')setIntroComplete(true);},[session.status]);
   useEffect(()=>{if(session.status==='signed-out'&&!['login','signup'].includes(route.screen))navigate(workspacePath('login',route.lang)+'?next='+encodeURIComponent(url.pathname+url.search),true);},[session.status,route.screen]);
   if(['login','signup'].includes(route.screen))return <Login {...props}/>;
-  if(session.status==='loading'||session.status==='signed-out')return <div className="ws-app ws-opening"><Brand/><Loading label={ar?'نجهز مساحة العمل…':'Opening your workspace…'}/></div>;
-  if(session.status==='error')return <div className="ws-app ws-opening"><Brand/><ErrorState error={session.error} ar={ar} onRetry={session.retry}/><a href={workspacePath('login',route.lang)}>{ar?'العودة للدخول':'Back to sign in'}</a></div>;
+  if(session.status==='error')return <div className="ws-app ws-opening"><Brand animate={false}/><ErrorState error={session.error} ar={ar} onRetry={session.retry}/><a href={workspacePath('login',route.lang)}>{ar?'العودة للدخول':'Back to sign in'}</a></div>;
+  if(session.status==='loading'||session.status==='signed-out'||!introComplete)return <div className="ws-app ws-opening"><Brand animate={!introComplete} onComplete={()=>setIntroComplete(true)}/><Loading label={ar?'نجهز مساحة العمل…':'Opening your workspace…'}/></div>;
   const context={...props,session,client:session.client,ar,t:(en,arabic)=>ar?arabic:en};
   const Screen={dashboard:Dashboard,jobs:Jobs,saved:Jobs,compare:Compare,applications:Applications,compose:Compose,profile:Profile,cv:CV,'auto-apply':AutoApply,settings:Settings}[route.screen]||Dashboard;
   return <WorkspaceShell {...props} session={session}><Screen key={session.account.user_id+':'+route.screen} {...context}/></WorkspaceShell>;
 }
 function AdminGate(props){
   const session=useSession(),{route,url,navigate}=props,ar=route.lang==='ar';
+  const [introComplete,setIntroComplete]=useState(false);
+  useEffect(()=>{if(session.status==='error'||session.status==='signed-in'&&!session.account.admin_role)setIntroComplete(true);},[session.status,session.account?.admin_role]);
   useEffect(()=>{if(session.status==='signed-out')navigate(workspacePath('login',route.lang)+'?next='+encodeURIComponent(url.pathname+url.search),true);},[session.status]);
-  if(session.status==='loading'||session.status==='signed-out')return <div className="ws-app ws-opening"><Brand/><Loading label={ar?'جارٍ التحقق من وصول الإدارة…':'Checking administrator access…'}/></div>;
-  if(session.status==='error')return <div className="ws-app ws-opening"><Brand/><ErrorState error={session.error} ar={ar} onRetry={session.retry}/><button className="ws-button secondary" onClick={session.signOut}>{ar?'تبديل الحساب':'Switch account'}</button></div>;
-  if(!session.account.admin_role)return <div className="ws-app ws-opening"><Brand/><h1>{ar?'الوصول مخصص للإدارة':'Administrator access required'}</h1><p>{ar?'لم يتم تعيين هذا الحساب كمسؤول.':'This account has not been assigned an administrator role.'}</p><button className="ws-button secondary" onClick={session.signOut}>{ar?'تبديل الحساب':'Switch account'}</button><a href={workspacePath('dashboard',route.lang)}>{ar?'مساحة العمل':'Your workspace'}</a></div>;
+  if(session.status==='error')return <div className="ws-app ws-opening"><Brand animate={false}/><ErrorState error={session.error} ar={ar} onRetry={session.retry}/><button className="ws-button secondary" onClick={session.signOut}>{ar?'تبديل الحساب':'Switch account'}</button></div>;
+  if(session.status==='signed-in'&&!session.account.admin_role)return <div className="ws-app ws-opening"><Brand animate={false}/><h1>{ar?'الوصول مخصص للإدارة':'Administrator access required'}</h1><p>{ar?'لم يتم تعيين هذا الحساب كمسؤول.':'This account has not been assigned an administrator role.'}</p><button className="ws-button secondary" onClick={session.signOut}>{ar?'تبديل الحساب':'Switch account'}</button><a href={workspacePath('dashboard',route.lang)}>{ar?'مساحة العمل':'Your workspace'}</a></div>;
+  if(session.status==='loading'||session.status==='signed-out'||!introComplete)return <div className="ws-app ws-opening"><Brand animate={!introComplete} onComplete={()=>setIntroComplete(true)}/><Loading label={ar?'جارٍ التحقق من وصول الإدارة…':'Checking administrator access…'}/></div>;
   return <AdminApp key={session.account.user_id} {...props} appSession={session}/>;
 }
 export default function DesktopApp({initialURL='/login/'}){

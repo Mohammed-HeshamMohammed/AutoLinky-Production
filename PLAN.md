@@ -8,7 +8,7 @@ The owner reported that fast loading cuts the opening logo formation short.
 
 - [x] Keep the personal/admin opening logo mounted until its formation completes and authentication is ready; preserve immediate error handling, sign-out redirects and reduced motion. Sidebar branding stays complete instead of starting a second drawing.
 - [x] Pass 21 startup lifecycle checks against both source and the production build: fast/slow authentication, navigation, errors/retry, role refresh, sign-out redirects, EN/AR, reduced motion and unchanged public formation. All 19 frontend tests and the 22-page build pass.
-- [ ] Publish the focused fix to main and frontend-production and verify remote source parity.
+- [x] Publish the focused fix to main (`619d6d2`) and frontend-production (`a0a2498`); verify both remote tips and exact frontend-tree parity. VPS rollout remains separate from source publication.
 
 ## Previous: dashboard editorial redesign and branch publication (2026-10-18)
 

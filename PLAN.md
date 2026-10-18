@@ -6,7 +6,7 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 
 - [x] Use the approved light mark for the website favicon in both browser themes; remove theme overrides and make ICO, touch and PWA fallbacks light too. Preserve the separate dark in-product artwork.
 - [x] Pass 9 browser/head checks, 8 raster/frame palette checks, all 23 frontend tests and the verified 22-page build.
-- [ ] Publish to main and frontend-production, verify the live icon and refresh the source/web packages.
+- [x] Publish source main (`b424da3`) and frontend-production (`0abd5af`), verify remote tips and frontend-tree parity, and pass all 9 live browser/head checks including exact light-background pixels in both browser themes. Refresh and independently verify both source/web packages and their payload hashes.
 
 ## Previous: sidebar overflow and scroll reachability (2026-10-18)
 

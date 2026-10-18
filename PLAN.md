@@ -7,7 +7,7 @@ Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is r
 - [x] Trace the cut-off card to its source-image crop: it stops partway through the missing-skills row and excludes the action footer.
 - [x] Include the entire job card and derive its display height from the source aspect ratio; preserve the current position and inspect its full motion, including chapter dissolves.
 - [x] Rerender and decode all 1440 frames; pass 20 English/Arabic phone and desktop display checks, all 23 frontend tests and the verified 22-page production build.
-- [ ] Publish to main/frontend-production, verify the live movie and refresh the source/web packages.
+- [x] Publish source main (`a79e451`) and frontend-production (`a6127e4`), verify remote tips and exact frontend-tree parity, and confirm the live movie matches the decoded render byte for byte. All 20 live English/Arabic phone/desktop display checks pass. Refresh and independently verify the source/web packages: 869 source files, 976/99 payload files, current media, CRC and SHA-256 checks all pass.
 
 ## Previous: fixed light website icon (2026-10-18)
 

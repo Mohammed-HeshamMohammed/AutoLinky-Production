@@ -1,0 +1,22 @@
+{
+  "name": "AutoLinky",
+  "short_name": "AutoLinky",
+  "description": "Job matching and applications in one connected workspace",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#171c19",
+  "theme_color": "#171c19",
+  "icons": [
+    {
+      "src": "/assets/brand/icon-192.18fcd87fd5c9ddc8.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/brand/icon-512.18fcd87fd5c9ddc8.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "id": "/"
+}

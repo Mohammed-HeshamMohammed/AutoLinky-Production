@@ -4,6 +4,7 @@ import json
 import math
 from pathlib import Path
 import shutil
+import subprocess
 import zipfile
 from PIL import Image, ImageDraw, ImageFont
 from fontTools.ttLib import TTFont
@@ -362,6 +363,7 @@ def export():
         zipped.write(ROOT/'brand/formation.json','formation.json')
         for path in (ROOT/'brand/fonts').rglob('*'):
             if path.is_file():zipped.write(path,path.relative_to(ROOT/'brand'))
+    subprocess.run(['node',str(ROOT/'frontend/scripts/refresh-brand-assets.mjs')],cwd=ROOT,check=True)
     print('Exported outlined light/dark full, text, short, minimal and monochrome logo sets, native variants and ZIP.')
 
 if __name__=='__main__':export()

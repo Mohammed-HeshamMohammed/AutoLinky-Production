@@ -1,18 +1,18 @@
 /* The public site shares the workspace's typography and restrained palette. */
 :root {
-  --bg: #fbfbf9;
-  --bg-2: #edf0ea;
-  --surface: #fff;
-  --surface-2: #f3f4f0;
-  --text: #252a29;
-  --muted: #696f6c;
-  --faint: #7c867c;
-  --border: #e4e7e1;
-  --border-strong: #c4cebe;
-  --brand: #315bd6;
-  --brand-2: #2447b3;
-  --brand-soft: #315bd6;
-  --mint: #315bd6;
+  --bg: #f7f6f0;
+  --bg-2: #eeeade;
+  --surface: #fffefa;
+  --surface-2: #eeefe6;
+  --text: #27322b;
+  --muted: #66705f;
+  --faint: #73806c;
+  --border: #dcdfd4;
+  --border-strong: #b7c0ad;
+  --brand: #283b2f;
+  --brand-2: #1d2d22;
+  --brand-soft: #5f7253;
+  --mint: #5f7253;
   --radius: 9px;
   --radius-sm: 6px;
   --shadow: none;
@@ -29,9 +29,9 @@ html { scroll-padding-top: 100px; }
 .eyebrow { color: var(--muted); font-size: 11px; letter-spacing: .1em; font-weight: 550; text-transform: none; }
 .btn, .landing .btn { min-height: 48px; padding: 14px 21px; border-radius: 6px; font-size: 13px; font-weight: 600; box-shadow: none; transition: background .18s, border-color .18s; }
 .btn-primary, .landing .btn-primary { background: var(--brand); color: #fff; border-color: var(--brand); }
-.btn-primary:hover, .landing .btn-primary:hover { background: #264bb8; transform: none; box-shadow: none; }
+.btn-primary:hover, .landing .btn-primary:hover { background: #344b38; transform: none; box-shadow: none; }
 .btn-ghost, .landing .btn-ghost { background: transparent; border-color: var(--border-strong); color: var(--text); }
-.btn-ghost:hover { color: var(--brand); border-color: var(--brand); background: #edf1fc; transform: none; }
+.btn-ghost:hover { color: var(--brand); border-color: var(--brand); background: #e4ead9; transform: none; }
 .site-header.nav, .has-scrolled .site-header.nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; border: 0; box-shadow: none; }
 .site-header .nav-inner { min-height: 92px; height: auto; gap: 24px; border-bottom: 1px solid var(--border); }
 .site-header .brand { gap: 10px; font-size: 24px; font-weight: 800; letter-spacing: -1.1px; color: var(--text); }
@@ -178,6 +178,7 @@ html { scroll-padding-top: 100px; }
 .site-page .hero-bg { display: none; }
 .site-page .content-hero { background: transparent; border-bottom: 1px solid var(--border); }
 .site-page .content-hero :is(.breadcrumbs,.eyebrow,h1,.content-lead,.content-actions,.product-frame) { animation: none; }
+.site-page :is(.content-section,.faq-answer,.answer-card,.related-card) { animation: none; opacity: 1; translate: none; }
 .site-page .content-hero h1 { color: var(--text); font-weight: 550; }
 .site-page :is(.content-lead,.content-section p,.faq-answer p,.answer-card p) { color: var(--muted); }
 .site-page :is(.content-section,.faq-answer,.answer-card,.related-card) { border-color: var(--border); background: transparent; box-shadow: none; border-radius: 6px; }

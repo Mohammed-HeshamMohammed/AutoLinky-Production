@@ -2,7 +2,18 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: complete the workspace opening logo (2026-10-18)
+## Current: browser branding, film smoothness and visible website copy (2026-10-18)
+
+The owner reported an unchanged website icon, missing website text and a film that needs more frames and smoother scrolling.
+
+- [x] Refresh every browser icon alias, light/dark favicon, touch/PWA image, social preview and metadata reference with the approved identity and content-addressed URLs; preserve application identity and test canonical cache revalidation. Pass 39 HTTP and 14 browser checks, including 42 rendered logo images in both themes.
+- [x] Render the complete 24-second 1080-square film at 60 fps: 1,440 unique decoded frames, moving 0.8-second crossfades and 100ms keyframes. Preserve the real app screens and sample document provenance.
+- [x] Smooth forward/reverse scroll seeking, preserve playback/keyboard/reduced-motion controls, and make chapter captions and public copy visible without entrance-animation dependency. Pass 142 public text/layout checks, 58 film/player cases, 37 current-media cases, 11 continuous-scroll/loading/cancellation cases and 21 startup regression cases against the build. Four additional reduced-motion text cases pass.
+- [x] Pass all 23 frontend tests and the verified 22-page production build. Source/web delivery package verification is recorded separately after final publication.
+- [ ] Refresh and verify the complete source and standalone web packages with the final validation manifest.
+- [ ] Publish to main and frontend-production and verify remote tips and exact frontend-tree parity. Source publication does not itself confirm VPS deployment.
+
+## Previous: complete the workspace opening logo (2026-10-18)
 
 The owner reported that fast loading cuts the opening logo formation short.
 

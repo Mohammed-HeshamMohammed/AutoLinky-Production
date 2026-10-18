@@ -24,7 +24,7 @@ Use case: product-mockup. Create one isolated photorealistic sheet of premium un
 
 The CV has a name and role header, summary, work history, education, skills, certification and languages. The letter has a recipient, subject, greeting, three paragraphs and closing. The three forms use different employers and roles, with differently named fields that repeat the same candidate information. This makes the repeated effort visible without implying that AutoLinky submits arbitrary external forms.
 
-`scripts/film-documents.mjs` performs document typesetting and writes five WebP images under `public/assets/film/documents/`. `scripts/render-brand-film.mjs` places those images into the existing six-chapter motion timeline. Actual app screens remain in the iPhone scenes. The movie stays 24 seconds at 1080 × 1080 and 24 fps.
+`scripts/film-documents.mjs` performs document typesetting and writes five WebP images under `public/assets/film/documents/`. `scripts/render-brand-film.mjs` places those images into the existing six-chapter motion timeline. Actual app screens remain in the iPhone scenes. The movie is 24 seconds at 1080 × 1080 and 60 fps (1,440 frames). Both scenes keep moving through each 0.8-second crossfade. H.264 uses six-frame keyframe intervals, no B-frames and faststart for responsive forward/reverse seeking.
 
 ## Reproduction
 
@@ -34,7 +34,7 @@ From `frontend/`, run the film renderer with Node, `@napi-rs/canvas` and FFmpeg:
 node scripts/render-brand-film.mjs --modules <absolute-node_modules-directory> --ffmpeg <absolute-ffmpeg-executable>
 ```
 
-The document helper rebuilds the five images from the checked-in text and material before movie rendering. The film and poster are written to `public/assets/film/`; inspection stills go into the ignored `output/playwright/film-stills/` directory. The `mobile-editorial-2` media revision in the player URL refreshes cached footage. Rendering tools remain optional local dependencies and are not shipped to the browser.
+The document helper rebuilds the five images from the checked-in text and material before movie rendering. The film and poster are written to `public/assets/film/`; inspection stills go into the ignored `output/playwright/film-stills/` directory. The `film-60fps-1` media revision in the player URL refreshes cached footage. Rendering tools remain optional local dependencies and are not shipped to the browser. The browser interpolates scroll changes with a short 70ms response and seeks at half-frame precision; chapter and keyboard controls select their requested time directly. HTML captions remain fully visible while the film moves.
 
 The pinned font assets are included, so normal document and movie rendering does not require Python. To regenerate those two font files after changing the bundled source font, install Python `fontTools` and run from `frontend/`:
 

@@ -45,3 +45,23 @@ test('film playback supports video MIME types and byte ranges for forward and re
     const head=await fetch(url,{method:'HEAD',headers:{Range:'bytes=10-20'}});assert.equal(head.status,200);assert.equal(head.headers.get('content-length'),'256');assert.equal((await head.arrayBuffer()).byteLength,0);
   }finally{server.closeAllConnections();await new Promise(done=>server.close(done));await rm(directory,{recursive:true,force:true});}
 });
+
+test('browser branding aliases refresh while content-addressed icons remain cacheable',async()=>{
+  const base=resolve('.runtime'),directory=resolve(base,'branding-test-'+randomBytes(6).toString('hex'));assert(directory.startsWith(base+sep));
+  await mkdir(resolve(directory,'assets/brand'),{recursive:true});
+  const icon=Buffer.from([0,0,1,0,1,0,32,32]),svg='<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0h32v32H0z"/></svg>';
+  await writeFile(resolve(directory,'favicon.ico'),icon);await writeFile(resolve(directory,'assets/favicon.svg'),svg);
+  await writeFile(resolve(directory,'assets/icon-48.png'),icon);await writeFile(resolve(directory,'site.webmanifest'),'{"id":"/","start_url":"/"}');
+  await writeFile(resolve(directory,'assets/brand/favicon.0123456789abcdef.svg'),svg);
+  await writeFile(resolve(directory,'404.html'),'<title>Missing</title>');
+  const server=createSiteServer({directory});await new Promise(done=>server.listen(0,'127.0.0.1',done));const origin=`http://127.0.0.1:${server.address().port}`;
+  try{
+    for(const path of ['/favicon.ico','/assets/favicon.svg','/assets/icon-48.png','/site.webmanifest']){
+      const response=await fetch(origin+path);assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'public, max-age=0, must-revalidate');
+    }
+    const fallback=await fetch(origin+'/favicon.ico');assert.equal(fallback.headers.get('content-type'),'image/x-icon');assert.deepEqual(Buffer.from(await fallback.arrayBuffer()),icon);
+    const manifest=await fetch(origin+'/site.webmanifest');assert.equal(manifest.headers.get('content-type'),'application/manifest+json');assert.equal((await manifest.json()).id,'/');
+    const versioned=await fetch(origin+'/assets/brand/favicon.0123456789abcdef.svg');assert.equal(versioned.headers.get('cache-control'),'public, max-age=31536000, immutable');assert.equal(await versioned.text(),svg);
+    const missing=await fetch(origin+'/assets/brand/favicon.ffffffffffffffff.svg');assert.equal(missing.status,404);assert.equal(missing.headers.get('cache-control'),'no-store');
+  }finally{server.closeAllConnections();await new Promise(done=>server.close(done));await rm(directory,{recursive:true,force:true});}
+});

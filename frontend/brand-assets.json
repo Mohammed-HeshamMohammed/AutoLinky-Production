@@ -1,0 +1,18 @@
+{
+  "revision": "18fcd87fd5c9ddc8",
+  "assets": {
+    "favicon": "/assets/brand/favicon.18fcd87fd5c9ddc8.svg",
+    "faviconLight": "/assets/brand/favicon-light.18fcd87fd5c9ddc8.svg",
+    "faviconDark": "/assets/brand/favicon-dark.18fcd87fd5c9ddc8.svg",
+    "faviconIco": "/assets/brand/favicon.18fcd87fd5c9ddc8.ico",
+    "touchIcon": "/assets/brand/apple-touch-icon.18fcd87fd5c9ddc8.png",
+    "icon48": "/assets/brand/icon-48.18fcd87fd5c9ddc8.png",
+    "pwa192": "/assets/brand/icon-192.18fcd87fd5c9ddc8.png",
+    "pwa512": "/assets/brand/icon-512.18fcd87fd5c9ddc8.png",
+    "social": "/assets/brand/og.18fcd87fd5c9ddc8.png",
+    "organizationLogo": "/assets/brand/logo.18fcd87fd5c9ddc8.svg",
+    "fullLogoLight": "/assets/brand/logo-full-light.18fcd87fd5c9ddc8.svg",
+    "fullLogoDark": "/assets/brand/logo-full-dark.18fcd87fd5c9ddc8.svg",
+    "manifest": "/assets/brand/site.18fcd87fd5c9ddc8.webmanifest"
+  }
+}

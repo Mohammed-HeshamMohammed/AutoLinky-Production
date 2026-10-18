@@ -18,7 +18,8 @@ const device=JSON.parse(await readFile(resolve('src/iphoneMockup.json'),'utf8'))
 const hardware=await loadImage(resolve('public'+device.frameSrc));
 const images=await Promise.all(['profile','for-you','auto-apply'].map(name=>loadImage(resolve(`public/assets/app/iphone/${name}.webp`))));
 const matchDetail=await loadImage(resolve('public/assets/app/for-you.webp'));
-const W=1080,H=1080,FPS=24,DURATION=24;
+const W=1080,H=1080,FPS=60,DURATION=24,CHAPTER_SECONDS=4,DISSOLVE_SECONDS=.8;
+const GOP=6,CRF=22;
 const canvas=createCanvas(W,H),ctx=canvas.getContext('2d');
 const C={bg:'#171c19',paper:'#eeeade',ink:'#252d28',dim:'#94a095',line:'#343d36',sage:'#bed2a8',blue:'#315bd6'};
 const clamp=x=>Math.max(0,Math.min(1,x));
@@ -61,7 +62,11 @@ function backdrop(time){
   caption('A LITTLE LESS BUSYWORK',1004,1018,'right');
 }
 function scene(index,t){
-  const p=ease(t),drift=Math.sin(t*Math.PI)*10;
+  // Each shot has a short handle on either side of its chapter. Both shots
+  // keep moving while the centered dissolve crosses the chapter boundary.
+  const handle=DISSOLVE_SECONDS/(2*CHAPTER_SECONDS);
+  const phase=clamp((t+handle)/(1+2*handle));
+  const p=ease(phase),drift=Math.sin(phase*Math.PI)*10;
   if(index===0){
     paper(682+drift,483,365,.13+mix(.02,-.02,p),'application-1',.86);
     paper(359-drift,584,365,-.16,'cover-letter',.94);
@@ -96,22 +101,26 @@ function scene(index,t){
   }
 }
 function frame(seconds){
-  const chapter=Math.min(5,Math.floor(seconds/4)),local=seconds%4;
+  const chapter=Math.min(5,Math.floor(seconds/CHAPTER_SECONDS));
   backdrop(seconds);
-  // Cross dissolve with shared camera motion: every frame belongs to a continuous film.
-  if(chapter>0&&local<.65){
-    const fade=ease(local/.65);ctx.save();ctx.globalAlpha=1-fade;scene(chapter-1,1);ctx.restore();
-    ctx.save();ctx.globalAlpha=fade;scene(chapter,local/4);ctx.restore();
-  }else scene(chapter,local/4);
+  const boundary=Math.round(seconds/CHAPTER_SECONDS)*CHAPTER_SECONDS;
+  const half=DISSOLVE_SECONDS/2;
+  if(boundary>0&&boundary<DURATION&&Math.abs(seconds-boundary)<half){
+    const next=boundary/CHAPTER_SECONDS,previous=next-1;
+    const fade=ease((seconds-(boundary-half))/DISSOLVE_SECONDS);
+    ctx.save();ctx.globalAlpha=1-fade;scene(previous,(seconds-previous*CHAPTER_SECONDS)/CHAPTER_SECONDS);ctx.restore();
+    ctx.save();ctx.globalAlpha=fade;scene(next,(seconds-next*CHAPTER_SECONDS)/CHAPTER_SECONDS);ctx.restore();
+  }else scene(chapter,(seconds-chapter*CHAPTER_SECONDS)/CHAPTER_SECONDS);
 }
-const ffmpeg=spawn(resolve(option('--ffmpeg')),['-hide_banner','-loglevel','warning','-y','-f','rawvideo','-pixel_format','rgba','-video_size',`${W}x${H}`,'-framerate',String(FPS),'-i','pipe:0','-an','-c:v','libx264','-preset','medium','-crf','23','-pix_fmt','yuv420p','-g','12','-keyint_min','12','-sc_threshold','0','-bf','0','-movflags','+faststart',resolve(out,'autolinky-story.mp4')],{stdio:['pipe','ignore','inherit'],windowsHide:true});
+const ffmpeg=spawn(resolve(option('--ffmpeg')),['-hide_banner','-loglevel','warning','-y','-f','rawvideo','-pixel_format','rgba','-video_size',`${W}x${H}`,'-framerate',String(FPS),'-i','pipe:0','-an','-c:v','libx264','-preset','medium','-crf',String(CRF),'-pix_fmt','yuv420p','-g',String(GOP),'-keyint_min',String(GOP),'-sc_threshold','0','-bf','0','-movflags','+faststart',resolve(out,'autolinky-story.mp4')],{stdio:['pipe','ignore','inherit'],windowsHide:true});
 const finished=once(ffmpeg,'close');ffmpeg.stdin.on('error',()=>{});
+const stillFrames=new Map([2,5.5,10,14,18,23].map((seconds,index)=>[Math.round(seconds*FPS),index+1]));
 for(let i=0;i<FPS*DURATION;i++){
   frame(i/FPS);
   if(i===0)await writeFile(resolve(out,'autolinky-story-poster.webp'),await canvas.encode('webp',86));
-  if([48,132,240,336,432,552].includes(i))await writeFile(resolve(proofs,`chapter-${Math.floor(i/96)+1}.webp`),await canvas.encode('webp',92));
+  if(stillFrames.has(i))await writeFile(resolve(proofs,`chapter-${stillFrames.get(i)}.webp`),await canvas.encode('webp',92));
   if(!ffmpeg.stdin.write(Buffer.from(ctx.getImageData(0,0,W,H).data)))await once(ffmpeg.stdin,'drain');
-  if(i%96===0)process.stdout.write(`Rendered chapter ${Math.floor(i/96)+1}/6\n`);
+  if(i%(FPS*2)===0)process.stdout.write(`Rendered ${i}/${FPS*DURATION} frames (${i/FPS}s)\n`);
 }
 ffmpeg.stdin.end();const [code]=await finished;if(code!==0)throw Error(`FFmpeg failed (${code})`);
-process.stdout.write(`Rendered ${DURATION}s / ${W}×${H} / ${FPS}fps\n`);
+process.stdout.write(`Rendered ${DURATION}s / ${W}×${H} / ${FPS}fps / ${FPS*DURATION} frames / GOP ${GOP} / CRF ${CRF}\n`);

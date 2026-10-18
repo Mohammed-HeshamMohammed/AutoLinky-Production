@@ -5,6 +5,7 @@
     "start": "node --env-file-if-exists=.env server.js",
     "test": "node --test test/*.test.js",
     "dev": "node --env-file-if-exists=.env scripts/dev-server.mjs",
+    "prebuild:site": "node scripts/refresh-brand-assets.mjs",
     "build:site": "vite build && node scripts/prerender.mjs",
     "build": "npm run build:site",
     "check": "npm run build && node scripts/verify-build.mjs",

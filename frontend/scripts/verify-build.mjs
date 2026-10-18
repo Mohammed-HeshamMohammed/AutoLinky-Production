@@ -10,6 +10,7 @@ const { DOWNLOAD_URL, RELEASE_API_URL } = await server.ssrLoadModule('/src/confi
 await server.close();
 
 const root = path.resolve('dist');
+const branding = JSON.parse(fs.readFileSync(new URL('../brand-assets.json', import.meta.url), 'utf8'));
 const site = SITE_URL;
 const slugs = ['', ...Object.keys(PAGES)];
 const pages = [];
@@ -50,6 +51,12 @@ for (const { route, html } of pages) {
   }
 }
 
+function verifyBranding(html, route) {
+  for (const key of ['favicon', 'faviconLight', 'faviconDark', 'faviconIco', 'touchIcon', 'manifest']) assert(html.includes(`href="${branding.assets[key]}"`), `Stale browser branding ${key} on ${route}`);
+  assert(html.includes(`content="${site}${branding.assets.social}"`), `Stale social artwork on ${route}`);
+}
+for (const { route, html } of pages) verifyBranding(html, route);
+
 const open = fs.readFileSync(path.join(root, 'open', 'index.html'), 'utf8');
 const workspace=fs.readFileSync(path.join(root,'workspace','index.html'),'utf8');
 assert(workspace.includes('noindex')&&!workspace.includes('rel="canonical"'),'Desktop shell must be private and excluded from indexing');
@@ -57,5 +64,7 @@ assert(open.includes('noindex') && !open.includes('rel="canonical"'), '/open/ mu
 assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').match(/<loc>/g)?.length === pages.length, 'Sitemap count mismatch');
 assert(fs.readFileSync(path.join(root, 'robots.txt'), 'utf8').includes(`${site}/sitemap.xml`), 'Sitemap missing from robots.txt');
 assert(fs.existsSync(path.join(root, '404.html')), 'Missing 404 page');
+for (const [route, html] of [['/open/', open], ['/workspace/', workspace], ['/404', fs.readFileSync(path.join(root, '404.html'), 'utf8')]]) verifyBranding(html, route);
+for (const url of Object.values(branding.assets)) assert(fs.existsSync(path.join(root, url.slice(1))), `Missing content-addressed brand asset: ${url}`);
 assert(!fs.existsSync(path.join(root,'app')), 'Retired native browser bundles must not be included in the React output');
 console.log(`Verified ${pages.length} rendered pages, internal links, language alternates, sitemap, and noindex route`);

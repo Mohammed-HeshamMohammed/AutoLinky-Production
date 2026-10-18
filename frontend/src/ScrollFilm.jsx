@@ -6,55 +6,69 @@ import './scroll-film.css';
 export default function ScrollFilm({lang='en'}){
   const ar=lang==='ar',t=(en,arabic)=>ar?arabic:en,chapters=FILM_CHAPTERS[lang];
   const section=useRef(null),video=useRef(null),controller=useRef(null),currentProgress=useRef(0);
-  const [progress,setProgress]=useState(0),[playing,setPlaying]=useState(false),[reduced,setReduced]=useState(false),[failed,setFailed]=useState(false);
+  const [progress,setProgress]=useState(0),[playing,setPlaying]=useState(false),[reduced,setReduced]=useState(false),[failed,setFailed]=useState(false),[preload,setPreload]=useState('metadata');
   const active=filmChapter(progress),chapter=chapters[active];
 
   useEffect(()=>{
     const preference=matchMedia('(prefers-reduced-motion: reduce), (max-height: 500px)');
-    const update=()=>setReduced(preference.matches);update();preference.addEventListener('change',update);
-    return()=>preference.removeEventListener('change',update);
+    const connection=navigator.connection;
+    const update=()=>{setReduced(preference.matches);setPreload(preference.matches||connection?.saveData||['slow-2g','2g','3g'].includes(connection?.effectiveType)?'metadata':'auto');};
+    update();preference.addEventListener('change',update);connection?.addEventListener('change',update);
+    return()=>{preference.removeEventListener('change',update);connection?.removeEventListener('change',update);};
   },[]);
 
   useEffect(()=>{
     const el=section.current,media=video.current;
     setPlaying(false);
-    let frame=0,wanted=currentProgress.current*FILM_DURATION,watching=false,lastScroll=scrollY,disposed=false;
+    let frame=0,scrubFrame=0,scrubTime=0,wanted=currentProgress.current*FILM_DURATION,playhead=wanted,watching=false,lastScroll=scrollY,disposed=false;
     const header=()=>document.querySelector('.site-header')?.getBoundingClientRect().height||0;
     const duration=()=>Number.isFinite(media.duration)?media.duration:FILM_DURATION;
     const seek=()=>{
-      if(!watching&&media.readyState>=1&&!media.seeking&&Math.abs(media.currentTime-wanted)>.035){
-        try{media.currentTime=wanted;}catch{ /* The poster remains available until the browser can seek. */ }
+      if(!watching&&media.readyState>=1&&!media.seeking&&Math.abs(media.currentTime-playhead)>1/120){
+        try{media.currentTime=playhead;}catch{ /* The poster remains available until the browser can seek. */ }
       }
     };
-    const show=p=>{p=clampProgress(p);currentProgress.current=p;wanted=p*Math.max(0,duration()-.05);setProgress(p);seek();};
+    const scrub=timestamp=>{
+      scrubFrame=0;if(disposed||watching||media.readyState<1)return;
+      const elapsed=scrubTime?Math.min(50,timestamp-scrubTime):1000/60;scrubTime=timestamp;
+      playhead+=(wanted-playhead)*(1-Math.exp(-elapsed/70));
+      if(Math.abs(wanted-playhead)<1/120)playhead=wanted;
+      seek();
+      if(playhead!==wanted)scrubFrame=requestAnimationFrame(scrub);
+    };
+    const scheduleScrub=()=>{if(!disposed&&!watching&&!scrubFrame){scrubTime=0;scrubFrame=requestAnimationFrame(scrub);}};
+    const show=(p,snap=false)=>{
+      p=clampProgress(p);currentProgress.current=p;wanted=p*Math.max(0,duration()-.05);setProgress(p);
+      if(snap){playhead=wanted;seek();}scheduleScrub();
+    };
     const measure=()=>{
       frame=0;if(disposed)return;
       const top=header();el.style.setProperty('--film-header',`${top}px`);
       if(watching){if(Math.abs(scrollY-lastScroll)>12){media.pause();watching=false;}else return;}
       if(!reduced&&!failed){const travel=el.offsetHeight-el.querySelector('.film-stage').offsetHeight;show((top-el.getBoundingClientRect().top)/Math.max(1,travel));}
-      else seek();
+      else scheduleScrub();
       lastScroll=scrollY;
     };
     const schedule=()=>{if(!frame)frame=requestAnimationFrame(measure);};
-    const stop=()=>{watching=false;setPlaying(false);};
-    const start=()=>{watching=true;lastScroll=scrollY;setPlaying(true);};
+    const stop=()=>{if(watching)wanted=playhead=media.currentTime;watching=false;setPlaying(false);};
+    const start=()=>{watching=true;cancelAnimationFrame(scrubFrame);scrubFrame=0;lastScroll=scrollY;setPlaying(true);};
     const time=()=>{if(watching){currentProgress.current=clampProgress(media.currentTime/duration());setProgress(currentProgress.current);}};
-    const ready=()=>{schedule();seek();};
+    const ready=()=>{schedule();scheduleScrub();};
     const unavailable=()=>setFailed(true);
     controller.current={go(p){
-      media.pause();watching=false;show(p);
+      media.pause();watching=false;show(p,true);
       if(!reduced&&!failed){const travel=el.offsetHeight-el.querySelector('.film-stage').offsetHeight;window.scrollTo({top:el.getBoundingClientRect().top+scrollY-header()+travel*clampProgress(p),behavior:'instant'});}
       lastScroll=scrollY;
     }};
     addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);
-    media.addEventListener('loadedmetadata',ready);media.addEventListener('seeked',seek);
+    media.addEventListener('loadedmetadata',ready);media.addEventListener('seeked',scheduleScrub);
     media.addEventListener('error',unavailable);if(media.error)unavailable();
     media.addEventListener('play',start);media.addEventListener('pause',stop);media.addEventListener('ended',stop);media.addEventListener('timeupdate',time);
     const observer=new ResizeObserver(schedule);observer.observe(el);schedule();
     return()=>{
-      disposed=true;cancelAnimationFrame(frame);observer.disconnect();controller.current=null;
+      disposed=true;cancelAnimationFrame(frame);cancelAnimationFrame(scrubFrame);observer.disconnect();controller.current=null;
       removeEventListener('scroll',schedule);removeEventListener('resize',schedule);
-      media.removeEventListener('loadedmetadata',ready);media.removeEventListener('seeked',seek);
+      media.removeEventListener('loadedmetadata',ready);media.removeEventListener('seeked',scheduleScrub);
       media.removeEventListener('error',unavailable);
       media.removeEventListener('play',start);media.removeEventListener('pause',stop);media.removeEventListener('ended',stop);media.removeEventListener('timeupdate',time);media.pause();
     };
@@ -64,7 +78,7 @@ export default function ScrollFilm({lang='en'}){
     const media=video.current;
     if(playing){media.pause();return;}
     if(media.ended||progress>=.995)media.currentTime=0;
-    media.play().catch(()=>setFailed(true));
+    media.play().catch(()=>{setPlaying(false);if(media.error)setFailed(true);});
   }
   function skip(){video.current.pause();document.getElementById('after-film')?.focus({preventScroll:true});}
   const seconds=Math.min(FILM_DURATION,Math.floor(progress*FILM_DURATION));
@@ -75,10 +89,10 @@ export default function ScrollFilm({lang='en'}){
         <div className="film-copy">
           <h1 className="film-sr-only">{t('AutoLinky. Your next job, with less busywork.','AutoLinky. وظيفتك القادمة، بتفاصيل متكررة أقل.')}</h1>
           <p className="film-scene-label"><span>0{active+1}</span> / {chapter.label}</p>
-          <div className="film-words" key={active}><h2>{chapter.title.split('\n').map((line,i)=><span key={line} className={i?'film-heading-secondary':undefined}>{line}</span>)}</h2><p className="film-description">{chapter.body}</p></div>
+          <div className="film-words"><h2>{chapter.title.split('\n').map((line,i)=><span key={line} className={i?'film-heading-secondary':undefined}>{line}</span>)}</h2><p className="film-description">{chapter.body}</p></div>
           <div className="film-actions"><a className="film-primary" href={accountHref('signup',lang)}>{t('Start your next move','ابدأ خطوتك القادمة')}<span aria-hidden="true">↗</span></a><span className="film-platforms">{t('Free to start · Web & Android','ابدأ مجانًا · الويب وأندرويد')}</span></div>
         </div>
-        <figure className="film-picture"><video ref={video} src="/assets/film/autolinky-story.mp4?v=mobile-editorial-2" poster="/assets/film/autolinky-story-poster.webp?v=mobile-editorial-2" width="1080" height="1080" muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} disablePictureInPicture onError={()=>setFailed(true)}/><figcaption>{active>=2?t('Actual app screens · sample data','شاشات التطبيق · بيانات توضيحية'):t('Sample documents · motion study','مستندات توضيحية · فيلم قصير')}</figcaption></figure>
+        <figure className="film-picture"><video ref={video} src="/assets/film/autolinky-story.mp4?v=film-60fps-1" poster="/assets/film/autolinky-story-poster.webp?v=film-60fps-1" width="1080" height="1080" muted playsInline preload={preload} aria-hidden="true" tabIndex={-1} disablePictureInPicture onError={()=>setFailed(true)}/><figcaption>{active>=2?t('Actual app screens · sample data','شاشات التطبيق · بيانات توضيحية'):t('Sample documents · motion study','مستندات توضيحية · فيلم قصير')}</figcaption></figure>
       </div>
       <div className="film-bottom">
         <div className="film-transport"><span className="film-instruction">{failed?t('Read the story below','اقرأ القصة بالأسفل'):reduced?t('Explore at your own pace','استكشف بالوتيرة المناسبة لك'):playing?t('Scroll to take control','مرّر للتحكم بالفيلم'):t('Scroll to move the story','مرّر لتتابع القصة')}</span><span className="film-time" dir="ltr">00:{String(seconds).padStart(2,'0')} <span>/ 00:24</span></span>{!failed&&<button type="button" onClick={togglePlayback} aria-pressed={playing}>{playing?t('Pause film','أوقف الفيلم'):t('Play film','شغّل الفيلم')}</button>}</div>

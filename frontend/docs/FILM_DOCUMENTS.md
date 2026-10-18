@@ -49,7 +49,7 @@ Add `--preview-only` to render document camera studies at 1080, 300 and 260
 pixels without encoding the movie. Inspect those before a full render, then
 also inspect frames extracted from the encoded MP4 at the phone display size.
 
-The document helper rebuilds the five images from the checked-in text and material before movie rendering. The film and poster are written to `public/assets/film/`; inspection stills go into the ignored `output/playwright/film-stills/` directory. The `paper-closeups-1` media revision in the player URL refreshes cached footage. Rendering tools remain optional local dependencies and are not shipped to the browser. The browser interpolates scroll changes with a short 70ms response and seeks at half-frame precision; chapter and keyboard controls select their requested time directly. HTML captions remain fully visible while the film moves.
+The document helper rebuilds the five images from the checked-in text and material before movie rendering. The film and poster are written to `public/assets/film/`; inspection stills go into the ignored `output/playwright/film-stills/` directory. The `complete-card-1` media revision in the player URL refreshes cached footage. Rendering tools remain optional local dependencies and are not shipped to the browser. The browser interpolates scroll changes with a short 70ms response and seeks at half-frame precision; chapter and keyboard controls select their requested time directly. HTML captions remain fully visible while the film moves.
 
 The pinned font assets are included, so normal document and movie rendering does not require Python. To regenerate those two font files after changing the bundled source font, install Python `fontTools` and run from `frontend/`:
 

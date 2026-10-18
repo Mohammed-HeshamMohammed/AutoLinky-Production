@@ -2,7 +2,14 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: fixed light website icon (2026-10-18)
+## Current: complete film match card (2026-10-18)
+
+- [x] Trace the cut-off card to its source-image crop: it stops partway through the missing-skills row and excludes the action footer.
+- [x] Include the entire job card and derive its display height from the source aspect ratio; preserve the current position and inspect its full motion, including chapter dissolves.
+- [x] Rerender and decode all 1440 frames; pass 20 English/Arabic phone and desktop display checks, all 23 frontend tests and the verified 22-page production build.
+- [ ] Publish to main/frontend-production, verify the live movie and refresh the source/web packages.
+
+## Previous: fixed light website icon (2026-10-18)
 
 - [x] Use the approved light mark for the website favicon in both browser themes; remove theme overrides and make ICO, touch and PWA fallbacks light too. Preserve the separate dark in-product artwork.
 - [x] Pass 9 browser/head checks, 8 raster/frame palette checks, all 23 frontend tests and the verified 22-page build.

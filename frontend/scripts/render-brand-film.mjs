@@ -18,6 +18,7 @@ const device=JSON.parse(await readFile(resolve('src/iphoneMockup.json'),'utf8'))
 const hardware=await loadImage(resolve('public'+device.frameSrc));
 const images=await Promise.all(['profile','for-you','auto-apply'].map(name=>loadImage(resolve(`public/assets/app/iphone/${name}.webp`))));
 const matchDetail=await loadImage(resolve('public/assets/app/for-you.webp'));
+const matchCardCrop={x:48,y:686,width:690,height:556};
 const W=1080,H=1080,FPS=60,DURATION=24,CHAPTER_SECONDS=4,DISSOLVE_SECONDS=.8;
 const GOP=6,CRF=22;
 const previewOnly=process.argv.includes('--preview-only');
@@ -106,11 +107,13 @@ function scene(index,t){
     caption('YOUR CV. YOUR STARTING POINT.',76,924);
   }else if(index===3){
     phone(images[1],540,mix(563,526,p),359,mix(-.035,.015,p));
-    // Real screen crop, kept separate from the device so the fit is legible.
+    // Keep the complete card, including missing skills, actions and bottom border.
+    const cardWidth=386,cardHeight=cardWidth*matchCardCrop.height/matchCardCrop.width;
     ctx.save();ctx.translate(mix(749,767,p),mix(427,410,p));ctx.rotate(.025);
     ctx.shadowColor='#00000050';ctx.shadowBlur=24;ctx.shadowOffsetY=14;
-    rect(-193,-100,386,209,13,'#fff');ctx.shadowColor='transparent';
-    ctx.beginPath();ctx.roundRect(-193,-100,386,209,13);ctx.clip();ctx.drawImage(matchDetail,48,688,690,374,-193,-100,386,209);ctx.restore();
+    rect(-cardWidth/2,-100,cardWidth,cardHeight,11,'#fffefa');ctx.shadowColor='transparent';
+    ctx.beginPath();ctx.roundRect(-cardWidth/2,-100,cardWidth,cardHeight,11);ctx.clip();
+    ctx.drawImage(matchDetail,matchCardCrop.x,matchCardCrop.y,matchCardCrop.width,matchCardCrop.height,-cardWidth/2,-100,cardWidth,cardHeight);ctx.restore();
     caption('SEE THE FIT BEFORE YOU APPLY.',76,924);
   }else if(index===4){
     phone(images[2],mix(552,526,p),mix(550,524,p),354,mix(.035,-.02,p));
@@ -145,7 +148,7 @@ const framing={
 await writeFile(resolve('output/playwright/film-paper-framing-qa.json'),JSON.stringify(framing,null,2)+'\n');
 if(previewOnly){
   const previews=resolve('output/playwright/film-paper-preview');await mkdir(previews,{recursive:true});
-  for(const seconds of [0,1.3,2.05,2.8,3.5,4.6,5.3,6.05,6.8,7.5]){
+  for(const seconds of [0,1.3,2.05,2.8,3.5,4.6,5.3,6.05,6.8,7.5,12.4,14,15.6]){
     frame(seconds);const name=`${String(seconds).replace('.','-')}s`;
     await writeFile(resolve(previews,`${name}-1080.webp`),await canvas.encode('webp',100));
     for(const size of [PHONE_PREVIEW_WIDTH,260]){

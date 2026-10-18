@@ -578,7 +578,7 @@ html[lang='ar'] .plan-big { letter-spacing: 0; font-size: 46px; line-height: 1.2
 }
 
 /* The in-app browser help page */
-.open { min-height: 100vh; display: grid; place-items: center; padding-block: 32px; }
+main.open { min-height: 100vh; display: grid; place-items: center; padding-block: 32px; }
 .open-card { width: 100%; max-width: 460px; margin-inline: auto; padding: 28px 24px; border-radius: var(--radius); background: var(--surface-2); border: 1px solid var(--border); text-align: center; }
 .open-card img { margin: 0 auto 16px; }
 .open-card h1 { font-size: 24px; margin-bottom: 10px; }

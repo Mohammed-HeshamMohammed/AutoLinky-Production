@@ -10,8 +10,8 @@ The owner reported an unchanged website icon, missing website text and a film th
 - [x] Render the complete 24-second 1080-square film at 60 fps: 1,440 unique decoded frames, moving 0.8-second crossfades and 100ms keyframes. Preserve the real app screens and sample document provenance.
 - [x] Smooth forward/reverse scroll seeking, preserve playback/keyboard/reduced-motion controls, and make chapter captions and public copy visible without entrance-animation dependency. Pass 142 public text/layout checks, 58 film/player cases, 37 current-media cases, 11 continuous-scroll/loading/cancellation cases and 21 startup regression cases against the build. Four additional reduced-motion text cases pass.
 - [x] Pass all 23 frontend tests and the verified 22-page production build. Source/web delivery package verification is recorded separately after final publication.
-- [ ] Refresh and verify the complete source and standalone web packages with the final validation manifest.
-- [ ] Publish to main and frontend-production and verify remote tips and exact frontend-tree parity. Source publication does not itself confirm VPS deployment.
+- [x] Refresh and independently verify the complete source and standalone web packages with the final validation manifest: 869 source files, 976 complete-package payload files, 99 web-runtime payload files, current media bytes and CRC/hash manifests all pass. No native installers are included.
+- [x] Publish source main (`a400f6c`) and frontend-production (`8042ada`), verify both remote tips and exact frontend-tree parity, and confirm all six unchanged backend component/shared-metadata trees still match main. Source publication does not itself confirm VPS deployment.
 
 ## Previous: complete the workspace opening logo (2026-10-18)
 

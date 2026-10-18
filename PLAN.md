@@ -2,7 +2,16 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: readable print on the film's papers (2026-10-18)
+## Current: sidebar overflow and scroll reachability (2026-10-18)
+
+The owner reported unwanted horizontal sidebar scrolling on mobile and desktop web. The selected desktop row extends one pixel beyond its navigation scrollport. On phones, the generic `.open` help-page style also turns the drawer into a centered grid and compresses its navigation.
+
+- [x] Reproduce the navigation's horizontal overhang and inspect personal/admin sidebar sizing and scroll containers.
+- [x] Remove the selected row overhang, scope help-page styling to `main.open` and give navigation a vertical scrollport with a thin sage scrollbar. Preserve the normal header/footer positions; short landscape screens scroll the whole rail so no controls collapse.
+- [x] Pass 239 built-browser checks across both workspaces, EN/AR, nine viewport sizes, wheel/keyboard scrolling, Escape/backdrop/navigation/resize close behavior, long active labels and theme changes. Pass 10 independent checks including the help page and landing page, all 23 frontend tests and the verified 22-page production build.
+- [ ] Publish to main and frontend-production, verify the deployed styles and refresh the source/web packages.
+
+## Previous: readable print on the film's papers (2026-10-18)
 
 The owner clarified that missing text means the print on the papers inside the film. The source documents contain real text, but the whole-page composition reduces it to roughly 2–3 CSS pixels on a phone.
 

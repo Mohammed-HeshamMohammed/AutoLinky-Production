@@ -19,6 +19,16 @@ flutter:
     - assets/brand/
     - shorebird.yaml
   fonts:
+    - family: Manrope
+      fonts:
+        - asset: assets/fonts/Manrope-400.ttf
+          weight: 400
+        - asset: assets/fonts/Manrope-500.ttf
+          weight: 500
+        - asset: assets/fonts/Manrope-600.ttf
+          weight: 600
+        - asset: assets/fonts/Manrope-700.ttf
+          weight: 700
     - family: IBMPlexSansArabic
       fonts:
         - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf

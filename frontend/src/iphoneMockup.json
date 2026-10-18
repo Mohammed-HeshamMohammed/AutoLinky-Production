@@ -1,0 +1,16 @@
+{
+  "frameSrc": "/assets/devices/iphone-pro-frame.png",
+  "width": 1311,
+  "height": 2708,
+  "screen": {
+    "x": 52,
+    "y": 44,
+    "width": 1207,
+    "height": 2620,
+    "radius": 205
+  },
+  "background": "#F7F6F0",
+  "source": "https://www.applaunchflow.com/tools/mockup-generator/iphone-15",
+  "assetSource": "https://www.applaunchflow.com/mockups/iphone17-3d-flat.png",
+  "captureRevision": "mobile-editorial-1"
+}

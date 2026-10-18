@@ -253,6 +253,7 @@ void main() {
     await tester.tap(find.text('Profile'));
     await settle(tester);
     await tester.scrollUntilVisible(find.text('Replace'), 200);
+    await settle(tester);
     await tester.tap(find.text('Replace'));
     await settle(tester);
     await tester.tap(find.text('Choose a file'));
@@ -307,6 +308,8 @@ void main() {
     await settle(tester);
 
     Future<void> add(String text, {bool typed = true}) async {
+      await tester.ensureVisible(find.widgetWithText(ActionChip, 'Add').first);
+      await settle(tester);
       await tester.tap(find.widgetWithText(ActionChip, 'Add').first); // under "The jobs you want"
       await settle(tester);
       await tester.enterText(find.byType(TextField).last, text);
@@ -321,6 +324,8 @@ void main() {
     await add('Cloud Engineer');
     expect(find.byType(InputChip).evaluate().length, greaterThanOrEqualTo(5));
 
+    await tester.ensureVisible(find.widgetWithText(ActionChip, 'Add').first);
+    await settle(tester);
     await tester.tap(find.widgetWithText(ActionChip, 'Add').first);
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('You can choose up to 5 jobs. Remove one to add another.'), findsOneWidget);
@@ -356,6 +361,7 @@ void main() {
     ScaffoldMessenger.of(tester.element(find.byType(NavigationBar))).removeCurrentSnackBar();
     await settle(tester);
     await tester.scrollUntilVisible(find.text('Delete CV'), 200);
+    await settle(tester);
     await tester.tap(find.text('Delete CV'));
     await settle(tester);
     await tester.tap(find.widgetWithText(TextButton, 'Delete'));

@@ -10,6 +10,7 @@ import '../../../core/errors/failure_messages.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../matches/presentation/first_jobs_screen.dart';
 import '../../profile/application/profile_providers.dart';
@@ -82,12 +83,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final Widget? action = switch (_step) {
       0 => AppButton(label: l10n.continueButton, onPressed: _scope == null ? null : () => setState(() => _step = 1)),
       1 => null,
-      _ => AppButton(
-        label: l10n.finishSetup,
-        loading: _saving,
-        icon: const Icon(Icons.auto_awesome_rounded, size: 20),
-        onPressed: () => unawaited(_finish()),
-      ),
+      _ => AppButton(label: l10n.finishSetup, loading: _saving, onPressed: () => unawaited(_finish())),
     };
     return PopScope(
       canPop: _step == 0,
@@ -100,11 +96,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           leading: _step == 0 ? null : BackButton(onPressed: _back),
           title: Text(l10n.stepOf(_step + 1, _steps), style: context.text.labelLarge),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(4),
+            preferredSize: const Size.fromHeight(2),
             child: TweenAnimationBuilder<double>(
               tween: Tween(end: (_step + 1) / _steps),
               duration: AppDurations.normal,
-              builder: (context, value, _) => LinearProgressIndicator(value: value, minHeight: 4),
+              builder: (context, value, _) => LinearProgressIndicator(value: value, minHeight: 2),
             ),
           ),
         ),
@@ -142,10 +138,7 @@ class _StepLayout extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.xl, AppSpace.page, AppSpace.xl),
         children: [
-          Text(title, style: context.text.headlineMedium),
-          const SizedBox(height: AppSpace.sm),
-          Text(subtitle, style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant)),
-          const SizedBox(height: AppSpace.xl),
+          EditorialHeading(eyebrow: 'AutoLinky', title: title, description: subtitle),
           child,
         ],
       ),

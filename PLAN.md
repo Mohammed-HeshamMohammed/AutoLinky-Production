@@ -2,7 +2,151 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: fixed App backend origin (2026-10-17)
+## Current: dashboard editorial redesign and branch publication (2026-10-18)
+
+The owner requested the landing page's new visual direction for both dashboards and publication to main and production branches.
+
+- [x] Apply the charcoal continuous sidebar/masthead, ivory content sheet, sage controls and editorial typography across personal and administration workspaces, EN/AR and light/dark.
+- [x] Recompose personal overview/jobs/profile/CV/Auto Apply and administration metrics/charts/operations while retaining existing account, application and verified management flows.
+- [x] Verify both workspaces, responsive navigation, states, safeguards and public-site regressions; pass 47 built-runtime functional checks, 90 design checks, nine state checks, two sticky-detail checks, 19 frontend tests and the 22-page build.
+- [ ] Commit the authorized landing/logo/mobile/dashboard work to main, synchronize the allowed frontend-production snapshot, fast-forward push and verify remote tree parity. Confirm unchanged backend production trees.
+
+## Previous: mobile editorial redesign (2026-10-18)
+
+The owner requested rebuilding the mobile UI with the same care and visual language as the new landing page.
+
+- [x] Apply charcoal, warm ivory and sage through canonical palette tokens; bundle Manrope with the existing Arabic typeface as fallback. Reduce rounded/card nesting, decorative icons and oversized badges.
+- [x] Recompose Flutter welcome/sign-in/setup and the shared app shell with an integrated masthead, ivory content sheet and numbered navigation. Redesign job discovery, fit display, details, applications, profile/CV, settings and Auto Apply while preserving their existing data and actions.
+- [x] Apply matching editorial hierarchy and reusable components across native SwiftUI presentation, preserving localization, safe areas and all account/application behavior. All 13 Swift sources parse cleanly; the formation block and 16 existing business helper functions remain unchanged. SwiftUI type checking, simulator/device validation and native installers still require the absent Xcode/platform toolchains.
+- [x] Pass Flutter analysis and 166 unique functional cases across split runs: the aggregate completed 144 cases with 22 match cases runner-incomplete; a focused 39/39 run covers those 22 plus 17 overlapping plan cases. Pass 85 actual widget render cases with bundled fonts and no overflow: 61 iPhone, 12 compact 320px and 12 at system text scale 1.35. Rerender all 61 iPhone cases after the LTR numeric-counter and full-opacity search-hint fixes, inspect representative EN/AR light/dark captures and document the applied design.
+
+- [x] Refresh all four marketing app screens and the 24-second film from current Flutter renders. Pass 14 hardware/safe-area checks, 16 gallery checks and 37 current English/Arabic film/product-route checks; decode all 576 frames. Pass 19 frontend tests and the 22-page build, and refresh the complete source and web delivery with validation manifests.
+
+See [mobile design and validation](mobile%20apps/MOBILE_DESIGN.md). The interactive local gallery uses real Flutter renders and sample data. Native Android/iOS installers and deployment remain separate from this source/widget delivery.
+
+## Previous: printed document visuals (2026-10-18)
+
+The owner requested replacing the film's simplified paper placeholders with realistic documents.
+
+- [x] Generate blank paper material and typeset a complete CV, cover letter and three distinct A4 application forms from editable fictional sample content. Keep paper opaque, with clean edges, physical texture and cast shadows. Use pinned OFL Manrope font instances for consistent offline print rendering.
+- [x] Replace paper in the first three film chapters, preserve complete page margins and separate the application footer from its caption. Keep the actual iPhone app imagery and existing scroll timeline, and revise both movie/poster cache URLs.
+- [x] Verify all five complete document bounds, independent visual review and all 576 decoded frames. Pass 29 English/Arabic film checks covering forward/reverse scrolling, phone layout, reduced motion and built-runtime byte ranges, plus 19 frontend tests and the 22-page build. Refresh source/web packages and verify their payload hashes.
+
+See [document sources, prompt and reproduction](frontend/docs/FILM_DOCUMENTS.md).
+
+## Previous: continuous A formation (2026-10-18)
+
+The owner reported that the A stopped midway before continuing. Frame sampling confirmed pauses caused by retracing painted geometry and waiting between eased mask stages.
+
+- [x] Split the A into visible-only stem and attached branch traces, use linear A-specific easing, and overlap the ink/loop/bar handoffs. Preserve the original final geometry, normal t/y, L return and i-dot bounce.
+- [x] Apply the same overlapping linear approach to native welcome branding. Pass 12 targeted Flutter tests, including visible growth through the A joins, and clean analysis of the changed Dart files. Whole-project Flutter analysis encountered the known native Dart VM crash; SwiftUI remains source-reviewed only.
+- [x] Compare 90 sampled frames before/after: remove the 317ms/233ms incomplete-A stalls, with no paused or near-stalled frames afterward. The A completes by 880ms; 244 connectivity samples and exact final/reduced-motion pixel parity pass in both themes. Refresh the decoded 96-frame preview and complete packages.
+
+## Previous: i-dot drop and bounce (2026-10-18)
+
+The owner requested drawing the i first, then dropping its dot onto the stem with a bounce.
+
+- [x] Separate the existing Sora i contours into stem/serif and dot without changing the final letter. Draw the stem first, then drop the rigid dot, contact the stem twice with diminishing rebounds and settle back into the exact approved position.
+- [x] Share editable timing/keyframes between generated React motion CSS and both standalone themed SVGs. Keep the dot outside the stem mask, preserve the A/L formation and ordinary t/y, and retain once-only, reduced-motion and no-JavaScript behavior.
+- [x] Apply matching motion to Flutter and native SwiftUI welcome wordmarks, preserving layout, theme/language progress and ticker behavior. SwiftUI compilation still requires macOS/Xcode.
+- [x] Pass 10 geometry and 118 sampled motion checks for exact contacts, rigid vertical movement and a seamless static handoff, plus 10 live React bounce checks and 14 general animation checks. Verify zero final/reduced-motion pixel differences in both themes. Pass 11 targeted Flutter tests and clean analysis, 19 frontend tests and the 22-page build; refresh the decoded 96-frame preview and complete packages.
+
+The realistic iPhone mockup and app screens remain current. The source/web/brand packages and formation preview are refreshed after the focused motion checks.
+
+## Previous: realistic iPhone mockup (2026-10-18)
+
+The owner requested replacing the drawn phone frame with a real-looking iPhone mockup.
+
+- [x] Source a transparent raster hardware frame with commercial marketing permission and record its provenance. Share its aperture geometry between the React product preview and offline film renderer.
+- [x] Prepare actual app screenshots with iPhone safe areas so the Dynamic Island does not cover the header and the bottom navigation stays visible. Preserve the default screenshot mode and actual sample-data UI.
+- [x] Replace the generic phone outline in the homepage film and English/Arabic product previews. Keep screenshots proportional and complete inside the aperture, existing chapter/navigation behavior and the separate match-detail callout.
+- [x] Pass 370 browser checks across both languages, product routes and four viewport widths; 14 asset/alpha/safe-area checks; four film seeking/source checks; four actual iPhone widget renders and clean Flutter analysis. Pass 19 frontend tests and the 22-page production build; decode all 576 refreshed film frames. Refresh the full source/web package and verify its payload hashes.
+
+No native app behavior, live accounts, deployment or store release is changed. [Hardware and reproduction details](frontend/docs/DEVICE_MOCKUP.md).
+
+## Previous: simplify t and y (2026-10-18)
+
+The owner requested restoring the t and y to normal after reviewing their custom returns.
+
+- [x] Restore both letters to the original outlined Sora 670 glyphs, without custom tips or accents. Keep the linked A and smaller custom L loop, in both appearances and monochrome.
+- [x] Remove t/y-specific formation traces. Retain the attachment-first A/L motion and ordinary reveals for the remaining lettering. Recalculate the integrated wordmark at 405 by 80 units and refresh static/animated exports, mobile assets, social graphics and identity previews.
+- [x] Update Flutter and native SwiftUI welcome masks and their proportions to match the simplified lettering; preserve reduced motion and once-only behavior. Native iOS still requires macOS/Xcode validation.
+- [x] Verify 16 exact-outline/data checks for normal t/y, 244 sampled A/L frames without detached components, pixel-identical final/reduced-motion artwork in both themes, 14 web animation checks, 19 frontend tests and the 22-page production build. Pass nine targeted Flutter tests and clean analysis; refresh the preview, brand kit and complete source/web delivery.
+
+The compact A/app icon is unchanged. Existing product screenshots and the landing film contain ordinary interface typography rather than this integrated wordmark, so they do not need rerendering for this correction. The source/web/brand delivery is refreshed after the focused logo checks.
+
+## Previous: logo formation (2026-10-18)
+
+The owner requested a formation animation for the approved integrated logo.
+
+- [x] Draw the A first, close its linked crossbar, reveal the lettering and finish the smaller t/L/y returns. Keep the approved proportions and exact final artwork.
+- [x] Correct the owner's terminal-direction feedback: returns grow from their visible letter joints toward the free tips. Reverse A/L returns, separate the A loop/bar masks to prevent early detached fragments, draw the A branch continuously from its trunk and grow the t crossbar outward from its stem. Apply the same attachment-first behavior to native welcome masks.
+- [x] Verify the direction correction across 334 frame samples in both themes at 4x resolution, including 1ms probes after stroke starts: no floating components. Preserve pixel-identical final/reduced-motion artwork and no final edge pop. Pass all nine targeted Flutter formation/lifecycle tests, clean Flutter analysis, 14 web animation checks, 19 frontend tests and the 22-page build. Refresh the 96-frame preview and full source/web packages.
+- [x] Apply the 2.55-second sequence to web headers, footers and dashboard wordmarks, once on first visibility. Reserve the full logo space throughout; theme changes do not replay it. Reduced motion and no JavaScript show the finished mark immediately. Compact icons remain static.
+- [x] Add matching 2.2-second Flutter and native SwiftUI welcome formations. Preserve progress through language/theme changes and finish immediately when reduced motion is enabled. SwiftUI source still requires macOS/Xcode validation.
+- [x] Export editable formation paths/timings, standalone light/dark animated SVGs and a 96-frame playable MP4 preview. Refresh the complete 52-file identity kit and the source/web delivery.
+- [x] Pass 19 frontend tests, the 22-page production build/prerender checks, 14 focused runtime animation checks and all 125 complete-brand browser checks. Verify the final and reduced-motion SVG frames match the static artwork in both themes, and the web handoff ends on the exact canonical logo.
+- [x] Pass Flutter analysis, all 160 widget/unit tests with serial execution (including six formation lifecycle tests), and three English/Arabic/dark welcome renders. Native installers and deployment remain outside this local delivery.
+- [x] Verify both refreshed ZIPs, all payload/source SHA-256 records, the 52-file brand kit and the included formation MP4. Extract the web runtime without node_modules or private environments and pass eight HTTP smoke groups, including the compiled formation and both animated SVGs. The complete package contains 813 current source files.
+
+See [formation source and behavior](brand/README.md#logo-formation) and [package reproduction](brand/PACKAGE.md). The animation runs once and never blocks navigation.
+
+## Previous: complete identity and mobile palette (2026-10-17)
+
+The owner requested a new logo and matching mobile colors, then specified a complete logo family and selected concept 01: an A whose crossbar becomes a linked return path.
+
+- [x] Reconstruct the selected concept as editable vector geometry. Export light/dark full logos, text wordmarks, compact tiles, bare minimal marks and black/white variants in SVG and PNG; package the complete 48-file kit, including the licensed Sora source and delivery guide.
+- [x] Refine the primary logo to read [linked A]utoLinky, removing the repeated A tile/name composition. Match the lettering with outlined Sora 670 and optical spacing. Use it in public headers/footers, both dashboards, Flutter welcome branding and the native SwiftUI welcome/setup views.
+- [x] Echo the A's linked return in a smaller custom L foot, plus quieter open t/y terminals requested by the owner. Keep the L's monochrome opening and spacing before i clear, and preserve A as the primary standalone symbol. Refresh both theme families, native/mobile wordmark assets, social preview and the complete kit; verify 53 browser checks, three Flutter welcome renders and the 22-page build again.
+- [x] Generate web favicons, touch/PWA icons and social preview, Android launcher/adaptive/monochrome/notification icons and themed splash resources, plus native iOS icon/image/color catalogs.
+- [x] Apply dashboard-matched warm neutral/sage/blue roles to Android's Flutter theme and native iOS SwiftUI surfaces, navigation, controls and status colors. Keep provider colors and semantic error/success distinctions.
+- [x] Connect themed marks to landing, related pages, both dashboards and mobile interfaces. Render current Flutter product screens with sample data and refresh the landing film with those screens.
+- [x] Pass Flutter analysis, 154 widget/unit tests, 13 rendered screen cases, 16 mobile configuration/release helper tests, 19 frontend tests, 18 focused browser checks and the production build/prerender checks for 22 public pages. Verify all export/native image references, Android alpha masks, ZIP integrity and 12 text/status contrast pairs.
+- [x] After the composition refinement, rerun Flutter analysis, three English/Arabic/dark welcome renders, 53 focused browser checks and the 22-page build/prerender checks. Verify outlined logo geometry, mobile/web asset parity, native wordmark images and ZIP integrity. Native SwiftUI changes still require macOS/Xcode validation.
+- [x] Finish the app-wide identity pass: public/account/admin branding, metadata/PWA/browser chrome, branded 404, native document badges, refreshed current product imagery and film, all launcher/splash/notification resources and native iOS catalogs. Keep notification silhouettes within the canvas. Remove competing automatic cross-document transitions while retaining controlled client navigation.
+- [x] Verify the final app pass with 19 frontend tests, Flutter analysis and 154 widget/unit tests, 13 actual screen renders, 16 mobile helper tests, 47 dashboard flow checks and 125 complete-brand browser checks including the built 404. Decode the refreshed film and validate native resources. Package a current source snapshot, compiled Node web runtime, complete brand kit and checksum/validation manifests; native installers and deployment remain outside this local delivery.
+- [x] Extract the actual web archive into a fresh directory and start it without node_modules or private environments. Pass eight runtime checks, verify every full-package payload SHA-256, confirm private-file exclusions and check both archive CRCs. The delivery contains 805 current source files plus the built web runtime and 48-file brand kit.
+
+Identity source, reproduction instructions and concept provenance are in [brand/README.md](brand/README.md). The original concept board used the built-in image-generation tool; final runtime marks and wordmarks are editable vector assets. Native iOS compilation/device checks require macOS/Xcode and were not run here. No Android/iOS installer, store publication, source publication or remote deployment is claimed by this UI update.
+
+## Previous: scroll-controlled landing film (2026-10-17)
+
+The owner requested a more premium landing page, with a video explaining the problem AutoLinky solves and scrolling controlling the story to its end.
+
+- [x] Render and integrate an original 24-second motion-graphics MP4 using existing app screens, with six narrative chapters from repeated applications to matching and user-controlled sending.
+- [x] Build a pinned timeline that follows forward/reverse scrolling, plus normal play/pause, chapter jumps, keyboard scrubbing, a skip link and readable English/Arabic story.
+- [x] Preserve account/download/contact/legal routes. Support phone layouts, reduced motion, short landscape screens and failed/unsupported media, including failures before hydration.
+- [x] Add production video MIME types and byte-range responses; pass 19 frontend tests including actual range requests, and production build/prerender/link checks for 22 public pages.
+- [x] Pass 58 focused browser checks for video seeking, playback, keyboard controls, both languages at five widths, responsive navigation, installation help, reduced motion and media failure. Decode all 576 video frames successfully.
+- [x] Pass 24 checks against the built Node site for video/range delivery, seeking, history restoration, every chapter on short English/Arabic phones, no-JavaScript access, initial media failure and hydration.
+
+The film is custom programmatic motion graphics, not AI-generated live-action footage. Runway's account is not connected. The movie is silent; the localized page supplies its narrative. Source and reproduction details are in [BRAND_FILM.md](frontend/docs/BRAND_FILM.md). Work remains local and unpublished.
+
+## Previous: landing page and connected dashboard navigation (2026-10-17)
+
+The owner approved the dashboard direction, requested the same attention for the landing page and asked that the sidebar and top bar feel like one object.
+
+- [x] Join both dashboards' navigation rail and toolbar into a continuous surface around a rounded content sheet; retain responsive menus, dark mode, RTL and a sticky desktop toolbar.
+- [x] Rebuild the landing page with concise bilingual copy, existing app imagery, an interactive three-step walkthrough, simple plan rows, FAQ and footer. Remove floating actions, decorative icons, glows and the illustrative dashboard UI.
+- [x] Preserve forward/reverse workflow synchronization, manual/keyboard tabs, signup/login destinations, downloads, Android installation help, WhatsApp links and iPhone web guidance.
+- [x] Carry the shared typography and palette into linked public pages, host fonts locally and preserve prerendered metadata, legal links and download configuration.
+- [x] Pass 30 landing browser checks, 47 dashboard regression checks and 13 focused navigation/iPhone checks. Pass 18 frontend tests and production build/prerender/link verification.
+
+This remains local frontend work. Browser account/admin values are fixtures; no source publication, deployment or live account/database mutation has been performed. Design and validation details are in [WORKSPACE_DESIGN.md](frontend/docs/WORKSPACE_DESIGN.md).
+
+## Previous: personal and administrator dashboard redesign (2026-10-17)
+
+The owner requested a complete, simple, modern redesign of both dashboards with custom styling, web research and minimal icon use. The shared React visual system now uses warm neutral surfaces, locally hosted Manrope and Arabic typography, text navigation and restrained blue accents.
+
+- [x] Rebuild both shells with grouped sidebars, responsive navigation, keyboard focus handling, language switching and persistent light/dark themes.
+- [x] Rework the personal home around job matches, a linked setup checklist, application totals and Auto Apply status. Integrate original generated artwork and replace decorative icons and icon-only controls with text.
+- [x] Rebuild the administrator overview around platform totals, selectable daily charts/table views, setup milestones, sending, plans and attention counts. Preserve every existing overview metric and the authenticator/reason gates for administration.
+- [x] Apply the same design to job cards, account forms, tables, drawers and confirmations. Verify desktop, phone and Arabic RTL layouts with isolated browser fixtures.
+- [x] Pass 18 frontend tests and the production build/prerender/link checks. Browser validation covers 47 checks across navigation, job actions, themes, five viewport widths, charts, drawers and admin verification flows; additionally inspect empty/error states and responsive chart labels.
+
+See [design decisions, sources and artwork provenance](frontend/docs/WORKSPACE_DESIGN.md). Browser previews use local fixtures; they do not verify production authentication, live metrics or database writes. No production publication or deployment is part of this request.
+
+## Previous: fixed App backend origin (2026-10-17)
 
 The owner clarified that `appapi.auto-linky.com` belongs to App, then requested that its address come from code instead of environments. Gateway, Notify/sender and Data's admin health view use the fixed `https://appapi.auto-linky.com` origin. This supersedes the earlier Gateway hostname interpretation. Private caller keys remain in environments. The frontend keeps its working Gateway connection; the mobile example uses the public website proxy. Local tooling injects App's loopback address directly, without a URL environment variable. No app builds or live environment/DNS/database mutations are authorized by this change.
 

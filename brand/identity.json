@@ -1,0 +1,436 @@
+{
+  "name": "AutoLinky",
+  "mark": {
+    "background": "171C19",
+    "radius": 24,
+    "stroke": 8,
+    "paths": [
+      {
+        "color": "EEEADE",
+        "role": "ink",
+        "commands": [
+          [
+            "M",
+            18,
+            76
+          ],
+          [
+            "L",
+            42,
+            29
+          ],
+          [
+            "C",
+            44,
+            25,
+            47,
+            24,
+            51,
+            24
+          ],
+          [
+            "L",
+            53,
+            24
+          ],
+          [
+            "C",
+            57,
+            24,
+            59,
+            26,
+            61,
+            30
+          ],
+          [
+            "L",
+            70,
+            49
+          ],
+          [
+            "L",
+            59,
+            49
+          ],
+          [
+            "L",
+            53,
+            36
+          ],
+          [
+            "C",
+            52,
+            34,
+            50,
+            34,
+            49,
+            37
+          ],
+          [
+            "L",
+            37,
+            60
+          ],
+          [
+            "L",
+            63,
+            60
+          ],
+          [
+            "L",
+            68,
+            69
+          ],
+          [
+            "C",
+            69.5,
+            72,
+            71,
+            74,
+            75,
+            75
+          ],
+          [
+            "C",
+            73,
+            76,
+            70,
+            76,
+            67,
+            76
+          ],
+          [
+            "C",
+            62,
+            76,
+            60,
+            74,
+            58,
+            71
+          ],
+          [
+            "L",
+            55,
+            67
+          ],
+          [
+            "L",
+            38,
+            67
+          ],
+          [
+            "C",
+            34,
+            67,
+            32,
+            69,
+            30,
+            72
+          ],
+          [
+            "L",
+            28,
+            76
+          ],
+          [
+            "Z"
+          ]
+        ]
+      },
+      {
+        "color": "BED2A8",
+        "role": "accent",
+        "commands": [
+          [
+            "M",
+            43,
+            51
+          ],
+          [
+            "L",
+            73,
+            51
+          ],
+          [
+            "C",
+            82,
+            51,
+            88,
+            57,
+            88,
+            64
+          ],
+          [
+            "C",
+            88,
+            71,
+            82,
+            76,
+            74,
+            76
+          ],
+          [
+            "C",
+            68,
+            76,
+            64,
+            73,
+            62,
+            69
+          ],
+          [
+            "L",
+            57,
+            60
+          ],
+          [
+            "L",
+            68,
+            60
+          ],
+          [
+            "L",
+            71,
+            66
+          ],
+          [
+            "C",
+            72,
+            69,
+            74,
+            69,
+            76,
+            68
+          ],
+          [
+            "C",
+            79,
+            67,
+            80,
+            64,
+            79,
+            62
+          ],
+          [
+            "C",
+            78,
+            60,
+            76,
+            59,
+            73,
+            59
+          ],
+          [
+            "L",
+            39,
+            59
+          ],
+          [
+            "Z"
+          ]
+        ]
+      }
+    ],
+    "style": "filled",
+    "description": "An A whose crossbar returns through a linked loop."
+  },
+  "light": {
+    "canvas": "F7F6F0",
+    "surface": "FFFEFA",
+    "chrome": "EEEFE6",
+    "text": "252A29",
+    "muted": "696F6C",
+    "line": "DCDFD4",
+    "outline": "B9C4B2",
+    "primary": "283B2F",
+    "onPrimary": "EEEADE",
+    "primarySoft": "E4EAD9",
+    "onPrimarySoft": "34442D",
+    "accent": "5F7253",
+    "onAccent": "FFFFFF",
+    "accentSoft": "E3E8DB",
+    "onAccentSoft": "34442D",
+    "success": "5F7253",
+    "warning": "8A5B16",
+    "error": "B13D34",
+    "errorSoft": "FCECE9",
+    "onErrorSoft": "7F2C26",
+    "surfaceLow": "F0F1E8",
+    "surfaceHigh": "E8EBE0",
+    "surfaceHighest": "DFE5D6",
+    "hero": "171C19",
+    "onHero": "EEEADE",
+    "heroAccent": "BED2A8"
+  },
+  "dark": {
+    "canvas": "171C19",
+    "surface": "202822",
+    "chrome": "111815",
+    "text": "EEEADE",
+    "muted": "B0B8AA",
+    "line": "374235",
+    "outline": "62735A",
+    "primary": "BED2A8",
+    "onPrimary": "1E2C20",
+    "primarySoft": "34432F",
+    "onPrimarySoft": "DFEBD4",
+    "accent": "BED2A8",
+    "onAccent": "26341F",
+    "accentSoft": "353E31",
+    "onAccentSoft": "DCE7D0",
+    "success": "BED2A8",
+    "warning": "E1C18D",
+    "error": "EBA49B",
+    "errorSoft": "482D2A",
+    "onErrorSoft": "FFE0DA",
+    "surfaceLow": "202524",
+    "surfaceHigh": "29312D",
+    "surfaceHighest": "343D37",
+    "hero": "111815",
+    "onHero": "EEEADE",
+    "heroAccent": "BED2A8"
+  },
+  "wordmark": {
+    "description": "The linked A leads; a smaller L loop echoes it. The remaining letters use unmodified outlined Sora.",
+    "letters": {
+      "L": {
+        "letter": "L",
+        "bearing": 6,
+        "advance": 44,
+        "capHeight": 52,
+        "paths": [
+          {
+            "role": "ink",
+            "commands": [
+              [
+                "M",
+                0,
+                0
+              ],
+              [
+                "L",
+                11.2,
+                0
+              ],
+              [
+                "L",
+                11.2,
+                42
+              ],
+              [
+                "C",
+                11.2,
+                44,
+                12.2,
+                45,
+                14.2,
+                45
+              ],
+              [
+                "L",
+                24,
+                45
+              ],
+              [
+                "L",
+                24,
+                52
+              ],
+              [
+                "L",
+                9,
+                52
+              ],
+              [
+                "C",
+                3,
+                52,
+                0,
+                49,
+                0,
+                43
+              ],
+              [
+                "Z"
+              ]
+            ]
+          },
+          {
+            "role": "accent",
+            "commands": [
+              [
+                "M",
+                14,
+                32
+              ],
+              [
+                "L",
+                24,
+                32
+              ],
+              [
+                "C",
+                31,
+                32,
+                36,
+                36.5,
+                36,
+                42
+              ],
+              [
+                "C",
+                36,
+                47.5,
+                31,
+                52,
+                24,
+                52
+              ],
+              [
+                "L",
+                14,
+                52
+              ],
+              [
+                "L",
+                14,
+                45
+              ],
+              [
+                "L",
+                24,
+                45
+              ],
+              [
+                "C",
+                27,
+                45,
+                28.5,
+                44,
+                28.5,
+                42
+              ],
+              [
+                "C",
+                28.5,
+                40,
+                27,
+                39,
+                24,
+                39
+              ],
+              [
+                "L",
+                14,
+                39
+              ],
+              [
+                "Z"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

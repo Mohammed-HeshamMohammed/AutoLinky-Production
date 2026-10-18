@@ -167,21 +167,19 @@ class _FirstJobsScreenState extends ConsumerState<FirstJobsScreen> {
                   padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.xl, AppSpace.page, AppSpace.lg),
                   sliver: SliverList.list(
                     children: [
-                      Center(
-                        child: _Radar(searching: searching, done: _done),
-                      ),
-                      const SizedBox(height: AppSpace.xl),
+                      _SearchProgress(searching: searching),
+                      const SizedBox(height: AppSpace.xxl),
                       AnimatedSwitcher(
                         duration: AppDurations.slow,
                         child: Column(
                           key: ValueKey(title),
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(title, textAlign: TextAlign.center, style: context.text.headlineSmall),
+                            Text(title, style: context.text.headlineLarge),
                             const SizedBox(height: AppSpace.sm),
                             Text(
                               subtitle,
-                              textAlign: TextAlign.center,
-                              style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant),
+                              style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant),
                             ),
                           ],
                         ),
@@ -210,8 +208,7 @@ class _FirstJobsScreenState extends ConsumerState<FirstJobsScreen> {
                           ? const _Placeholder()
                           : Text(
                               l10n.firstJobsNoneYet,
-                              textAlign: TextAlign.center,
-                              style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant),
+                              style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant),
                             ),
                     ),
                   )
@@ -234,7 +231,6 @@ class _FirstJobsScreenState extends ConsumerState<FirstJobsScreen> {
         bottomNavigationBar: BottomActionBar(
           child: AppButton(
             label: _done ? l10n.firstJobsSeeAll : l10n.firstJobsSeeNow,
-            icon: Icon(_done ? Icons.check_circle_rounded : Icons.arrow_upward_rounded, size: 20),
             variant: _done || _jobs.isNotEmpty ? AppButtonVariant.filled : AppButtonVariant.tonal,
             onPressed: _leave,
           ),
@@ -244,108 +240,19 @@ class _FirstJobsScreenState extends ConsumerState<FirstJobsScreen> {
   }
 }
 
-/// A searching radar: rings going out from the icon while searching, a tick once done.
-class _Radar extends StatefulWidget {
-  const _Radar({required this.searching, required this.done});
+/// An unobtrusive activity rule; the live title list carries the search state.
+class _SearchProgress extends StatelessWidget {
+  const _SearchProgress({required this.searching});
 
   final bool searching;
-  final bool done;
 
   @override
-  State<_Radar> createState() => _RadarState();
-}
-
-class _RadarState extends State<_Radar> with SingleTickerProviderStateMixin {
-  late final AnimationController _rings = AnimationController(vsync: this, duration: const Duration(seconds: 2));
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _follow();
-  }
-
-  @override
-  void didUpdateWidget(_Radar old) {
-    super.didUpdateWidget(old);
-    _follow();
-  }
-
-  /// Rings only while searching, and never for someone who asked the phone for fewer animations.
-  void _follow() {
-    final animate = widget.searching && !MediaQuery.disableAnimationsOf(context);
-    if (animate && !_rings.isAnimating) {
-      unawaited(_rings.repeat());
-    } else if (!animate && _rings.isAnimating) {
-      _rings.stop();
-    }
-  }
-
-  @override
-  void dispose() {
-    _rings.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final color = widget.done ? context.palette.success : colors.primary;
-    return SizedBox.square(
-      dimension: 132,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          if (widget.searching)
-            Positioned.fill(
-              child: AnimatedBuilder(
-                animation: _rings,
-                builder: (context, _) => CustomPaint(painter: _RingsPainter(_rings.value, color)),
-              ),
-            ),
-          AnimatedContainer(
-            duration: AppDurations.slow,
-            width: 76,
-            height: 76,
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.14), shape: BoxShape.circle),
-            child: AnimatedSwitcher(
-              duration: AppDurations.slow,
-              transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
-              child: Icon(
-                widget.done ? Icons.check_circle_rounded : Icons.travel_explore_rounded,
-                key: ValueKey(widget.done),
-                size: 40,
-                color: color,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _RingsPainter extends CustomPainter {
-  _RingsPainter(this.t, this.color);
-
-  final double t;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = size.center(Offset.zero);
-    final maxRadius = size.shortestSide / 2;
-    for (var i = 0; i < 3; i++) {
-      final p = (t + i / 3) % 1.0;
-      final paint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..color = color.withValues(alpha: (1 - p) * 0.45);
-      canvas.drawCircle(center, 38 + (maxRadius - 38) * p, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_RingsPainter old) => old.t != t || old.color != color;
+  Widget build(BuildContext context) => LinearProgressIndicator(
+    value: searching && !MediaQuery.disableAnimationsOf(context) ? null : 1,
+    minHeight: 2,
+    color: context.palette.accent,
+    backgroundColor: context.colors.outlineVariant,
+  );
 }
 
 /// The user's job titles: a small spinner while one is searched for the first time, a tick once it was.
@@ -360,43 +267,39 @@ class _TitleChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: AppSpace.sm,
-      runSpacing: AppSpace.sm,
+    final visible = titles.where((title) => title.state != TitleSearchState.skipped).toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final t in titles)
-          if (t.state != TitleSearchState.skipped)
-            AnimatedContainer(
-              duration: AppDurations.slow,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: AppSpace.xs + 2),
-              decoration: BoxDecoration(
-                color: t.state == TitleSearchState.searched ? colors.primaryContainer : colors.surfaceContainerHigh,
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedSwitcher(
-                    duration: AppDurations.normal,
-                    child: t.state == TitleSearchState.searched
-                        ? Icon(Icons.check_rounded, key: const ValueKey(1), size: 16, color: colors.onPrimaryContainer)
-                        : SizedBox.square(
-                            key: const ValueKey(0),
-                            dimension: 14,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: colors.primary),
-                          ),
-                  ),
-                  const SizedBox(width: AppSpace.sm),
-                  Text(
-                    names[t.title] ?? t.title,
-                    style: context.text.labelLarge?.copyWith(
-                      color: t.state == TitleSearchState.searched ? colors.onPrimaryContainer : colors.onSurface,
-                    ),
-                  ),
-                ],
-              ),
+        for (final (index, t) in visible.indexed)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: AppSpace.md),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: colors.outlineVariant)),
             ),
+            child: Row(
+              children: [
+                Text(
+                  (index + 1).toString().padLeft(2, '0'),
+                  style: context.text.labelSmall?.copyWith(color: colors.onSurfaceVariant),
+                  textDirection: TextDirection.ltr,
+                ),
+                const SizedBox(width: AppSpace.lg),
+                Expanded(child: Text(names[t.title] ?? t.title, style: context.text.bodyMedium)),
+                const SizedBox(width: AppSpace.md),
+                AnimatedSwitcher(
+                  duration: AppDurations.normal,
+                  child: t.state == TitleSearchState.searched
+                      ? Icon(Icons.check_rounded, key: const ValueKey(1), size: 18, color: context.palette.accent)
+                      : SizedBox.square(
+                          key: const ValueKey(0),
+                          dimension: 14,
+                          child: CircularProgressIndicator(strokeWidth: 1.5, color: colors.primary),
+                        ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }
@@ -516,7 +419,7 @@ class _PlaceholderState extends State<_Placeholder> with SingleTickerProviderSta
                       Container(
                         width: 48,
                         height: 48,
-                        decoration: BoxDecoration(color: shade, shape: BoxShape.circle),
+                        decoration: BoxDecoration(color: shade, borderRadius: AppRadius.smAll),
                       ),
                     ],
                   ),

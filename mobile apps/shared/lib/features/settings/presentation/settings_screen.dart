@@ -8,6 +8,7 @@ import '../../../core/config/providers.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/updates/app_updates.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../applications/application/applications_providers.dart';
 import '../../applications/data/applications_repository.dart';
@@ -34,6 +35,7 @@ class SettingsScreen extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.sm, AppSpace.page, AppSpace.xxl),
           children: [
             _Section(
+              number: '01',
               title: l10n.appearance,
               child: Padding(
                 padding: const EdgeInsets.all(AppSpace.md),
@@ -42,21 +44,9 @@ class SettingsScreen extends ConsumerWidget {
                   child: SegmentedButton<ThemeMode>(
                     showSelectedIcon: false,
                     segments: [
-                      ButtonSegment(
-                        value: ThemeMode.system,
-                        label: Text(l10n.themeSystem),
-                        icon: const Icon(Icons.brightness_auto_outlined),
-                      ),
-                      ButtonSegment(
-                        value: ThemeMode.light,
-                        label: Text(l10n.themeLight),
-                        icon: const Icon(Icons.light_mode_outlined),
-                      ),
-                      ButtonSegment(
-                        value: ThemeMode.dark,
-                        label: Text(l10n.themeDark),
-                        icon: const Icon(Icons.dark_mode_outlined),
-                      ),
+                      ButtonSegment(value: ThemeMode.system, label: Text(l10n.themeSystem)),
+                      ButtonSegment(value: ThemeMode.light, label: Text(l10n.themeLight)),
+                      ButtonSegment(value: ThemeMode.dark, label: Text(l10n.themeDark)),
                     ],
                     selected: {settings.themeMode},
                     onSelectionChanged: (value) => unawaited(controller.setThemeMode(value.first)),
@@ -65,6 +55,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             _Section(
+              number: '02',
               title: l10n.language,
               child: RadioGroup<String>(
                 groupValue: settings.locale?.languageCode ?? '',
@@ -84,30 +75,26 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const _Section(title: null, child: _Applying()),
             _Section(
+              number: '04',
               title: l10n.about,
               child: Column(
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.info_outline_rounded),
                     title: const Text('Autolinky'),
                     subtitle: Text(switch (ref.watch(currentPatchProvider).value) {
                       final patch? => l10n.versionWithUpdate(ref.watch(appVersionProvider), patch),
                       null => l10n.versionLabel(ref.watch(appVersionProvider)),
                     }),
                   ),
-                  if (env.termsUrl.isNotEmpty)
-                    _LinkTile(icon: Icons.description_outlined, title: l10n.termsOfService, url: env.termsUrl),
-                  if (env.privacyUrl.isNotEmpty)
-                    _LinkTile(icon: Icons.privacy_tip_outlined, title: l10n.privacyPolicy, url: env.privacyUrl),
+                  if (env.termsUrl.isNotEmpty) _LinkTile(title: l10n.termsOfService, url: env.termsUrl),
+                  if (env.privacyUrl.isNotEmpty) _LinkTile(title: l10n.privacyPolicy, url: env.privacyUrl),
                 ],
               ),
             ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.logout_rounded, color: context.colors.error),
-                title: Text(l10n.signOut, style: TextStyle(color: context.colors.error)),
-                onTap: () => unawaited(confirmSignOut(context, ref)),
-              ),
+            const Divider(height: 1),
+            ListTile(
+              title: Text(l10n.signOut, style: TextStyle(color: context.colors.error)),
+              onTap: () => unawaited(confirmSignOut(context, ref)),
             ),
           ],
         ),
@@ -117,10 +104,11 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.child});
+  const _Section({required this.title, required this.child, this.number});
 
   /// Null: [child] brings its own title.
   final String? title;
+  final String? number;
   final Widget child;
 
   @override
@@ -129,22 +117,13 @@ class _Section extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (title case final title?) _SectionTitle(title),
-        if (title == null) child else Card(child: child),
+        if (title case final title?) ...[
+          EditorialSectionLabel(number: number ?? '', label: title),
+          const SizedBox(height: AppSpace.md),
+        ],
+        child,
       ],
     ),
-  );
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsetsDirectional.only(start: AppSpace.xs, bottom: AppSpace.sm),
-    child: Text(text, style: context.text.labelLarge?.copyWith(color: context.colors.onSurfaceVariant)),
   );
 }
 
@@ -171,38 +150,29 @@ class _Applying extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionTitle(l10n.applyingSection),
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(
-                  Icons.mail_outline_rounded,
-                  color: email?.status == MailStatus.invalid ? context.colors.error : null,
-                ),
-                title: Text(l10n.settingsGmail),
-                subtitle: Text(gmail, maxLines: 1, overflow: TextOverflow.ellipsis),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () => unawaited(
-                  email == null || email.status == MailStatus.invalid
-                      ? openGmailSetup(context)
-                      : openGmailScreen(context),
-                ),
+        EditorialSectionLabel(number: '03', label: l10n.applyingSection),
+        const SizedBox(height: AppSpace.md),
+        Column(
+          children: [
+            ListTile(
+              title: Text(l10n.settingsGmail),
+              subtitle: Text(gmail, maxLines: 1, overflow: TextOverflow.ellipsis),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => unawaited(
+                email == null || email.status == MailStatus.invalid
+                    ? openGmailSetup(context)
+                    : openGmailScreen(context),
               ),
-              const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-              if (state != null) ...[
-                PlanTile(state: state),
-                const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-              ],
-              ListTile(
-                leading: const Icon(Icons.bolt_rounded),
-                title: Text(l10n.autoApplyTitle),
-                subtitle: auto.isEmpty ? null : Text(auto),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () => unawaited(openAutoApply(context)),
-              ),
-            ],
-          ),
+            ),
+            const Divider(height: 1),
+            if (state != null) ...[PlanTile(state: state), const Divider(height: 1)],
+            ListTile(
+              title: Text(l10n.autoApplyTitle),
+              subtitle: auto.isEmpty ? null : Text(auto),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => unawaited(openAutoApply(context)),
+            ),
+          ],
         ),
       ],
     );
@@ -210,15 +180,13 @@ class _Applying extends ConsumerWidget {
 }
 
 class _LinkTile extends StatelessWidget {
-  const _LinkTile({required this.icon, required this.title, required this.url});
+  const _LinkTile({required this.title, required this.url});
 
-  final IconData icon;
   final String title;
   final String url;
 
   @override
   Widget build(BuildContext context) => ListTile(
-    leading: Icon(icon),
     title: Text(title),
     trailing: const Icon(Icons.open_in_new_rounded, size: 18),
     onTap: () => unawaited(launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)),

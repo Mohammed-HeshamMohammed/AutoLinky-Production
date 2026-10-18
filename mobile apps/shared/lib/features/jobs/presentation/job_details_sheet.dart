@@ -7,6 +7,7 @@ import '../../../core/errors/failure_messages.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/bidi_text.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../applications/application/applications_providers.dart';
 import '../application/external_apps.dart';
@@ -83,37 +84,36 @@ class JobDetailsSheet extends ConsumerWidget {
                   ],
                   if (extra != null) ...[const SizedBox(height: AppSpace.lg), extra!],
                   const SizedBox(height: AppSpace.xl),
-                  _Section(job.source == JobSource.post ? l10n.thePost : l10n.jobDescription),
+                  EditorialSectionLabel(
+                    number: '01',
+                    label: job.source == JobSource.post ? l10n.thePost : l10n.jobDescription,
+                  ),
                   _Description(job: job, detail: detail),
                   if (channels.isNotEmpty) ...[
                     const SizedBox(height: AppSpace.xl),
-                    _Section(l10n.waysToApply),
-                    Card(
-                      child: Column(
-                        children: [
-                          for (final (i, way) in channels.indexed) ...[
-                            if (i > 0) const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-                            ListTile(
-                              leading: Icon(channelIcon(way)),
-                              title: Text(applyLabel(l10n, way)),
-                              subtitle: _WayHint(way: way, detail: detail.value),
-                              trailing: const Icon(Icons.chevron_right_rounded),
-                              enabled: application == null,
-                              onTap: () => Navigator.pop(context, way),
-                            ),
-                          ],
+                    EditorialSectionLabel(number: '02', label: l10n.waysToApply),
+                    Column(
+                      children: [
+                        for (final (i, way) in channels.indexed) ...[
+                          if (i > 0) const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
+                          ListTile(
+                            title: Text(applyLabel(l10n, way)),
+                            subtitle: _WayHint(way: way, detail: detail.value),
+                            trailing: const Icon(Icons.chevron_right_rounded),
+                            enabled: application == null,
+                            onTap: () => Navigator.pop(context, way),
+                          ),
                         ],
-                      ),
+                      ],
                     ),
                   ],
                   if (webUri(job.url) case final url?) ...[
                     const SizedBox(height: AppSpace.md),
                     Align(
                       alignment: AlignmentDirectional.centerStart,
-                      child: TextButton.icon(
+                      child: TextButton(
                         onPressed: () => unawaited(ref.read(linkOpenerProvider)(url)),
-                        icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                        label: Text(l10n.openOnLinkedIn),
+                        child: Text(l10n.openOnLinkedIn),
                       ),
                     ),
                   ],
@@ -127,10 +127,9 @@ class JobDetailsSheet extends ConsumerWidget {
                   ? Center(child: AppliedBadge(state: application))
                   : SizedBox(
                       width: double.infinity,
-                      child: FilledButton.icon(
+                      child: FilledButton(
                         onPressed: () => Navigator.pop(context, primary),
-                        icon: Icon(channelIcon(primary!)),
-                        label: Text(applyLabel(l10n, primary)),
+                        child: Text(applyLabel(l10n, primary!)),
                       ),
                     ),
             ),
@@ -138,18 +137,6 @@ class JobDetailsSheet extends ConsumerWidget {
       ),
     );
   }
-}
-
-class _Section extends StatelessWidget {
-  const _Section(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: AppSpace.sm),
-    child: Text(text, style: context.text.titleMedium),
-  );
 }
 
 /// The post's text or the job description, in its own direction (an English ad reads left to right in Arabic).

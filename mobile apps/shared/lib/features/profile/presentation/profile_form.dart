@@ -268,7 +268,6 @@ class _ProfileFormState extends ConsumerState<ProfileForm> {
             title: l10n.fieldScope,
             child: Card(
               child: ListTile(
-                leading: draft.scope == null ? null : Icon(scopeIcon(draft.scope!)),
                 title: Text(draft.scope == null ? l10n.notSet : scopeTitle(l10n, draft.scope!)),
                 subtitle: draft.scope == null ? null : Text(scopeBody(l10n, draft.scope!)),
                 trailing: TextButton(onPressed: _changeScope, child: Text(l10n.change)),
@@ -363,6 +362,8 @@ class _Section extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(height: 1),
+        const SizedBox(height: AppSpace.lg),
         Text(title, style: context.text.titleSmall),
         if (help != null) ...[const SizedBox(height: AppSpace.xxs), Text(help!, style: context.text.bodySmall)],
         const SizedBox(height: AppSpace.md),

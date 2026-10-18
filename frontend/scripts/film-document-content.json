@@ -1,0 +1,179 @@
+{
+  "description": "Editable sample documents for the landing film. Sara Ali is a fictional candidate, consistent with the shipped app screenshot fixtures. Employers and education below are fictional. These documents demonstrate repeated application work, not application results.",
+  "page": {
+    "width": 1000,
+    "height": 1414,
+    "margin": 88,
+    "fontFamily": "Manrope",
+    "nameSize": 47,
+    "titleSize": 29,
+    "sectionSize": 22,
+    "bodySize": 22,
+    "lineHeight": 33,
+    "smallSize": 18,
+    "ink": "#262B28",
+    "mutedInk": "#61665F",
+    "rule": "#B8BCB2",
+    "footer": "SAMPLE DOCUMENT"
+  },
+  "candidate": {
+    "name": "Sara Ali",
+    "role": "Network Engineer",
+    "location": "Cairo, Egypt",
+    "email": "sara.ali@example.com",
+    "experience": "3 years",
+    "availability": "One month notice",
+    "workPreference": "Hybrid or on-site"
+  },
+  "cv": {
+    "documentLabel": "CURRICULUM VITAE",
+    "summary": "Network engineer with three years of experience supporting ISP infrastructure. Hands-on with routing, switching, incident response and network documentation. Seeking a role in network engineering or network operations.",
+    "experience": [
+      {
+        "title": "Network Engineer",
+        "company": "Northline Networks",
+        "location": "Cairo, Egypt",
+        "dates": "2024 - Present",
+        "bullets": [
+          "Maintain BGP and OSPF routing across customer networks.",
+          "Investigate connectivity incidents and document resolutions.",
+          "Prepare configuration changes and network diagrams."
+        ]
+      },
+      {
+        "title": "Network Operations Engineer",
+        "company": "Delta Connectivity",
+        "location": "Cairo, Egypt",
+        "dates": "2023 - 2024",
+        "bullets": [
+          "Monitor network health and triage service alerts.",
+          "Coordinate incident handovers with field and support teams."
+        ]
+      }
+    ],
+    "education": {
+      "title": "BSc, Communications Engineering",
+      "institution": "Nile Valley Institute of Technology",
+      "dates": "2019 - 2023"
+    },
+    "skills": ["BGP", "OSPF", "Routing & switching", "Linux", "Python", "Packet Tracer"],
+    "certification": "Cisco Certified Network Associate (CCNA)",
+    "languages": "Arabic - Native  /  English - Professional"
+  },
+  "coverLetter": {
+    "documentLabel": "COVER LETTER",
+    "date": "18 October 2026",
+    "recipient": ["Hiring Team", "Northstar Infrastructure", "Cairo, Egypt"],
+    "subject": "Application for Network Engineer",
+    "salutation": "Dear Hiring Team,",
+    "paragraphs": [
+      "I am applying for the Network Engineer position at Northstar Infrastructure. I bring three years of experience supporting ISP networks, with a practical grounding in routing, switching and incident response.",
+      "In my current role, I maintain BGP and OSPF configurations, investigate service interruptions and prepare network documentation. I enjoy working through technical problems carefully and keeping colleagues informed throughout an incident.",
+      "I am looking for an engineering team where I can contribute to reliable network operations and continue developing my skills. I would welcome the opportunity to discuss how my experience fits your requirements."
+    ],
+    "closing": "Kind regards,",
+    "signature": "Sara Ali",
+    "attachment": "Enclosed: Sara Ali - CV.pdf"
+  },
+  "applications": [
+    {
+      "documentLabel": "EMPLOYMENT APPLICATION",
+      "company": "Northstar Infrastructure",
+      "department": "Engineering",
+      "role": "Network Engineer",
+      "reference": "NE-104",
+      "sections": [
+        {
+          "title": "Personal details",
+          "fields": [
+            {"label": "Full name", "value": "Sara Ali"},
+            {"label": "Email address", "value": "sara.ali@example.com"},
+            {"label": "Current location", "value": "Cairo, Egypt"}
+          ]
+        },
+        {
+          "title": "Professional background",
+          "fields": [
+            {"label": "Current position", "value": "Network Engineer"},
+            {"label": "Relevant experience", "value": "3 years"},
+            {"label": "Core skills", "value": "BGP, OSPF, routing and switching"}
+          ]
+        },
+        {
+          "title": "Availability",
+          "fields": [
+            {"label": "Notice period", "value": "One month"},
+            {"label": "Preferred work arrangement", "value": "Hybrid or on-site"},
+            {"label": "CV attachment", "value": "Sara Ali - CV.pdf"}
+          ]
+        }
+      ]
+    },
+    {
+      "documentLabel": "CANDIDATE INFORMATION",
+      "company": "Relay Network Services",
+      "department": "Network Operations",
+      "role": "NOC Engineer",
+      "reference": "NOC-208",
+      "sections": [
+        {
+          "title": "Contact information",
+          "fields": [
+            {"label": "First name", "value": "Sara"},
+            {"label": "Last name", "value": "Ali"},
+            {"label": "Contact email", "value": "sara.ali@example.com"}
+          ]
+        },
+        {
+          "title": "Experience and qualifications",
+          "fields": [
+            {"label": "Present job title", "value": "Network Engineer"},
+            {"label": "Years in networking", "value": "3"},
+            {"label": "Relevant qualification", "value": "BSc, Communications Engineering"}
+          ]
+        },
+        {
+          "title": "Supporting information",
+          "fields": [
+            {"label": "Network monitoring experience", "value": "Alert triage and incident handovers"},
+            {"label": "Earliest start", "value": "One month after offer"},
+            {"label": "Resume", "value": "Sara Ali - CV.pdf"}
+          ]
+        }
+      ]
+    },
+    {
+      "documentLabel": "JOB APPLICATION FORM",
+      "company": "Cedar Systems",
+      "department": "Technical Services",
+      "role": "Network Support Engineer",
+      "reference": "NS-316",
+      "sections": [
+        {
+          "title": "Applicant",
+          "fields": [
+            {"label": "Name", "value": "Sara Ali"},
+            {"label": "Email", "value": "sara.ali@example.com"},
+            {"label": "City / Country", "value": "Cairo / Egypt"}
+          ]
+        },
+        {
+          "title": "Employment history",
+          "fields": [
+            {"label": "Most recent role", "value": "Network Engineer"},
+            {"label": "Total relevant experience", "value": "3 years"},
+            {"label": "Technical skills", "value": "Routing, switching, Linux, Python"}
+          ]
+        },
+        {
+          "title": "Application details",
+          "fields": [
+            {"label": "Position applied for", "value": "Network Support Engineer"},
+            {"label": "Availability to join", "value": "One month notice"},
+            {"label": "Supporting document", "value": "Sara Ali - CV.pdf"}
+          ]
+        }
+      ]
+    }
+  ]
+}

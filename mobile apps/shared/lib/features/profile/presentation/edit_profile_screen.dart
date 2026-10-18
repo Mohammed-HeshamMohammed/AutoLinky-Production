@@ -8,6 +8,7 @@ import '../../../core/errors/failure_messages.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../matches/presentation/first_jobs_screen.dart';
 import '../../taxonomy/taxonomy.dart';
@@ -59,12 +60,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.editProfile)),
+      appBar: AppBar(title: Text(l10n.profileTitle)),
       body: SafeArea(
         child: ContentWidth(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.md, AppSpace.page, AppSpace.xl),
-            children: [ProfileForm(controller: _form)],
+            children: [
+              EditorialHeading(eyebrow: l10n.profileTitle, title: l10n.editProfile),
+              const SizedBox(height: AppSpace.xl),
+              ProfileForm(controller: _form),
+            ],
           ),
         ),
       ),

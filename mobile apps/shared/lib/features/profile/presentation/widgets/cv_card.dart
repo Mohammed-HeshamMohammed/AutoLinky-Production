@@ -19,9 +19,15 @@ class CvCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final isPdf = cv.fileType == 'pdf';
+    final colors = context.colors;
     final date = MaterialLocalizations.of(context).formatMediumDate(cv.uploadedAt);
     final details = [if (cv.pages != null) l10n.cvPages(cv.pages!), l10n.cvUploadedOn(date)].join(' · ');
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.surfaceContainerLowest,
+        borderRadius: AppRadius.smAll,
+        border: Border.all(color: colors.outlineVariant),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpace.lg),
         child: Column(
@@ -29,35 +35,23 @@ class CvCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: (isPdf ? const Color(0xFFE5484D) : const Color(0xFF2B6CB0)).withValues(alpha: 0.12),
-                    borderRadius: AppRadius.mdAll,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    isPdf ? 'PDF' : 'DOC',
-                    style: context.text.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: isPdf ? const Color(0xFFE5484D) : const Color(0xFF2B6CB0),
-                    ),
+                Text(
+                  isPdf ? 'PDF' : 'DOC',
+                  textDirection: TextDirection.ltr,
+                  style: context.text.labelSmall?.copyWith(
+                    color: colors.primary,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(width: AppSpace.lg),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BidiText(cv.fileName, style: context.text.titleSmall, maxLines: 1),
-                      const SizedBox(height: AppSpace.xxs),
-                      Text(details, style: context.text.bodySmall),
-                    ],
-                  ),
-                ),
+                const Spacer(),
+                Icon(Icons.description_outlined, size: 20, color: colors.onSurfaceVariant),
               ],
             ),
+            const SizedBox(height: AppSpace.xl),
+            BidiText(cv.fileName, style: context.text.titleLarge, maxLines: 2),
+            const SizedBox(height: AppSpace.sm),
+            Text(details, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
             if (cv.isPartial) ...[
               const SizedBox(height: AppSpace.md),
               Container(
@@ -77,6 +71,8 @@ class CvCard extends StatelessWidget {
               ),
             ],
             if (actions.isNotEmpty) ...[
+              const SizedBox(height: AppSpace.lg),
+              const Divider(height: 1),
               const SizedBox(height: AppSpace.md),
               Wrap(spacing: AppSpace.sm, runSpacing: AppSpace.sm, children: actions),
             ],

@@ -3,7 +3,7 @@
 Android is Flutter; iOS is an independent native SwiftUI app. Both use the public
 `mobile apps/release-source.json` repository/channel/manifest and the common
 `shared/pubspec.yaml` version/build policy. The iOS app does not consume Dart
-screens or require Flutter tooling. The iOS-style web application remains separate.
+screens or require Flutter tooling. The browser workspace is a separate React application.
 
 `mobile-development.yml` builds Android on Ubuntu and unsigned Swift iOS on macOS.
 Each main code change or manual dispatch creates a new common build number.

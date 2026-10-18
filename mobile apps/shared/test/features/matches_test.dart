@@ -121,7 +121,10 @@ void main() {
     await pumpApp(tester, api);
     // the screen and the next stretch of scrolling filled, one page after the other: not all 30
     expect(api.calls.take(3), [null, '1', '2']);
-    expect(api.calls.length, inInclusiveRange(4, 15));
+    // The number of cards needed depends on typography and viewport height.
+    // Loading stops once the real viewport has its look-ahead buffer, before all 30 pages.
+    expect(api.calls.length, lessThan(30));
+    expect(tester.state<ScrollableState>(list).position.extentAfter, greaterThanOrEqualTo(600));
     final loaded = api.calls.length;
     await tester.pump(const Duration(seconds: 2));
     expect(api.calls, hasLength(loaded));
@@ -241,8 +244,11 @@ void main() {
     );
     await pumpApp(tester, FakeMatchesApi(jobs: [placeless(0, WorkMode.onsite), placeless(1, WorkMode.remote)]));
     expect(find.text('Placeless 0'), findsOneWidget);
+    expect(find.text('Place not given'), findsOneWidget); // the on-site one
+    await tester.scrollUntilVisible(find.text('Placeless 1'), 240, scrollable: list);
     expect(find.text('Placeless 1'), findsOneWidget);
-    expect(find.text('Place not given'), findsOneWidget); // the on-site one only
+    final remoteCard = find.ancestor(of: find.text('Placeless 1'), matching: find.byType(MatchCard));
+    expect(find.descendant(of: remoteCard, matching: find.text('Place not given')), findsNothing);
   });
 
   testWidgets('the API has no profile for the user: the way to the setup', (tester) async {

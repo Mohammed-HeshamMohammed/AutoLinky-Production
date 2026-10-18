@@ -23,7 +23,7 @@ class JobCard extends ConsumerWidget {
   /// The tab's way to apply; null = the job's own ways.
   final ApplyChannel? channel;
 
-  /// At the end of the title row (the match ring); shown in the details too.
+  /// At the end of the title row (the numeric fit); shown in the details too.
   final Widget? trailing;
   final Widget? extra;
 
@@ -36,10 +36,16 @@ class JobCard extends ConsumerWidget {
     final application = applicationOf(ref, job);
     final done = isDoneWith(application);
     return Card(
+      margin: EdgeInsets.zero,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadius.mdAll,
+        side: BorderSide(color: context.colors.outlineVariant),
+      ),
       child: InkWell(
         onTap: details,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(AppSpace.lg, AppSpace.lg, AppSpace.lg, AppSpace.md),
+          padding: const EdgeInsets.fromLTRB(AppSpace.lg, AppSpace.xl, AppSpace.lg, AppSpace.md),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -66,14 +72,13 @@ class JobCard extends ConsumerWidget {
               const SizedBox(height: AppSpace.sm),
               Row(
                 children: [
-                  TextButton.icon(
+                  TextButton(
                     onPressed: details,
-                    icon: const Icon(Icons.article_outlined, size: 18),
-                    label: Text(context.l10n.showDetails),
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm),
                       minimumSize: const Size(0, 44),
                     ),
+                    child: Text(context.l10n.showDetails),
                   ),
                   const SizedBox(width: AppSpace.sm),
                   Expanded(
@@ -105,11 +110,23 @@ class JobHeading extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BidiText(job.title, style: large ? context.text.titleLarge : context.text.titleMedium, maxLines: large ? 4 : 2),
         if (job.company case final company?) ...[
-          const SizedBox(height: AppSpace.xxs),
-          BidiText(company, style: context.text.bodyMedium, maxLines: 1),
+          BidiText(
+            company,
+            style: context.text.labelMedium?.copyWith(color: context.colors.onSurfaceVariant),
+            maxLines: 1,
+          ),
+          const SizedBox(height: AppSpace.sm),
         ],
+        BidiText(
+          job.title,
+          style: (large ? context.text.headlineSmall : context.text.titleMedium)?.copyWith(
+            fontWeight: FontWeight.w600,
+            height: 1.35,
+            letterSpacing: large ? -0.5 : -0.2,
+          ),
+          maxLines: large ? 4 : 2,
+        ),
       ],
     );
   }

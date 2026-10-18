@@ -7,8 +7,7 @@ import '../../../../core/widgets/bidi_text.dart';
 import '../../data/job.dart';
 import '../job_labels.dart';
 
-/// Where, how and how long ago: icons and short texts, wrapping on as many lines as needed. A job posted today
-/// says so in mint.
+/// Quiet text metadata, wrapping naturally in either language.
 class JobFacts extends StatelessWidget {
   const JobFacts({super.key, required this.job});
 
@@ -40,7 +39,7 @@ class JobFacts extends StatelessWidget {
   }
 }
 
-/// A small icon and a short text.
+/// A short text fact. [icon] is retained for existing callers; metadata stays typographic.
 class Fact extends StatelessWidget {
   const Fact({super.key, required this.icon, required this.text, this.color});
 
@@ -51,16 +50,7 @@ class Fact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = this.color ?? context.colors.onSurfaceVariant;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 16, color: color),
-        const SizedBox(width: AppSpace.xs),
-        Flexible(
-          child: BidiText(text, style: context.text.bodySmall?.copyWith(color: color), maxLines: 1),
-        ),
-      ],
-    );
+    return BidiText(text, style: context.text.bodySmall?.copyWith(color: color), maxLines: 2);
   }
 }
 
@@ -107,23 +97,19 @@ class SkillChip extends StatelessWidget {
       color: kind == SkillChipKind.missing ? colors.onSurfaceVariant : colors.onSurface,
     );
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: AppSpace.xxs + 1),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: AppSpace.xxs + 2),
       decoration: BoxDecoration(
         color: switch (kind) {
-          SkillChipKind.have => high.withValues(alpha: 0.12),
+          SkillChipKind.have => high.withValues(alpha: 0.07),
           SkillChipKind.missing => null,
-          SkillChipKind.plain || SkillChipKind.more => colors.surfaceContainerHigh,
+          SkillChipKind.plain || SkillChipKind.more => colors.surfaceContainerLow,
         },
-        border: kind == SkillChipKind.missing ? Border.all(color: colors.outline) : null,
-        borderRadius: AppRadius.smAll,
+        border: Border.all(color: kind == SkillChipKind.missing ? colors.outline : colors.outlineVariant),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (kind == SkillChipKind.have) ...[
-            Icon(Icons.check_rounded, size: 14, color: high),
-            const SizedBox(width: AppSpace.xxs),
-          ],
           Flexible(
             child: kind == SkillChipKind.more
                 ? Text(text, style: style, textDirection: TextDirection.ltr) // "+2" in Arabic too, not "2+"
@@ -146,13 +132,13 @@ class AppliedBadge extends StatelessWidget {
     final failed = state.status == ApplicationStatus.failed;
     final color = failed ? context.colors.error : context.palette.success;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: AppSpace.sm),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.mdAll),
+      padding: const EdgeInsetsDirectional.only(start: AppSpace.sm, top: AppSpace.xxs, bottom: AppSpace.xxs),
+      decoration: BoxDecoration(
+        border: BorderDirectional(start: BorderSide(color: color, width: 2)),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(failed ? Icons.error_outline_rounded : Icons.check_circle_rounded, size: 18, color: color),
-          const SizedBox(width: AppSpace.xs + 2),
           Flexible(
             child: Text(
               applicationLabel(context.l10n, state),

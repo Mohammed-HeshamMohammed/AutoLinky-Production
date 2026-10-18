@@ -1,93 +1,134 @@
-"""
-Draws the Autolinky brand images (app icon, Android adaptive icon layers, splash) from one geometry, the same as
-lib/core/widgets/app_logo.dart: a white "A" chevron with a mint dot (the match) on a blue gradient.
+"""Render brand/identity.json into web, Android and native iOS assets.
 
-    python tool/make_brand.py        -> shared assets/brand/*.png and the Android notification resources; then run mobile_apps.py
-                                        and android/app/src/main/res/drawable-*/ic_stat_autolinky.png (notifications)
+Run python "mobile apps/shared/tool/make_brand.py", then mobile_apps.py and
+Android's branding generators. Requires Pillow and fontTools for the full kit.
 """
-
+import json
+from io import BytesIO
 from pathlib import Path
-
+import subprocess
+import sys
 from PIL import Image, ImageDraw
 
-OUT = Path(__file__).resolve().parent.parent / "assets" / "brand"
-ANDROID_RES = Path(__file__).resolve().parents[2] / "Android app" / "android" / "app" / "src" / "main" / "res"
-NOTIFICATION_PX = {"mdpi": 24, "hdpi": 36, "xhdpi": 48, "xxhdpi": 72, "xxxhdpi": 96}   # 24 dp
-TOP, BOTTOM = (0x4C, 0x6E, 0xFF), (0x1F, 0x35, 0xC7)       # gradient, top-left -> bottom-right
-WHITE, MINT = (255, 255, 255, 255), (0x2D, 0xD4, 0xA0, 255)
-S = 4                                                        # supersampling
+ROOT = Path(__file__).resolve().parents[3]
+SHARED = ROOT / 'mobile apps/shared'
+OUT = SHARED / 'assets/brand'
+WEB = ROOT / 'frontend/public/assets'
+ANDROID_RES = ROOT / 'mobile apps/Android app/android/app/src/main/res'
+IOS = ROOT / 'mobile apps/IOS app/Resources/Assets.xcassets'
+IDENTITY = json.loads((ROOT / 'brand/identity.json').read_text())
+S = 4
+NOTIFICATION_PX = {'mdpi':24, 'hdpi':36, 'xhdpi':48, 'xxhdpi':72, 'xxxhdpi':96}
 
+def rgb(value):
+    return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
 
-def gradient(size: int) -> Image.Image:
-    img = Image.new("RGBA", (size, size))
-    px = img.load()
-    for y in range(size):
-        for x in range(size):
-            t = (x + y) / (2 * (size - 1))
-            px[x, y] = tuple(round(a + (b - a) * t) for a, b in zip(TOP, BOTTOM)) + (255,)
-    return img
+def save_image(image,path,**options):
+    encoded=BytesIO()
+    image.save(encoded,format='ICO' if path.suffix.lower()=='.ico' else 'PNG',**options)
+    temporary=path.with_name(path.name+'.tmp')
+    temporary.write_bytes(encoded.getvalue());temporary.replace(path)
 
+def mark(size, scale=1, monochrome=False, center=(50,50)):
+    image = Image.new('RGBA', (size*S, size*S))
+    draw = ImageDraw.Draw(image)
+    unit = size*S*scale/100
+    def point(x,y): return size*S/2+(x-center[0])*unit, size*S/2+(y-center[1])*unit
+    width = IDENTITY['mark']['stroke']*unit
+    for path in IDENTITY['mark']['paths']:
+        points = []
+        for command in path['commands']:
+            if command[0] in ('M','L'):
+                points.append(point(*command[1:]))
+            elif command[0] == 'Q':
+                start = points[-1]
+                control, end = point(*command[1:3]), point(*command[3:5])
+                for step in range(1,25):
+                    t = step/24
+                    points.append(tuple((1-t)**2*a+2*(1-t)*t*b+t*t*c for a,b,c in zip(start,control,end)))
+            elif command[0] == 'C':
+                start = points[-1]
+                c1,c2,end = point(*command[1:3]),point(*command[3:5]),point(*command[5:7])
+                for step in range(1,33):
+                    t = step/32
+                    points.append(tuple((1-t)**3*a+3*(1-t)**2*t*b+3*(1-t)*t*t*c+t**3*d for a,b,c,d in zip(start,c1,c2,end)))
+        color = (255,255,255,255) if monochrome else rgb(path['color'])+(255,)
+        if IDENTITY['mark'].get('style') == 'filled':
+            draw.polygon(points,fill=color)
+        else:
+            draw.line(points, fill=color, width=round(width), joint='curve')
+            for x,y in points:
+                draw.ellipse((x-width/2,y-width/2,x+width/2,y+width/2),fill=color)
+    return image.resize((size,size),Image.Resampling.LANCZOS)
 
-def mark(size: int, scale: float) -> Image.Image:
-    """The mark on a transparent square; scale = the share of the square the 100-unit artwork takes."""
-    big = size * S
-    img = Image.new("RGBA", (big, big), (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
-    unit = big * scale / 100
-    off = (big - 100 * unit) / 2
+def rounded(image, radius):
+    size = image.width
+    mask = Image.new('L',(size*S,size*S))
+    ImageDraw.Draw(mask).rounded_rectangle((0,0,size*S-1,size*S-1),radius=radius*size*S,fill=255)
+    result = image.copy()
+    result.putalpha(mask.resize((size,size),Image.Resampling.LANCZOS))
+    return result
 
-    def p(x, y):
-        return off + x * unit, off + y * unit
+def svg():
+    art = IDENTITY['mark']
+    paths = []
+    for path in art['paths']:
+        d = ' '.join(command[0]+' '.join(str(n) for n in command[1:]) for command in path['commands'])
+        paths.append(f'<path d="{d}" fill="#{path["color"]}"/>' if art.get('style') == 'filled' else f'<path d="{d}" stroke="#{path["color"]}"/>')
+    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="{art["radius"]}" fill="#{art["background"]}"/><g fill="none" stroke-width="{art["stroke"]}" stroke-linecap="round" stroke-linejoin="round">'+''.join(paths)+'</g></svg>\n'
 
-    pts = [p(26, 74), p(50, 26), p(74, 74)]
-    w = 13 * unit
-    d.line(pts, fill=WHITE, width=round(w), joint="curve")
-    for x, y in (pts[0], pts[2]):
-        d.ellipse([x - w / 2, y - w / 2, x + w / 2, y + w / 2], fill=WHITE)
-    cx, cy = p(50, 62)
-    r = 7.5 * unit
-    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=MINT)
-    return img.resize((size, size), Image.LANCZOS)
+def theme_colors():
+    dart = ['// Generated by tool/make_brand.py from brand/identity.json.', "import 'package:material_ui/material_ui.dart';", '', 'abstract final class BrandColors {']
+    for mode in ('light','dark'):
+        for name,value in IDENTITY[mode].items():
+            dart.append(f'  static const {mode}{name[0].upper()+name[1:]} = Color(0xFF{value});')
+    dart.append('}\n')
+    (SHARED / 'lib/core/theme/brand_colors.dart').write_text('\n'.join(dart),encoding='utf-8')
+    for name in IDENTITY['light']:
+        directory = IOS / (name[0].upper()+name[1:]+'.colorset')
+        directory.mkdir(parents=True,exist_ok=True)
+        colors = []
+        for mode in ('light','dark'):
+            r,g,b = rgb(IDENTITY[mode][name])
+            color = {'idiom':'universal','color':{'color-space':'srgb','components':{'red':f'0x{r:02X}','green':f'0x{g:02X}','blue':f'0x{b:02X}','alpha':'1.000'}}}
+            if mode == 'dark':color['appearances']=[{'appearance':'luminosity','value':'dark'}]
+            colors.append(color)
+        (directory / 'Contents.json').write_text(json.dumps({'colors':colors,'info':{'author':'xcode','version':1}},indent=2)+'\n',encoding='utf-8')
 
+def main():
+    OUT.mkdir(parents=True,exist_ok=True)
+    full = Image.new('RGBA',(1024,1024),rgb(IDENTITY['mark']['background'])+(255,))
+    full.alpha_composite(mark(1024))
+    save_image(full.convert('RGB'),OUT / 'icon.png')
+    tile = rounded(full,.24)
+    save_image(tile,OUT / 'logo_rounded.png')
+    save_image(Image.new('RGB',(1024,1024),rgb(IDENTITY['mark']['background'])),OUT / 'icon_background.png')
+    save_image(mark(1024,.7),OUT / 'icon_foreground.png')
+    save_image(mark(1024,.7,True),OUT / 'icon_monochrome.png')
+    splash = Image.new('RGBA',(1152,1152))
+    splash.alpha_composite(tile.resize((512,512),Image.Resampling.LANCZOS),(320,320))
+    save_image(splash,OUT / 'splash_android12.png')
+    save_image(tile.resize((384,384),Image.Resampling.LANCZOS),OUT / 'splash.png')
+    for directory in (OUT,WEB):(directory / 'logo.svg').write_text(svg(),encoding='utf-8')
+    (WEB / 'favicon.svg').write_text(svg(),encoding='utf-8')
+    save_image(tile,WEB / 'favicon.ico',sizes=[(16,16),(32,32),(48,48),(64,64)])
+    for name,size in (('icon-192.png',192),('icon-512.png',512),('apple-touch-icon.png',180)):
+        save_image(full.resize((size,size),Image.Resampling.LANCZOS).convert('RGB'),WEB / name)
+    for density,size in NOTIFICATION_PX.items():
+        directory=ANDROID_RES / f'drawable-{density}'
+        directory.mkdir(parents=True,exist_ok=True)
+        save_image(mark(size,1.2,True,center=(53,50)),directory / 'ic_stat_autolinky.png')
+    catalog=json.loads((IOS / 'AppIcon.appiconset/Contents.json').read_text())
+    for item in catalog['images']:
+        size=round(float(item['size'].split('x')[0])*float(item['scale'].rstrip('x')))
+        save_image(full.resize((size,size),Image.Resampling.LANCZOS).convert('RGB'),IOS / 'AppIcon.appiconset' / item['filename'])
+    save_image(tile,IOS / 'BrandLogo.imageset/logo.png')
+    for suffix,scale in (('',1),('@2x',2),('@3x',3)):
+        save_image(tile.resize((192*scale,192*scale),Image.Resampling.LANCZOS),IOS / f'LaunchImage.imageset/LaunchImage{suffix}.png')
+    for name,mode in (('background.png','light'),('darkbackground.png','dark')):
+        save_image(Image.new('RGB',(1,1),rgb(IDENTITY[mode]['canvas'])),IOS / 'LaunchBackground.imageset' / name)
+    theme_colors()
+    subprocess.run([sys.executable, str(ROOT / 'brand/export_kit.py')], check=True)
+    print('Rendered shared identity, Flutter tokens, web icons, Android notification icons and native iOS catalogs.')
 
-def rounded(img: Image.Image, radius: float) -> Image.Image:
-    size = img.size[0]
-    m = Image.new("L", (size * S, size * S), 0)
-    ImageDraw.Draw(m).rounded_rectangle([0, 0, size * S - 1, size * S - 1], radius=radius * size * S, fill=255)
-    out = img.copy()
-    out.putalpha(m.resize((size, size), Image.LANCZOS))
-    return out
-
-
-def notification_icons() -> None:
-    """Android's notification icon: the mark as a white silhouette (Android paints it in one colour). Named in
-    lib/features/auto_apply/application/notifications.dart and kept by res/raw/keep.xml (resource shrinking)."""
-    for density, px in NOTIFICATION_PX.items():
-        icon = Image.new("RGBA", (px, px), WHITE)
-        icon.putalpha(mark(px, 1.25).getchannel("A"))   # ~2 dp of padding, as Android asks
-        folder = ANDROID_RES / f"drawable-{density}"
-        folder.mkdir(parents=True, exist_ok=True)
-        icon.save(folder / "ic_stat_autolinky.png")
-
-
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    bg = gradient(1024)
-    full = bg.copy()
-    full.alpha_composite(mark(1024, 0.86))
-    full.convert("RGB").save(OUT / "icon.png")                       # iOS / stores: square, no transparency
-    rounded(full, 0.225).save(OUT / "logo_rounded.png")                # docs, README
-    bg.convert("RGB").save(OUT / "icon_background.png")                # Android adaptive: background layer
-    mark(1024, 0.56).save(OUT / "icon_foreground.png")                 # foreground inside the 66% safe zone
-    mark(1024, 0.56).convert("LA").point(lambda v: v).save(OUT / "icon_monochrome.png")   # Android 13 themed
-    splash = Image.new("RGBA", (1152, 1152), (0, 0, 0, 0))             # Android 12 splash: icon in a 768 circle
-    tile = rounded(full.resize((512, 512), Image.LANCZOS), 0.225)
-    splash.alpha_composite(tile, (320, 320))
-    splash.save(OUT / "splash_android12.png")
-    rounded(full.resize((384, 384), Image.LANCZOS), 0.225).save(OUT / "splash.png")
-    notification_icons()
-    print("written:", ", ".join(sorted(p.name for p in OUT.glob("*.png"))), "+ ic_stat_autolinky.png")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':main()

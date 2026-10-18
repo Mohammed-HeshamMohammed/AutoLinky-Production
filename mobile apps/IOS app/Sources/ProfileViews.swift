@@ -8,21 +8,31 @@ struct ProfileView: View {
     @State private var busy = false
     @State private var deleteCV = false
     var body: some View {
-        Form {
-            Section { Text(store.auth.email).font(.headline).privacySensitive(); if !store.profile["headline"].text.isEmpty { Text(store.profile["headline"].text) }; NavigationLink(t("Edit profile")) { ProfileEditor(onboarding: false) } }
-            Section(t("Your CV")) {
-                if store.cv.isNull { Text(t("Upload your CV to build your profile and find relevant jobs.")) }
-                else { Label(store.cv["file_name"].text, systemImage: "doc.text"); Text(ByteCountFormatter.string(fromByteCount: Int64(store.cv["file_size"].integer), countStyle: .file)).font(.caption).foregroundStyle(.secondary)
+        BrandForm {
+            VStack(alignment: .leading, spacing: 16) {
+                BrandPageHeading(eyebrow: "AutoLinky", title: "Profile", subtitle: store.profile["headline"].text.isEmpty ? nil : store.profile["headline"].text)
+                Text(store.auth.email).font(.subheadline).foregroundStyle(BrandColors.muted).privacySensitive()
+                NavigationLink(t("Edit profile")) { ProfileEditor(onboarding: false) }.buttonStyle(BrandOutlineButtonStyle())
+            }.padding(.bottom, 14).listRowSeparator(.hidden)
+            Section {
+                if store.cv.isNull { Text(t("Upload your CV to build your profile and find relevant jobs.")).font(.title3.weight(.medium)).lineSpacing(4).padding(.vertical, 10) }
+                else {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(store.cv["file_name"].text).font(.title3.weight(.medium)).fixedSize(horizontal: false, vertical: true)
+                        Text(ByteCountFormatter.string(fromByteCount: Int64(store.cv["file_size"].integer), countStyle: .file)).font(.caption).foregroundStyle(BrandColors.muted)
+                    }.padding(.vertical, 12)
                     if store.cv["analysis"].text == "partial" { Text(t("Your CV was partly read. You can ask for another analysis.")); Button(t("Analyze again")) { run { try await store.reanalyze() } } }
                     Button(t("Delete CV"), role: .destructive) { deleteCV = true }
                 }
-                Button(t(store.cv.isNull ? "Upload CV" : "Replace CV")) { importing = true }
+                Button(t(store.cv.isNull ? "Upload CV" : "Replace CV")) { importing = true }.buttonStyle(BrandPrimaryButtonStyle()).listRowSeparator(.hidden)
                 if busy { ProgressView(t("Reading your CV…")) }
-                Text(t("PDF or DOCX, up to 4 MB. Your CV is stored privately.")).font(.footnote).foregroundStyle(.secondary)
-            }.disabled(busy)
-            Section { NavigationLink(t("Applications")) { ApplicationsView() }; NavigationLink(t("Auto apply")) { AutoApplyView() }; NavigationLink(t("Gmail settings")) { MailSettingsView() }; NavigationLink(t("Search progress")) { SearchProgressView() } }
+                Text(t("PDF or DOCX, up to 4 MB. Your CV is stored privately.")).font(.footnote).foregroundStyle(BrandColors.muted)
+            } header: { BrandSectionLabel("Your CV") }.disabled(busy)
+            Section { NavigationLink(t("Applications")) { ApplicationsView() }; NavigationLink(t("Auto apply")) { AutoApplyView() }; NavigationLink(t("Gmail settings")) { MailSettingsView() }; NavigationLink(t("Search progress")) { SearchProgressView() } } header: { BrandSectionLabel("Your target work") }
             Section { NavigationLink(t("Settings")) { SettingsView() } }
         }.navigationTitle(t("Profile"))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { ToolbarItem(placement: .principal) { BrandMasthead() } }
         .fileImporter(isPresented: $importing, allowedContentTypes: [.pdf, UTType(filenameExtension: "docx") ?? .data]) { result in run { try await store.upload(result.get()) } }
         .confirmationDialog(t("Delete your stored CV? Your profile will stay."), isPresented: $deleteCV, titleVisibility: .visible) { Button(t("Delete CV"), role: .destructive) { run { _ = try await store.api.request("/v1/cv", method: "DELETE"); try store.validateOwner(); store.cv = .null } } }
         .refreshable { await store.load() }
@@ -50,25 +60,26 @@ struct ProfileEditor: View {
     @State private var importing = false
     @State private var loaded = false
     var body: some View {
-        Form {
-            if onboarding { Section { Text(t("Let’s find the right opportunities for you.")).font(.title2.bold()); Text(t("Start with your CV, then review the profile it creates.")); Button(t("Upload CV")) { importing = true }; if !store.cv.isNull { Label(store.cv["file_name"].text, systemImage: "checkmark.circle") } } }
+        BrandForm {
+            BrandPageHeading(eyebrow: "Profile", title: onboarding ? "Let’s find the right opportunities for you." : "Edit profile", subtitle: onboarding ? "Start with your CV, then review the profile it creates." : nil).listRowSeparator(.hidden)
+            if onboarding { Section { Button(t("Upload CV")) { importing = true }.buttonStyle(BrandPrimaryButtonStyle()).listRowSeparator(.hidden); if !store.cv.isNull { Text(store.cv["file_name"].text).foregroundStyle(BrandColors.success) } } }
             Section(t("About you")) { TextField(t("Headline"), text: $headline); Picker(t("Experience level"), selection: $level) { Text(t("Not specified")).tag(""); ForEach(["intern", "junior", "mid", "senior", "manager"], id: \.self) { Text(t($0)).tag($0) } }; Stepper(t("Years of experience") + ": \(years)", value: $years, in: 0...60) }
             Section(t("Your target work")) {
                 Picker(t("Where to work"), selection: $scope) { ForEach(["egypt", "egypt_gulf", "egypt_remote", "egypt_gulf_remote", "remote", "worldwide"], id: \.self) { Text(t($0)).tag($0) } }
                 Toggle(t("Open to remote work"), isOn: $remote)
                 TextField(t("Country codes, separated by commas"), text: $countries).textInputAutocapitalization(.characters).autocorrectionDisabled()
                 TextField(t("Search titles, one per line"), text: $titles, axis: .vertical).lineLimit(3...8)
-                Text(t("Up to 8 job titles. These guide collection and matching.")).font(.footnote).foregroundStyle(.secondary)
-                NavigationLink { TaxonomySelection(title: "Roles", values: store.taxonomy["roles"].items, selection: $roles, limit: 5) } label: { LabeledContent(t("Roles"), value: "\(roles.count)/5") }
-                NavigationLink { TaxonomySelection(title: "Fields", values: store.taxonomy["fields"].items, selection: $fields, limit: 5) } label: { LabeledContent(t("Fields"), value: "\(fields.count)/5") }
+                Text(t("Up to 8 job titles. These guide collection and matching.")).font(.footnote).foregroundStyle(BrandColors.muted)
+                NavigationLink { TaxonomySelection(title: "Roles", values: store.taxonomy["roles"].items, selection: $roles, limit: 5) } label: { LabeledContent { Text("\(roles.count)/5").environment(\.layoutDirection, .leftToRight) } label: { Text(t("Roles")) } }
+                NavigationLink { TaxonomySelection(title: "Fields", values: store.taxonomy["fields"].items, selection: $fields, limit: 5) } label: { LabeledContent { Text("\(fields.count)/5").environment(\.layoutDirection, .leftToRight) } label: { Text(t("Fields")) } }
             }
             Section(t("Skills and languages")) {
-                NavigationLink { TaxonomySelection(title: "Skills", values: store.taxonomy["skills"].items, selection: $skills, limit: 60) } label: { LabeledContent(t("Skills"), value: "\(skills.count)/60") }
+                NavigationLink { TaxonomySelection(title: "Skills", values: store.taxonomy["skills"].items, selection: $skills, limit: 60) } label: { LabeledContent { Text("\(skills.count)/60").environment(\.layoutDirection, .leftToRight) } label: { Text(t("Skills")) } }
                 TextField(t("Other skills, separated by commas"), text: $extras, axis: .vertical)
                 ForEach(["en", "ar", "de", "fr", "nl", "es", "pt"], id: \.self) { language in Toggle(Locale.current.localizedString(forLanguageCode: language) ?? language, isOn: Binding(get: { languages.contains(language) }, set: { if $0 { languages.insert(language) } else { languages.remove(language) } })) }
             }
             if busy { ProgressView(t("Saving…")) }
-        }.navigationTitle(t(onboarding ? "Set up your profile" : "Edit profile"))
+        }.navigationTitle(t(onboarding ? "Set up your profile" : "Edit profile")).navigationBarTitleDisplayMode(.inline)
         .toolbar { ToolbarItem(placement: .confirmationAction) { Button(t("Save")) { save() }.disabled(busy || headline.count > 100 || lines(titles).count > 8 || list(extras).count > 30 || list(countries).count > 15) } }
         .disabled(busy)
         .onAppear { if !loaded { fill(); loaded = true } }
@@ -100,14 +111,15 @@ struct TaxonomySelection: View {
     @AppStorage("language") private var language = "en"
     private func label(_ value: JSON) -> String { let name = value[language == "ar" ? "name_ar" : "name_en"].text; return name.isEmpty ? (value["name"].text.isEmpty ? value["slug"].text : value["name"].text) : name }
     var body: some View {
-        List {
+        BrandList {
+            BrandPageHeading(eyebrow: "Edit profile", title: title).listRowSeparator(.hidden)
             ForEach(selection.filter { slug in !values.contains { $0["slug"].text == slug } }.sorted(), id: \.self) { slug in Button { selection.remove(slug) } label: { Label(slug, systemImage: "checkmark.circle.fill") } }
             ForEach(values.filter { query.isEmpty || label($0).localizedCaseInsensitiveContains(query) || $0["slug"].text.localizedCaseInsensitiveContains(query) }) { value in
                 let slug = value["slug"].text
                 Button { if selection.contains(slug) { selection.remove(slug) } else if selection.count < limit { selection.insert(slug) } } label: { HStack { Text(label(value)); Spacer(); if selection.contains(slug) { Image(systemName: "checkmark") } } }
                 .disabled(!selection.contains(slug) && selection.count >= limit)
             }
-        }.navigationTitle(t(title)).searchable(text: $query).toolbar { Text("\(selection.count)/\(limit)").foregroundStyle(.secondary) }
+        }.navigationTitle(t(title)).searchable(text: $query).toolbar { Text("\(selection.count)/\(limit)").environment(\.layoutDirection, .leftToRight).foregroundStyle(BrandColors.muted) }
     }
 }
 
@@ -116,10 +128,10 @@ struct SearchProgressView: View {
     @State private var status: JSON = .null
     @State private var busy = false
     var body: some View {
-        List {
-            Section { Text(t("Search requests are handled by the collector when it is available.")) }
+        BrandList {
+            BrandPageHeading(eyebrow: "Explore", title: "Search progress", subtitle: "Search requests are handled by the collector when it is available.").listRowSeparator(.hidden)
             ForEach(status["titles"].items) { item in LabeledContent(item["title"].text, value: t(item["status"].text)) }
-            Button(t("Search now")) { Task { await refresh(start: true) } }.disabled(busy)
+            Button(t("Search now")) { Task { await refresh(start: true) } }.buttonStyle(BrandPrimaryButtonStyle()).listRowSeparator(.hidden).disabled(busy)
             if busy { ProgressView() }
         }.navigationTitle(t("Search progress")).task { await refresh(start: false) }.refreshable { await refresh(start: false) }
     }

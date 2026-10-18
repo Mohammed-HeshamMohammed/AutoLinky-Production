@@ -56,11 +56,8 @@ class _CardSkeleton extends StatelessWidget {
                 const SizedBox(width: AppSpace.xl),
                 Container(
                   width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: shade, width: 5),
-                  ),
+                  height: 30,
+                  decoration: BoxDecoration(color: shade, borderRadius: AppRadius.smAll),
                 ),
               ],
             ),

@@ -1,4 +1,4 @@
-/* Autolinky website. Brand: the app's blues (#4C6EFF -> #2236C9) and its mint (#3EE0AE). */
+/* Shared layout and components. Current brand tokens are defined in site-design.css. */
 :root {
   --bg: #070b1d;
   --bg-2: #0b1130;

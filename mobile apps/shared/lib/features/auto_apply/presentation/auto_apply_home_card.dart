@@ -144,17 +144,10 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
         ? l10n.freeLeft(state.freeLeftNow, state.freeLimit)
         : null;
 
-    final (background, border, ink) = switch (tone) {
-      _Tone.off => (colors.surfaceContainerLowest, palette.cardBorder, colors.onSurface),
-      _Tone.on => (palette.success.withValues(alpha: 0.10), palette.success.withValues(alpha: 0.45), colors.onSurface),
-      _Tone.paused => (
-        palette.warning.withValues(alpha: 0.12),
-        palette.warning.withValues(alpha: 0.5),
-        colors.onSurface,
-      ),
-      _Tone.problem => (colors.errorContainer, colors.error.withValues(alpha: 0.35), colors.onErrorContainer),
-    };
-    final soft = tone == _Tone.problem ? ink : colors.onSurfaceVariant;
+    final background = palette.heroBackground;
+    final border = tone == _Tone.problem ? colors.error : background;
+    final ink = palette.onHero;
+    final soft = ink.withValues(alpha: .75);
 
     return ContentWidth(
       child: AnimatedContainer(
@@ -172,21 +165,19 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                 ? () => unawaited(context.push(Routes.autoApply))
                 : (async.hasError ? () => ref.invalidate(autoApplyProvider) : null),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(AppSpace.md, AppSpace.md, AppSpace.sm, AppSpace.md),
+              padding: const EdgeInsets.all(AppSpace.md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     children: [
-                      _Badge(tone: tone),
-                      const SizedBox(width: AppSpace.md),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               l10n.autoApplyTitle,
-                              style: context.text.titleSmall?.copyWith(color: ink, fontWeight: FontWeight.w700),
+                              style: context.text.titleMedium?.copyWith(color: ink, fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(height: AppSpace.xxs),
                             if (line.isEmpty)
@@ -201,7 +192,8 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                                 child: Text(
                                   line,
                                   key: ValueKey(line),
-                                  maxLines: 2,
+                                  semanticsLabel: line,
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: context.text.bodySmall?.copyWith(color: soft),
                                 ),
@@ -215,11 +207,6 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                         child: Switch(
                           value: on,
                           onChanged: state == null || _pending != null ? null : (value) => unawaited(_toggle(value)),
-                          thumbIcon: WidgetStateProperty.resolveWith(
-                            (states) => states.contains(WidgetState.selected)
-                                ? Icon(Icons.bolt_rounded, size: 16, color: palette.success)
-                                : const Icon(Icons.power_settings_new_rounded, size: 14),
-                          ),
                           trackColor: WidgetStateProperty.resolveWith(
                             (states) => states.contains(WidgetState.selected) && !states.contains(WidgetState.disabled)
                                 ? palette.success
@@ -236,8 +223,7 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                   ),
                   if (problem != null || freeLeft != null)
                     Padding(
-                      // under the words, not under the badge
-                      padding: const EdgeInsetsDirectional.only(start: _Badge.size + AppSpace.md, top: AppSpace.sm),
+                      padding: const EdgeInsets.only(top: AppSpace.sm),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -245,7 +231,7 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                             Text(problemText(l10n, problem), style: context.text.bodySmall?.copyWith(color: ink)),
                             if (_fixOf(problem) case final fix?) ...[
                               const SizedBox(height: AppSpace.sm),
-                              FilledButton.icon(
+                              FilledButton(
                                 onPressed: fix.action,
                                 style: FilledButton.styleFrom(
                                   backgroundColor: colors.error,
@@ -253,8 +239,7 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                                   minimumSize: const Size(0, 36),
                                   padding: const EdgeInsets.symmetric(horizontal: AppSpace.md),
                                 ),
-                                icon: Icon(fix.icon, size: 18),
-                                label: Text(fix.label),
+                                child: Text(fix.label),
                               ),
                             ],
                           ],
@@ -262,10 +247,7 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
                             if (problem != null) const SizedBox(height: AppSpace.sm),
                             Text(
                               freeLeft,
-                              style: context.text.labelMedium?.copyWith(
-                                color: tone == _Tone.problem ? ink : colors.primary,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: context.text.labelMedium?.copyWith(color: ink, fontSize: 12, fontWeight: FontWeight.w600),
                             ),
                           ],
                         ],
@@ -299,47 +281,6 @@ class _AutoApplyHomeCardState extends ConsumerState<AutoApplyHomeCard> {
   }
 }
 
-/// The card's mark: a bolt on the brand's soft blue (off), green (on), amber (paused) or red (needs the user).
-class _Badge extends StatelessWidget {
-  const _Badge({required this.tone});
-
-  static const double size = 44;
-
-  final _Tone tone;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final palette = context.palette;
-    // white or dark on green / amber, whichever reads better (they are lighter in the dark theme)
-    Color inkOn(Color color) =>
-        ThemeData.estimateBrightnessForColor(color) == Brightness.dark ? Colors.white : const Color(0xE6000000);
-    final (color, ink, icon) = switch (tone) {
-      _Tone.off => (colors.primaryContainer, colors.onPrimaryContainer, Icons.bolt_rounded),
-      _Tone.on => (palette.success, inkOn(palette.success), Icons.bolt_rounded),
-      _Tone.paused => (palette.warning, inkOn(palette.warning), Icons.pause_rounded),
-      _Tone.problem => (colors.error, colors.onError, Icons.priority_high_rounded),
-    };
-    return AnimatedContainer(
-      duration: AppDurations.normal,
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        boxShadow: tone == _Tone.on
-            ? [BoxShadow(color: palette.success.withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4))]
-            : null,
-      ),
-      child: AnimatedSwitcher(
-        duration: AppDurations.normal,
-        transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
-        child: Icon(icon, key: ValueKey(icon), size: 24, color: ink),
-      ),
-    );
-  }
-}
-
 /// Where the line goes while auto apply's state loads the first time.
 class _LinePlaceholder extends StatelessWidget {
   const _LinePlaceholder();
@@ -350,7 +291,7 @@ class _LinePlaceholder extends StatelessWidget {
     child: Container(
       width: 140,
       height: 10,
-      decoration: BoxDecoration(color: context.colors.surfaceContainerHigh, borderRadius: AppRadius.smAll),
+      decoration: BoxDecoration(color: context.palette.onHero.withValues(alpha: .15), borderRadius: AppRadius.smAll),
     ),
   );
 }

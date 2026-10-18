@@ -11,6 +11,7 @@ import '../../../core/logging/app_log.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../applications/application/applications_providers.dart';
 import '../../applications/data/applications_repository.dart';
@@ -203,7 +204,7 @@ class _GmailScreenState extends ConsumerState<GmailScreen> {
       GmailReason.settings => l10n.gmailIntroSettings,
     };
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.gmailTitle)),
+      appBar: AppBar(title: Text(l10n.applyingSection)),
       body: ContentWidth(
         child: Form(
           key: _form,
@@ -213,6 +214,8 @@ class _GmailScreenState extends ConsumerState<GmailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                EditorialHeading(eyebrow: l10n.applyingSection, title: l10n.gmailTitle),
+                const SizedBox(height: AppSpace.xl),
                 if (saved != null) ...[_SavedAccount(account: saved), const SizedBox(height: AppSpace.lg)],
                 if (saved?.status == MailStatus.invalid) ...[
                   _Note(
@@ -240,7 +243,6 @@ class _GmailScreenState extends ConsumerState<GmailScreen> {
                     hintText: 'name@gmail.com',
                     helperText: _accountEmail.isNotEmpty ? l10n.gmailAccountOnly : null,
                     helperMaxLines: 2,
-                    prefixIcon: const Icon(Icons.alternate_email_rounded),
                   ),
                   onChanged: (_) => setState(() {}), // a new address needs a new app password
                   validator: (value) => isValidEmail(value ?? '') ? null : l10n.emailInvalid,
@@ -256,7 +258,6 @@ class _GmailScreenState extends ConsumerState<GmailScreen> {
                     labelText: l10n.gmailNameLabel,
                     helperText: l10n.gmailNameHelper,
                     helperMaxLines: 2,
-                    prefixIcon: const Icon(Icons.badge_outlined),
                     counterText: '',
                   ),
                   validator: (value) => (value ?? '').trim().isEmpty ? l10n.gmailErrorName : null,
@@ -278,7 +279,6 @@ class _GmailScreenState extends ConsumerState<GmailScreen> {
                     helperText: _needsPassword(saved) ? l10n.gmailPasswordHelper : l10n.gmailPasswordKeep,
                     errorText: _refused,
                     errorMaxLines: 4,
-                    prefixIcon: const Icon(Icons.key_rounded),
                     suffixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -372,12 +372,12 @@ class _SavedAccount extends StatelessWidget {
       MailStatus.unverified => (context.palette.warning, Icons.schedule_rounded, l10n.gmailStatusUnverified),
       MailStatus.invalid => (context.colors.error, Icons.error_outline_rounded, l10n.gmailStatusInvalid),
     };
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: context.colors.outlineVariant)),
+      ),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: context.colors.primaryContainer,
-          child: Icon(Icons.mail_outline_rounded, color: context.colors.onPrimaryContainer),
-        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: AppSpace.sm),
         title: Text(account.address, textDirection: TextDirection.ltr, maxLines: 1, overflow: TextOverflow.ellipsis),
         subtitle: Row(
           children: [
@@ -406,12 +406,12 @@ class _Steps extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 13,
-            backgroundColor: context.colors.primary,
+          SizedBox(
+            width: 28,
             child: Text(
-              '$n',
-              style: context.text.labelMedium?.copyWith(color: context.colors.onPrimary, fontWeight: FontWeight.w700),
+              '0$n',
+              textDirection: TextDirection.ltr,
+              style: context.text.labelMedium?.copyWith(color: context.colors.primary),
             ),
           ),
           const SizedBox(width: AppSpace.md),
@@ -435,7 +435,13 @@ class _Steps extends ConsumerWidget {
         ],
       ),
     );
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: context.colors.outlineVariant),
+          bottom: BorderSide(color: context.colors.outlineVariant),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpace.lg),
         child: Column(

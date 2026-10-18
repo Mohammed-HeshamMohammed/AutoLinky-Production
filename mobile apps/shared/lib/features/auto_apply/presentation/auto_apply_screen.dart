@@ -9,6 +9,7 @@ import '../../../core/errors/app_failure.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../applications/application/applications_providers.dart';
@@ -167,17 +168,8 @@ class _AutoApplyScreenState extends ConsumerState<AutoApplyScreen> {
                       onPressed: () => context.pop(),
                     )
                   : state.outOfFree
-                  ? AppButton(
-                      label: l10n.upgradeButton,
-                      icon: const Icon(Icons.auto_awesome_rounded, size: 20),
-                      onPressed: () => unawaited(showUpgradeSheet(context, ref)),
-                    )
-                  : AppButton(
-                      label: l10n.autoApplyStart,
-                      icon: const Icon(Icons.bolt_rounded, size: 20),
-                      loading: _busy,
-                      onPressed: () => unawaited(_start(state)),
-                    ),
+                  ? AppButton(label: l10n.upgradeButton, onPressed: () => unawaited(showUpgradeSheet(context, ref)))
+                  : AppButton(label: l10n.autoApplyStart, loading: _busy, onPressed: () => unawaited(_start(state))),
             ),
     );
   }
@@ -224,7 +216,6 @@ class _Body extends StatelessWidget {
               const SizedBox(height: AppSpace.md),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.mail_outline_rounded, color: context.colors.primary),
                   title: Text(l10n.autoApplyConnectGmail),
                   subtitle: Text(l10n.autoApplyConnectGmailBody),
                   trailing: const Icon(Icons.chevron_right_rounded),
@@ -234,12 +225,12 @@ class _Body extends StatelessWidget {
             ],
             if (state.enabled) ...[
               const SizedBox(height: AppSpace.md),
-              _Line(icon: Icons.notifications_active_outlined, text: l10n.autoApplyBackgroundNote),
-              if (notifications == false)
-                _Line(icon: Icons.notifications_off_outlined, text: l10n.autoApplyNotificationsOff),
+              _Line(text: l10n.autoApplyBackgroundNote),
+              if (notifications == false) _Line(text: l10n.autoApplyNotificationsOff),
             ],
             const SizedBox(height: AppSpace.xl),
             _Choice(
+              number: '01',
               title: l10n.autoApplyMinMatch,
               values: minMatchChoices,
               selected: minMatch,
@@ -249,6 +240,7 @@ class _Body extends StatelessWidget {
             ),
             const SizedBox(height: AppSpace.lg),
             _Choice(
+              number: '02',
               title: l10n.autoApplyDailyLimit,
               values: dailyLimitChoices,
               selected: dailyLimit,
@@ -258,6 +250,7 @@ class _Body extends StatelessWidget {
             ),
             const SizedBox(height: AppSpace.lg),
             _Choice(
+              number: '03',
               title: l10n.autoApplyGap,
               values: gapChoices,
               selected: gap,
@@ -265,20 +258,19 @@ class _Body extends StatelessWidget {
               enabled: !busy,
               onChanged: onGap,
             ),
-            _Line(icon: Icons.info_outline_rounded, text: l10n.autoApplyGapSafety),
+            _Line(text: l10n.autoApplyGapSafety),
             const SizedBox(height: AppSpace.xl),
-            Text(l10n.autoApplyHowTitle, style: context.text.titleSmall),
+            EditorialSectionLabel(number: '04', label: l10n.autoApplyHowTitle),
             const SizedBox(height: AppSpace.sm),
-            _Line(icon: Icons.timelapse_rounded, text: l10n.autoApplyHowGap),
-            _Line(icon: Icons.schedule_rounded, text: l10n.autoApplyHowHours),
-            _Line(icon: Icons.person_off_outlined, text: l10n.autoApplyHowOnce),
-            _Line(icon: Icons.fiber_new_outlined, text: l10n.autoApplyHowFresh),
-            _Line(icon: Icons.outbox_outlined, text: l10n.autoApplyHowGmail),
+            _Line(text: l10n.autoApplyHowGap),
+            _Line(text: l10n.autoApplyHowHours),
+            _Line(text: l10n.autoApplyHowOnce),
+            _Line(text: l10n.autoApplyHowFresh),
+            _Line(text: l10n.autoApplyHowGmail),
             if (state.email case final email?) ...[
               const SizedBox(height: AppSpace.lg),
               Card(
                 child: ListTile(
-                  leading: const Icon(Icons.mail_outline_rounded),
                   title: Text(l10n.autoApplySendsFrom),
                   subtitle: Text(email.address, textDirection: TextDirection.ltr),
                   trailing: const Icon(Icons.chevron_right_rounded),
@@ -317,15 +309,10 @@ class AutoApplyStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final colors = context.colors;
     final problem = state.outOfFree ? AutoApplyProblem.freeLimit : state.problem;
     final on = state.enabled;
-    final background = problem != null
-        ? colors.errorContainer
-        : on
-        ? context.palette.success.withValues(alpha: 0.12)
-        : colors.surfaceContainerLow;
-    final ink = problem != null ? colors.onErrorContainer : colors.onSurface;
+    final background = context.palette.heroBackground;
+    final ink = context.palette.onHero;
     final lines = <String>[
       if (!on) l10n.autoApplyOffBody,
       if (on) l10n.autoApplySentToday(state.sentToday, state.dailyLimit),
@@ -339,40 +326,32 @@ class AutoApplyStatusCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Icon(
-                problem != null
-                    ? Icons.error_outline_rounded
-                    : on
-                    ? Icons.bolt_rounded
-                    : Icons.power_settings_new_rounded,
-                color: problem != null ? colors.error : (on ? context.palette.success : colors.onSurfaceVariant),
-              ),
-              const SizedBox(width: AppSpace.sm),
-              Expanded(
-                child: Text(
-                  on ? l10n.autoApplyOnTitle : l10n.autoApplyOffTitle,
-                  style: context.text.titleMedium?.copyWith(color: ink),
-                ),
-              ),
-            ],
+          Text(
+            l10n.applyingSection,
+            style: context.text.labelSmall?.copyWith(color: ink.withValues(alpha: .65), letterSpacing: 1.5),
           ),
-          const SizedBox(height: AppSpace.sm),
+          const SizedBox(height: AppSpace.lg),
+          Text(
+            on ? l10n.autoApplyOnTitle : l10n.autoApplyOffTitle,
+            style: context.text.headlineMedium?.copyWith(color: ink, height: 1.1),
+          ),
+          const SizedBox(height: AppSpace.lg),
+          Divider(height: 1, color: ink.withValues(alpha: .2)),
+          const SizedBox(height: AppSpace.md),
           for (final line in lines)
             Padding(
               padding: const EdgeInsets.only(top: AppSpace.xs),
-              child: Text(line, style: context.text.bodyMedium?.copyWith(color: ink)),
+              child: Text(line, style: context.text.bodyMedium?.copyWith(color: ink.withValues(alpha: .8))),
             ),
           if (problem == AutoApplyProblem.freeLimit) ...[
             const SizedBox(height: AppSpace.md),
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Consumer(
-                builder: (context, ref, _) => FilledButton.icon(
+                builder: (context, ref, _) => FilledButton(
                   onPressed: () => unawaited(showUpgradeSheet(context, ref)),
-                  icon: const Icon(Icons.auto_awesome_rounded, size: 18),
-                  label: Text(l10n.upgradeButton),
+                  style: FilledButton.styleFrom(backgroundColor: ink, foregroundColor: background),
+                  child: Text(l10n.upgradeButton),
                 ),
               ),
             ),
@@ -382,6 +361,7 @@ class AutoApplyStatusCard extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: FilledButton.tonal(
+                style: FilledButton.styleFrom(backgroundColor: ink, foregroundColor: background),
                 onPressed: () => problem == AutoApplyProblem.emailInvalid
                     ? unawaited(openGmailSetup(context))
                     : context.go(Routes.profile),
@@ -417,14 +397,14 @@ class PlanTile extends ConsumerWidget {
     final subtitle = state.pro
         ? (until == null ? l10n.planPro : l10n.planProUntil(MaterialLocalizations.of(context).formatMediumDate(until)))
         : '${l10n.planFree} · ${l10n.freeLeft(state.freeLeftNow, state.freeLimit)}';
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: context.colors.outlineVariant)),
+      ),
       child: ListTile(
-        leading: Icon(
-          state.pro ? Icons.verified_user_outlined : Icons.lock_outline_rounded,
-          color: state.pro ? context.palette.success : context.colors.primary,
-        ),
-        title: Text(l10n.planTitle),
-        subtitle: Text(subtitle),
+        contentPadding: const EdgeInsets.symmetric(vertical: AppSpace.sm),
+        title: Text(l10n.planTitle, style: context.text.labelMedium),
+        subtitle: Text(subtitle, style: context.text.bodyMedium),
         trailing: state.pro
             ? null
             : TextButton(
@@ -438,6 +418,7 @@ class PlanTile extends ConsumerWidget {
 
 class _Choice extends StatelessWidget {
   const _Choice({
+    required this.number,
     required this.title,
     required this.values,
     required this.selected,
@@ -446,6 +427,7 @@ class _Choice extends StatelessWidget {
     required this.onChanged,
   });
 
+  final String number;
   final String title;
   final List<int> values;
   final int selected;
@@ -457,7 +439,7 @@ class _Choice extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      Text(title, style: context.text.titleSmall),
+      EditorialSectionLabel(number: number, label: title),
       const SizedBox(height: AppSpace.sm),
       SegmentedButton<int>(
         showSelectedIcon: false,
@@ -478,9 +460,8 @@ class _Choice extends StatelessWidget {
 }
 
 class _Line extends StatelessWidget {
-  const _Line({required this.icon, required this.text});
+  const _Line({required this.text});
 
-  final IconData icon;
   final String text;
 
   @override
@@ -489,7 +470,10 @@ class _Line extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 20, color: context.palette.accent),
+        Padding(
+          padding: const EdgeInsets.only(top: 9),
+          child: Container(width: 12, height: 1, color: context.colors.outline),
+        ),
         const SizedBox(width: AppSpace.md),
         Expanded(
           child: Text(text, style: context.text.bodyMedium?.copyWith(color: context.colors.onSurface)),

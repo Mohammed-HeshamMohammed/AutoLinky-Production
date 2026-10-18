@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -8,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/router.dart';
 import '../../../core/config/providers.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
@@ -35,76 +37,93 @@ class WelcomeScreen extends ConsumerWidget {
     });
     final l10n = context.l10n;
 
-    return Scaffold(
-      body: SafeArea(
-        child: ContentWidth(
-          child: Column(
-            children: [
-              // what Autolinky does: scrolls on small phones...
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.lg, AppSpace.page, AppSpace.lg),
-                  children: [
-                    const Align(alignment: AlignmentDirectional.centerStart, child: AppWordmark(logoSize: 34)),
-                    const SizedBox(height: AppSpace.xl),
-                    const MatchPreview(),
-                    const SizedBox(height: AppSpace.xxl),
-                    Text(l10n.welcomeTitle, style: context.text.headlineMedium),
-                    const SizedBox(height: AppSpace.md),
-                    Text(
-                      l10n.welcomeSubtitle,
-                      style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant),
-                    ),
-                    const SizedBox(height: AppSpace.xl),
-                    _Point(icon: Icons.auto_awesome_rounded, text: l10n.welcomePointMatch),
-                    _Point(icon: Icons.bolt_rounded, text: l10n.welcomePointFresh),
-                    _Point(icon: Icons.send_rounded, text: l10n.welcomePointApply),
-                  ],
-                ),
-              ),
-              // ...the way in never does: always on screen
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  border: Border(top: BorderSide(color: context.colors.outlineVariant)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.lg, AppSpace.page, AppSpace.md),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
+      child: Scaffold(
+        backgroundColor: context.palette.heroBackground,
+        body: SafeArea(
+          child: ContentWidth(
+            child: Column(
+              children: [
+                // what Autolinky does: scrolls on small phones...
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.lg, AppSpace.page, AppSpace.lg),
                     children: [
-                      GoogleButton(
-                        loading: google.isLoading,
-                        onPressed: apple.isLoading
-                            ? null
-                            : () => unawaited(ref.read(googleSignInProvider.notifier).signIn()),
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Theme(data: AppTheme.dark(), child: const AppWordmark(logoSize: 30)),
                       ),
-                      if (env.appleSignIn) ...[
-                        const SizedBox(height: AppSpace.sm),
-                        AppButton(
-                          label: l10n.continueWithApple,
-                          loading: apple.isLoading,
-                          icon: const Icon(Icons.apple),
-                          onPressed: google.isLoading
-                              ? null
-                              : () => unawaited(ref.read(appleSignInProvider.notifier).signIn()),
-                        ),
-                      ],
-                      if (env.emailSignIn) ...[
-                        const SizedBox(height: AppSpace.sm),
-                        AppButton(
-                          label: l10n.continueWithEmail,
-                          variant: AppButtonVariant.text,
-                          icon: const Icon(Icons.mail_outline_rounded, size: 20),
-                          onPressed: google.isLoading ? null : () => context.push(Routes.email),
-                        ),
-                      ],
-                      const SizedBox(height: AppSpace.sm),
-                      _LegalNotice(termsUrl: env.termsUrl, privacyUrl: env.privacyUrl),
+                      const SizedBox(height: AppSpace.xxl),
+                      Text(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 'البحث عن وظيفة، برؤية جديدة'
+                            : 'THE SEARCH, RECONSIDERED',
+                        style: context.text.labelSmall?.copyWith(color: context.palette.heroAccent, letterSpacing: 1.1),
+                      ),
+                      const SizedBox(height: AppSpace.lg),
+                      Text(
+                        l10n.welcomeTitle,
+                        style: context.text.displaySmall?.copyWith(color: context.palette.onHero),
+                      ),
+                      const SizedBox(height: AppSpace.md),
+                      Text(
+                        l10n.welcomeSubtitle,
+                        style: context.text.bodyMedium?.copyWith(color: context.palette.onHero.withValues(alpha: 0.72)),
+                      ),
+                      const SizedBox(height: AppSpace.xl),
+                      const MatchPreview(),
+                      const SizedBox(height: AppSpace.lg),
+                      _Point(number: '01', text: l10n.welcomePointMatch),
+                      _Point(number: '02', text: l10n.welcomePointFresh),
+                      _Point(number: '03', text: l10n.welcomePointApply),
                     ],
                   ),
                 ),
-              ),
-            ],
+                // ...the way in never does: always on screen
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: context.colors.surface,
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.lg, AppSpace.page, AppSpace.md),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GoogleButton(
+                          loading: google.isLoading,
+                          onPressed: apple.isLoading
+                              ? null
+                              : () => unawaited(ref.read(googleSignInProvider.notifier).signIn()),
+                        ),
+                        if (env.appleSignIn) ...[
+                          const SizedBox(height: AppSpace.sm),
+                          AppButton(
+                            label: l10n.continueWithApple,
+                            loading: apple.isLoading,
+                            icon: const Icon(Icons.apple),
+                            onPressed: google.isLoading
+                                ? null
+                                : () => unawaited(ref.read(appleSignInProvider.notifier).signIn()),
+                          ),
+                        ],
+                        if (env.emailSignIn) ...[
+                          const SizedBox(height: AppSpace.sm),
+                          AppButton(
+                            label: l10n.continueWithEmail,
+                            variant: AppButtonVariant.text,
+                            onPressed: google.isLoading ? null : () => context.push(Routes.email),
+                          ),
+                        ],
+                        const SizedBox(height: AppSpace.sm),
+                        _LegalNotice(termsUrl: env.termsUrl, privacyUrl: env.privacyUrl),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -113,9 +132,9 @@ class WelcomeScreen extends ConsumerWidget {
 }
 
 class _Point extends StatelessWidget {
-  const _Point({required this.icon, required this.text});
+  const _Point({required this.number, required this.text});
 
-  final IconData icon;
+  final String number;
   final String text;
 
   @override
@@ -125,15 +144,10 @@ class _Point extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpace.md),
       child: Row(
         children: [
-          Container(
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(color: palette.accent.withValues(alpha: 0.14), shape: BoxShape.circle),
-            child: Icon(icon, size: 18, color: palette.accent),
-          ),
+          Text(number, style: context.text.labelSmall?.copyWith(color: palette.heroAccent)),
           const SizedBox(width: AppSpace.md),
           Expanded(
-            child: Text(text, style: context.text.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
+            child: Text(text, style: context.text.bodySmall?.copyWith(color: palette.onHero)),
           ),
         ],
       ),

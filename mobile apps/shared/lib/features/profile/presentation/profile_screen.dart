@@ -8,6 +8,7 @@ import '../../../app/router.dart';
 import '../../../core/errors/failure_messages.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../auth/data/auth_repository.dart';
@@ -49,7 +50,7 @@ class ProfileScreen extends ConsumerWidget {
             ref.refresh(cvProvider.future),
           ]),
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.sm, AppSpace.page, AppSpace.xxl),
+            padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.lg, AppSpace.page, AppSpace.xxl),
             children: [
               _Header(name: name, email: email, avatarUrl: avatar, method: method),
               if (account case AsyncError(:final error)) ...[
@@ -61,30 +62,26 @@ class ProfileScreen extends ConsumerWidget {
               const SizedBox(height: AppSpace.xl),
               const CvSection(),
               const SizedBox(height: AppSpace.xl),
-              _SectionTitle(l10n.accountSection),
-              Card(
-                child: Column(
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.settings_outlined),
-                      title: Text(l10n.settingsTitle),
-                      trailing: const Icon(Icons.chevron_right_rounded),
-                      onTap: () => context.push(Routes.settings),
-                    ),
-                    const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-                    ListTile(
-                      leading: Icon(Icons.delete_outline, color: context.colors.error),
-                      title: Text(l10n.deleteAccountTitle, style: TextStyle(color: context.colors.error)),
-                      onTap: () => context.push(Routes.deleteAccount),
-                    ),
-                    const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-                    ListTile(
-                      leading: Icon(Icons.logout_rounded, color: context.colors.error),
-                      title: Text(l10n.signOut, style: TextStyle(color: context.colors.error)),
-                      onTap: () => unawaited(confirmSignOut(context, ref)),
-                    ),
-                  ],
-                ),
+              EditorialSectionLabel(number: '03', label: l10n.accountSection),
+              const SizedBox(height: AppSpace.sm),
+              Column(
+                children: [
+                  ListTile(
+                    title: Text(l10n.settingsTitle),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () => context.push(Routes.settings),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    title: Text(l10n.deleteAccountTitle, style: TextStyle(color: context.colors.error)),
+                    onTap: () => context.push(Routes.deleteAccount),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    title: Text(l10n.signOut, style: TextStyle(color: context.colors.error)),
+                    onTap: () => unawaited(confirmSignOut(context, ref)),
+                  ),
+                ],
               ),
             ],
           ),
@@ -107,93 +104,75 @@ class _Header extends StatelessWidget {
     final colors = context.colors;
     final shown = name.isNotEmpty ? name : email.split('@').first;
     final initial = shown.isEmpty ? '?' : shown.characters.first.toUpperCase();
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpace.lg),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundColor: colors.primaryContainer,
-              foregroundImage: avatarUrl.startsWith('https://') ? NetworkImage(avatarUrl) : null,
-              child: Text(initial, style: context.text.titleLarge?.copyWith(color: colors.onPrimaryContainer)),
-            ),
-            const SizedBox(width: AppSpace.lg),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(shown, style: context.text.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: AppSpace.xxs),
-                  Text(
-                    email,
-                    style: context.text.bodySmall,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textDirection: TextDirection.ltr,
-                  ),
-                  const SizedBox(height: AppSpace.sm),
-                  _Pill(
-                    text: switch (method) {
-                      SignInMethod.google => context.l10n.signedInWithGoogle,
-                      SignInMethod.apple => context.l10n.signedInWithApple,
-                      _ => context.l10n.signedInWithEmail,
-                    },
-                    icon: method == SignInMethod.google ? Icons.verified_user_outlined : Icons.mail_outline_rounded,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsetsDirectional.only(start: AppSpace.xs, bottom: AppSpace.sm),
-    child: Text(text, style: context.text.labelLarge?.copyWith(color: context.colors.onSurfaceVariant)),
-  );
-}
-
-class _Pill extends StatelessWidget {
-  const _Pill({required this.text, this.icon});
-
-  final String text;
-  final IconData? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm + 2, vertical: AppSpace.xs),
-      decoration: BoxDecoration(color: colors.secondaryContainer, borderRadius: BorderRadius.circular(AppRadius.pill)),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+      padding: const EdgeInsets.only(bottom: AppSpace.xl),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: colors.outlineVariant)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 14, color: colors.onSecondaryContainer),
-            const SizedBox(width: AppSpace.xs),
-          ],
-          Flexible(
-            child: Text(
-              text,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.text.labelSmall?.copyWith(color: colors.onSecondaryContainer),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  context.l10n.accountSection,
+                  style: context.text.labelSmall?.copyWith(color: colors.primary, letterSpacing: 1.6),
+                ),
+              ),
+              ClipRRect(
+                borderRadius: AppRadius.smAll,
+                child: avatarUrl.startsWith('https://')
+                    ? Image.network(
+                        avatarUrl,
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) => _Initial(initial: initial),
+                      )
+                    : _Initial(initial: initial),
+              ),
+            ],
           ),
+          const SizedBox(height: AppSpace.lg),
+          Text(
+            shown,
+            style: context.text.headlineLarge?.copyWith(height: 1.1),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: AppSpace.sm),
+          Text(
+            email,
+            style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+            textDirection: TextDirection.ltr,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: AppSpace.lg),
+          Text(switch (method) {
+            SignInMethod.google => context.l10n.signedInWithGoogle,
+            SignInMethod.apple => context.l10n.signedInWithApple,
+            _ => context.l10n.signedInWithEmail,
+          }, style: context.text.labelMedium?.copyWith(color: colors.onSurfaceVariant)),
         ],
       ),
     );
   }
+}
+
+class _Initial extends StatelessWidget {
+  const _Initial({required this.initial});
+  final String initial;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 48,
+    height: 48,
+    alignment: Alignment.center,
+    color: context.palette.heroBackground,
+    child: Text(initial, style: context.text.titleLarge?.copyWith(color: context.palette.onHero)),
+  );
 }
 
 class _Banner extends StatelessWidget {

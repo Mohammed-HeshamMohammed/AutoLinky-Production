@@ -67,11 +67,19 @@ void main() {
 
   Finder tab(String name) => find.descendant(of: find.byType(TabBar), matching: find.text(name));
 
+  /// Scroll actions into their real hit region before tapping, as a phone user does.
+  Future<void> tapVisible(WidgetTester tester, Finder finder) async {
+    await tester.ensureVisible(finder);
+    await settle(tester);
+    expect(finder.hitTestable(), findsOneWidget, reason: 'The action must be visible and tappable.');
+    await tester.tap(finder);
+  }
+
   /// The tab bar scrolls sideways on a phone: brought into view first, as a user does.
   Future<void> openTab(WidgetTester tester, String name) async {
     await tester.ensureVisible(tab(name));
     await settle(tester);
-    await tester.tap(tab(name));
+    await tapVisible(tester, tab(name));
     await settle(tester);
   }
 
@@ -102,6 +110,12 @@ void main() {
       await openTab(tester, 'WhatsApp');
       expect(api.channels.last, ApplyChannel.whatsapp);
       expect(find.text('WhatsApp job'), findsOneWidget);
+      // The second lazy card may be below the first viewport.
+      await tester.scrollUntilVisible(
+        find.text('Phone job'),
+        240,
+        scrollable: find.byWidgetPredicate((w) => w is Scrollable && w.axisDirection == AxisDirection.down).first,
+      );
       expect(find.text('Phone job'), findsOneWidget); // a plain number: WhatsApp too
       expect(find.text('Email job'), findsNothing);
 
@@ -139,9 +153,9 @@ void main() {
       expect(find.text('Via Easy Apply'), findsOneWidget);
 
       // "I did not apply after all"
-      await tester.tap(find.byTooltip('More options').first);
+      await tapVisible(tester, find.byTooltip('More options').first);
       await settle(tester);
-      await tester.tap(find.text('Remove from Applied'));
+      await tapVisible(tester, find.text('Remove from Applied'));
       await settle(tester);
       expect(apps.withdrawn, ['job-0']);
       expect(find.text('Sent by WhatsApp'), findsNothing);
@@ -164,9 +178,9 @@ void main() {
       await pumpApp(tester, applications: apps);
       await openTab(tester, 'Applied');
       expect(find.text('CV sent · Just now'), findsOneWidget);
-      await tester.tap(find.byTooltip('More options'));
+      await tapVisible(tester, find.byTooltip('More options'));
       await settle(tester);
-      await tester.tap(find.text('Remove from Applied'));
+      await tapVisible(tester, find.text('Remove from Applied'));
       await settle(tester);
       expect(find.textContaining('already emailed'), findsOneWidget);
       expect(find.text('Network Engineer 0'), findsOneWidget);
@@ -183,7 +197,7 @@ void main() {
     testWidgets('WhatsApp: a chat with the number and an English message ready; then "Did you apply?"', (tester) async {
       final apps = await pumpApp(tester, matches: FakeMatchesApi(jobs: everyWay()));
       await openTab(tester, 'WhatsApp');
-      await tester.tap(find.widgetWithText(FilledButton, 'WhatsApp').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'WhatsApp').first);
       await settle(tester);
 
       final chat = links.opened.single;
@@ -193,7 +207,7 @@ void main() {
       expect(chat.toString(), contains('%20')); // spaces as %20: WhatsApp would show a "+"
       expect(find.text('Did you apply?'), findsOneWidget);
 
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
       expect(apps.recorded, [('job-1', ApplyMethod.whatsapp)]);
       expect(find.text('Added to Applied'), findsOneWidget);
@@ -207,9 +221,9 @@ void main() {
     testWidgets('a job applied to leaves its tabs; taken out of Applied, it comes back', (tester) async {
       await pumpApp(tester, matches: FakeMatchesApi(jobs: everyWay()));
       await openTab(tester, 'WhatsApp');
-      await tester.tap(find.widgetWithText(FilledButton, 'WhatsApp').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'WhatsApp').first);
       await settle(tester);
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
       expect(find.text('WhatsApp job'), findsNothing);
 
@@ -218,9 +232,9 @@ void main() {
       expect(find.text('WhatsApp job'), findsNothing);
 
       await openTab(tester, 'Applied');
-      await tester.tap(find.byTooltip('More options').first);
+      await tapVisible(tester, find.byTooltip('More options').first);
       await settle(tester);
-      await tester.tap(find.text('Remove from Applied'));
+      await tapVisible(tester, find.text('Remove from Applied'));
       await settle(tester);
       await openTab(tester, 'WhatsApp');
       expect(find.text('WhatsApp job'), findsOneWidget);
@@ -248,17 +262,17 @@ void main() {
         jobs: jobs,
       );
       await openTab(tester, 'WhatsApp');
-      await tester.tap(find.widgetWithText(FilledButton, 'WhatsApp').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'WhatsApp').first);
       await tester.pump(const Duration(seconds: 2));
       await settle(tester);
       expect(find.textContaining('Something went wrong'), findsNothing);
       expect(links.opened.single.host, 'wa.me');
       expect(find.text('Did you apply?'), findsOneWidget);
-      await tester.tap(find.text('Not yet'));
+      await tapVisible(tester, find.text('Not yet'));
       await settle(tester);
 
       // a second time: the details are kept, no new call
-      await tester.tap(find.widgetWithText(FilledButton, 'WhatsApp').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'WhatsApp').first);
       await settle(tester);
       expect(jobs.detailCalls, ['job-1']);
       expect(apps.recorded, isEmpty);
@@ -272,11 +286,11 @@ void main() {
         jobs: jobs,
       );
       await openTab(tester, 'Apply link');
-      await tester.tap(find.widgetWithText(FilledButton, 'Open the link'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Open the link'));
       await settle(tester);
       expect(find.textContaining('No internet connection'), findsOneWidget);
       expect(links.opened, isEmpty);
-      await tester.tap(find.widgetWithText(FilledButton, 'Open the link'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Open the link'));
       await settle(tester);
       expect(links.opened.single.toString(), 'https://forms.gle/apply123');
     });
@@ -284,10 +298,10 @@ void main() {
     testWidgets('"Not yet" saves nothing', (tester) async {
       final apps = await pumpApp(tester, matches: FakeMatchesApi(jobs: everyWay()));
       await openTab(tester, 'Apply link');
-      await tester.tap(find.widgetWithText(FilledButton, 'Open the link'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Open the link'));
       await settle(tester);
       expect(links.opened.single.toString(), 'https://forms.gle/apply123');
-      await tester.tap(find.text('Not yet'));
+      await tapVisible(tester, find.text('Not yet'));
       await settle(tester);
       expect(apps.recorded, isEmpty);
       expect(find.widgetWithText(FilledButton, 'Open the link'), findsOneWidget);
@@ -301,17 +315,17 @@ void main() {
         jobs: jobs,
       );
       await openTab(tester, 'Easy Apply');
-      await tester.tap(find.widgetWithText(FilledButton, 'Easy Apply'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Easy Apply'));
       await settle(tester);
       expect(links.opened.last.toString(), 'https://www.linkedin.com/jobs/view/4/');
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
 
       await openTab(tester, 'Company site');
-      await tester.tap(find.widgetWithText(FilledButton, 'Apply on their site'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Apply on their site'));
       await settle(tester);
       expect(links.opened.last.toString(), 'https://www.linkedin.com/jobs/view/5/');
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
       expect(apps.recorded, [('job-4', ApplyMethod.easyApply), ('job-5', ApplyMethod.external)]);
       expect(jobs.detailCalls, isEmpty); // the link is in the list: no extra call
@@ -320,14 +334,14 @@ void main() {
     testWidgets('a message opens the profile of who posted; a comment opens the post', (tester) async {
       await pumpApp(tester, matches: FakeMatchesApi(jobs: everyWay()));
       await openTab(tester, 'Message');
-      await tester.tap(find.widgetWithText(FilledButton, 'Send a message'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send a message'));
       await settle(tester);
       expect(links.opened.last.toString(), 'https://www.linkedin.com/in/sara-hr');
-      await tester.tap(find.text('Not yet'));
+      await tapVisible(tester, find.text('Not yet'));
       await settle(tester);
 
       await openTab(tester, 'Comment');
-      await tester.tap(find.widgetWithText(FilledButton, 'Comment'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Comment'));
       await settle(tester);
       expect(links.opened.last.toString(), 'https://www.linkedin.com/feed/update/urn:li:activity:1/');
     });
@@ -336,7 +350,7 @@ void main() {
       final apps = await pumpApp(tester, matches: FakeMatchesApi(jobs: everyWay()));
       await openTab(tester, 'Apply link');
       links.opens = false;
-      await tester.tap(find.widgetWithText(FilledButton, 'Open the link'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Open the link'));
       await settle(tester);
       expect(find.text("Couldn't open it on this phone."), findsOneWidget);
       expect(find.text('Did you apply?'), findsNothing);
@@ -344,7 +358,7 @@ void main() {
       links
         ..opens = true
         ..comesBack = false;
-      await tester.tap(find.widgetWithText(FilledButton, 'Open the link'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Open the link'));
       await settle(tester);
       expect(find.text('Did you apply?'), findsNothing);
       expect(apps.recorded, isEmpty);
@@ -361,7 +375,7 @@ void main() {
         jobs: jobs,
       );
       await openTab(tester, 'Apply link');
-      await tester.tap(find.widgetWithText(FilledButton, 'Open the link'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Open the link'));
       await settle(tester);
       expect(find.text("This way to apply isn't in the job any more."), findsOneWidget);
       expect(links.opened, isEmpty);
@@ -372,13 +386,13 @@ void main() {
       final matches = FakeMatchesApi();
       final apps = FakeApplicationsApi(jobs: {for (final m in matches.jobs) m.job.id: m.job});
       await pumpApp(tester, matches: matches, applications: apps);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
 
       // the setup, step by step, with the way to Google's pages
       expect(find.text('Connect Gmail'), findsOneWidget);
       expect(find.text('Step 1 of 3'), findsOneWidget);
-      await tester.tap(find.text("It's already on"));
+      await tapVisible(tester, find.text("It's already on"));
       await settle(tester);
       // back from App passwords with something else copied: left alone, the user goes on
       final messenger = tester.binding.defaultBinaryMessenger;
@@ -387,11 +401,11 @@ void main() {
         (call) async => call.method == 'Clipboard.getData' ? <String, Object?>{'text': 'https://example.com'} : null,
       );
       addTearDown(() => messenger.setMockMethodCallHandler(SystemChannels.platform, null));
-      await tester.tap(find.text('Open App passwords'));
+      await tapVisible(tester, find.text('Open App passwords'));
       await settle(tester);
       expect(links.opened.last.toString(), 'https://myaccount.google.com/apppasswords');
       expect(find.text('Step 2 of 3'), findsOneWidget);
-      await tester.tap(find.text('I copied it'));
+      await tapVisible(tester, find.text('I copied it'));
       await settle(tester);
       expect(find.text('Step 3 of 3'), findsOneWidget);
       // the address is the account's own Gmail: shown, not typed
@@ -403,7 +417,7 @@ void main() {
 
       // not an app password: said before asking anyone
       await tester.enterText(password, 'mypassword');
-      await tester.tap(find.widgetWithText(FilledButton, 'Check and connect'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Check and connect'));
       await settle(tester);
       expect(find.textContaining('An app password is 16 letters'), findsOneWidget);
       expect(apps.gmailCalls, isEmpty);
@@ -411,14 +425,14 @@ void main() {
       // Gmail refuses it: said under the field, the screen stays, with the way to a new one
       apps.refuseGmail = 'wrong_app_password';
       await tester.enterText(password, 'abcd efgh ijkl mnop');
-      await tester.tap(find.widgetWithText(FilledButton, 'Check and connect'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Check and connect'));
       await settle(tester);
       expect(find.textContaining("Gmail didn't accept this app password"), findsOneWidget);
       expect(find.text('Make a new one'), findsOneWidget);
 
       // accepted: back to the job, and what is about to go
       apps.refuseGmail = null;
-      await tester.tap(find.widgetWithText(FilledButton, 'Check and connect'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Check and connect'));
       await settle(tester);
       expect(apps.gmailCalls.last, ('sara.ali@gmail.com', 'Sara Ali', 'abcdefghijklmnop'));
       expect(find.text('Send your CV?'), findsOneWidget);
@@ -428,7 +442,7 @@ void main() {
       expect(find.text('Sara Ali - CV.pdf'), findsOneWidget);
       expect(find.textContaining('Dear Vodafone Egypt Hiring Team'), findsOneWidget);
       expect(find.text('Written for this job from your CV. You can change it before sending.'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send'));
       await settle(tester);
       expect(apps.recorded, [('job-0', ApplyMethod.email)]);
       expect(apps.letters.single, startsWith('Dear Vodafone Egypt Hiring Team,'));
@@ -441,7 +455,7 @@ void main() {
       await settle(tester);
       await tester.ensureVisible(find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
       expect(find.text('Connect Gmail'), findsNothing);
       expect(find.text('Send your CV?'), findsOneWidget);
@@ -450,7 +464,7 @@ void main() {
     testWidgets('the letter can be changed before it goes; an empty one cannot go', (tester) async {
       final apps = FakeApplicationsApi()..emailConnected = true;
       await pumpApp(tester, applications: apps);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
       final letter = find.widgetWithText(TextField, 'Letter');
       await tester.enterText(letter, '   ');
@@ -458,7 +472,7 @@ void main() {
       expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Send')).onPressed, isNull);
       await tester.enterText(letter, 'Dear team,\n\nMy own words.\n\nSara');
       await tester.pump();
-      await tester.tap(find.widgetWithText(FilledButton, 'Send'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send'));
       await settle(tester);
       expect(apps.letters, ['Dear team,\n\nMy own words.\n\nSara']);
     });
@@ -469,9 +483,9 @@ void main() {
         ..emailConnected = true
         ..sendFails = 'address_refused';
       await pumpApp(tester, matches: matches, applications: apps);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send'));
       await settle(tester);
       expect(find.text("Not sent: the job's address refused it."), findsOneWidget);
       expect(find.widgetWithText(FilledButton, 'Send again'), findsOneWidget);
@@ -482,9 +496,9 @@ void main() {
         ..emailConnected = true
         ..failRecord = const ApiFailure(statusCode: 429, code: 'gmail_limit');
       await pumpApp(tester, applications: apps);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send'));
       await settle(tester);
       expect(find.text("Gmail's daily sending limit is reached. Try again tomorrow."), findsOneWidget);
       expect(find.widgetWithText(FilledButton, 'Send my CV'), findsWidgets);
@@ -495,7 +509,7 @@ void main() {
         ..emailConnected = true
         ..hasCv = false;
       await pumpApp(tester, applications: apps);
-      await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Send my CV').first);
       await settle(tester);
       expect(find.text("Upload your CV first: it's what gets attached."), findsOneWidget);
       final send = tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Send'));
@@ -507,7 +521,7 @@ void main() {
     testWidgets('"Show details": the post, every way to apply with where it goes, and Apply', (tester) async {
       final apps = await pumpApp(tester, matches: FakeMatchesApi(jobs: everyWay()));
       await openTab(tester, 'WhatsApp');
-      await tester.tap(find.text('Show details').first);
+      await tapVisible(tester, find.text('Show details').first);
       await settle(tester);
       expect(find.text('The post'), findsOneWidget);
       expect(find.textContaining('We are hiring a Network Engineer.'), findsOneWidget);
@@ -516,10 +530,10 @@ void main() {
       expect(find.text('hr@vodafone.example'), findsOneWidget); // the job's e-mail way too
 
       // the sheet's Apply: the tab's way
-      await tester.tap(find.descendant(of: find.byType(BottomActionBar), matching: find.text('WhatsApp')));
+      await tapVisible(tester, find.descendant(of: find.byType(BottomActionBar), matching: find.text('WhatsApp')));
       await settle(tester);
       expect(links.opened.single.host, 'wa.me');
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
       expect(apps.recorded.single.$2, ApplyMethod.whatsapp);
     });
@@ -532,11 +546,11 @@ void main() {
         jobs: jobs,
       );
       await openTab(tester, 'Easy Apply');
-      await tester.tap(find.text('Show details'));
+      await tapVisible(tester, find.text('Show details'));
       await settle(tester);
       expect(find.text('Job description'), findsOneWidget);
       expect(find.textContaining('No internet connection'), findsOneWidget);
-      await tester.tap(find.widgetWithText(TextButton, 'Try again'));
+      await tapVisible(tester, find.widgetWithText(TextButton, 'Try again'));
       await settle(tester);
       expect(find.textContaining('We are hiring a Network Engineer.'), findsOneWidget);
     });
@@ -559,7 +573,7 @@ void main() {
 
   group('Explore', () {
     Future<void> openExplore(WidgetTester tester) async {
-      await tester.tap(find.text('Explore'));
+      await tapVisible(tester, find.text('Explore'));
       await settle(tester);
     }
 
@@ -595,7 +609,7 @@ void main() {
       final chips = find.ancestor(of: find.byType(FilterChip), matching: find.byType(Scrollable)).first;
       await tester.scrollUntilVisible(find.widgetWithText(ChoiceChip, 'Easy Apply'), 120, scrollable: chips);
       await settle(tester);
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Easy Apply'));
+      await tapVisible(tester, find.widgetWithText(ChoiceChip, 'Easy Apply'));
       await settle(tester);
       expect(jobs.searches.last, ('network', ApplyChannel.easyApply));
       expect(find.text('Network Engineer'), findsNothing);
@@ -615,13 +629,13 @@ void main() {
       );
       final apps = await pumpApp(tester, jobs: jobs);
       await openExplore(tester);
-      await tester.tap(find.widgetWithText(FilledButton, 'Apply'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'Apply'));
       await settle(tester);
       expect(find.text('How do you want to apply?'), findsOneWidget);
-      await tester.tap(find.widgetWithText(ListTile, 'WhatsApp'));
+      await tapVisible(tester, find.widgetWithText(ListTile, 'WhatsApp'));
       await settle(tester);
       expect(links.opened.single.host, 'wa.me');
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
       expect(apps.recorded, [('job-0', ApplyMethod.whatsapp)]);
     });
@@ -646,7 +660,7 @@ void main() {
       expect(tester.widget<FilterChip>(find.byType(FilterChip)).selected, isFalse);
       final loads = jobs.searches.length;
 
-      await tester.tap(find.widgetWithText(FilterChip, 'Not applied'));
+      await tapVisible(tester, find.widgetWithText(FilterChip, 'Not applied'));
       await settle(tester);
       expect(find.text('Applied one'), findsNothing);
       expect(find.text('Fresh one'), findsOneWidget);
@@ -655,15 +669,15 @@ void main() {
       expect(container.read(preferencesProvider).getBool(hideAppliedKey), isTrue); // kept for the next time
 
       // applied to now: it leaves at once; nothing left is said so, with the way back
-      await tester.tap(find.widgetWithText(FilledButton, 'WhatsApp'));
+      await tapVisible(tester, find.widgetWithText(FilledButton, 'WhatsApp'));
       await settle(tester);
-      await tester.tap(find.text('Yes, I applied'));
+      await tapVisible(tester, find.text('Yes, I applied'));
       await settle(tester);
       expect(apps.recorded, [('job-1', ApplyMethod.whatsapp)]);
       expect(find.text('Fresh one'), findsNothing);
       expect(find.text("You've applied to all of these"), findsOneWidget);
       expect(find.text('No jobs found'), findsNothing);
-      await tester.tap(find.text('Show all'));
+      await tapVisible(tester, find.text('Show all'));
       await settle(tester);
       expect(find.text('Applied one'), findsOneWidget);
       expect(find.text('Fresh one'), findsOneWidget);
@@ -694,11 +708,11 @@ void main() {
     expect(tab('تقديم تلقائي'), findsOneWidget);
     expect(tab('واتساب'), findsOneWidget);
     await openTab(tester, 'واتساب');
-    await tester.tap(find.text('عرض التفاصيل').first);
+    await tapVisible(tester, find.text('عرض التفاصيل').first);
     await settle(tester);
     expect(find.text('طرق التقديم'), findsOneWidget);
     expect(tester.widget<Text>(find.text('+201001234567')).textDirection, TextDirection.ltr);
-    await tester.tap(find.descendant(of: find.byType(BottomActionBar), matching: find.text('واتساب')));
+    await tapVisible(tester, find.descendant(of: find.byType(BottomActionBar), matching: find.text('واتساب')));
     await settle(tester);
     expect(find.text('هل قدّمت؟'), findsOneWidget);
     // the message to the recruiter is in English, whatever the app's language

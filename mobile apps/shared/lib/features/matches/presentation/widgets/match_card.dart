@@ -10,8 +10,7 @@ import '../../../taxonomy/taxonomy.dart';
 import '../../data/models.dart';
 import '../match_labels.dart';
 
-/// A matched job: the job card with the match percent as a ring, why it matched, and the skills the user has and
-/// lacks for it.
+/// A matched job with its numeric fit, reasons and relevant skills.
 class MatchCard extends ConsumerWidget {
   const MatchCard({super.key, required this.item, required this.channel});
 
@@ -43,19 +42,10 @@ class MatchDetails extends StatelessWidget {
     final l10n = context.l10n;
     String skill(String slug) => taxonomy?.skillName(slug) ?? Taxonomy.readable(slug);
     final shared = reasons.skills;
-    final color = context.colors.primary;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Icon(Icons.auto_awesome_rounded, size: 16, color: color),
-            const SizedBox(width: AppSpace.xs),
-            Expanded(
-              child: Text(whyLabel(l10n, reasons), style: context.text.labelMedium?.copyWith(color: color)),
-            ),
-          ],
-        ),
+        Text(whyLabel(l10n, reasons), style: context.text.labelMedium?.copyWith(color: context.colors.onSurface)),
         if (shared.isNotEmpty) ...[
           const SizedBox(height: AppSpace.md),
           ChipRow(
@@ -78,7 +68,7 @@ class MatchDetails extends StatelessWidget {
   }
 }
 
-/// The match percent as a ring filled that much, in the color of its tier (strong / fair / weak).
+/// Compact numeric fit treatment. The established widget name remains for callers.
 class MatchRing extends StatelessWidget {
   const MatchRing({super.key, required this.percent, this.size = 56});
 
@@ -92,23 +82,31 @@ class MatchRing extends StatelessWidget {
       container: true,
       label: context.l10n.matchPercent(percent),
       excludeSemantics: true,
-      child: SizedBox.square(
-        dimension: size,
-        child: Stack(
-          fit: StackFit.expand,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: size + 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            CircularProgressIndicator(
-              value: percent / 100,
-              strokeWidth: 5,
-              color: color,
-              backgroundColor: color.withValues(alpha: 0.14),
-              strokeCap: StrokeCap.round,
+            Text(
+              '$percent%',
+              textDirection: TextDirection.ltr,
+              style: context.text.headlineSmall?.copyWith(
+                color: color,
+                fontSize: size <= 48 ? 24 : 28,
+                fontWeight: FontWeight.w500,
+                height: 1.1,
+                letterSpacing: -1,
+              ),
             ),
-            Center(
-              child: Text(
-                '$percent%',
-                textDirection: TextDirection.ltr,
-                style: context.text.labelLarge?.copyWith(color: color, fontWeight: FontWeight.w700),
+            const SizedBox(height: AppSpace.sm),
+            SizedBox(
+              width: size + 2,
+              height: 2,
+              child: LinearProgressIndicator(
+                value: percent / 100,
+                color: color,
+                backgroundColor: context.colors.outlineVariant,
               ),
             ),
           ],

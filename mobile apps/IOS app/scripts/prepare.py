@@ -23,7 +23,7 @@ def prepare(settings=None, mode='device', api_url=None):
         'CFBundleShortVersionString': '$(MARKETING_VERSION)', 'CFBundleVersion': '$(CURRENT_PROJECT_VERSION)',
         'CFBundleLocalizations': ['en', 'ar'], 'LSRequiresIPhoneOS': True,
         'UIApplicationSceneManifest': {'UIApplicationSupportsMultipleScenes': False},
-        'UILaunchScreen': {}, 'UIApplicationSupportsIndirectInputEvents': True,
+        'UILaunchScreen': {'UIColorName': 'Canvas', 'UIImageName': 'BrandLogo'}, 'UIApplicationSupportsIndirectInputEvents': True,
         'UISupportedInterfaceOrientations': ['UIInterfaceOrientationPortrait', 'UIInterfaceOrientationLandscapeLeft', 'UIInterfaceOrientationLandscapeRight'],
         'UIBackgroundModes': ['fetch'], 'BGTaskSchedulerPermittedIdentifiers': ['com.autolinky.ios.activity'],
     }

@@ -143,9 +143,8 @@ class _ForYouTabsState extends ConsumerState<_ForYouTabs> {
               labelStyle: context.text.labelLarge,
               unselectedLabelStyle: context.text.labelLarge?.copyWith(fontWeight: FontWeight.w500),
               tabs: [
-                for (final channel in ApplyChannel.values)
-                  _TabLabel(icon: channelIcon(channel), text: channelName(l10n, channel)),
-                _TabLabel(icon: Icons.task_alt_rounded, text: l10n.tabApplied, count: applied),
+                for (final channel in ApplyChannel.values) _TabLabel(text: channelName(l10n, channel)),
+                _TabLabel(text: l10n.tabApplied, count: applied),
               ],
             ),
             Expanded(
@@ -182,10 +181,9 @@ class _NewJobsPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Material(
     color: context.colors.primary,
-    elevation: 3,
-    shape: const StadiumBorder(),
+    shape: const RoundedRectangleBorder(borderRadius: AppRadius.smAll),
     child: InkWell(
-      customBorder: const StadiumBorder(),
+      customBorder: const RoundedRectangleBorder(borderRadius: AppRadius.smAll),
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSpace.lg, vertical: AppSpace.sm + 2),
@@ -206,9 +204,7 @@ class _NewJobsPill extends StatelessWidget {
 }
 
 class _TabLabel extends StatelessWidget {
-  const _TabLabel({required this.icon, required this.text, this.count});
-
-  final IconData icon;
+  const _TabLabel({required this.text, this.count});
   final String text;
 
   /// A small badge after the text (the Applied count), hidden at 0.
@@ -222,20 +218,18 @@ class _TabLabel extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18),
-          const SizedBox(width: AppSpace.sm),
           Text(text),
           if (count case final count? when count > 0) ...[
             const SizedBox(width: AppSpace.sm),
             Container(
               constraints: const BoxConstraints(minWidth: 22),
               padding: const EdgeInsets.symmetric(horizontal: AppSpace.xs + 2, vertical: AppSpace.xxs),
-              decoration: BoxDecoration(color: colors.primary, borderRadius: BorderRadius.circular(AppRadius.pill)),
+              decoration: BoxDecoration(color: colors.surfaceContainerHigh, borderRadius: AppRadius.smAll),
               child: Text(
                 '$count',
                 textAlign: TextAlign.center,
                 textDirection: TextDirection.ltr,
-                style: context.text.labelSmall?.copyWith(color: colors.onPrimary, fontWeight: FontWeight.w700),
+                style: context.text.labelSmall?.copyWith(color: colors.onSurface, fontWeight: FontWeight.w700),
               ),
             ),
           ],
@@ -301,13 +295,12 @@ class _TabAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(Icons.info_outline_rounded, size: 18, color: context.colors.onSurfaceVariant),
-        const SizedBox(width: AppSpace.sm),
-        Expanded(child: Text('${channelAbout(l10n, channel)} ${l10n.bestFitFirst}', style: context.text.bodySmall)),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpace.sm),
+      child: Text(
+        '${channelAbout(l10n, channel)} ${l10n.bestFitFirst}',
+        style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant, height: 1.5),
+      ),
     );
   }
 }

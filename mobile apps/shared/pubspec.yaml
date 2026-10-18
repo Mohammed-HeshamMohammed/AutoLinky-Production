@@ -54,7 +54,17 @@ flutter:
     - assets/brand/
     - shorebird.yaml
   fonts:
-    # One family for Arabic and English (IBM Plex Sans Arabic, SIL OFL: assets/fonts/OFL.txt), bundled: no network
+    - family: Manrope
+      fonts:
+        - asset: assets/fonts/Manrope-400.ttf
+          weight: 400
+        - asset: assets/fonts/Manrope-500.ttf
+          weight: 500
+        - asset: assets/fonts/Manrope-600.ttf
+          weight: 600
+        - asset: assets/fonts/Manrope-700.ttf
+          weight: 700
+    # Local Latin typography with the original Arabic fallback; both SIL OFL.
     - family: IBMPlexSansArabic
       fonts:
         - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf

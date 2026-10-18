@@ -6,6 +6,7 @@ import '../../../app/router.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../application/auth_providers.dart';
 
@@ -55,13 +56,9 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.sm, AppSpace.page, AppSpace.xl),
               children: [
-                Text(l10n.emailTitle, style: context.text.headlineMedium),
-                const SizedBox(height: AppSpace.sm),
-                Text(
-                  l10n.emailSubtitle,
-                  style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant),
-                ),
-                const SizedBox(height: AppSpace.xl),
+                EditorialHeading(eyebrow: 'AutoLinky / 01', title: l10n.emailTitle, description: l10n.emailSubtitle),
+                const Divider(),
+                const SizedBox(height: AppSpace.xxl),
                 TextFormField(
                   controller: _email,
                   autofocus: true,
@@ -71,11 +68,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
                   autofillHints: const [AutofillHints.email],
                   autocorrect: false,
                   textDirection: TextDirection.ltr,
-                  decoration: InputDecoration(
-                    labelText: l10n.emailLabel,
-                    hintText: l10n.emailHint,
-                    prefixIcon: const Icon(Icons.alternate_email_rounded),
-                  ),
+                  decoration: InputDecoration(labelText: l10n.emailLabel, hintText: l10n.emailHint),
                   validator: (value) => isValidEmail(value ?? '') ? null : l10n.emailInvalid,
                   onFieldSubmitted: (_) => _submit(),
                 ),

@@ -9,12 +9,23 @@ struct AutoApplyView: View {
     @State private var gap = 5
     @State private var busy = false
     var body: some View {
-        Form {
-            Section(t("Sending status")) {
-                LabeledContent(t("Sent today"), value: "\(store.autoApply["sent_today"].integer)")
-                LabeledContent(t("Plan"), value: t(store.autoApply["plan"].text))
-                if store.autoApply["plan"].text == "free" { LabeledContent(t("Free applications remaining"), value: "\(store.autoApply["free_left"].integer)") }
-                if !store.autoApply["problem"].isNull { Text(t(store.autoApply["problem"].text)).foregroundStyle(.orange) }
+        BrandForm {
+            BrandPageHeading(eyebrow: "Applications", title: "Auto apply").listRowSeparator(.hidden)
+            VStack(alignment: .leading, spacing: 24) {
+                HStack {
+                    BrandSectionLabel("Sending status")
+                    Spacer()
+                    Text(t(store.autoApply["plan"].text)).font(.caption.weight(.semibold)).foregroundStyle(BrandColors.muted)
+                }
+                HStack(alignment: .top, spacing: 24) {
+                    BrandMetric(value: "\(store.autoApply["sent_today"].integer)", label: "Sent today")
+                    if store.autoApply["plan"].text == "free" { BrandMetric(value: "\(store.autoApply["free_left"].integer)", label: "Free applications remaining") }
+                }
+                BrandRule()
+                Text(t("Applications are sent by the server, within your plan and Gmail limits. Closing the app does not stop the server.")).font(.caption).foregroundStyle(BrandColors.muted).lineSpacing(4)
+            }.padding(22).background(BrandColors.surface).listRowSeparator(.hidden)
+            Section {
+                if !store.autoApply["problem"].isNull { Text(t(store.autoApply["problem"].text)).foregroundStyle(BrandColors.warning) }
                 if !store.autoApply["next_send_at"].text.isEmpty { LabeledContent(t("Next send"), value: store.autoApply["next_send_at"].text) }
                 NavigationLink(t("Gmail settings")) { MailSettingsView() }
             }
@@ -23,8 +34,8 @@ struct AutoApplyView: View {
                 Stepper(t("Minimum match") + ": \(match)%", value: $match, in: 40...95, step: 5)
                 Stepper(t("Daily limit") + ": \(limit)", value: $limit, in: 1...500)
                 Stepper(t("Minutes between emails") + ": \(gap)", value: $gap, in: 3...120)
-                Text(t("Applications are sent by the server, within your plan and Gmail limits. Closing the app does not stop the server.")).font(.footnote).foregroundStyle(.secondary)
                 Button(t("Save")) { busy = true; Task { defer { busy = false }; await store.perform { try await store.setAuto(["enabled": .bool(enabled), "min_match": .number(Double(match)), "daily_limit": .number(Double(limit)), "gap_minutes": .number(Double(gap))]); fill() } } }
+                    .buttonStyle(BrandPrimaryButtonStyle()).listRowSeparator(.hidden)
             }.disabled(busy)
             if let url = Security.webURL(store.autoApply["upgrade_url"].text) { Section { Link(t("Upgrade"), destination: url) } }
             if busy { ProgressView() }
@@ -43,7 +54,8 @@ struct MailSettingsView: View {
     @State private var disconnect = false
     @State private var saved = false
     var body: some View {
-        Form {
+        BrandForm {
+            BrandPageHeading(eyebrow: "Auto apply", title: "Gmail settings").listRowSeparator(.hidden)
             Section(t("Connect your Gmail")) {
                 Text(t("Use the Gmail address you sign in with and a Google app password. Your normal password will not work."))
                 TextField(t("Gmail address"), text: $address).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled()
@@ -56,8 +68,8 @@ struct MailSettingsView: View {
                 var fields: [String: JSON] = ["address": .string(address), "sender_name": .string(name), "signature": .string(signature)]
                 if !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { fields["app_password"] = .string(password) }
                 let result = try await store.api.request("/v1/mail-account", method: "PUT", json: .object(fields)); try store.validateOwner(); store.autoApply = result; password = ""; saved = true
-            } }.disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || address.lowercased() != store.auth.email.lowercased() || signature.count > 600)
-                if saved { Label(t("Saved"), systemImage: "checkmark.circle").foregroundStyle(.green) }
+            } }.buttonStyle(BrandPrimaryButtonStyle()).listRowSeparator(.hidden).disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || address.lowercased() != store.auth.email.lowercased() || signature.count > 600)
+                if saved { Label(t("Saved"), systemImage: "checkmark.circle").foregroundStyle(BrandColors.success) }
                 if store.autoApply["email_connected"].flag || !store.autoApply["email"].isNull { Button(t("Disconnect Gmail"), role: .destructive) { disconnect = true } }
                 if busy { ProgressView() }
             }
@@ -74,11 +86,12 @@ struct ApplicationsView: View {
     @State private var busy = false
     @State private var error: String?
     var body: some View {
-        List {
-            if items.isEmpty && !busy { ContentUnavailableView(t("No applications yet"), systemImage: "paperplane", description: Text(t("Your tracked and emailed applications will appear here."))) }
+        BrandList {
+            BrandPageHeading(eyebrow: "Profile", title: "Applications", subtitle: "Your tracked and emailed applications will appear here.").listRowSeparator(.hidden)
+            if items.isEmpty && !busy { BrandEmptyState(title: "No applications yet", message: "Your tracked and emailed applications will appear here.").listRowSeparator(.hidden) }
             if let error { Text(t(error)); Button(t("Retry")) { Task { await load(reset: true) } } }
             ForEach(items) { item in
-                NavigationLink { JobDetailView(job: Job(item["job"])) } label: { VStack(alignment: .leading, spacing: 6) { JobRow(job: Job(item["job"])); Text(t(item["status"].text) + " · " + t(item["method"].text)).font(.caption); if !item["error"].text.isEmpty { Text(t(item["error"].text)).font(.caption).foregroundStyle(.orange) } } }
+                NavigationLink { JobDetailView(job: Job(item["job"])) } label: { VStack(alignment: .leading, spacing: 6) { JobRow(job: Job(item["job"])); HStack { Text(t(item["status"].text)).font(.caption.weight(.semibold)).foregroundStyle(BrandColors.primary); Spacer(); Text(t(item["method"].text)).font(.caption).foregroundStyle(BrandColors.muted) }; if !item["error"].text.isEmpty { Text(t(item["error"].text)).font(.caption).foregroundStyle(BrandColors.warning) } }.padding(.bottom, 12) }
                 .swipeActions { if !(item["method"].text == "email" && ["sent", "sending", "queued"].contains(item["status"].text)) { Button(t("Remove"), role: .destructive) { Task { await store.perform { _ = try await store.api.request("/v1/applications/\(item["job"]["id"].text)", method: "DELETE"); await load(reset: true); store.revision += 1 } } } } }
             }
             if busy { ProgressView() }

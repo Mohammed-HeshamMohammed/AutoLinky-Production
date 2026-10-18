@@ -2,70 +2,89 @@ import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'app_palette.dart';
+import 'brand_colors.dart';
 import 'tokens.dart';
 
 /// The whole look of the app in one place: change a color, a radius or a font here and every screen follows.
 abstract final class AppTheme {
-  static const fontFamily = 'IBMPlexSansArabic';
-  static const brand = Color(0xFF2F4FE8);
+  static const fontFamily = 'Manrope';
+  static const arabicFontFamily = 'IBMPlexSansArabic';
+  static const brand = BrandColors.lightPrimary;
 
   static ThemeData light() => _build(_lightScheme, AppPalette.light);
 
   static ThemeData dark() => _build(_darkScheme, AppPalette.dark);
 
   static final ColorScheme _lightScheme = ColorScheme.fromSeed(seedColor: brand).copyWith(
-    primary: brand,
-    onPrimary: Colors.white,
-    primaryContainer: const Color(0xFFE3E8FF),
-    onPrimaryContainer: const Color(0xFF0E1B66),
-    secondary: const Color(0xFF0FA97B),
-    onSecondary: Colors.white,
-    secondaryContainer: const Color(0xFFD5F7EA),
-    onSecondaryContainer: const Color(0xFF00382A),
-    surface: const Color(0xFFF7F8FC),
-    onSurface: const Color(0xFF0F1430),
-    onSurfaceVariant: const Color(0xFF5B6280),
-    surfaceContainerLowest: Colors.white,
-    surfaceContainerLow: const Color(0xFFF1F3F9),
-    surfaceContainer: const Color(0xFFECEFF6),
-    surfaceContainerHigh: const Color(0xFFE5E9F2),
-    surfaceContainerHighest: const Color(0xFFDDE2EE),
-    outline: const Color(0xFFC9CFDF),
-    outlineVariant: const Color(0xFFE6E9F2),
-    error: const Color(0xFFD92D20),
-    onError: Colors.white,
-    errorContainer: const Color(0xFFFDE7E5),
-    onErrorContainer: const Color(0xFF7A1A12),
+    primary: BrandColors.lightPrimary,
+    onPrimary: BrandColors.lightOnPrimary,
+    primaryContainer: BrandColors.lightPrimarySoft,
+    onPrimaryContainer: BrandColors.lightOnPrimarySoft,
+    secondary: BrandColors.lightAccent,
+    onSecondary: BrandColors.lightOnAccent,
+    secondaryContainer: BrandColors.lightAccentSoft,
+    onSecondaryContainer: BrandColors.lightOnAccentSoft,
+    tertiary: BrandColors.lightAccent,
+    onTertiary: BrandColors.lightOnAccent,
+    tertiaryContainer: BrandColors.lightAccentSoft,
+    onTertiaryContainer: BrandColors.lightOnAccentSoft,
+    surface: BrandColors.lightCanvas,
+    onSurface: BrandColors.lightText,
+    onSurfaceVariant: BrandColors.lightMuted,
+    surfaceContainerLowest: BrandColors.lightSurface,
+    surfaceContainerLow: BrandColors.lightSurfaceLow,
+    surfaceContainer: BrandColors.lightChrome,
+    surfaceContainerHigh: BrandColors.lightSurfaceHigh,
+    surfaceContainerHighest: BrandColors.lightSurfaceHighest,
+    outline: BrandColors.lightOutline,
+    outlineVariant: BrandColors.lightLine,
+    error: BrandColors.lightError,
+    onError: BrandColors.lightOnPrimary,
+    errorContainer: BrandColors.lightErrorSoft,
+    onErrorContainer: BrandColors.lightOnErrorSoft,
+    inverseSurface: BrandColors.lightHero,
+    onInverseSurface: BrandColors.lightOnHero,
+    inversePrimary: BrandColors.lightHeroAccent,
+    surfaceTint: Colors.transparent,
   );
 
   static final ColorScheme _darkScheme = ColorScheme.fromSeed(seedColor: brand, brightness: Brightness.dark).copyWith(
-    primary: const Color(0xFF8EA2FF),
-    onPrimary: const Color(0xFF0B1A6B),
-    primaryContainer: const Color(0xFF23338F),
-    onPrimaryContainer: const Color(0xFFDDE3FF),
-    secondary: const Color(0xFF3EE0AE),
-    onSecondary: const Color(0xFF00382A),
-    secondaryContainer: const Color(0xFF0B4A3A),
-    onSecondaryContainer: const Color(0xFFC6F7E6),
-    surface: const Color(0xFF0B1020),
-    onSurface: const Color(0xFFE8EBF7),
-    onSurfaceVariant: const Color(0xFFA3AAC6),
-    surfaceContainerLowest: const Color(0xFF0E1428),
-    surfaceContainerLow: const Color(0xFF121833),
-    surfaceContainer: const Color(0xFF161D3B),
-    surfaceContainerHigh: const Color(0xFF1C2447),
-    surfaceContainerHighest: const Color(0xFF232C55),
-    outline: const Color(0xFF3A4470),
-    outlineVariant: const Color(0xFF232B4F),
-    error: const Color(0xFFFF8A80),
-    onError: const Color(0xFF5C0A04),
-    errorContainer: const Color(0xFF5C1A14),
-    onErrorContainer: const Color(0xFFFFDAD5),
+    primary: BrandColors.darkPrimary,
+    onPrimary: BrandColors.darkOnPrimary,
+    primaryContainer: BrandColors.darkPrimarySoft,
+    onPrimaryContainer: BrandColors.darkOnPrimarySoft,
+    secondary: BrandColors.darkAccent,
+    onSecondary: BrandColors.darkOnAccent,
+    secondaryContainer: BrandColors.darkAccentSoft,
+    onSecondaryContainer: BrandColors.darkOnAccentSoft,
+    tertiary: BrandColors.darkAccent,
+    onTertiary: BrandColors.darkOnAccent,
+    tertiaryContainer: BrandColors.darkAccentSoft,
+    onTertiaryContainer: BrandColors.darkOnAccentSoft,
+    surface: BrandColors.darkCanvas,
+    onSurface: BrandColors.darkText,
+    onSurfaceVariant: BrandColors.darkMuted,
+    surfaceContainerLowest: BrandColors.darkSurface,
+    surfaceContainerLow: BrandColors.darkSurfaceLow,
+    surfaceContainer: BrandColors.darkChrome,
+    surfaceContainerHigh: BrandColors.darkSurfaceHigh,
+    surfaceContainerHighest: BrandColors.darkSurfaceHighest,
+    outline: BrandColors.darkOutline,
+    outlineVariant: BrandColors.darkLine,
+    error: BrandColors.darkError,
+    onError: BrandColors.darkErrorSoft,
+    errorContainer: BrandColors.darkErrorSoft,
+    onErrorContainer: BrandColors.darkOnErrorSoft,
+    inverseSurface: BrandColors.darkHero,
+    onInverseSurface: BrandColors.darkOnHero,
+    inversePrimary: BrandColors.darkHeroAccent,
+    surfaceTint: Colors.transparent,
   );
 
   static TextTheme _text(ColorScheme c) {
     TextStyle s(double size, FontWeight w, {double height = 1.4, double spacing = 0, Color? color}) => TextStyle(
       fontFamily: fontFamily,
+      fontFamilyFallback: const [arabicFontFamily],
       fontSize: size,
       fontWeight: w,
       height: height,
@@ -73,11 +92,11 @@ abstract final class AppTheme {
       color: color ?? c.onSurface,
     );
     return TextTheme(
-      displayLarge: s(44, FontWeight.w700, height: 1.15, spacing: -0.8),
-      displayMedium: s(38, FontWeight.w700, height: 1.15, spacing: -0.6),
-      displaySmall: s(32, FontWeight.w700, height: 1.2, spacing: -0.4),
-      headlineLarge: s(28, FontWeight.w700, height: 1.25, spacing: -0.3),
-      headlineMedium: s(25, FontWeight.w700, height: 1.25, spacing: -0.2),
+      displayLarge: s(44, FontWeight.w500, height: 1.12, spacing: -1.6),
+      displayMedium: s(38, FontWeight.w500, height: 1.16, spacing: -1.3),
+      displaySmall: s(34, FontWeight.w500, height: 1.18, spacing: -1),
+      headlineLarge: s(32, FontWeight.w500, height: 1.2, spacing: -0.9),
+      headlineMedium: s(28, FontWeight.w500, height: 1.25, spacing: -0.7),
       headlineSmall: s(22, FontWeight.w600, height: 1.3),
       titleLarge: s(20, FontWeight.w600, height: 1.3),
       titleMedium: s(16.5, FontWeight.w600, height: 1.35),
@@ -106,10 +125,11 @@ abstract final class AppTheme {
       colorScheme: c,
       brightness: c.brightness,
       fontFamily: fontFamily,
+      fontFamilyFallback: const [arabicFontFamily],
       textTheme: text,
       scaffoldBackgroundColor: c.surface,
       extensions: [palette],
-      splashFactory: InkSparkle.splashFactory,
+      splashFactory: InkRipple.splashFactory,
       appBarTheme: AppBarTheme(
         backgroundColor: c.surface,
         foregroundColor: c.onSurface,
@@ -117,8 +137,15 @@ abstract final class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
-        titleTextStyle: text.titleLarge,
-        systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+        titleTextStyle: text.headlineMedium,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+          systemNavigationBarColor: isDark ? BrandColors.darkChrome : BrandColors.lightChrome,
+          systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          systemNavigationBarDividerColor: Colors.transparent,
+        ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
@@ -151,7 +178,7 @@ abstract final class AppTheme {
         focusedBorder: fieldBorder.copyWith(borderSide: BorderSide(color: c.primary, width: 1.6)),
         errorBorder: fieldBorder.copyWith(borderSide: BorderSide(color: c.error)),
         focusedErrorBorder: fieldBorder.copyWith(borderSide: BorderSide(color: c.error, width: 1.6)),
-        hintStyle: text.bodyLarge?.copyWith(color: c.onSurfaceVariant.withValues(alpha: 0.7)),
+        hintStyle: text.bodyLarge?.copyWith(color: c.onSurfaceVariant),
         labelStyle: text.bodyLarge?.copyWith(color: c.onSurfaceVariant),
         floatingLabelStyle: text.labelLarge?.copyWith(color: c.primary),
         errorStyle: text.bodySmall?.copyWith(color: c.error),
@@ -160,10 +187,7 @@ abstract final class AppTheme {
         color: card,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.lgAll,
-          side: BorderSide(color: palette.cardBorder),
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
         clipBehavior: Clip.antiAlias,
       ),
       listTileTheme: ListTileThemeData(
@@ -174,11 +198,11 @@ abstract final class AppTheme {
         minVerticalPadding: AppSpace.md,
       ),
       navigationBarTheme: NavigationBarThemeData(
-        height: 70,
+        height: 68,
         elevation: 0,
-        backgroundColor: card,
+        backgroundColor: isDark ? BrandColors.darkChrome : BrandColors.lightChrome,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: c.primaryContainer,
+        indicatorColor: Colors.transparent,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => text.labelMedium?.copyWith(
@@ -196,8 +220,8 @@ abstract final class AppTheme {
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
-        backgroundColor: isDark ? c.surfaceContainerHighest : const Color(0xFF151A35),
-        contentTextStyle: text.bodyMedium?.copyWith(color: Colors.white),
+        backgroundColor: palette.heroBackground,
+        contentTextStyle: text.bodyMedium?.copyWith(color: palette.onHero),
         insetPadding: const EdgeInsets.fromLTRB(AppSpace.lg, 0, AppSpace.lg, AppSpace.lg),
       ),
       dividerTheme: DividerThemeData(color: c.outlineVariant, thickness: 1, space: 1),

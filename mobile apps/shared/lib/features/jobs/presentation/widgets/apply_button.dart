@@ -62,9 +62,6 @@ class _ApplyButtonState extends ConsumerState<ApplyButton> {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
-    final icon = _busy
-        ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2.2))
-        : Icon(single == null ? Icons.send_rounded : channelIcon(single), size: 18);
     final style = FilledButton.styleFrom(
       minimumSize: const Size(0, 44),
       padding: const EdgeInsets.symmetric(horizontal: AppSpace.lg),
@@ -72,8 +69,18 @@ class _ApplyButtonState extends ConsumerState<ApplyButton> {
     );
     final onPressed = _busy ? null : _apply;
     // auto apply is the app's own way: the strongest button
+    final content = _busy
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox.square(dimension: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+              const SizedBox(width: AppSpace.sm),
+              Flexible(child: label),
+            ],
+          )
+        : label;
     return single == ApplyChannel.email
-        ? FilledButton.icon(onPressed: onPressed, style: style, icon: icon, label: label)
-        : FilledButton.tonalIcon(onPressed: onPressed, style: style, icon: icon, label: label);
+        ? FilledButton(onPressed: onPressed, style: style, child: content)
+        : FilledButton.tonal(onPressed: onPressed, style: style, child: content);
   }
 }

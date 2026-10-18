@@ -70,8 +70,8 @@ class _ScopeCard extends StatelessWidget {
       child: Material(
         color: selected ? colors.primaryContainer.withValues(alpha: 0.55) : context.theme.cardTheme.color,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.lgAll,
-          side: BorderSide(color: selected ? colors.primary : context.palette.cardBorder, width: selected ? 1.6 : 1),
+          borderRadius: AppRadius.smAll,
+          side: BorderSide(color: selected ? colors.primary : context.palette.cardBorder),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -80,17 +80,15 @@ class _ScopeCard extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpace.lg),
             child: Row(
               children: [
-                AnimatedContainer(
-                  duration: AppDurations.fast,
-                  width: 46,
-                  height: 46,
-                  decoration: BoxDecoration(
-                    color: selected ? colors.primary : colors.surfaceContainerHigh,
-                    borderRadius: AppRadius.mdAll,
+                SizedBox(
+                  width: 28,
+                  child: Text(
+                    (scope.index + 1).toString().padLeft(2, '0'),
+                    textDirection: TextDirection.ltr,
+                    style: context.text.labelSmall?.copyWith(color: colors.onSurfaceVariant),
                   ),
-                  child: Icon(scopeIcon(scope), color: selected ? colors.onPrimary : colors.onSurfaceVariant),
                 ),
-                const SizedBox(width: AppSpace.lg),
+                const SizedBox(width: AppSpace.sm),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,6 +119,8 @@ class _ScopeCard extends StatelessWidget {
 Future<SearchScope?> showScopeSheet(BuildContext context, SearchScope? current) {
   return showModalBottomSheet<SearchScope>(
     context: context,
+    useRootNavigator: true,
+    useSafeArea: true,
     isScrollControlled: true,
     builder: (context) => SafeArea(
       child: SingleChildScrollView(

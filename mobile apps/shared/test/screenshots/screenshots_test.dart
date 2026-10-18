@@ -1,6 +1,8 @@
 // Renders every screen to PNG with the real fonts, to look at the design (not a regression test):
 //
 //   set SCREENSHOTS=1 && flutter test test/screenshots --update-goldens      (PowerShell: $env:SCREENSHOTS=1)
+//   SCREENSHOT_DEVICE=iphone renders a 393 × 852 logical iPhone at 3×, with
+//   59pt top / 34pt bottom safe areas, under out/iphone/.
 //
 // Images land in test/screenshots/out/ (not committed). Skipped in a normal `flutter test`.
 @Tags(['screenshots'])
@@ -16,6 +18,7 @@ import 'package:autolinky/features/auth/application/auth_providers.dart';
 import 'package:autolinky/features/auth/presentation/email_link_screen.dart';
 import 'package:autolinky/features/auth/presentation/email_screen.dart';
 import 'package:autolinky/features/auth/presentation/welcome_screen.dart';
+import 'package:autolinky/features/auto_apply/presentation/auto_apply_home_card.dart';
 import 'package:autolinky/features/matches/data/models.dart';
 import 'package:autolinky/features/matches/presentation/first_jobs_screen.dart';
 import 'package:autolinky/features/profile/data/models.dart';
@@ -33,13 +36,22 @@ import 'package:mocktail/mocktail.dart';
 import '../helpers.dart';
 
 final _skip = !Platform.environment.containsKey('SCREENSHOTS');
+final _device = Platform.environment['SCREENSHOT_DEVICE'] ?? 'phone';
+final _iphone = _device.startsWith('iphone');
+final _compact = _device == 'compact';
+final _largeType = _device == 'iphone-large';
 
 Future<void> _loadFonts() async {
-  final plex = FontLoader(AppTheme.fontFamily);
+  final plex = FontLoader(AppTheme.arabicFontFamily);
   for (final w in ['Regular', 'Medium', 'SemiBold', 'Bold']) {
     plex.addFont(Future.value(ByteData.sublistView(File('assets/fonts/IBMPlexSansArabic-$w.ttf').readAsBytesSync())));
   }
   await plex.load();
+  final manrope = FontLoader(AppTheme.fontFamily);
+  for (final weight in [400, 500, 600, 700]) {
+    manrope.addFont(Future.value(ByteData.sublistView(File('assets/fonts/Manrope-$weight.ttf').readAsBytesSync())));
+  }
+  await manrope.load();
   final flutterRoot = Platform.environment['FLUTTER_ROOT'] ?? r'D:\flutter\flutter';
   final icons = FontLoader('MaterialIcons')
     ..addFont(
@@ -59,17 +71,45 @@ class _PresetEmail extends EmailSignInController {
 
 void main() {
   setUpAll(_loadFonts);
+  setUpAll(() => WidgetController.hitTestWarningShouldBeFatal = true);
+  tearDownAll(() => WidgetController.hitTestWarningShouldBeFatal = false);
 
   void phone(WidgetTester tester) {
-    tester.view
-      ..physicalSize = const Size(786, 1702)
-      ..devicePixelRatio = 2;
+    if (_largeType) {
+      tester.platformDispatcher.textScaleFactorTestValue = 1.35;
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    }
+    if (_iphone) {
+      tester.view
+        ..physicalSize = const Size(1179, 2556)
+        ..devicePixelRatio = 3
+        ..padding = const FakeViewPadding(top: 177, bottom: 102)
+        ..viewPadding = const FakeViewPadding(top: 177, bottom: 102);
+    } else if (_compact) {
+      tester.view
+        ..physicalSize = const Size(960, 2136)
+        ..devicePixelRatio = 3
+        ..padding = const FakeViewPadding(top: 72, bottom: 48)
+        ..viewPadding = const FakeViewPadding(top: 72, bottom: 48);
+    } else {
+      tester.view
+        ..physicalSize = const Size(786, 1702)
+        ..devicePixelRatio = 2;
+    }
     addTearDown(tester.view.reset);
   }
 
   Future<void> shot(WidgetTester tester, String name) async {
-    await tester.pump(const Duration(seconds: 1));
-    await expectLater(find.byType(MaterialApp).first, matchesGoldenFile('out/$name.png'));
+    await tester.runAsync(() => precacheImage(const AssetImage('assets/brand/search-documents.webp'), tester.element(find.byType(MaterialApp).first)));
+    await tester.pump(const Duration(seconds: 3));
+    if (_iphone) {
+      final media = MediaQueryData.fromView(tester.view);
+      expect(media.size, const Size(393, 852));
+      expect(media.padding, const EdgeInsets.only(top: 59, bottom: 34));
+      expect(media.viewPadding, media.padding);
+    }
+    final folder = _device == 'phone' ? '' : '$_device/';
+    await expectLater(find.byType(MaterialApp).first, matchesGoldenFile('out/$folder$name.png'));
   }
 
   Future<void> screen(
@@ -274,6 +314,13 @@ void main() {
         await t.pumpAndSettle();
       },
     );
+  }, skip: _skip);
+
+  testWidgets('profile ready', (t) async {
+    await app(t, '15_profile_ready_en', tab: 'Profile', api: FakeProfileApi(cv: testCv()), steps: () async {
+      await t.scrollUntilVisible(find.text('Sara Ali CV.pdf'), 180);
+      await t.pumpAndSettle();
+    });
   }, skip: _skip);
 
   testWidgets('profile with cv', (t) async {
@@ -537,6 +584,19 @@ void main() {
       },
     );
   }, skip: _skip);
+  testWidgets('auto apply preferences', (t) async {
+    await app(
+      t,
+      '43_auto_apply_preferences_en',
+      steps: () async {
+        await setupSteps(t, step: 3);
+        await t.tap(find.widgetWithText(FilledButton, 'Connect and turn on'));
+        await t.pumpAndSettle();
+        await t.tap(find.text('Adjust settings'));
+        await t.pumpAndSettle();
+      },
+    );
+  }, skip: _skip);
   testWidgets(
     'gmail setup 2 ar dark',
     (t) => app(
@@ -565,6 +625,34 @@ void main() {
     ),
     skip: _skip,
   );
+
+  for (final language in ['en', 'ar']) {
+    for (final dark in [false, true]) {
+      final mode = dark ? 'dark' : 'light';
+      final locale = Locale(language);
+      final theme = dark ? ThemeMode.dark : ThemeMode.light;
+      for (final page in ['matches', 'explore', 'profile', 'autoapply']) {
+        testWidgets('editorial $page $language $mode', (t) async {
+          await app(
+            t,
+            'editorial_${page}_${language}_$mode',
+            locale: locale,
+            theme: theme,
+            tab: switch (page) {
+              'explore' => language == 'ar' ? 'استكشاف' : 'Explore',
+              'profile' => language == 'ar' ? 'حسابي' : 'Profile',
+              _ => null,
+            },
+            applications: page == 'autoapply' ? switchedOn() : null,
+            steps: page == 'autoapply' ? () async {
+              await t.tap(find.byType(AutoApplyHomeCard));
+              await t.pumpAndSettle();
+            } : null,
+          );
+        }, skip: _skip);
+      }
+    }
+  }
 
   testWidgets('details ar dark', (t) async {
     await app(

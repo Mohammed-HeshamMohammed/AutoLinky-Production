@@ -1,4 +1,4 @@
-/* Original Autolinky components, informed by Bklit's precise frames,
+/* Original AutoLinky components, informed by Bklit's precise frames,
    Kombai's product storytelling, and 21st.dev's interactive motion patterns. */
 :root { --bg: #080b12; --bg-2: #101520; --surface: rgba(255,255,255,.035); --muted: #a6aec2; --faint: #7d879f; --radius: 20px; --motion-ease: cubic-bezier(.22,1,.36,1); }
 body { background-image: radial-gradient(ellipse at 50% 0, rgba(40,56,102,.13), transparent 65%); }
@@ -18,7 +18,6 @@ body { background-image: radial-gradient(ellipse at 50% 0, rgba(40,56,102,.13), 
 .mobile-menu nav { border: 0; background: #101722; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
 .menu-divider { height: 8px; margin: 0; background: transparent; }
 .brand img { transition: transform .35s var(--motion-ease); }
-.brand:hover img { transform: rotate(-8deg); }
 .mobile-menu[open] nav { animation: menu-enter .25s var(--motion-ease); }
 @keyframes menu-enter { from { opacity: 0; transform: translateY(-8px) scale(.98); } }
 
@@ -231,7 +230,6 @@ html[dir='rtl'] .hero-flow svg:last-child:not(:first-child) { transform: scaleX(
 .related-card strong { font-size: 16px; }
 .answer-card { background: linear-gradient(140deg,rgba(62,224,174,.065),rgba(76,110,255,.045)); }
 .answer-card p { font-size: 14px; }
-@view-transition { navigation: auto; }
 .nav { view-transition-name: site-navigation; }
 ::view-transition-group(root), ::view-transition-group(site-navigation) { animation-duration: .42s; animation-timing-function: var(--motion-ease); }
 ::view-transition-old(root) { animation: route-out .18s ease-in both; }

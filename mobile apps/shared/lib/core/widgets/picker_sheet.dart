@@ -36,6 +36,7 @@ Future<PickerChoice?> showPickerSheet(
 }) {
   return showModalBottomSheet<PickerChoice>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     useSafeArea: true,
     builder: (context) => _PickerSheet(title: title, items: items, createLabel: createLabel, maxLength: maxLength),

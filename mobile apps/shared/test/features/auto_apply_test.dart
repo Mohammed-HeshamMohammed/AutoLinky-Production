@@ -278,7 +278,9 @@ void main() {
     await tester.tap(find.text('On · 3 sent today · 4 jobs waiting'));
     await settle(tester);
     expect(find.text('3 of 20 CVs sent today'), findsOneWidget);
-    // a choice changes at once while it is on
+    // A choice changes at once while it is on, after scrolling it above the fixed action bar.
+    await tester.ensureVisible(find.text('60%'));
+    await settle(tester);
     await tester.tap(find.text('60%'));
     await settle(tester);
     expect(apps.autoApplyCalls.last, {'min_match': 60});
@@ -295,6 +297,7 @@ void main() {
     await settle(tester);
     expect(apps.autoApplyCalls.last, {'gap_minutes': 20});
     await tester.ensureVisible(find.text('Turn off auto apply'));
+    await settle(tester);
     await tester.tap(find.text('Turn off auto apply'));
     await settle(tester);
     expect(apps.autoApplyCalls.last, {'enabled': false});
@@ -348,6 +351,7 @@ void main() {
     expect(find.text('Connected'), findsOneWidget);
     expect(find.text('Leave it empty to keep the saved one.'), findsOneWidget);
     await tester.ensureVisible(find.text('Disconnect Gmail'));
+    await settle(tester);
     await tester.tap(find.text('Disconnect Gmail'));
     await settle(tester);
     expect(find.text('Disconnect Gmail?'), findsOneWidget);
@@ -387,6 +391,7 @@ void main() {
     await tester.tap(find.text('Gmail'));
     await settle(tester);
     await tester.ensureVisible(find.text('Use the one from my CV'));
+    await settle(tester);
     await tester.tap(find.text('Use the one from my CV'));
     await settle(tester);
     expect(find.text('📧 sara.ali@gmail.com\n📞 +201001234567'), findsOneWidget);

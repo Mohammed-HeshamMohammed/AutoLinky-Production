@@ -10,6 +10,7 @@ import '../../../core/logging/app_log.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../applications/application/applications_providers.dart';
 import '../../applications/data/applications_repository.dart';
@@ -162,18 +163,6 @@ class _ReadySheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final colors = context.colors;
-    final success = context.palette.success;
-    final badge = Container(
-      width: 76,
-      height: 76,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: success,
-        boxShadow: [BoxShadow(color: success.withValues(alpha: 0.35), blurRadius: 24, offset: const Offset(0, 8))],
-      ),
-      child: const Icon(Icons.check_rounded, color: Colors.white, size: 42),
-    );
     return SafeArea(
       child: ContentWidth(
         child: SingleChildScrollView(
@@ -181,37 +170,19 @@ class _ReadySheet extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: MediaQuery.disableAnimationsOf(context)
-                    ? badge
-                    : TweenAnimationBuilder<double>(
-                        tween: Tween(begin: 0.4, end: 1),
-                        duration: const Duration(milliseconds: 700),
-                        curve: Curves.elasticOut,
-                        builder: (context, scale, child) => Transform.scale(scale: scale, child: child),
-                        child: badge,
-                      ),
-              ),
-              const SizedBox(height: AppSpace.lg),
-              Text(
-                l10n.autoApplyReadyTitle,
-                textAlign: TextAlign.center,
-                style: context.text.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: AppSpace.sm),
-              Text(
-                l10n.autoApplyReadyBody,
-                textAlign: TextAlign.center,
-                style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+              EditorialHeading(
+                eyebrow: l10n.autoApplyTitle,
+                title: l10n.autoApplyReadyTitle,
+                description: l10n.autoApplyReadyBody,
               ),
               if (state.email case final email?) ...[
                 const SizedBox(height: AppSpace.md),
                 Center(child: _AddressChip(address: email.address)),
               ],
               const SizedBox(height: AppSpace.xl),
-              _Fact(icon: Icons.track_changes_rounded, text: l10n.autoApplyReadyMatch(state.minMatch)),
-              _Fact(icon: Icons.speed_rounded, text: l10n.autoApplyReadyPace(state.dailyLimit, state.gapMinutes)),
-              _Fact(icon: Icons.notifications_active_outlined, text: l10n.autoApplyBackgroundNote),
+              _Fact(number: '01', text: l10n.autoApplyReadyMatch(state.minMatch)),
+              _Fact(number: '02', text: l10n.autoApplyReadyPace(state.dailyLimit, state.gapMinutes)),
+              _Fact(number: '03', text: l10n.autoApplyBackgroundNote),
               const SizedBox(height: AppSpace.xl),
               AppButton(
                 label: l10n.done,
@@ -249,14 +220,12 @@ class _AddressChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: AppSpace.xs + 2),
       decoration: BoxDecoration(
         color: colors.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(AppRadius.pill),
+        borderRadius: AppRadius.smAll,
         border: Border.all(color: colors.outlineVariant),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.mail_outline_rounded, size: 16, color: colors.onSurfaceVariant),
-          const SizedBox(width: AppSpace.xs + 2),
           Flexible(
             child: Text(
               address,
@@ -273,9 +242,9 @@ class _AddressChip extends StatelessWidget {
 }
 
 class _Fact extends StatelessWidget {
-  const _Fact({required this.icon, required this.text});
+  const _Fact({required this.number, required this.text});
 
-  final IconData icon;
+  final String number;
   final String text;
 
   @override
@@ -284,7 +253,11 @@ class _Fact extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 22, color: context.palette.accent),
+        Text(
+          number,
+          textDirection: TextDirection.ltr,
+          style: context.text.labelSmall?.copyWith(color: context.colors.primary),
+        ),
         const SizedBox(width: AppSpace.md),
         Expanded(child: Text(text, style: context.text.bodyLarge)),
       ],

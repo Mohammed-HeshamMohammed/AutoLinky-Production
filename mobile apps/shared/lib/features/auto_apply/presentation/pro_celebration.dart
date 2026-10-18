@@ -92,7 +92,7 @@ class ProCelebration extends StatefulWidget {
 class _ProCelebrationState extends State<ProCelebration> with TickerProviderStateMixin {
   late final AnimationController _confetti = AnimationController(vsync: this, duration: ProCelebration.confettiFor);
   late final AnimationController _enter = AnimationController(vsync: this, duration: const Duration(milliseconds: 900));
-  late final _pieces = _Confetti.make(90);
+  late final _pieces = _Confetti.make(32);
 
   @override
   void initState() {
@@ -118,8 +118,8 @@ class _ProCelebrationState extends State<ProCelebration> with TickerProviderStat
       palette.accent,
       palette.success,
       palette.warning,
-      const Color(0xFFFF5C8A),
-      const Color(0xFFFFC53D),
+      palette.heroAccent,
+      colors.onSurfaceVariant,
     ];
     final badge = CurvedAnimation(parent: _enter, curve: Curves.elasticOut);
     final card = CurvedAnimation(
@@ -155,25 +155,19 @@ class _ProCelebrationState extends State<ProCelebration> with TickerProviderStat
                           const SizedBox(height: AppSpace.xl),
                           Text(
                             l10n.proWelcomeTitle,
-                            textAlign: TextAlign.center,
-                            style: context.text.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+                            style: context.text.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: AppSpace.sm),
                           Text(
                             l10n.proWelcomeBody,
-                            textAlign: TextAlign.center,
                             style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
                           ),
                           const SizedBox(height: AppSpace.xl),
-                          _Perk(text: l10n.upgradePerkUnlimited),
-                          _Perk(text: l10n.upgradePerkAuto),
-                          _Perk(text: l10n.upgradePerkLetters),
+                          _Perk(number: '01', text: l10n.upgradePerkUnlimited),
+                          _Perk(number: '02', text: l10n.upgradePerkAuto),
+                          _Perk(number: '03', text: l10n.upgradePerkLetters),
                           const SizedBox(height: AppSpace.xl),
-                          AppButton(
-                            label: l10n.proWelcomeButton,
-                            icon: const Icon(Icons.rocket_launch_rounded, size: 20),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                          AppButton(label: l10n.proWelcomeButton, onPressed: () => Navigator.pop(context)),
                         ],
                       ),
                     ),
@@ -197,8 +191,9 @@ class _ProCelebrationState extends State<ProCelebration> with TickerProviderStat
 }
 
 class _Perk extends StatelessWidget {
-  const _Perk({required this.text});
+  const _Perk({required this.number, required this.text});
 
+  final String number;
   final String text;
 
   @override
@@ -206,7 +201,11 @@ class _Perk extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: AppSpace.xs + 2),
     child: Row(
       children: [
-        Icon(Icons.check_circle_rounded, size: 22, color: context.palette.success),
+        Text(
+          number,
+          textDirection: TextDirection.ltr,
+          style: context.text.labelSmall?.copyWith(color: context.colors.primary),
+        ),
         const SizedBox(width: AppSpace.md),
         Expanded(child: Text(text, style: context.text.bodyLarge)),
       ],
@@ -214,7 +213,7 @@ class _Perk extends StatelessWidget {
   );
 }
 
-/// The Pro mark: a crowned medal on the brand gradient, softly glowing.
+/// A quiet typographic plan mark, using the same identity as the workspace.
 class _ProBadge extends StatelessWidget {
   const _ProBadge({required this.size});
 
@@ -222,20 +221,12 @@ class _ProBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      width: size,
+    return SizedBox(
+      width: size * 1.5,
       height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [colors.primary, context.palette.accent],
-        ),
-        boxShadow: [BoxShadow(color: colors.primary.withValues(alpha: 0.4), blurRadius: 28, spreadRadius: 2)],
+      child: Center(
+        child: Text(context.l10n.planPro, style: context.text.displaySmall?.copyWith(color: context.colors.primary)),
       ),
-      child: Icon(Icons.workspace_premium_rounded, color: colors.onPrimary, size: size * 0.55),
     );
   }
 }

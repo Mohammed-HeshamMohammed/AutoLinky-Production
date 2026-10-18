@@ -1,0 +1,97 @@
+{
+  "description": "The A constructs first; its linked return and the smaller L loop grow from their letter bodies. The i stem draws before its dot drops and bounces into place. All Sora outlines, including normal t/y, remain unchanged. Plays once and rests on the exact static logo.",
+  "duration": 2.55,
+  "settle": 2.5,
+  "A": [
+    {
+      "parts": [
+        { "d": "M23 76 L47 29 Q51 23 55 30 L64 49", "strokeWidth": 17, "delay": 0.08, "duration": 0.32, "easing": "linear" },
+        { "d": "M32 66 L58 64 L65 73 L75 76", "strokeWidth": 17, "delay": 0.26, "duration": 0.26, "easing": "linear" }
+      ]
+    },
+    {
+      "parts": [
+        {
+          "d": "M63 63 C67 71 71 75 78 72 C91 68 86 55 73 55",
+          "strokeWidth": 14,
+          "delay": 0.45,
+          "duration": 0.29,
+          "easing": "linear",
+          "clip": "M14 59 H73 V20 H92 V80 H14 Z"
+        },
+        {
+          "d": "M73 55 H39",
+          "strokeWidth": 14,
+          "delay": 0.71,
+          "duration": 0.2,
+          "easing": "linear",
+          "clip": "M14 20 H73 V59 H14 Z"
+        }
+      ]
+    }
+  ],
+  "letters": {
+    "u": {
+      "delay": 0.8,
+      "duration": 0.48
+    },
+    "t": {
+      "delay": 0.92,
+      "duration": 0.56
+    },
+    "o": {
+      "delay": 1.04,
+      "duration": 0.46
+    },
+    "L": {
+      "delay": 1.14,
+      "duration": 0.64,
+      "paths": [
+        {
+          "d": "M5.6 0 V43 Q5.6 48.5 14 48.5 H24",
+          "strokeWidth": 13,
+          "delay": 1.14,
+          "duration": 0.6
+        },
+        {
+          "d": "M14 48.5 H24 C35 48.5 35 35.5 24 35.5 H14",
+          "strokeWidth": 9,
+          "delay": 1.74,
+          "duration": 0.5
+        }
+      ]
+    },
+    "i": {
+      "delay": 1.33,
+      "duration": 0.32,
+      "stem": { "d": "M30 489.25 H177.475 V0", "strokeWidth": 200, "delay": 1.33, "duration": 0.32 },
+      "dot": {
+        "delay": 1.66,
+        "duration": 0.79,
+        "keyframes": [
+          { "at": 0, "y": -22, "opacity": 0, "easing": "linear" },
+          { "at": 1, "y": -22, "opacity": 1, "easing": "cubic-bezier(.55,0,.9,.5)" },
+          { "at": 38, "y": 4.107599029541014, "opacity": 1, "easing": "linear" },
+          { "at": 42, "y": 4.107599029541014, "opacity": 1, "easing": "cubic-bezier(.15,.55,.35,1)" },
+          { "at": 62, "y": -3.2, "opacity": 1, "easing": "cubic-bezier(.55,0,.9,.5)" },
+          { "at": 80, "y": 4.107599029541014, "opacity": 1, "easing": "linear" },
+          { "at": 84, "y": 4.107599029541014, "opacity": 1, "easing": "cubic-bezier(.15,.55,.35,1)" },
+          { "at": 93, "y": -0.7, "opacity": 1, "easing": "ease-in-out" },
+          { "at": 100, "y": 0, "opacity": 1, "easing": "linear" }
+        ]
+      }
+    },
+    "n": {
+      "delay": 1.43,
+      "duration": 0.46
+    },
+    "k": {
+      "delay": 1.53,
+      "duration": 0.5
+    },
+    "y": {
+      "delay": 1.65,
+      "duration": 0.58
+    }
+  }
+}

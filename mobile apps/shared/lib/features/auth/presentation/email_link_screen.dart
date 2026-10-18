@@ -108,8 +108,8 @@ class _EmailLinkScreenState extends ConsumerState<EmailLinkScreen> {
                   const SizedBox(height: AppSpace.lg),
                   AppButton(label: l10n.emailLinkConfirm, loading: state.busy, onPressed: _complete),
                 ] else ...[
-                  const Icon(Icons.mark_email_unread_outlined, size: 56),
-                  const SizedBox(height: AppSpace.lg),
+                  const Divider(),
+                  const SizedBox(height: AppSpace.xxl),
                   if (state.email.isNotEmpty)
                     AppButton(
                       label: _wait > 0 ? l10n.resendIn(_wait) : l10n.resendCode,

@@ -8,6 +8,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../applications/application/applications_providers.dart';
 import '../../auth/application/auth_providers.dart';
@@ -51,6 +52,8 @@ Uri? upgradeLink(String? url, {String? promoCode}) {
 /// which), then WhatsApp. [usedUp]: the free ones are gone (said so).
 Future<void> showUpgradeSheet(BuildContext context, WidgetRef ref, {bool usedUp = true}) => showModalBottomSheet<void>(
   context: context,
+  useRootNavigator: true,
+  useSafeArea: true,
   isScrollControlled: true,
   showDragHandle: true,
   builder: (sheet) => _UpgradeSheet(
@@ -129,25 +132,38 @@ class _UpgradeSheetState extends ConsumerState<_UpgradeSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Center(child: _Badge(size: 64)),
-        const SizedBox(height: AppSpace.lg),
-        Text(l10n.upgradeTitle, textAlign: TextAlign.center, style: context.text.headlineSmall),
-        const SizedBox(height: AppSpace.sm),
-        Text(
-          widget.usedUp ? l10n.upgradeUsedUp(state?.freeLimit ?? 20) : l10n.upgradeIntro,
-          textAlign: TextAlign.center,
-          style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant),
+        Container(
+          padding: const EdgeInsets.all(AppSpace.lg),
+          decoration: BoxDecoration(color: context.palette.heroBackground, borderRadius: AppRadius.mdAll),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.planPro,
+                style: context.text.labelSmall?.copyWith(
+                  letterSpacing: 1.5,
+                  color: context.palette.onHero.withValues(alpha: .65),
+                ),
+              ),
+              const SizedBox(height: AppSpace.xl),
+              Text(
+                l10n.upgradeTitle,
+                style: context.text.headlineMedium?.copyWith(height: 1.1, color: context.palette.onHero),
+              ),
+              const SizedBox(height: AppSpace.md),
+              Text(
+                widget.usedUp ? l10n.upgradeUsedUp(state?.freeLimit ?? 20) : l10n.upgradeIntro,
+                style: context.text.bodyMedium?.copyWith(color: context.palette.onHero.withValues(alpha: .8)),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: AppSpace.xl),
-        _Perk(text: l10n.upgradePerkUnlimited),
-        _Perk(text: l10n.upgradePerkAuto),
-        _Perk(text: l10n.upgradePerkLetters),
+        _Perk(number: '01', text: l10n.upgradePerkUnlimited),
+        _Perk(number: '02', text: l10n.upgradePerkAuto),
+        _Perk(number: '03', text: l10n.upgradePerkLetters),
         const SizedBox(height: AppSpace.xl),
-        AppButton(
-          label: l10n.upgradeButton,
-          icon: const Icon(Icons.auto_awesome_rounded, size: 20),
-          onPressed: () => _go(_Step.askCode),
-        ),
+        AppButton(label: l10n.upgradeButton, onPressed: () => _go(_Step.askCode)),
         const SizedBox(height: AppSpace.md),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,15 +188,7 @@ class _UpgradeSheetState extends ConsumerState<_UpgradeSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Center(child: _CodeBadge()),
-        const SizedBox(height: AppSpace.lg),
-        Text(l10n.upgradePromoTitle, textAlign: TextAlign.center, style: context.text.headlineSmall),
-        const SizedBox(height: AppSpace.sm),
-        Text(
-          l10n.upgradePromoBody,
-          textAlign: TextAlign.center,
-          style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant),
-        ),
+        EditorialHeading(eyebrow: l10n.planPro, title: l10n.upgradePromoTitle, description: l10n.upgradePromoBody),
         const SizedBox(height: AppSpace.xl),
         AppButton(
           label: l10n.upgradePromoYes,
@@ -205,9 +213,7 @@ class _UpgradeSheetState extends ConsumerState<_UpgradeSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Center(child: _CodeBadge()),
-        const SizedBox(height: AppSpace.lg),
-        Text(l10n.upgradePromoEnter, textAlign: TextAlign.center, style: context.text.headlineSmall),
+        EditorialHeading(eyebrow: l10n.planPro, title: l10n.upgradePromoEnter),
         const SizedBox(height: AppSpace.xl),
         TextField(
           controller: _code,
@@ -222,7 +228,6 @@ class _UpgradeSheetState extends ConsumerState<_UpgradeSheet> {
           decoration: InputDecoration(
             labelText: l10n.upgradePromoLabel,
             helperText: l10n.upgradePromoHelper,
-            prefixIcon: const Icon(Icons.confirmation_number_outlined),
             counterText: '',
           ),
           onChanged: (_) => setState(() {}),
@@ -243,63 +248,26 @@ class _UpgradeSheetState extends ConsumerState<_UpgradeSheet> {
   }
 }
 
-/// The promo code step's mark: a ticket on the brand colours.
-class _CodeBadge extends StatelessWidget {
-  const _CodeBadge();
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: 64,
-    height: 64,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [context.colors.primary, context.palette.accent],
-      ),
-    ),
-    child: Icon(Icons.confirmation_number_rounded, color: context.colors.onPrimary, size: 30),
-  );
-}
-
 class _Perk extends StatelessWidget {
-  const _Perk({required this.text});
+  const _Perk({required this.number, required this.text});
 
+  final String number;
   final String text;
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: AppSpace.xs + 2),
+    padding: const EdgeInsets.symmetric(vertical: AppSpace.md),
     child: Row(
       children: [
-        Icon(Icons.check_circle_rounded, size: 22, color: context.palette.success),
+        Text(
+          number,
+          textDirection: TextDirection.ltr,
+          style: context.text.labelSmall?.copyWith(color: context.colors.primary),
+        ),
         const SizedBox(width: AppSpace.md),
         Expanded(child: Text(text, style: context.text.bodyLarge)),
       ],
     ),
-  );
-}
-
-/// The plan's mark: a lock on the brand colour.
-class _Badge extends StatelessWidget {
-  const _Badge({required this.size});
-
-  final double size;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: size,
-    height: size,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [context.colors.primary, context.palette.accent],
-      ),
-    ),
-    child: Icon(Icons.lock_outline_rounded, color: context.colors.onPrimary, size: size * 0.48),
   );
 }
 
@@ -311,42 +279,21 @@ class UnlockCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final colors = context.colors;
+    final ink = context.palette.onHero;
     final limit = ref.watch(autoApplyProvider).value?.freeLimit ?? 20;
     return Container(
       padding: const EdgeInsets.all(AppSpace.lg),
-      decoration: BoxDecoration(
-        borderRadius: AppRadius.lgAll,
-        border: Border.all(color: colors.primary.withValues(alpha: 0.35)),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [colors.primaryContainer, colors.surfaceContainerLow],
-        ),
-      ),
+      decoration: BoxDecoration(borderRadius: AppRadius.lgAll, color: context.palette.heroBackground),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              const _Badge(size: 44),
-              const SizedBox(width: AppSpace.md),
-              Expanded(
-                child: Text(
-                  l10n.upgradeTitle,
-                  style: context.text.titleMedium?.copyWith(color: colors.onPrimaryContainer),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpace.md),
-          Text(l10n.lockedJobsBody(limit), style: context.text.bodyMedium?.copyWith(color: colors.onPrimaryContainer)),
+          Text(l10n.planPro, style: context.text.labelSmall?.copyWith(color: ink.withValues(alpha: .65))),
           const SizedBox(height: AppSpace.lg),
-          AppButton(
-            label: l10n.upgradeButton,
-            icon: const Icon(Icons.auto_awesome_rounded, size: 20),
-            onPressed: () => unawaited(showUpgradeSheet(context, ref)),
-          ),
+          Text(l10n.upgradeTitle, style: context.text.headlineSmall?.copyWith(color: ink)),
+          const SizedBox(height: AppSpace.md),
+          Text(l10n.lockedJobsBody(limit), style: context.text.bodyMedium?.copyWith(color: ink.withValues(alpha: .8))),
+          const SizedBox(height: AppSpace.lg),
+          AppButton(label: l10n.upgradeButton, onPressed: () => unawaited(showUpgradeSheet(context, ref))),
         ],
       ),
     );

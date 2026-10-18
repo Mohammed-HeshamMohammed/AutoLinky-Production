@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../auto_apply/presentation/email_texts.dart';
 import '../../jobs/presentation/job_labels.dart';
@@ -43,7 +44,7 @@ class _Count extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final total = ref.watch(appliedProvider).value?.total ?? 0;
     if (total == 0) return const SizedBox.shrink();
-    return Text(context.l10n.appliedCount(total), style: context.text.titleSmall);
+    return EditorialSectionLabel(number: '02', label: context.l10n.appliedCount(total));
   }
 }
 
@@ -104,16 +105,7 @@ class _Menu extends ConsumerWidget {
       tooltip: context.l10n.moreOptions,
       icon: const Icon(Icons.more_vert_rounded),
       itemBuilder: (menu) => [
-        PopupMenuItem<void>(
-          onTap: () => unawaited(_remove(context, ref)),
-          child: Row(
-            children: [
-              const Icon(Icons.remove_circle_outline_rounded, size: 20),
-              const SizedBox(width: AppSpace.md),
-              Flexible(child: Text(context.l10n.removeApplied)),
-            ],
-          ),
-        ),
+        PopupMenuItem<void>(onTap: () => unawaited(_remove(context, ref)), child: Text(context.l10n.removeApplied)),
       ],
     );
   }

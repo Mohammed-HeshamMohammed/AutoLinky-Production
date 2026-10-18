@@ -1,14 +1,17 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../app/router.dart';
 import '../../../core/errors/app_failure.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/updates/app_updates.dart';
 import '../../../core/updates/binary_updates.dart';
+import '../../../core/widgets/app_logo.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../auto_apply/application/auto_apply_watcher.dart';
 import '../../auto_apply/presentation/pro_celebration.dart';
@@ -52,34 +55,65 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   Widget build(BuildContext context) {
     final shell = widget.shell;
     final l10n = context.l10n;
-    return Scaffold(
-      body: BinaryUpdateNoticeHost(child: UpdateNoticeHost(
-        child: ProCelebrationHost(child: AutoApplyWatcher(child: shell)),
-      )),
-      bottomNavigationBar: DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: context.colors.outlineVariant)),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: context.palette.heroBackground,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: context.palette.heroBackground,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+                child: Row(
+                  children: [
+                    Theme(data: AppTheme.dark(), child: const AppWordmark(logoSize: 25)),
+                    const Spacer(),
+                    Text(
+                      '0${shell.currentIndex + 1} / 03',
+                      textDirection: TextDirection.ltr,
+                      style: context.text.labelSmall?.copyWith(color: context.palette.heroAccent, letterSpacing: 1),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+                  child: BinaryUpdateNoticeHost(
+                    child: UpdateNoticeHost(
+                      child: ProCelebrationHost(child: AutoApplyWatcher(child: shell)),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        child: NavigationBar(
-          selectedIndex: shell.currentIndex,
-          onDestinationSelected: (index) => shell.goBranch(index, initialLocation: index == shell.currentIndex),
-          destinations: [
-            NavigationDestination(
-              icon: const Icon(Icons.auto_awesome_outlined),
-              selectedIcon: const Icon(Icons.auto_awesome),
-              label: l10n.navMatches,
+        bottomNavigationBar: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: context.colors.outlineVariant)),
+          ),
+          child: Theme(
+            data: AppTheme.dark().copyWith(
+              navigationBarTheme: AppTheme.dark().navigationBarTheme.copyWith(
+                backgroundColor: context.palette.heroBackground,
+              ),
             ),
-            NavigationDestination(
-              icon: const Icon(Icons.travel_explore_outlined),
-              selectedIcon: const Icon(Icons.travel_explore),
-              label: l10n.navExplore,
+            child: NavigationBar(
+              selectedIndex: shell.currentIndex,
+              onDestinationSelected: (index) => shell.goBranch(index, initialLocation: index == shell.currentIndex),
+              destinations: [
+                NavigationDestination(icon: const Text('01'), label: l10n.navMatches),
+                NavigationDestination(icon: const Text('02'), label: l10n.navExplore),
+                NavigationDestination(icon: const Text('03'), label: l10n.navProfile),
+              ],
             ),
-            NavigationDestination(
-              icon: const Icon(Icons.person_outline_rounded),
-              selectedIcon: const Icon(Icons.person_rounded),
-              label: l10n.navProfile,
-            ),
-          ],
+          ),
         ),
       ),
     );

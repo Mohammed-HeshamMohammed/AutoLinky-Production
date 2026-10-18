@@ -49,6 +49,19 @@ void main() {
     return apps;
   }
 
+  // The feed builds rows lazily; reveal the target with the same vertical gesture used on a phone.
+  Future<void> reveal(WidgetTester tester, Finder finder, {bool towardStart = false}) async {
+    for (var attempt = 0; finder.evaluate().isEmpty && attempt < 12; attempt++) {
+      final scrollable = find.byWidgetPredicate(
+        (widget) => widget is Scrollable && widget.axisDirection == AxisDirection.down,
+      ).first;
+      await tester.drag(scrollable, Offset(0, towardStart ? 220 : -220));
+      await settle(tester);
+    }
+    await tester.ensureVisible(finder.first);
+    await settle(tester);
+  }
+
   testWidgets('on the free plan the Auto apply tab says how many free applications are left', (tester) async {
     await pumpApp(tester, FakeApplicationsApi(jobs: {})..freeUsed = 8);
     expect(find.text('12 of 20 free applications left'), findsOneWidget);
@@ -64,11 +77,18 @@ void main() {
     expect(find.text('Unlock unlimited applications'), findsOneWidget); // the card over the locked jobs
     expect(find.textContaining("You've used your 20 free applications"), findsOneWidget);
     expect(find.text('Turn on'), findsNothing); // in place of the auto apply banner: it cannot send either
+    await reveal(tester, find.byType(LockedJob));
     expect(find.byType(LockedJob), findsWidgets); // the jobs, blurred
     // a locked job cannot be applied to: its buttons are not even reachable
     expect(find.widgetWithText(FilledButton, 'Send my CV').hitTestable(), findsNothing);
 
-    await tester.tap(find.widgetWithText(FilledButton, 'Upgrade').last);
+    // The locked row is below the upgrade summary; scroll back to its actual action.
+    final summaryUpgrade = find.descendant(
+      of: find.byType(UnlockCard),
+      matching: find.widgetWithText(FilledButton, 'Upgrade'),
+    );
+    await reveal(tester, summaryUpgrade, towardStart: true);
+    await tester.tap(summaryUpgrade);
     await settle(tester);
     expect(
       find.text(
@@ -79,9 +99,9 @@ void main() {
     );
     expect(find.text('Unlimited applications by e-mail'), findsOneWidget);
     expect(find.textContaining('sara.ali@gmail.com'), findsOneWidget); // the account the plan is for
-    await tester.tap(
-      find.descendant(of: find.byType(BottomSheet), matching: find.widgetWithText(FilledButton, 'Upgrade')),
-    );
+    final upgrade = find.descendant(of: find.byType(BottomSheet), matching: find.widgetWithText(FilledButton, 'Upgrade'));
+    await reveal(tester, upgrade);
+    await tester.tap(upgrade);
     await settle(tester);
     // a promo code first: none here, WhatsApp at once with the message as the API wrote it
     expect(find.text('Do you have a promo code?'), findsOneWidget);
@@ -95,11 +115,12 @@ void main() {
 
   testWidgets('a promo code goes with the WhatsApp message, on a line of its own', (tester) async {
     final apps = await pumpApp(tester, FakeApplicationsApi(jobs: {})..freeUsed = 20);
+    await reveal(tester, find.widgetWithText(FilledButton, 'Upgrade'));
     await tester.tap(find.widgetWithText(FilledButton, 'Upgrade').last);
     await settle(tester);
-    await tester.tap(
-      find.descendant(of: find.byType(BottomSheet), matching: find.widgetWithText(FilledButton, 'Upgrade')),
-    );
+    final upgrade = find.descendant(of: find.byType(BottomSheet), matching: find.widgetWithText(FilledButton, 'Upgrade'));
+    await reveal(tester, upgrade);
+    await tester.tap(upgrade);
     await settle(tester);
     await tester.tap(find.text('Yes, I have a code'));
     await settle(tester);
@@ -122,11 +143,12 @@ void main() {
 
   testWidgets('"Continue without a code" goes to WhatsApp with the message as it was', (tester) async {
     final apps = await pumpApp(tester, FakeApplicationsApi(jobs: {})..freeUsed = 20);
+    await reveal(tester, find.widgetWithText(FilledButton, 'Upgrade'));
     await tester.tap(find.widgetWithText(FilledButton, 'Upgrade').last);
     await settle(tester);
-    await tester.tap(
-      find.descendant(of: find.byType(BottomSheet), matching: find.widgetWithText(FilledButton, 'Upgrade')),
-    );
+    final upgrade = find.descendant(of: find.byType(BottomSheet), matching: find.widgetWithText(FilledButton, 'Upgrade'));
+    await reveal(tester, upgrade);
+    await tester.tap(upgrade);
     await settle(tester);
     await tester.tap(find.text('Yes, I have a code'));
     await settle(tester);
@@ -179,8 +201,7 @@ void main() {
 
   testWidgets('a tap on a locked job offers the upgrade too', (tester) async {
     await pumpApp(tester, FakeApplicationsApi(jobs: {})..freeUsed = 25);
-    await tester.ensureVisible(find.byType(LockedJob).first);
-    await settle(tester);
+    await reveal(tester, find.byType(LockedJob));
     await tester.tap(find.byType(LockedJob).first);
     await settle(tester);
     expect(find.text('Unlimited applications by e-mail'), findsOneWidget);
@@ -193,6 +214,7 @@ void main() {
     await pumpApp(tester, apps);
     await tester.tap(find.text('Explore'));
     await settle(tester);
+    await reveal(tester, find.widgetWithText(FilledButton, 'Send my CV'));
     await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
     await settle(tester);
     expect(find.text('Unlock unlimited applications'), findsOneWidget);
@@ -207,6 +229,7 @@ void main() {
       ..freeUsed = 19
       ..failRecord = const ApiFailure(statusCode: 402, code: 'free_limit');
     await pumpApp(tester, apps);
+    await reveal(tester, find.widgetWithText(FilledButton, 'Send my CV'));
     await tester.tap(find.widgetWithText(FilledButton, 'Send my CV').first);
     await settle(tester);
     await tester.tap(find.widgetWithText(FilledButton, 'Send'));

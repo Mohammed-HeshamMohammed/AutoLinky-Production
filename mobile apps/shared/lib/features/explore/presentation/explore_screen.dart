@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../applications/application/applications_providers.dart';
 import '../../jobs/application/jobs_providers.dart';
@@ -71,7 +72,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
         children: [
           ContentWidth(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.xs, AppSpace.page, AppSpace.sm),
+              padding: const EdgeInsets.fromLTRB(AppSpace.page, AppSpace.md, AppSpace.page, AppSpace.lg),
               child: TextField(
                 controller: _search,
                 textInputAction: TextInputAction.search,
@@ -81,7 +82,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 decoration: InputDecoration(
                   hintText: l10n.exploreSearchHint,
                   counterText: '',
-                  prefixIcon: const Icon(Icons.search_rounded),
+                  prefixIcon: const Icon(Icons.search_rounded, size: 20),
                   suffixIcon: _search.text.isEmpty
                       ? null
                       : IconButton(tooltip: l10n.clearSearch, icon: const Icon(Icons.close_rounded), onPressed: _clear),
@@ -98,6 +99,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 FilterChip(
                   label: Text(l10n.filterNotApplied),
                   selected: hideApplied,
+                  showCheckmark: false,
                   onSelected: (hide) => unawaited(ref.read(hideAppliedProvider.notifier).set(hide: hide)),
                 ),
                 const VerticalDivider(width: AppSpace.lg, indent: AppSpace.md, endIndent: AppSpace.md),
@@ -109,7 +111,6 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 for (final channel in ApplyChannel.values)
                   _Filter(
                     label: channelName(l10n, channel),
-                    icon: channelIcon(channel),
                     selected: _channel == channel,
                     onTap: () => setState(() => _channel = channel),
                   ),
@@ -121,7 +122,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
               key: ValueKey(query), // a new search starts at the top
               provider: exploreProvider(query),
               keyOf: (job) => job.id,
-              header: Text(l10n.exploreHeader, style: context.text.bodySmall),
+              header: EditorialSectionLabel(number: '01', label: l10n.exploreHeader),
               itemBuilder: (context, job) => JobCard(
                 job: job,
                 channel: _channel,
@@ -150,23 +151,16 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
 }
 
 class _Filter extends StatelessWidget {
-  const _Filter({required this.label, required this.selected, required this.onTap, this.icon});
+  const _Filter({required this.label, required this.selected, required this.onTap});
 
   final String label;
-  final IconData? icon;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsetsDirectional.only(end: AppSpace.sm),
-    child: ChoiceChip(
-      label: Text(label),
-      avatar: icon == null ? null : Icon(icon, size: 16),
-      selected: selected,
-      showCheckmark: false,
-      onSelected: (_) => onTap(),
-    ),
+    child: ChoiceChip(label: Text(label), selected: selected, showCheckmark: false, onSelected: (_) => onTap()),
   );
 }
 

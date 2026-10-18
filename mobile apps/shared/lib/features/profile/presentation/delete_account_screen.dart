@@ -5,6 +5,7 @@ import '../../../core/errors/app_failure.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../auto_apply/application/background_check.dart';
@@ -58,13 +59,17 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
     final l10n = context.l10n;
     final email = ref.watch(currentUserProvider)?.email ?? '';
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.deleteAccountTitle)),
+      appBar: AppBar(title: Text(l10n.accountSection)),
       body: SafeArea(
         child: ContentWidth(
           child: ListView(
             padding: const EdgeInsets.all(AppSpace.page),
             children: [
-              Text(l10n.deleteAccountBody, style: context.text.bodyLarge),
+              EditorialHeading(
+                eyebrow: l10n.accountSection,
+                title: l10n.deleteAccountTitle,
+                description: l10n.deleteAccountBody,
+              ),
               const SizedBox(height: AppSpace.xl),
               Text(l10n.deleteAccountConfirm(email)),
               const SizedBox(height: AppSpace.md),

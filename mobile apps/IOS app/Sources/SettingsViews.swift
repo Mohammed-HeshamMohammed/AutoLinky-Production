@@ -9,17 +9,18 @@ struct SettingsView: View {
     @State private var busy = false
     @State private var signOut = false
     var body: some View {
-        Form {
+        BrandForm {
+            BrandPageHeading(eyebrow: "Profile", title: "Settings").listRowSeparator(.hidden)
             Section(t("Preferences")) {
                 LanguagePicker()
                 Picker(t("Appearance"), selection: $appearance) { Text(t("System")).tag("system"); Text(t("Light")).tag("light"); Text(t("Dark")).tag("dark") }
                 Toggle(t("Activity notifications"), isOn: Binding(get: { notifications }, set: { value in busy = true; Task { defer { busy = false }; await store.perform { if value { try await ActivityNotifications.enable(api: store.api, uid: store.auth.uid ?? ""); notifications = true } else { await ActivityNotifications.disable(api: store.api); notifications = false } } } }))
-                Text(t("iOS decides when background checks run. You can always refresh applications in the app.")).font(.footnote).foregroundStyle(.secondary)
+                Text(t("iOS decides when background checks run. You can always refresh applications in the app.")).font(.footnote).foregroundStyle(BrandColors.muted)
             }.disabled(busy)
             Section(t("About")) { LabeledContent(t("Version"), value: "\(store.auth.configuration.version) (\(store.auth.configuration.build))"); NavigationLink(t("Check for updates")) { ReleaseView() }; if let url = store.auth.configuration.legal("terms") { Link(t("Terms"), destination: url) }; if let url = store.auth.configuration.legal("privacy") { Link(t("Privacy"), destination: url) }; if let site = store.auth.configuration.site { Link(t("Open website"), destination: site) } }
-            Section(t("Account")) { Button(t("Sign out")) { signOut = true }; NavigationLink { DeleteAccountView() } label: { Text(t("Delete account")).foregroundStyle(.red) } }
+            Section(t("Account")) { Button(t("Sign out")) { signOut = true }; NavigationLink { DeleteAccountView() } label: { Text(t("Delete account")).foregroundStyle(BrandColors.error) } }
             if busy { ProgressView() }
-        }.navigationTitle(t("Settings"))
+        }.navigationTitle(t("Settings")).navigationBarTitleDisplayMode(.inline)
         .confirmationDialog(t("Sign out of this device?"), isPresented: $signOut, titleVisibility: .visible) { Button(t("Sign out")) { busy = true; Task { defer { busy = false }; await ActivityNotifications.disable(api: store.api); notifications = false; await store.perform { try store.auth.signOut() } } } }
     }
 }
@@ -30,8 +31,14 @@ struct DeleteAccountView: View {
     @State private var busy = false
     @State private var emailSheet = false
     var body: some View {
-        Form {
-            Section { Text(t("Delete account")).font(.title2.bold()); Text(t("This permanently deletes your AutoLinky account, profile, CV and application data. This cannot be undone.")); Text(t("For your security, sign in again before deleting.")) }
+        BrandForm {
+            BrandPageHeading(eyebrow: "Account", title: "Delete account").listRowSeparator(.hidden)
+            Section {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(t("This permanently deletes your AutoLinky account, profile, CV and application data. This cannot be undone.")).font(.body).lineSpacing(4).foregroundStyle(BrandColors.error)
+                    Text(t("For your security, sign in again before deleting.")).font(.subheadline).foregroundStyle(BrandColors.muted)
+                }.padding(.vertical, 12)
+            }
             Section(t("Confirm your identity")) {
                 if store.auth.configuration.googleEnabled { Button(t("Continue with Google")) { run { try await store.auth.google() } } }
                 if store.auth.configuration.appleEnabled { SignInWithAppleButton(.continue, onRequest: store.auth.appleRequest) { result in run { try await store.auth.appleComplete(result) } }.frame(height: 48) }
@@ -53,10 +60,11 @@ struct ReleaseView: View {
     @State private var release: BinaryRelease?
     @State private var error: String?
     var body: some View {
-        Form {
+        BrandForm {
+            BrandPageHeading(eyebrow: "AutoLinky", title: "App updates").listRowSeparator(.hidden)
             if busy { ProgressView(t("Checking for updates…")) }
             else if let release {
-                Section { Text("AutoLinky \(release.version) (\(release.build))").font(.headline); Link(t("Open release download"), destination: release.downloadURL); Text(t("Development iOS packages require signing before installation.")).font(.footnote).foregroundStyle(.secondary) }
+                Section { Text("AutoLinky \(release.version) (\(release.build))").font(.headline); Link(t("Open release download"), destination: release.downloadURL); Text(t("Development iOS packages require signing before installation.")).font(.footnote).foregroundStyle(BrandColors.muted) }
             } else { Text(t(error ?? "You’re up to date.")) }
             Section { Text(t("Android and iOS use the same release feed. Each platform installs its own app build.")).font(.footnote); Button(t("Check again")) { Task { await check() } } }
         }.navigationTitle(t("App updates")).task { await check() }

@@ -3,7 +3,8 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_ui/material_ui.dart' show Color;
+
+import '../../../core/theme/brand_colors.dart';
 
 import '../../../l10n/gen/app_localizations.dart';
 import '../../applications/data/applications_repository.dart';
@@ -53,7 +54,7 @@ class AndroidAutoApplyNotifications implements AutoApplyNotifications {
   static const _sentId = 8501; // a newer "sent" replaces the older one
   static const _problemId = 8502;
   static const _newMatchesId = 8503; // a newer count replaces the older one
-  static const _brand = Color(0xFF0FA97B);
+  static const _brand = BrandColors.lightPrimary;
 
   Future<void> _init() async {
     if (_ready) return;

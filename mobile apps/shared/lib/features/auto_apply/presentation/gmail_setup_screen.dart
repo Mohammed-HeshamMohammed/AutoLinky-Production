@@ -262,7 +262,6 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
     final l10n = context.l10n;
     return _StepPage(
       key: const ValueKey(0),
-      icon: Icons.verified_user_rounded,
       eyebrow: l10n.setupDuration,
       title: l10n.setupTwoStepTitle,
       body: l10n.setupTwoStepBody,
@@ -280,7 +279,6 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
     final l10n = context.l10n;
     return _StepPage(
       key: const ValueKey(1),
-      icon: Icons.key_rounded,
       title: l10n.setupAppPasswordTitle,
       body: l10n.setupAppPasswordBody,
       top: _reconnect
@@ -304,7 +302,6 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
     final valid = compactAppPassword(typed) != null;
     return _StepPage(
       key: const ValueKey(2),
-      icon: Icons.mark_email_read_rounded,
       title: l10n.setupPasteTitle,
       body: l10n.setupPasteBody,
       children: [
@@ -322,7 +319,6 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
               labelText: l10n.gmailAddressLabel,
               hintText: 'name@gmail.com',
               errorText: _addressError,
-              prefixIcon: const Icon(Icons.alternate_email_rounded),
             ),
             onChanged: (_) => setState(() => _addressError = null),
           ),
@@ -346,7 +342,6 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
             hintText: 'abcd efgh ijkl mnop',
             errorText: _passwordError,
             errorMaxLines: 4,
-            prefixIcon: const Icon(Icons.key_rounded),
             suffixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -414,7 +409,6 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
             helperText: l10n.gmailNameHelper,
             helperMaxLines: 2,
             errorText: _nameError,
-            prefixIcon: const Icon(Icons.badge_outlined),
             counterText: '',
           ),
           onChanged: (_) {
@@ -469,17 +463,8 @@ class _GmailSetupScreenState extends ConsumerState<GmailSetupScreen> {
 /// A step: its picture, a word above the title, the title and why, then its content, scrolling (the buttons are
 /// the screen's bottom bar). Every field is built (nothing lazy), so none is missed.
 class _StepPage extends StatelessWidget {
-  const _StepPage({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.body,
-    required this.children,
-    this.eyebrow,
-    this.top,
-  });
+  const _StepPage({super.key, required this.title, required this.body, required this.children, this.eyebrow, this.top});
 
-  final IconData icon;
   final String title;
   final String body;
   final List<Widget> children;
@@ -496,60 +481,19 @@ class _StepPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (top != null) ...[top!, const SizedBox(height: AppSpace.lg)],
-          Center(child: _Hero(icon: icon)),
-          const SizedBox(height: AppSpace.xl),
           if (eyebrow != null) ...[
-            Text(
-              eyebrow!,
-              textAlign: TextAlign.center,
-              style: context.text.labelLarge?.copyWith(color: context.colors.primary),
-            ),
-            const SizedBox(height: AppSpace.xs),
+            Text(eyebrow!, style: context.text.labelSmall?.copyWith(color: context.colors.onSurfaceVariant)),
+            const SizedBox(height: AppSpace.md),
           ],
-          Text(title, textAlign: TextAlign.center, style: context.text.headlineSmall),
-          const SizedBox(height: AppSpace.sm),
-          Text(
-            body,
-            textAlign: TextAlign.center,
-            style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant),
-          ),
+          Text(title, style: context.text.headlineLarge),
+          const SizedBox(height: AppSpace.md),
+          Text(body, style: context.text.bodyLarge?.copyWith(color: context.colors.onSurfaceVariant)),
           const SizedBox(height: AppSpace.xl),
           ...children,
         ],
       ),
     ),
   );
-}
-
-/// The step's picture: its icon on the brand's blue, popping in when the step opens.
-class _Hero extends StatelessWidget {
-  const _Hero({required this.icon});
-
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final circle = Container(
-      width: 96,
-      height: 96,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: context.palette.brandGradient,
-        boxShadow: [
-          BoxShadow(color: context.colors.primary.withValues(alpha: 0.28), blurRadius: 24, offset: const Offset(0, 8)),
-        ],
-      ),
-      child: Icon(icon, size: 44, color: Colors.white),
-    );
-    if (MediaQuery.disableAnimationsOf(context)) return circle;
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.82, end: 1),
-      duration: AppDurations.slow,
-      curve: Curves.easeOutBack,
-      builder: (context, scale, child) => Transform.scale(scale: scale, child: child),
-      child: circle,
-    );
-  }
 }
 
 /// What to do at Google, numbered.
@@ -561,42 +505,31 @@ class _HowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpace.lg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (var i = 0; i < lines.length; i++)
-              Padding(
-                padding: EdgeInsets.only(top: i == 0 ? 0 : AppSpace.md),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: colors.primaryContainer,
-                      child: Text(
-                        '${i + 1}',
-                        style: context.text.labelMedium?.copyWith(
-                          color: colors.onPrimaryContainer,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpace.md),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Text(lines[i], style: context.text.bodyMedium?.copyWith(color: colors.onSurface)),
-                      ),
-                    ),
-                  ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (var i = 0; i < lines.length; i++) ...[
+          if (i > 0) const Divider(height: AppSpace.lg),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpace.sm),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 32,
+                  child: Text(
+                    '0${i + 1}',
+                    textDirection: TextDirection.ltr,
+                    style: context.text.labelMedium?.copyWith(color: colors.primary),
+                  ),
                 ),
-              ),
-          ],
-        ),
-      ),
+                const SizedBox(width: AppSpace.sm),
+                Expanded(child: Text(lines[i], style: context.text.bodyMedium)),
+              ],
+            ),
+          ),
+        ],
+      ],
     );
   }
 }
@@ -693,15 +626,11 @@ class _AccountTile extends StatelessWidget {
     final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(AppSpace.md),
-      decoration: BoxDecoration(color: colors.surfaceContainerLow, borderRadius: AppRadius.mdAll),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: colors.outlineVariant)),
+      ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: colors.primaryContainer,
-            child: Icon(Icons.mail_outline_rounded, size: 20, color: colors.onPrimaryContainer),
-          ),
-          const SizedBox(width: AppSpace.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

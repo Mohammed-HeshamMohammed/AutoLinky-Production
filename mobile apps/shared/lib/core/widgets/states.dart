@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../errors/failure_messages.dart';
+import '../theme/brand_colors.dart';
 import '../theme/theme_ext.dart';
 import '../theme/tokens.dart';
 import 'app_button.dart';
@@ -54,12 +55,7 @@ class EmptyState extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 88,
-                height: 88,
-                decoration: BoxDecoration(color: colors.primaryContainer, shape: BoxShape.circle),
-                child: Icon(icon, size: 40, color: colors.onPrimaryContainer),
-              ),
+              Icon(icon, size: 28, color: colors.onSurfaceVariant),
               const SizedBox(height: AppSpace.xl),
               if (badge != null) ...[
                 Container(
@@ -133,7 +129,7 @@ void showInfoSnack(
         children: [
           Icon(
             isError ? Icons.error_outline_rounded : Icons.check_circle_outline_rounded,
-            color: isError ? const Color(0xFFFF8A80) : const Color(0xFF3EE0AE),
+            color: isError ? BrandColors.darkError : BrandColors.darkSuccess,
             size: 20,
           ),
           const SizedBox(width: AppSpace.md),

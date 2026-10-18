@@ -8,6 +8,7 @@ import '../../../app/router.dart';
 import '../../../core/errors/failure_messages.dart';
 import '../../../core/theme/theme_ext.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/editorial.dart';
 import '../../../core/widgets/states.dart';
 import '../../taxonomy/taxonomy.dart';
 import '../application/profile_providers.dart';
@@ -19,14 +20,17 @@ import 'widgets/cv_upload_panel.dart';
 import 'widgets/scope_options.dart';
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle(this.text, {super.key});
+  const SectionTitle(this.text, {super.key, this.number});
 
   final String text;
+  final String? number;
 
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsetsDirectional.only(start: AppSpace.xs, bottom: AppSpace.sm),
-    child: Text(text, style: context.text.labelLarge?.copyWith(color: context.colors.onSurfaceVariant)),
+    child: number == null
+        ? Text(text, style: context.text.titleSmall)
+        : EditorialSectionLabel(number: number!, label: text),
   );
 }
 
@@ -68,13 +72,21 @@ class CvSection extends ConsumerWidget {
         ),
       ),
     };
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [SectionTitle(l10n.cvSection), body]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionTitle(l10n.cvSection, number: '02'),
+        body,
+      ],
+    );
   }
 
   /// Another CV, in a sheet; once read, the user checks the profile it filled, then sees its jobs come in live.
   Future<void> _replace(BuildContext context) async {
     final done = await showModalBottomSheet<bool>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       isScrollControlled: true,
       isDismissible: false,
       builder: (sheet) => SafeArea(
@@ -105,6 +117,8 @@ class CvSection extends ConsumerWidget {
   Future<void> _reanalyze(BuildContext context) async {
     final done = await showModalBottomSheet<bool>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       isDismissible: false,
       enableDrag: false,
       builder: (sheet) => const SafeArea(child: _ReanalyzeSheet()),
@@ -201,32 +215,27 @@ class PreferencesSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SectionTitle(l10n.jobPreferences),
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(scope == null ? Icons.place_outlined : scopeIcon(scope)),
-                title: Text(l10n.fieldScope),
-                subtitle: Text(scope == null ? l10n.notSet : scopeTitle(l10n, scope)),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () => unawaited(_changeScope(context, ref, scope)),
-              ),
-              const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-              ListTile(
-                leading: const Icon(Icons.work_outline_rounded),
-                title: Text(l10n.fieldRoles),
-                subtitle: Text(jobs.isEmpty ? l10n.notSet : jobs, maxLines: 3, overflow: TextOverflow.ellipsis),
-              ),
-              const Divider(indent: AppSpace.lg, endIndent: AppSpace.lg),
-              ListTile(
-                leading: Icon(Icons.edit_outlined, color: context.colors.primary),
-                title: Text(l10n.editProfile, style: TextStyle(color: context.colors.primary)),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () => context.push(Routes.editProfile),
-              ),
-            ],
-          ),
+        SectionTitle(l10n.jobPreferences, number: '01'),
+        Column(
+          children: [
+            ListTile(
+              title: Text(l10n.fieldScope),
+              subtitle: Text(scope == null ? l10n.notSet : scopeTitle(l10n, scope)),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => unawaited(_changeScope(context, ref, scope)),
+            ),
+            const Divider(height: 1),
+            ListTile(
+              title: Text(l10n.fieldRoles),
+              subtitle: Text(jobs.isEmpty ? l10n.notSet : jobs, maxLines: 3, overflow: TextOverflow.ellipsis),
+            ),
+            const Divider(height: 1),
+            ListTile(
+              title: Text(l10n.editProfile, style: TextStyle(color: context.colors.primary)),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => context.push(Routes.editProfile),
+            ),
+          ],
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:cupertino_ui/cupertino_ui.dart' show GlobalCupertinoLocalizations;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -59,7 +60,10 @@ class AutolinkyApp extends ConsumerWidget {
         return MediaQuery(
           data: media.copyWith(textScaler: media.textScaler.clamp(maxScaleFactor: 1.35)),
           // a word from us while the service is being updated, over any screen (sign-in too)
-          child: WebSiteNavigation(child: ServiceNoticeHost(child: child!)),
+          child: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: Theme.of(context).appBarTheme.systemOverlayStyle!,
+            child: WebSiteNavigation(child: ServiceNoticeHost(child: child!)),
+          ),
         );
       },
     );

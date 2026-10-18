@@ -24,30 +24,21 @@ Future<T?> _sheet<T>(BuildContext context, Widget Function(BuildContext sheet) b
 );
 
 class _SheetHeader extends StatelessWidget {
-  const _SheetHeader({required this.icon, required this.title, this.body});
-
-  final IconData icon;
+  const _SheetHeader({required this.title, this.body});
   final String title;
   final String? body;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(color: colors.primaryContainer, borderRadius: AppRadius.mdAll),
-            child: Icon(icon, color: colors.onPrimaryContainer),
-          ),
-        ),
         const SizedBox(height: AppSpace.lg),
-        Text(title, style: context.text.titleLarge),
-        if (body != null) ...[const SizedBox(height: AppSpace.xs), Text(body!, style: context.text.bodyMedium)],
+        Text(title, style: context.text.headlineMedium),
+        if (body != null) ...[
+          const SizedBox(height: AppSpace.md),
+          Text(body!, style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)),
+        ],
       ],
     );
   }
@@ -61,21 +52,18 @@ class _JobLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(AppSpace.md),
-    decoration: BoxDecoration(color: context.colors.surfaceContainerLow, borderRadius: AppRadius.mdAll),
-    child: Row(
+    padding: const EdgeInsets.symmetric(vertical: AppSpace.lg),
+    decoration: BoxDecoration(
+      border: Border.symmetric(horizontal: BorderSide(color: context.colors.outlineVariant)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.work_outline_rounded, size: 20, color: context.colors.onSurfaceVariant),
-        const SizedBox(width: AppSpace.md),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BidiText(job.title, style: context.text.titleSmall, maxLines: 2),
-              if (job.company case final company?) BidiText(company, style: context.text.bodySmall, maxLines: 1),
-            ],
-          ),
-        ),
+        if (job.company case final company?) ...[
+          BidiText(company, style: context.text.labelMedium, maxLines: 1),
+          const SizedBox(height: AppSpace.xs),
+        ],
+        BidiText(job.title, style: context.text.titleMedium, maxLines: 2),
       ],
     ),
   );
@@ -88,15 +76,11 @@ Future<bool> askDidYouApply(BuildContext context, Job job, ApplyChannel channel)
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SheetHeader(icon: channelIcon(channel), title: l10n.didYouApplyTitle, body: l10n.didYouApplyBody),
+        _SheetHeader(title: l10n.didYouApplyTitle, body: l10n.didYouApplyBody),
         const SizedBox(height: AppSpace.lg),
         _JobLine(job),
         const SizedBox(height: AppSpace.xl),
-        FilledButton.icon(
-          onPressed: () => Navigator.pop(sheet, true),
-          icon: const Icon(Icons.check_rounded),
-          label: Text(l10n.yesApplied),
-        ),
+        FilledButton(onPressed: () => Navigator.pop(sheet, true), child: Text(l10n.yesApplied)),
         const SizedBox(height: AppSpace.sm),
         OutlinedButton(onPressed: () => Navigator.pop(sheet, false), child: Text(l10n.notYet)),
       ],
@@ -112,14 +96,14 @@ Future<ApplyChannel?> chooseChannel(BuildContext context, Job job, List<ApplyCha
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n.chooseWayTitle, style: sheet.text.titleLarge),
+        _SheetHeader(title: l10n.chooseWayTitle),
         const SizedBox(height: AppSpace.md),
         _JobLine(job),
         const SizedBox(height: AppSpace.md),
-        for (final channel in channels)
+        for (final (index, channel) in channels.indexed)
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: Icon(channelIcon(channel)),
+            leading: Text((index + 1).toString().padLeft(2, '0'), style: sheet.text.labelSmall),
             title: Text(applyLabel(l10n, channel)),
             subtitle: Text(channelAbout(l10n, channel)),
             trailing: const Icon(Icons.chevron_right_rounded),
@@ -179,29 +163,14 @@ class _SendCvState extends State<_SendCv> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _SheetHeader(icon: Icons.send_rounded, title: l10n.sendCvTitle),
+        _SheetHeader(title: l10n.sendCvTitle),
         const SizedBox(height: AppSpace.lg),
         if (preview.from case final from?) row(l10n.sendCvFrom, from, ltr: true),
         row(l10n.sendCvTo, preview.to, ltr: true),
         row(l10n.sendCvSubject, preview.subject),
         row(l10n.sendCvAttachment, attachment ?? l10n.cvMissingTitle),
         const SizedBox(height: AppSpace.md),
-        Row(
-          children: [
-            Icon(
-              preview.writtenByAi ? Icons.auto_awesome_rounded : Icons.edit_note_rounded,
-              size: 18,
-              color: context.palette.accent,
-            ),
-            const SizedBox(width: AppSpace.xs + 2),
-            Expanded(
-              child: Text(
-                preview.writtenByAi ? l10n.sendCvLetterAi : l10n.sendCvLetterTemplate,
-                style: context.text.bodySmall,
-              ),
-            ),
-          ],
-        ),
+        Text(preview.writtenByAi ? l10n.sendCvLetterAi : l10n.sendCvLetterTemplate, style: context.text.bodySmall),
         const SizedBox(height: AppSpace.sm),
         // the letter is in English, whatever the app's language
         TextField(
@@ -225,12 +194,11 @@ class _SendCvState extends State<_SendCv> {
           Text(l10n.emailErrorNoCv, style: context.text.bodySmall?.copyWith(color: context.colors.error)),
         ],
         const SizedBox(height: AppSpace.xl),
-        FilledButton.icon(
+        FilledButton(
           onPressed: attachment == null || _letter.text.trim().isEmpty
               ? null
               : () => Navigator.pop(context, _letter.text.trim()),
-          icon: const Icon(Icons.send_rounded),
-          label: Text(l10n.sendCvButton),
+          child: Text(l10n.sendCvButton),
         ),
         const SizedBox(height: AppSpace.sm),
         TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),

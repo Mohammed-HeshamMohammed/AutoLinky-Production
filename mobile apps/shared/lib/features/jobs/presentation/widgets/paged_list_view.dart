@@ -134,7 +134,7 @@ class _PagedListViewState<T> extends ConsumerState<PagedListView<T>> with Automa
                           key: ValueKey(widget.keyOf(items[i])),
                           child: widget.itemBuilder(context, items[i]),
                         ),
-                        separatorBuilder: (context, i) => const SizedBox(height: AppSpace.md),
+                        separatorBuilder: (context, i) => const SizedBox(height: AppSpace.lg),
                       ),
                     ),
                     SliverPadding(
@@ -175,23 +175,16 @@ class _Footer extends StatelessWidget {
       return Column(
         children: [
           Text(l10n.matchesMoreError, style: muted, textAlign: TextAlign.center),
-          TextButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh_rounded, size: 18),
-            label: Text(l10n.retry),
-          ),
+          TextButton(onPressed: onRetry, child: Text(l10n.retry)),
         ],
       );
     }
     if (list.hasMore) return const SizedBox(height: 28); // loads as soon as it comes near
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        Icon(Icons.check_circle_outline_rounded, size: 18, color: context.colors.onSurfaceVariant),
-        const SizedBox(width: AppSpace.sm),
-        Flexible(
-          child: Text(l10n.listEnd, style: muted, textAlign: TextAlign.center),
-        ),
+        const Divider(),
+        const SizedBox(height: AppSpace.md),
+        Text(l10n.listEnd, style: muted, textAlign: TextAlign.center),
       ],
     );
   }

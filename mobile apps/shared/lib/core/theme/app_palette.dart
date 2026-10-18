@@ -1,10 +1,14 @@
 import 'package:material_ui/material_ui.dart';
 
+import 'brand_colors.dart';
+
 /// Brand colors the Material ColorScheme has no role for. Read with context.palette (theme_ext.dart).
 @immutable
 class AppPalette extends ThemeExtension<AppPalette> {
   const AppPalette({
-    required this.brandGradient,
+    required this.heroBackground,
+    required this.onHero,
+    required this.heroAccent,
     required this.accent,
     required this.onAccent,
     required this.success,
@@ -16,41 +20,40 @@ class AppPalette extends ThemeExtension<AppPalette> {
   });
 
   static const light = AppPalette(
-    brandGradient: LinearGradient(
-      begin: AlignmentDirectional.topStart,
-      end: AlignmentDirectional.bottomEnd,
-      colors: [Color(0xFF4C6EFF), Color(0xFF1F35C7)],
-    ),
-    accent: Color(0xFF0FA97B),
-    onAccent: Colors.white,
-    success: Color(0xFF12A150),
-    warning: Color(0xFFD97706),
-    matchHigh: Color(0xFF0FA97B),
-    matchMedium: Color(0xFF2F4FE8),
-    matchLow: Color(0xFF8A90A8),
-    cardBorder: Color(0xFFE6E9F2),
+    heroBackground: BrandColors.lightHero,
+    onHero: BrandColors.lightOnHero,
+    heroAccent: BrandColors.lightHeroAccent,
+    accent: BrandColors.lightAccent,
+    onAccent: BrandColors.lightOnAccent,
+    success: BrandColors.lightSuccess,
+    warning: BrandColors.lightWarning,
+    matchHigh: BrandColors.lightSuccess,
+    matchMedium: BrandColors.lightPrimary,
+    matchLow: BrandColors.lightMuted,
+    cardBorder: BrandColors.lightLine,
   );
 
   static const dark = AppPalette(
-    brandGradient: LinearGradient(
-      begin: AlignmentDirectional.topStart,
-      end: AlignmentDirectional.bottomEnd,
-      colors: [Color(0xFF3A5BF0), Color(0xFF1A2A9E)],
-    ),
-    accent: Color(0xFF3EE0AE),
-    onAccent: Color(0xFF00382A),
-    success: Color(0xFF4ADE80),
-    warning: Color(0xFFFBBF24),
-    matchHigh: Color(0xFF3EE0AE),
-    matchMedium: Color(0xFF8EA2FF),
-    matchLow: Color(0xFF7D84A3),
-    cardBorder: Color(0xFF232B4F),
+    heroBackground: BrandColors.darkHero,
+    onHero: BrandColors.darkOnHero,
+    heroAccent: BrandColors.darkHeroAccent,
+    accent: BrandColors.darkAccent,
+    onAccent: BrandColors.darkOnAccent,
+    success: BrandColors.darkSuccess,
+    warning: BrandColors.darkWarning,
+    matchHigh: BrandColors.darkSuccess,
+    matchMedium: BrandColors.darkPrimary,
+    matchLow: BrandColors.darkMuted,
+    cardBorder: BrandColors.darkLine,
   );
 
-  /// The logo's blue, for heroes and highlights.
-  final Gradient brandGradient;
+  /// Quiet charcoal panels, shared with the public film.
+  final Color heroBackground;
 
-  /// Mint: the "match" color of the logo's dot.
+  final Color onHero;
+  final Color heroAccent;
+
+  /// Sage accent for supporting controls.
   final Color accent;
   final Color onAccent;
   final Color success;
@@ -64,7 +67,9 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   @override
   AppPalette copyWith({
-    Gradient? brandGradient,
+    Color? heroBackground,
+    Color? onHero,
+    Color? heroAccent,
     Color? accent,
     Color? onAccent,
     Color? success,
@@ -74,7 +79,9 @@ class AppPalette extends ThemeExtension<AppPalette> {
     Color? matchLow,
     Color? cardBorder,
   }) => AppPalette(
-    brandGradient: brandGradient ?? this.brandGradient,
+    heroBackground: heroBackground ?? this.heroBackground,
+    onHero: onHero ?? this.onHero,
+    heroAccent: heroAccent ?? this.heroAccent,
     accent: accent ?? this.accent,
     onAccent: onAccent ?? this.onAccent,
     success: success ?? this.success,
@@ -89,7 +96,9 @@ class AppPalette extends ThemeExtension<AppPalette> {
   AppPalette lerp(AppPalette? other, double t) {
     if (other == null) return this;
     return AppPalette(
-      brandGradient: Gradient.lerp(brandGradient, other.brandGradient, t)!,
+      heroBackground: Color.lerp(heroBackground, other.heroBackground, t)!,
+      onHero: Color.lerp(onHero, other.onHero, t)!,
+      heroAccent: Color.lerp(heroAccent, other.heroAccent, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
       onAccent: Color.lerp(onAccent, other.onAccent, t)!,
       success: Color.lerp(success, other.success, t)!,

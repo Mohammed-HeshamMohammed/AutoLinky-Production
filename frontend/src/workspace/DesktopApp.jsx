@@ -1,22 +1,44 @@
-import React,{useEffect,useState} from 'react';
+import React,{useCallback,useEffect,useState} from 'react';
 import { workspacePath,workspaceRoute } from '../../workspace-routes.js';
 import { SessionProvider,useSession } from './session.jsx';
 import Login from './Login.jsx';
 import AdminApp from './AdminApp.jsx';
-import { Brand,Icon,Loading,ErrorState } from './ui.jsx';
+import { Brand,Loading,ErrorState } from './ui.jsx';
 import { Dashboard,Jobs,Applications,Compare,Compose } from './JobScreens.jsx';
 import { Profile,CV,AutoApply,Settings } from './AccountScreens.jsx';
 import './workspace.css';
-const destinations=[['dashboard','spark','My matches','المطابقات'],['jobs','search','Explore jobs','استكشف الوظائف'],['saved','bookmark','Saved jobs','الوظائف المحفوظة'],['applications','briefcase','Applications','طلبات التوظيف'],['compare','compare','Compare jobs','قارن الوظائف'],['profile','user','My profile','ملفي الشخصي'],['cv','file','My CV','سيرتي الذاتية'],['auto-apply','bolt','Auto Apply','التقديم التلقائي']];
+import './workspace-design.css';
+import {Sidebar,NavGroup,AppearanceButton} from './Navigation.jsx';
+const destinations=[['dashboard','My matches','المطابقات'],['jobs','Explore jobs','استكشف الوظائف'],['saved','Saved jobs','الوظائف المحفوظة'],['applications','Applications','طلبات التوظيف'],['compare','Compare jobs','قارن الوظائف'],['profile','My profile','ملفي الشخصي'],['cv','My CV','سيرتي الذاتية'],['auto-apply','Auto Apply','التقديم التلقائي']];
 export function WorkspaceShell({route,url,navigate,session,children}){
   const ar=route.lang==='ar',[mobileOpen,setMobileOpen]=useState(false),[search,setSearch]=useState(''),[dark,setDark]=useState(false);
+  const closeMenu=useCallback(()=>setMobileOpen(false),[]);
   useEffect(()=>{try{setDark(localStorage.getItem('autolinky.web.dark')==='true');}catch{}},[]);
-  const labels=destinations.find(([name])=>name===route.screen)||[route.screen,'grid',route.screen==='settings'?'Settings':route.screen==='compose'?'Review application':'Workspace',route.screen==='settings'?'الإعدادات':route.screen==='compose'?'مراجعة الطلب':'مساحة العمل'];
-  const name=session.user?.displayName||session.account?.email?.split('@')[0]||'Your account';
+  useEffect(closeMenu,[route.screen,route.lang,closeMenu]);
+  const labels=destinations.find(([name])=>name===route.screen)||[route.screen,route.screen==='settings'?'Settings':route.screen==='compose'?'Review application':'Workspace',route.screen==='settings'?'الإعدادات':route.screen==='compose'?'مراجعة الطلب':'مساحة العمل'];
+  const name=session.user?.displayName||session.account?.email?.split('@')[0]||(ar?'حسابك':'Your account');
   function toggleTheme(){setDark(value=>{try{localStorage.setItem('autolinky.web.dark',String(!value));}catch{}return !value;});}
-  return <div className={`ws-app ${dark?'is-dark':''}`} dir={ar?'rtl':'ltr'}><a className="ws-skip" href="#workspace-main">{ar?'تخطى إلى المحتوى':'Skip to content'}</a>{mobileOpen&&<button className="ws-sidebar-scrim" aria-label={ar?'إغلاق القائمة':'Close navigation'} onClick={()=>setMobileOpen(false)}/>}
-    <aside className={`ws-sidebar ${mobileOpen?'open':''}`}><Brand/><div className="ws-space-label">{ar?'مساحة العمل':'YOUR WORKSPACE'}</div><nav aria-label={ar?'القائمة الرئيسية':'Main navigation'}>{destinations.map(([screen,icon,en,arabic],index)=><React.Fragment key={screen}>{index===5&&<span className="ws-space-label second">{ar?'حسابك':'YOUR ACCOUNT'}</span>}<a href={workspacePath(screen,route.lang)} className={route.screen===screen||route.screen==='compose'&&screen==='applications'?'active':''} aria-current={route.screen===screen?'page':undefined} onClick={()=>setMobileOpen(false)}><Icon name={icon}/><span>{ar?arabic:en}</span>{screen==='auto-apply'&&<span className="ws-nav-new">{ar?'ذكي':'SMART'}</span>}</a></React.Fragment>)}</nav><div className="ws-sidebar-bottom"><a href={workspacePath('settings',route.lang)} className={route.screen==='settings'?'active':''}><Icon name="settings"/>{ar?'الإعدادات':'Settings'}</a><div className="ws-account"><span className="ws-avatar">{name.slice(0,1).toUpperCase()}</span><div><b>{name}</b><small>{session.account?.email}</small></div><button className="ws-icon-button" title={ar?'تسجيل الخروج':'Sign out'} aria-label={ar?'تسجيل الخروج':'Sign out'} onClick={async()=>{await session.signOut();navigate(workspacePath('login',route.lang));}}><Icon name="logout" size={18}/></button></div></div></aside>
-    <div className="ws-main-wrap"><header className="ws-topbar"><div className="ws-topbar-left"><button className="ws-icon-button ws-menu" aria-label={ar?'فتح القائمة':'Open navigation'} onClick={()=>setMobileOpen(true)}><Icon name="menu"/></button><span className="ws-breadcrumb">{ar?'مساحة العمل':'Workspace'} <Icon name="chevron" size={13}/></span><b>{ar?labels[3]:labels[2]}</b></div><form className="ws-global-search" role="search" onSubmit={e=>{e.preventDefault();navigate(workspacePath('jobs',route.lang)+'?q='+encodeURIComponent(search.trim()));}}><Icon name="search" size={17}/><input aria-label={ar?'ابحث عن وظيفة':'Search jobs'} placeholder={ar?'ابحث عن فرصتك القادمة…':'Find your next opportunity…'} value={search} onChange={e=>setSearch(e.target.value)}/><kbd>↵</kbd></form><div className="ws-topbar-actions"><button className="ws-text-button" onClick={()=>navigate(workspacePath(route.screen,ar?'en':'ar')+url.search)}>{ar?'EN':'عربي'}</button><button className="ws-icon-button" title={ar?'تبديل المظهر':'Toggle color theme'} aria-label={ar?'تبديل المظهر':'Toggle color theme'} onClick={toggleTheme}><Icon name="grid" size={18}/></button><span className="ws-top-avatar">{name.slice(0,1).toUpperCase()}</span></div></header><main id="workspace-main" className="ws-main" tabIndex={-1}>{children}</main><footer className="ws-workspace-footer"><span>AutoLinky <span className="ws-dot"/>{ar?'خطوتك القادمة تبدأ هنا.':'A little closer to your next move.'}</span><a href={ar?'/ar/':'/'}>{ar?'زيارة الموقع':'Visit website'} <Icon name="arrow" size={13}/></a></footer></div></div>;
+  const navItems=items=>items.map(([screen,en,arabic])=><a key={screen} href={workspacePath(screen,route.lang)} className={route.screen===screen||route.screen==='compose'&&screen==='applications'?'active':''} aria-current={route.screen===screen?'page':undefined} onClick={closeMenu}><span className="ws-nav-index" aria-hidden="true">{String(destinations.findIndex(([id])=>id===screen)+1).padStart(2,'0')}</span><span>{ar?arabic:en}</span></a>);
+  return <div className={`ws-app ws-workspace ${dark?'is-dark':''}`} dir={ar?'rtl':'ltr'}>
+    <a className="ws-skip" href="#workspace-main">{ar?'تخطى إلى المحتوى':'Skip to content'}</a>
+    <Sidebar open={mobileOpen} onClose={closeMenu} ar={ar} label={ar?'مساحة عملك':'Personal workspace'} footer={<>
+      <a href={workspacePath('settings',route.lang)} className={route.screen==='settings'?'active':''} aria-current={route.screen==='settings'?'page':undefined}>{ar?'الإعدادات':'Settings'}</a>
+      <div className="ws-account"><span className="ws-avatar" aria-hidden="true">{name.slice(0,1).toUpperCase()}</span><div><b>{name}</b><small>{session.account?.email}</small></div></div>
+      <button className="ws-signout" onClick={async()=>{await session.signOut();navigate(workspacePath('login',route.lang));}}>{ar?'تسجيل الخروج':'Sign out'}</button>
+    </>}>
+      <NavGroup label={ar?'بحثك عن وظيفة':'Job search'}>{navItems(destinations.slice(0,5))}</NavGroup>
+      <NavGroup label={ar?'ملفك وتفضيلاتك':'Profile & preferences'}>{navItems(destinations.slice(5))}</NavGroup>
+    </Sidebar>
+    <div className="ws-main-wrap">
+      <header className="ws-topbar">
+        <div className="ws-topbar-left"><button className="ws-menu ws-text-button" aria-expanded={mobileOpen} aria-controls="workspace-navigation" onClick={()=>setMobileOpen(true)}>{ar?'القائمة':'Menu'}</button><span className="ws-breadcrumb">{ar?'مساحة العمل':'Workspace'}<span>/</span></span><b>{ar?labels[2]:labels[1]}</b></div>
+        <form className="ws-global-search" role="search" onSubmit={event=>{event.preventDefault();navigate(workspacePath('jobs',route.lang)+'?q='+encodeURIComponent(search.trim()));}}><input type="search" aria-label={ar?'ابحث عن وظيفة':'Search jobs'} placeholder={ar?'ابحث عن وظيفة…':'Search jobs…'} value={search} onChange={event=>setSearch(event.target.value)}/><button type="submit">{ar?'بحث':'Search'}</button></form>
+        <div className="ws-topbar-actions"><button className="ws-text-button" onClick={()=>navigate(workspacePath(route.screen,ar?'en':'ar')+url.search)}>{ar?'EN':'عربي'}</button><AppearanceButton dark={dark} onClick={toggleTheme} ar={ar}/></div>
+      </header>
+      <div className="ws-content-sheet"><main id="workspace-main" className="ws-main" tabIndex={-1}>{children}</main>
+      <footer className="ws-workspace-footer"><span>AutoLinky · {ar?'مساحة لخطوتك القادمة.':'Room for your next move.'}</span><a href={ar?'/ar/':'/'}>{ar?'زيارة الموقع':'Visit website'}</a></footer></div>
+    </div>
+  </div>;
 }
 function UserApp(props){
   const session=useSession(),{route,url,navigate}=props,ar=route.lang==='ar';

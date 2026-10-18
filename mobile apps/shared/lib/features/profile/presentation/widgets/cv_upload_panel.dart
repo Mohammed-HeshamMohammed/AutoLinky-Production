@@ -73,10 +73,10 @@ class _DropArea extends StatelessWidget {
       button: true,
       label: context.l10n.cvPick,
       child: Material(
-        color: colors.primaryContainer.withValues(alpha: 0.35),
+        color: colors.surfaceContainerLowest,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.lgAll,
-          side: BorderSide(color: colors.primary.withValues(alpha: 0.45), width: 1.4),
+          side: BorderSide(color: colors.outlineVariant),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -84,17 +84,23 @@ class _DropArea extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpace.xl, vertical: AppSpace.xxl),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 64,
-                  height: 64,
-                  decoration: BoxDecoration(color: colors.primary, shape: BoxShape.circle),
-                  child: Icon(Icons.upload_file_rounded, color: colors.onPrimary, size: 30),
+                Row(
+                  children: [
+                    Text(
+                      'PDF / DOCX',
+                      textDirection: TextDirection.ltr,
+                      style: context.text.labelSmall?.copyWith(letterSpacing: 1.5, color: colors.onSurfaceVariant),
+                    ),
+                    const Spacer(),
+                    Icon(Icons.upload_file_outlined, color: colors.primary, size: 22),
+                  ],
                 ),
-                const SizedBox(height: AppSpace.lg),
-                Text(context.l10n.cvPick, style: context.text.titleMedium?.copyWith(color: colors.primary)),
-                const SizedBox(height: AppSpace.xs),
-                Text(context.l10n.cvPickHint, style: context.text.bodySmall, textAlign: TextAlign.center),
+                const SizedBox(height: AppSpace.xl),
+                Text(context.l10n.cvPick, style: context.text.titleLarge),
+                const SizedBox(height: AppSpace.sm),
+                Text(context.l10n.cvPickHint, style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant)),
               ],
             ),
           ),
@@ -175,7 +181,7 @@ class _UploadProgressState extends State<UploadProgress> {
           ] else ...[
             ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              child: LinearProgressIndicator(value: widget.state.sent, minHeight: 8),
+              child: LinearProgressIndicator(value: widget.state.sent, minHeight: 3),
             ),
             const SizedBox(height: AppSpace.md),
             Text(l10n.cvUploading((widget.state.sent * 100).round()), style: context.text.titleSmall),

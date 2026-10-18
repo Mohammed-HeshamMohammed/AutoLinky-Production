@@ -12,14 +12,14 @@ abstract final class AppSpace {
   static const double xxxl = 48;
 
   /// Side padding of a screen.
-  static const double page = 20;
+  static const double page = 24;
 }
 
 abstract final class AppRadius {
-  static const double sm = 10;
-  static const double md = 14;
-  static const double lg = 20;
-  static const double xl = 28;
+  static const double sm = 6;
+  static const double md = 10;
+  static const double lg = 14;
+  static const double xl = 22;
   static const double pill = 999;
 
   static const BorderRadius smAll = BorderRadius.all(Radius.circular(sm));

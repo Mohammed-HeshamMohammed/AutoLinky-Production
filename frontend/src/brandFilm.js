@@ -20,3 +20,18 @@ export const FILM_CHAPTERS={
 
 export const clampProgress=value=>Math.max(0,Math.min(1,Number.isFinite(value)?value:0));
 export const filmChapter=progress=>Math.min(5,Math.floor(clampProgress(progress)*6));
+
+// A shared playhead drives both sides of the handoff, so scrolling backwards
+// retraces exactly the same positions instead of starting another animation.
+export function filmCopyLayers(progress,reduced=false){
+  const active=filmChapter(progress),time=clampProgress(progress)*FILM_DURATION;
+  const boundary=Math.round(time/4),window=.7,half=window/2,travel=14;
+  const changing=!reduced&&boundary>0&&boundary<6&&Math.abs(time-boundary*4)<half;
+  const phase=clampProgress((time-boundary*4+half)/window);
+  const entering=phase>=.5,part=entering?(phase-.5)*2:phase*2,blend=part*part*(3-2*part);
+  return Array.from({length:6},(_,index)=>{
+    if(changing&&index===boundary-1)return {index,opacity:entering?0:1-blend,y:-travel*(entering?1:blend)};
+    if(changing&&index===boundary)return {index,opacity:entering?blend:0,y:travel*(entering?1-blend:1)};
+    return {index,opacity:index===active?1:0,y:reduced?0:index<active?-travel:index>active?travel:0};
+  });
+}

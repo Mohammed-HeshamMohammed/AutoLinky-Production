@@ -21,7 +21,9 @@
 .film-copy h2 > span { display: block; }
 .film-copy .film-heading-secondary { color: #a3b59b; }
 .film-description { color: #b4beb2; font-size: 14px; line-height: 1.9; max-width: 395px; margin-top: 27px; min-height: 80px; }
-.film-words { opacity: 1; transform: none; animation: none; }
+.film-words { display: grid; opacity: 1; transform: none; animation: none; }
+.film-copy-layer { grid-area: 1 / 1; min-width: 0; opacity: var(--film-copy-opacity,0); pointer-events: none; }
+.film-copy-content { transform: translate3d(0,var(--film-copy-shift,0px),0); }
 .film-actions { display: flex; align-items: flex-start; flex-direction: column; gap: 16px; margin-top: 28px; }
 .film-primary { display: inline-flex; align-items: center; gap: 35px; padding: 15px 21px; border: 1px solid #d9e4cc; background: #e5eddd; color: #202b22; border-radius: 3px; min-height: 50px; font-size: 12px; font-weight: 650; }
 .film-primary:hover { background: #cddfbd; }
@@ -138,7 +140,7 @@ html[lang='ar'] .film-primary > span { transform: scaleX(-1); }
 @media(prefers-reduced-motion:reduce) {
   .scroll-film { height: auto; }
   .film-stage { position: relative; top: 0; }
-  .film-words { animation: none; }
+  .film-copy-content { transform: none; }
 }
 @media(max-height:740px) and (max-width:650px) {
   .film-copy h2 { font-size: clamp(30px,8.5vw,40px); }

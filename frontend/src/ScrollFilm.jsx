@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {FILM_CHAPTERS,FILM_DURATION,clampProgress,filmChapter} from './brandFilm';
+import {FILM_CHAPTERS,FILM_DURATION,clampProgress,filmChapter,filmCopyLayers} from './brandFilm';
 import {accountHref} from './SiteHeader';
 import './scroll-film.css';
 
@@ -8,6 +8,7 @@ export default function ScrollFilm({lang='en'}){
   const section=useRef(null),video=useRef(null),controller=useRef(null),currentProgress=useRef(0);
   const [progress,setProgress]=useState(0),[playing,setPlaying]=useState(false),[reduced,setReduced]=useState(false),[failed,setFailed]=useState(false),[preload,setPreload]=useState('metadata');
   const active=filmChapter(progress),chapter=chapters[active];
+  const copyLayers=filmCopyLayers(progress,reduced||failed);
 
   useEffect(()=>{
     const preference=matchMedia('(prefers-reduced-motion: reduce), (max-height: 500px)');
@@ -88,11 +89,16 @@ export default function ScrollFilm({lang='en'}){
       <div className="film-composition">
         <div className="film-copy">
           <h1 className="film-sr-only">{t('AutoLinky. Your next job, with less busywork.','AutoLinky. وظيفتك القادمة، بتفاصيل متكررة أقل.')}</h1>
-          <p className="film-scene-label"><span>0{active+1}</span> / {chapter.label}</p>
-          <div className="film-words"><h2>{chapter.title.split('\n').map((line,i)=><span key={line} className={i?'film-heading-secondary':undefined}>{line}</span>)}</h2><p className="film-description">{chapter.body}</p></div>
+          <div className="film-words">{copyLayers.map(({index,opacity,y})=>{
+            const story=chapters[index];
+            return <div key={story.label} className="film-copy-layer" data-chapter={index+1} aria-hidden={index!==active} style={{'--film-copy-opacity':opacity,'--film-copy-shift':`${y}px`}}><div className="film-copy-content">
+              <p className="film-scene-label"><span>0{index+1}</span> / {story.label}</p>
+              <h2>{story.title.split('\n').map((line,i)=><span key={line} className={i?'film-heading-secondary':undefined}>{line}</span>)}</h2><p className="film-description">{story.body}</p>
+            </div></div>;
+          })}</div>
           <div className="film-actions"><a className="film-primary" href={accountHref('signup',lang)}>{t('Start your next move','ابدأ خطوتك القادمة')}<span aria-hidden="true">↗</span></a><span className="film-platforms">{t('Free to start · Web & Android','ابدأ مجانًا · الويب وأندرويد')}</span></div>
         </div>
-        <figure className="film-picture"><video ref={video} src="/assets/film/autolinky-story.mp4?v=complete-card-1" poster="/assets/film/autolinky-story-poster.webp?v=complete-card-1" width="1080" height="1080" muted playsInline preload={preload} aria-hidden="true" tabIndex={-1} disablePictureInPicture onError={()=>setFailed(true)}/><figcaption>{active>=2?t('Actual app screens · sample data','شاشات التطبيق · بيانات توضيحية'):t('Sample documents · motion study','مستندات توضيحية · فيلم قصير')}</figcaption></figure>
+        <figure className="film-picture"><video ref={video} src="/assets/film/autolinky-story.mp4?v=continuous-story-1" poster="/assets/film/autolinky-story-poster.webp?v=continuous-story-1" width="1080" height="1080" muted playsInline preload={preload} aria-hidden="true" tabIndex={-1} disablePictureInPicture onError={()=>setFailed(true)}/><figcaption>{active>=2?t('Actual app screens · sample data','شاشات التطبيق · بيانات توضيحية'):t('Sample documents · motion study','مستندات توضيحية · فيلم قصير')}</figcaption></figure>
       </div>
       <div className="film-bottom">
         <div className="film-transport"><span className="film-instruction">{failed?t('Read the story below','اقرأ القصة بالأسفل'):reduced?t('Explore at your own pace','استكشف بالوتيرة المناسبة لك'):playing?t('Scroll to take control','مرّر للتحكم بالفيلم'):t('Scroll to move the story','مرّر لتتابع القصة')}</span><span className="film-time" dir="ltr">00:{String(seconds).padStart(2,'0')} <span>/ 00:24</span></span>{!failed&&<button type="button" onClick={togglePlayback} aria-pressed={playing}>{playing?t('Pause film','أوقف الفيلم'):t('Play film','شغّل الفيلم')}</button>}</div>

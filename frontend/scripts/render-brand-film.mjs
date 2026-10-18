@@ -5,7 +5,9 @@ import {resolve} from 'node:path';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {spawn} from 'node:child_process';
 import {once} from 'node:events';
+import {createHash} from 'node:crypto';
 import {renderDocuments} from './film-documents.mjs';
+import {filmMotion,TRANSITIONS,between,mix} from './film-motion.mjs';
 
 const option=name=>process.argv[process.argv.indexOf(name)+1];
 if(!process.argv.includes('--modules')||!process.argv.includes('--ffmpeg'))throw Error('Provide the optional canvas module directory and FFmpeg executable.');
@@ -19,15 +21,12 @@ const hardware=await loadImage(resolve('public'+device.frameSrc));
 const images=await Promise.all(['profile','for-you','auto-apply'].map(name=>loadImage(resolve(`public/assets/app/iphone/${name}.webp`))));
 const matchDetail=await loadImage(resolve('public/assets/app/for-you.webp'));
 const matchCardCrop={x:48,y:686,width:690,height:556};
-const W=1080,H=1080,FPS=60,DURATION=24,CHAPTER_SECONDS=4,DISSOLVE_SECONDS=.8;
+const W=1080,H=1080,FPS=60,DURATION=24;
 const GOP=6,CRF=22;
 const previewOnly=process.argv.includes('--preview-only');
 const PAPER_LAYOUT_WIDTH=1000,MACRO_PAPER_WIDTH=2600,PHONE_PREVIEW_WIDTH=300;
 const canvas=createCanvas(W,H),ctx=canvas.getContext('2d');
 const C={bg:'#171c19',paper:'#eeeade',ink:'#252d28',dim:'#94a095',line:'#343d36',sage:'#bed2a8',blue:'#315bd6'};
-const clamp=x=>Math.max(0,Math.min(1,x));
-const ease=x=>{x=clamp(x);return x*x*(3-2*x);};
-const mix=(a,b,t)=>a+(b-a)*t;
 function rect(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.2;ctx.stroke();}}
 function text(value,x,y,size=20,color=C.ink,weight=500){ctx.fillStyle=color;ctx.font=`${weight} ${size}px Manrope`;ctx.fillText(value,x,y);}
 function paper(x,y,w,rotation=0,kind='cv',shade=1){
@@ -39,29 +38,42 @@ function paper(x,y,w,rotation=0,kind='cv',shade=1){
   if(shade<1){ctx.fillStyle=`rgba(23,28,25,${1-shade})`;ctx.fillRect(-w/2,-h/2,w,h);}
   ctx.restore();
 }
-function printedCloseup(kind,seconds,{startWidth,startX,startY,startRotation,topStart,topEnd}){
-  // Establish the physical sheet before the camera approaches its left column.
-  // This is a crop of the actual printed document, never replacement UI text.
-  const push=ease((seconds-.6)/1.3),pan=ease((seconds-2.05)/1.7);
-  const width=mix(startWidth,MACRO_PAPER_WIDTH,push),height=width*1.414;
-  const leftAtMacro=100-88*MACRO_PAPER_WIDTH/PAPER_LAYOUT_WIDTH;
-  const x=mix(startX,leftAtMacro+MACRO_PAPER_WIDTH/2,push);
-  const top=mix(startY-startWidth*1.414/2,mix(topStart,topEnd,pan),push);
-  paper(x,top+height/2,width,mix(startRotation,0,push),kind);
-  return push;
-}
-function phone(image,x,y,width,rotation=0,alpha=1,zoom=1){
+function phoneGeometry({width},image){
   const outerWidth=width+18,scale=outerWidth/device.width,height=outerWidth*device.height/device.width;
   const left=-outerWidth/2,top=-height/2,screen=device.screen;
   const sx=left+screen.x*scale,sy=top+screen.y*scale,sw=screen.width*scale,sh=screen.height*scale;
-  ctx.save();ctx.globalAlpha*=alpha;ctx.translate(x,y);ctx.rotate(rotation);ctx.scale(zoom,zoom);
-  ctx.shadowColor='#00000080';ctx.shadowBlur=40;ctx.shadowOffsetY=28;
-  ctx.drawImage(hardware,left,top,outerWidth,height);ctx.shadowColor='transparent';
-  ctx.save();ctx.beginPath();ctx.roundRect(sx,sy,sw,sh,screen.radius*scale);ctx.clip();
-  ctx.fillStyle=device.background;ctx.fillRect(sx,sy,sw,sh);
   const fit=Math.min(sw/image.width,sh/image.height),iw=image.width*fit,ih=image.height*fit;
-  ctx.drawImage(image,sx+(sw-iw)/2,sy+(sh-ih)/2,iw,ih);ctx.restore();
-  ctx.drawImage(hardware,left,top,outerWidth,height);ctx.restore();
+  return {outerWidth,height,left,top,sx,sy,sw,sh,fit,ix:sx+(sw-iw)/2,iy:sy+(sh-ih)/2,iw,ih,radius:screen.radius*scale};
+}
+function phone(image,pose,{dim=0,change=null,hideMatchCard=false}={}){
+  const {x,y,rotation}=pose,g=phoneGeometry(pose,image);
+  ctx.save();ctx.translate(x,y);ctx.rotate(rotation);
+  ctx.shadowColor='#00000080';ctx.shadowBlur=40;ctx.shadowOffsetY=28;
+  ctx.drawImage(hardware,g.left,g.top,g.outerWidth,g.height);ctx.shadowColor='transparent';
+  ctx.save();ctx.beginPath();ctx.roundRect(g.sx,g.sy,g.sw,g.sh,g.radius);ctx.clip();
+  ctx.fillStyle=device.background;ctx.fillRect(g.sx,g.sy,g.sw,g.sh);
+  if(change){
+    // Both opaque screens travel through one hardware aperture; no ghost phones.
+    ctx.drawImage(image,g.ix-change.progress*g.iw,g.iy,g.iw,g.ih);
+    ctx.drawImage(change.image,g.ix+(1-change.progress)*g.iw,g.iy,g.iw,g.ih);
+  }else ctx.drawImage(image,g.ix,g.iy,g.iw,g.ih);
+  if(hideMatchCard){ctx.fillStyle=device.background;ctx.fillRect(g.ix+72*g.fit,g.iy+1206*g.fit,1035*g.fit,834*g.fit);}
+  if(dim>0){ctx.fillStyle=`rgba(23,28,25,${dim})`;ctx.fillRect(g.sx,g.sy,g.sw,g.sh);}
+  ctx.restore();ctx.drawImage(hardware,g.left,g.top,g.outerWidth,g.height);ctx.restore();
+}
+function liftedCard(pose,lift,seconds){
+  const g=phoneGeometry(pose,images[1]);
+  // Safe-area render includes a 177px vertical inset; use its measured card bounds.
+  const localX=g.ix+(72+1035/2)*g.fit,localY=g.iy+(1206+834/2)*g.fit;
+  const anchorX=pose.x+localX*Math.cos(pose.rotation)-localY*Math.sin(pose.rotation);
+  const anchorY=pose.y+localX*Math.sin(pose.rotation)+localY*Math.cos(pose.rotation);
+  const drift=between(seconds,12.6,15.7),width=mix(1035*g.fit,386,lift),height=width*matchCardCrop.height/matchCardCrop.width;
+  const x=mix(anchorX,mix(749,767,drift),lift),y=mix(anchorY,mix(427,410,drift)-100+386*556/690/2,lift);
+  ctx.save();ctx.translate(x,y);ctx.rotate(mix(pose.rotation,.025,lift));
+  ctx.shadowColor=`rgba(0,0,0,${.31*lift})`;ctx.shadowBlur=24*lift;ctx.shadowOffsetY=14*lift;
+  rect(-width/2,-height/2,width,height,width*11/386,'#fffefa');ctx.shadowColor='transparent';
+  ctx.beginPath();ctx.roundRect(-width/2,-height/2,width,height,width*11/386);ctx.clip();
+  ctx.drawImage(matchDetail,matchCardCrop.x,matchCardCrop.y,matchCardCrop.width,matchCardCrop.height,-width/2,-height/2,width,height);ctx.restore();
 }
 function caption(label,x,y,align='left'){
   ctx.save();ctx.textAlign=align;ctx.letterSpacing='2px';text(label,x,y,12,C.dim,500);ctx.restore();
@@ -75,80 +87,68 @@ function backdrop(time){
   caption('AUTOLINKY / THE SEARCH, RECONSIDERED',76,83);
   caption('A LITTLE LESS BUSYWORK',1004,1018,'right');
 }
-function scene(index,t){
-  // Each shot has handles around its centered dissolve. The document camera
-  // briefly settles for reading; device shots keep their moving handles.
-  const handle=DISSOLVE_SECONDS/(2*CHAPTER_SECONDS);
-  const phase=clamp((t+handle)/(1+2*handle));
-  const p=ease(phase),drift=Math.sin(phase*Math.PI)*10;
-  if(index===0){
-    const seconds=t*CHAPTER_SECONDS,push=ease((seconds-.6)/1.3);
-    ctx.save();ctx.globalAlpha*=1-push;
-    paper(682+drift,483,365,.13+mix(.02,-.02,p),'application-1',.86);
-    paper(359-drift,584,365,-.16,'cover-letter',.94);
-    ctx.restore();
-    printedCloseup('cv',seconds,{startWidth:405,startX:545,startY:536-mix(0,18,p),startRotation:mix(-.04,.025,p),topStart:-180,topEnd:-920});
-    ctx.save();ctx.globalAlpha*=1-push;
-    caption('THE EXPERIENCE IS YOURS.',98,924);
-    ctx.restore();
-  }else if(index===1){
-    const seconds=t*CHAPTER_SECONDS,push=ease((seconds-.6)/1.3);
-    ctx.save();ctx.globalAlpha*=1-push;
-    paper(mix(310,215,p),mix(410,385,p),330,-.17,'application-2',.92);
-    paper(mix(770,855,p),mix(440,460,p),330,.15,'application-3',.92);
-    ctx.restore();
-    printedCloseup('application-1',seconds,{startWidth:390,startX:535,startY:560,startRotation:mix(.07,-.035,p),topStart:-950,topEnd:-1760});
-    ctx.save();ctx.globalAlpha*=1-ease((seconds-.6)/.35);
-    rect(330,852,420,59,3,C.sage);text('Same details. Another form.',362,890,22,C.ink,600);
-    ctx.restore();
-  }else if(index===2){
-    paper(mix(362,243,p),610,310,mix(-.1,-.16,p),'cv',.94);
-    phone(images[0],mix(620,605,p),mix(559,529,p),328,mix(.05,.015,p));
-    caption('YOUR CV. YOUR STARTING POINT.',76,924);
-  }else if(index===3){
-    phone(images[1],540,mix(563,526,p),359,mix(-.035,.015,p));
-    // Keep the complete card, including missing skills, actions and bottom border.
-    const cardWidth=386,cardHeight=cardWidth*matchCardCrop.height/matchCardCrop.width;
-    ctx.save();ctx.translate(mix(749,767,p),mix(427,410,p));ctx.rotate(.025);
-    ctx.shadowColor='#00000050';ctx.shadowBlur=24;ctx.shadowOffsetY=14;
-    rect(-cardWidth/2,-100,cardWidth,cardHeight,11,'#fffefa');ctx.shadowColor='transparent';
-    ctx.beginPath();ctx.roundRect(-cardWidth/2,-100,cardWidth,cardHeight,11);ctx.clip();
-    ctx.drawImage(matchDetail,matchCardCrop.x,matchCardCrop.y,matchCardCrop.width,matchCardCrop.height,-cardWidth/2,-100,cardWidth,cardHeight);ctx.restore();
-    caption('SEE THE FIT BEFORE YOU APPLY.',76,924);
-  }else if(index===4){
-    phone(images[2],mix(552,526,p),mix(550,524,p),354,mix(.035,-.02,p));
-    rect(700,714,260,93,5,C.sage);text('YOUR PREFERENCES',721,746,11,C.ink,700);text('Your pace.',721,780,26,C.ink,600);
-    caption('ELIGIBLE EMAIL JOBS / YOUR GMAIL',76,924);
-  }else{
-    phone(images[0],mix(404,298,p),590,263,mix(-.05,-.09,p),.58);
-    phone(images[2],mix(685,794,p),590,263,mix(.06,.09,p),.58);
-    phone(images[1],540,mix(554,525,p),346,0);
-    caption('A LITTLE CLOSER TO YOUR NEXT MOVE.',76,924);
-  }
-}
 function frame(seconds){
-  const chapter=Math.min(5,Math.floor(seconds/CHAPTER_SECONDS));
-  backdrop(seconds);
-  const boundary=Math.round(seconds/CHAPTER_SECONDS)*CHAPTER_SECONDS;
-  const half=DISSOLVE_SECONDS/2;
-  if(boundary>0&&boundary<DURATION&&Math.abs(seconds-boundary)<half){
-    const next=boundary/CHAPTER_SECONDS,previous=next-1;
-    const fade=ease((seconds-(boundary-half))/DISSOLVE_SECONDS);
-    ctx.save();ctx.globalAlpha=1-fade;scene(previous,(seconds-previous*CHAPTER_SECONDS)/CHAPTER_SECONDS);ctx.restore();
-    ctx.save();ctx.globalAlpha=fade;scene(next,(seconds-next*CHAPTER_SECONDS)/CHAPTER_SECONDS);ctx.restore();
-  }else scene(chapter,(seconds-chapter*CHAPTER_SECONDS)/CHAPTER_SECONDS);
+  const motion=filmMotion(seconds);backdrop(seconds);
+  if(motion.openingStack>0){
+    ctx.save();ctx.globalAlpha=motion.openingStack;
+    paper(682+seconds*4,483,365,.15-seconds*.01,'application-1',.86);
+    paper(359-seconds*4,584,365,-.16,'cover-letter',.94);ctx.restore();
+  }
+  if(motion.formStack>0){
+    ctx.save();ctx.globalAlpha=motion.formStack;
+    const arrival=between(seconds,3.55,4.8);
+    paper(mix(-230,215,arrival),385,330,-.17,'application-2',.92);
+    paper(mix(1340,855,arrival),460,330,.15,'application-3',.92);ctx.restore();
+  }
+  if(seconds<12.45)paper(motion.cv.x,motion.cv.y,motion.cv.width,motion.cv.rotation,'cv');
+  if(seconds>=3.5&&seconds<9.35)paper(motion.form.x,motion.form.y,motion.form.width,motion.form.rotation,'application-1');
+  if(seconds>=7.5){
+    if(seconds>=19.25){
+      // The retained settings handset moves aside to uncover the final group.
+      phone(images[0],motion.summaryProfile,{dim:.22});
+      phone(images[1],motion.summaryMatch);
+      phone(images[2],motion.phone,{dim:.22*motion.fan});
+    }else{
+      const settings=motion.matchesToSettings,matched=motion.profileToMatches;
+      const image=settings>0?images[1]:matched<1?images[0]:images[1];
+      const change=settings>0&&settings<1?{image:images[2],progress:settings}:matched>0&&matched<1?{image:images[1],progress:matched}:null;
+      phone(settings===1?images[2]:image,motion.phone,{change,hideMatchCard:motion.cardLift>0});
+    }
+  }
+  if(motion.cardLift>0)liftedCard(motion.phone,motion.cardLift,seconds);
+  if(motion.preferenceNote>0){
+    const p=motion.preferenceNote;ctx.save();ctx.translate(mix(610,700,p),mix(665,714,p));ctx.scale(p,p);
+    rect(0,0,260,93,5,C.sage);text('YOUR PREFERENCES',21,32,11,C.ink,700);text('Your pace.',21,66,26,C.ink,600);ctx.restore();
+  }
+  const labels=['THE EXPERIENCE IS YOURS.','SAME DETAILS. ANOTHER FORM.','YOUR CV. YOUR STARTING POINT.','SEE THE FIT BEFORE YOU APPLY.','ELIGIBLE EMAIL JOBS / YOUR GMAIL','A LITTLE CLOSER TO YOUR NEXT MOVE.'];
+  labels.forEach((label,index)=>{
+    const enter=index===0?1:between(seconds,index*4-.45,index*4+.45);
+    const leave=index===5?1:1-between(seconds,(index+1)*4-.45,(index+1)*4+.45);
+    const visibility=enter*leave*(index<2?1-between(seconds,index*4+.6,index*4+1.4):1);
+    if(visibility>0){ctx.save();ctx.globalAlpha=visibility;caption(label,76,924+(1-enter)*12-(1-leave)*12);ctx.restore();}
+  });
 }
 const framing={
   source:'Actual supersampled printed document canvases; no substitute overlay text',
   phonePreviewWidth:PHONE_PREVIEW_WIDTH,filmWidth:W,macroPaperWidth:MACRO_PAPER_WIDTH,
-  establishingSeconds:.6,pushSeconds:1.3,panStartsAtSeconds:2.05,panSeconds:1.7,
+  establishingSeconds:.6,pushSeconds:1.3,
   macroCssSizes:Object.fromEntries([300,260].map(displayWidth=>[displayWidth,Object.fromEntries([['cvName',47],['cvRole',29],['cvJobTitle',24],['formValue',23],['formLabel',16]].map(([name,size])=>[name,Number((size*MACRO_PAPER_WIDTH/PAPER_LAYOUT_WIDTH*displayWidth/W).toFixed(2))]))])),
-  chapters:[{chapter:1,kind:'cv',topStart:-180,topEnd:-920,readableLines:['Sara Ali','Network Engineer','EXPERIENCE','Network Engineer','Northline Networks / Cairo, Egypt']},{chapter:2,kind:'application-1',topStart:-950,topEnd:-1760,readableLines:['Full name','Sara Ali','Email address','sara.ali@example.com','Current position','Network Engineer','Relevant experience','3 years','Core skills','BGP, OSPF, routing and switching']}]
+  chapters:[{chapter:1,kind:'cv',macroStarts:1.9,macroEnds:3.5,topStart:-180,topEnd:-920,readableLines:['Sara Ali','Network Engineer','EXPERIENCE','Network Engineer','Northline Networks / Cairo, Egypt']},{chapter:2,kind:'application-1',macroStarts:6,macroEnds:7.5,topStart:-950,topEnd:-1760,readableLines:['Full name','Sara Ali','Email address','sara.ali@example.com','Current position','Network Engineer','Relevant experience','3 years','Core skills','BGP, OSPF, routing and switching']}]
 };
 await writeFile(resolve('output/playwright/film-paper-framing-qa.json'),JSON.stringify(framing,null,2)+'\n');
+const reversibility=[];
+for(const {at} of TRANSITIONS){
+  frame(at);const before=createHash('sha256').update(Buffer.from(ctx.getImageData(0,0,W,H).data)).digest('hex');
+  frame(at+1);frame(at-1);frame(at);
+  const after=createHash('sha256').update(Buffer.from(ctx.getImageData(0,0,W,H).data)).digest('hex');
+  if(before!==after)throw Error(`History-dependent rendered frame at ${at}s`);
+  reversibility.push({seconds:at,forwardBackwardIdentical:before===after,sha256:before});
+}
+await writeFile(resolve('output/playwright/film-object-motion-qa.json'),JSON.stringify({transitions:TRANSITIONS,wholeSceneDissolves:false,absoluteTime:true,reversibility,matchCardCrop,safeAreaMatchCardCrop:{x:72,y:1206,width:1035,height:834}},null,2)+'\n');
 if(previewOnly){
   const previews=resolve('output/playwright/film-paper-preview');await mkdir(previews,{recursive:true});
-  for(const seconds of [0,1.3,2.05,2.8,3.5,4.6,5.3,6.05,6.8,7.5,12.4,14,15.6]){
+  const moments=[0,1.3,2.05,2.8,3.5,4.6,5.3,6.05,6.8,7.5,12.4,14,15.6,...TRANSITIONS.flatMap(({at})=>[-.6,-.3,0,.3,.6].map(offset=>at+offset)),13.35,15,15.7,19.25,20.9,23.9];
+  for(const seconds of [...new Set(moments)].sort((a,b)=>a-b)){
     frame(seconds);const name=`${String(seconds).replace('.','-')}s`;
     await writeFile(resolve(previews,`${name}-1080.webp`),await canvas.encode('webp',100));
     for(const size of [PHONE_PREVIEW_WIDTH,260]){

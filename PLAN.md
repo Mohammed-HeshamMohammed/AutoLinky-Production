@@ -2,7 +2,15 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: complete film match card (2026-10-18)
+## Current: connected, reversible film transitions (2026-10-18)
+
+- [x] Identify isolated scene dissolves and abrupt HTML story changes as the disconnected handoffs.
+- [x] Replace scene resets with an absolute-time paper/phone/card choreography across all five chapter boundaries; preserve readable printed-paper close-ups and the complete match card. Keep summary handsets opaque to avoid text ghosting.
+- [x] Make the accompanying story copy handoff follow timeline progress in both directions, with a static reduced-motion alternative. Pass 364 copy/layout checks, media-failure/no-JS checks and all 26 frontend tests; verify the 22-page production build.
+- [ ] Inspect transition frames, decode the full film and verify continuous forward/reverse playback on EN/AR phone and desktop layouts.
+- [ ] Publish to main/frontend-production, verify the live movie and refresh the source/web packages.
+
+## Previous: complete film match card (2026-10-18)
 
 - [x] Trace the cut-off card to its source-image crop: it stops partway through the missing-skills row and excludes the action footer.
 - [x] Include the entire job card and derive its display height from the source aspect ratio; preserve the current position and inspect its full motion, including chapter dissolves.

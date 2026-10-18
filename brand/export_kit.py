@@ -316,6 +316,14 @@ def export():
         suffix='' if mode=='light' else '_dark'
         save_png(tile.resize((384,384),Image.Resampling.LANCZOS),brand.OUT/f'splash{suffix}.png')
         splash=Image.new('RGBA',(1152,1152));splash.alpha_composite(tile,(320,320));save_png(splash,brand.OUT/f'splash_android12{suffix}.png')
+    # Website icons always use the approved light appearance, including fallbacks.
+    light_icon=Image.open(output/'light/logo-short.png').convert('RGBA')
+    (brand.WEB/'favicon.svg').write_text(art('light','logo-short')[0],encoding='utf-8')
+    brand.save_image(light_icon,brand.WEB/'favicon.ico',sizes=[(16,16),(32,32),(48,48),(64,64)])
+    for name,size in [('apple-touch-icon.png',180),('icon-192.png',192),('icon-512.png',512)]:
+        tile=Image.new('RGBA',(size,size),brand.rgb(brand.IDENTITY['light']['chrome'])+(255,))
+        tile.alpha_composite(light_icon.resize((size,size),Image.Resampling.LANCZOS))
+        save_png(tile.convert('RGB'),brand.WEB/name)
     app_assets=output/'app';app_assets.mkdir(exist_ok=True)
     for name in ['icon.png','icon_background.png','icon_foreground.png','icon_monochrome.png','splash.png','splash_dark.png']:
         shutil.copyfile(brand.OUT/name,app_assets/name)

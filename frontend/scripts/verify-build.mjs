@@ -52,7 +52,8 @@ for (const { route, html } of pages) {
 }
 
 function verifyBranding(html, route) {
-  for (const key of ['favicon', 'faviconLight', 'faviconDark', 'faviconIco', 'touchIcon', 'manifest']) assert(html.includes(`href="${branding.assets[key]}"`), `Stale browser branding ${key} on ${route}`);
+  for (const key of ['favicon', 'faviconIco', 'touchIcon', 'manifest']) assert(html.includes(`href="${branding.assets[key]}"`), `Stale browser branding ${key} on ${route}`);
+  assert(!html.includes(`href="${branding.assets.faviconDark}"`), `Dark favicon override on ${route}`);
   assert(html.includes(`content="${site}${branding.assets.social}"`), `Stale social artwork on ${route}`);
 }
 for (const { route, html } of pages) verifyBranding(html, route);

@@ -2,7 +2,13 @@
 
 Started 2026-10-15. The reference workspace `X:\Autolinky-with-serverbased` is read-only. All implementation and evidence live in this repository. The owner later authorized consolidating both web versions into canonical `frontend/`; the original is retained in Git and a local ignored archive.
 
-## Current: sidebar overflow and scroll reachability (2026-10-18)
+## Current: fixed light website icon (2026-10-18)
+
+- [x] Use the approved light mark for the website favicon in both browser themes; remove theme overrides and make ICO, touch and PWA fallbacks light too. Preserve the separate dark in-product artwork.
+- [x] Pass 9 browser/head checks, 8 raster/frame palette checks, all 23 frontend tests and the verified 22-page build.
+- [ ] Publish to main and frontend-production, verify the live icon and refresh the source/web packages.
+
+## Previous: sidebar overflow and scroll reachability (2026-10-18)
 
 The owner reported unwanted horizontal sidebar scrolling on mobile and desktop web. The selected desktop row extends one pixel beyond its navigation scrollport. On phones, the generic `.open` help-page style also turns the drawer into a centered grid and compresses its navigation.
 

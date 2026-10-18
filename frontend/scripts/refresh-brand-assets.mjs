@@ -32,10 +32,8 @@ export async function refreshBrandAssets() {
   const [light, dark, ico, manifestText] = await Promise.all([
     read('logo-light.svg'), read('logo-dark.svg'), read('favicon.ico'), readFile(path.join(root, 'public/site.webmanifest'), 'utf8'),
   ]);
-  const adaptive = light.toString().replace('<rect', '<style>:root{--tile:#EEEFE6;--ink:#252A29;--link:#5F7253}@media(prefers-color-scheme:dark){:root{--tile:#171C19;--ink:#EEEADE;--link:#BED2A8}}</style><rect')
-    .replace(/(<rect\b[^>]*\bfill=)"#[^"]+"/i, '$1"var(--tile)"').replace(/fill="#252A29"/gi, 'fill="var(--ink)"').replace(/fill="#5F7253"/gi, 'fill="var(--link)"');
   const files = {
-    'favicon.svg': Buffer.from(adaptive), 'favicon-light.svg': light, 'favicon-dark.svg': dark,
+    'favicon.svg': light, 'favicon-light.svg': light, 'favicon-dark.svg': dark,
     'favicon.ico': ico, 'icon-48.png': iconFrame(ico, 48),
     'apple-touch-icon.png': await read('apple-touch-icon.png'),
     'icon-192.png': await read('icon-192.png'), 'icon-512.png': await read('icon-512.png'),
@@ -61,6 +59,7 @@ export async function refreshBrandAssets() {
   await Promise.all([
     writeFile(path.join(root, 'public/favicon.ico'), ico),
     writeFile(path.join(root, 'public/favicon.svg'), files['favicon.svg']),
+    writeFile(path.join(assets, 'favicon.svg'), files['favicon.svg']),
     writeFile(path.join(root, 'public/apple-touch-icon.png'), files['apple-touch-icon.png']),
     writeFile(path.join(assets, 'icon-48.png'), files['icon-48.png']),
     writeFile(path.join(assets, 'favicon-light.svg'), light), writeFile(path.join(assets, 'favicon-dark.svg'), dark),
@@ -74,7 +73,7 @@ export async function refreshBrandAssets() {
   ]);
   const brand = { revision, assets: { favicon: urls['favicon.svg'], faviconLight: urls['favicon-light.svg'], faviconDark: urls['favicon-dark.svg'], faviconIco: urls['favicon.ico'], touchIcon: urls['apple-touch-icon.png'], icon48: urls['icon-48.png'], pwa192: urls['icon-192.png'], pwa512: urls['icon-512.png'], social: urls['og.png'], organizationLogo: urls['logo.svg'], fullLogoLight: urls['logo-full-light.svg'], fullLogoDark: urls['logo-full-dark.svg'], manifest: manifestURL } };
   await writeFile(path.join(root, 'brand-assets.json'), JSON.stringify(brand, null, 2) + '\n');
-  const links = `    <!-- BRAND_ICONS -->\n    <link rel="icon" href="${brand.assets.favicon}" type="image/svg+xml" />\n    <link rel="icon" href="${brand.assets.faviconLight}" type="image/svg+xml" media="(prefers-color-scheme: light)" />\n    <link rel="icon" href="${brand.assets.faviconDark}" type="image/svg+xml" media="(prefers-color-scheme: dark)" />\n    <link rel="alternate icon" href="${brand.assets.faviconIco}" type="image/x-icon" />\n    <link rel="apple-touch-icon" href="${brand.assets.touchIcon}" sizes="180x180" />\n    <link rel="manifest" href="${brand.assets.manifest}" />\n    <!-- /BRAND_ICONS -->`;
+  const links = `    <!-- BRAND_ICONS -->\n    <link rel="icon" href="${brand.assets.favicon}" type="image/svg+xml" />\n    <link rel="alternate icon" href="${brand.assets.faviconIco}" type="image/x-icon" />\n    <link rel="apple-touch-icon" href="${brand.assets.touchIcon}" sizes="180x180" />\n    <link rel="manifest" href="${brand.assets.manifest}" />\n    <!-- /BRAND_ICONS -->`;
   let html = await readFile(path.join(root, 'index.html'), 'utf8');
   if (html.includes('<!-- BRAND_ICONS -->')) html = html.replace(/    <!-- BRAND_ICONS -->[\s\S]*?<!-- \/BRAND_ICONS -->/, links);
   else {
@@ -88,5 +87,5 @@ export async function refreshBrandAssets() {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const brand = await refreshBrandAssets();
-  console.log(`Refreshed browser branding ${brand.revision}: approved themed icons, stable manifest identity, and social previews.`);
+  console.log(`Refreshed browser branding ${brand.revision}: light website icons, stable manifest identity, and social previews.`);
 }

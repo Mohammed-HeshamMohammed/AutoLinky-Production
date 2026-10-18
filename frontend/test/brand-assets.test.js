@@ -16,9 +16,8 @@ test('browser branding has fresh content addresses and retains the approved link
   const paths = svg => [...svg.matchAll(/<path\b[^>]*\bd="([^"]+)"/g)].map(match => match[1]);
   const approved = (await asset('/assets/logo-light.svg')).toString();
   for (const key of ['favicon', 'faviconLight', 'faviconDark']) assert.deepEqual(paths((await asset(branding.assets[key])).toString()), paths(approved));
-  const adaptive = (await asset(branding.assets.favicon)).toString();
-  assert.match(adaptive, /prefers-color-scheme:dark/);
-  assert.match(adaptive, /fill="var\(--tile\)"/);
+  assert.deepEqual(await asset(branding.assets.favicon), await asset('/assets/logo-light.svg'));
+  assert.doesNotMatch((await asset(branding.assets.favicon)).toString(), /prefers-color-scheme/);
   const legacy48 = await asset('/assets/icon-48.png');
   assert.equal(legacy48.readUInt32BE(16), 48);
   assert.equal(legacy48.readUInt32BE(20), 48);
@@ -38,9 +37,9 @@ test('hashed manifest and document metadata preserve the installed app identity'
   assert.equal(manifest.short_name, 'AutoLinky');
   assert.deepEqual(manifest.icons.map(icon => icon.src), [branding.assets.pwa192, branding.assets.pwa512]);
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-  for (const key of ['favicon', 'faviconLight', 'faviconDark', 'faviconIco', 'touchIcon', 'manifest', 'social']) assert.ok(html.includes(branding.assets[key]), key);
-  assert.match(html, /media="\(prefers-color-scheme: light\)"/);
-  assert.match(html, /media="\(prefers-color-scheme: dark\)"/);
+  for (const key of ['favicon', 'faviconIco', 'touchIcon', 'manifest', 'social']) assert.ok(html.includes(branding.assets[key]), key);
+  assert.doesNotMatch(html, /<link rel="icon"[^>]*media=/);
+  assert.ok(!html.includes(`href="${branding.assets.faviconDark}"`));
   assert.doesNotMatch(html, /(?:href|content)="\/(?:assets\/(?:favicon\.(?:svg|ico)|apple-touch-icon\.png|og\.png)|site\.webmanifest)"/);
 });
 

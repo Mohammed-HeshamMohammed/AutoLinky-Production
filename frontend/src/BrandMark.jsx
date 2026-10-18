@@ -1,9 +1,10 @@
 import {useEffect,useId,useRef,useState} from 'react';
 import {brandFormation} from './brandFormation';
+import branding from '../brand-assets.json';
 import './brandFormation.css';
 
 export default function BrandMark({size=30}){
-  return <span className="brand-mark" aria-hidden="true" style={{display:'inline-flex',width:size,height:size,flex:'none'}}><img className="brand-mark-light" src="/assets/logo-light.svg" width={size} height={size} alt=""/><img className="brand-mark-dark" src="/assets/logo-dark.svg" width={size} height={size} alt=""/></span>;
+  return <span className="brand-mark" aria-hidden="true" style={{display:'inline-flex',width:size,height:size,flex:'none'}}><img className="brand-mark-light" src={branding.assets.faviconLight} width={size} height={size} alt=""/><img className="brand-mark-dark" src={branding.assets.faviconDark} width={size} height={size} alt=""/></span>;
 }
 
 const timing=({delay,duration,easing})=>({'--form-delay':`${delay}s`,'--form-duration':`${duration}s`,...(easing?{'--form-easing':easing}:{})});
@@ -60,8 +61,8 @@ export function BrandWordmark({height=30,animate=true,onComplete}){
     return()=>{clearTimeout(timer);observer?.disconnect();preference.removeEventListener('change',update);};
   },[animate]);
   return <span ref={element} className={`brand-wordmark is-${phase}`} role="img" aria-label="AutoLinky" style={{'--brand-wordmark-size':`${height}px`,'--brand-aspect':brandFormation.width/brandFormation.height}}>
-    <img className="brand-wordmark-light" src="/assets/logo-full-light.svg" alt=""/>
-    <img className="brand-wordmark-dark" src="/assets/logo-full-dark.svg" alt=""/>
+    <img className="brand-wordmark-light" src={branding.assets.fullLogoLight} alt=""/>
+    <img className="brand-wordmark-dark" src={branding.assets.fullLogoDark} alt=""/>
     <Formation prefix={prefix}/>
   </span>;
 }

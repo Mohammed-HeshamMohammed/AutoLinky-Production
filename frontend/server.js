@@ -14,6 +14,9 @@ const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=
   '.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.ico':'image/x-icon',
   '.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf',
   '.wasm':'application/wasm','.webmanifest':'application/manifest+json','.mp4':'video/mp4','.webm':'video/webm'};
+const brandAliases=new Set(['/favicon.ico','/favicon.svg','/apple-touch-icon.png','/site.webmanifest',
+  ...['favicon.svg','favicon-light.svg','favicon-dark.svg','favicon.ico','apple-touch-icon.png','icon-48.png','icon-192.png','icon-512.png','og.png','logo.svg','logo-light.svg','logo-dark.svg','logo-full-light.svg','logo-full-dark.svg'].map(name=>'/assets/'+name)]);
+const immutableBrand=/^\/assets\/brand\/[a-z0-9-]+\.[a-f0-9]{16}\.(?:svg|ico|png|webmanifest)$/;
 
 export function createSiteServer({directory=fileURLToPath(new URL('./dist/',import.meta.url)),env=process.env,apiOrigin=env.API_BASE_URL||''}={}) {
   const root=resolve(directory);
@@ -78,7 +81,7 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       if(!info?.isFile()){res.writeHead(404).end('Not found');return;}
       res.setHeader('Content-Type',types[extname(path)]||'application/octet-stream');
       res.setHeader('Content-Length',info.size);
-      res.setHeader('Cache-Control',res.statusCode===404?'no-store':extname(path)==='.html'?'public, max-age=0, must-revalidate':'public, max-age=3600');
+      res.setHeader('Cache-Control',res.statusCode===404?'no-store':extname(path)==='.html'||brandAliases.has(pathname)?'public, max-age=0, must-revalidate':immutableBrand.test(pathname)?'public, max-age=31536000, immutable':'public, max-age=3600');
       let range;
       if(res.statusCode===200&&['.mp4','.webm'].includes(extname(path))){
         res.setHeader('Accept-Ranges','bytes');

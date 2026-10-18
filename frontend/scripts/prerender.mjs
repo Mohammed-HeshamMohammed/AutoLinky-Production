@@ -6,6 +6,7 @@ import { createServer } from 'vite';
 import QRCode from 'qrcode';
 
 const dist = path.resolve('dist');
+const branding = JSON.parse(await fs.readFile(new URL('../brand-assets.json', import.meta.url), 'utf8'));
 const shell = await fs.readFile(path.join(dist, 'index.html'), 'utf8');
 const server = await createServer({ mode: 'production', server: { middlewareMode: true, hmr: false }, appType: 'custom', logLevel: 'error' });
 const [{ default: PageMarkup }, { default: ContentPage }, { META }, { SITE_URL: site, PAGES, pagePath }, { schemaFor }] = await Promise.all([
@@ -30,7 +31,7 @@ function headFor(slug, lang, page, url, noindex = false) {
   const alt = noindex ? '' : `${pair.map(([language, href]) => `<link rel="alternate" hreflang="${language}" href="${esc(href)}" />`).join('\n    ')}\n    <link rel="alternate" hreflang="x-default" href="${esc(pair[0][1])}" />`;
   const canonical = noindex ? '' : `<link rel="canonical" href="${esc(url)}" />`;
   const graph = noindex ? '' : `<script type="application/ld+json">${JSON.stringify(schemaFor(slug, lang, page, url)).replace(/</g, '\\u003c')}</script>`;
-  return `${canonical}\n    ${alt}\n    <meta property="og:url" content="${esc(url)}" />\n    <meta property="og:locale" content="${lang === 'ar' ? 'ar_EG' : 'en_US'}" />\n    <meta property="og:locale:alternate" content="${lang === 'ar' ? 'en_US' : 'ar_EG'}" />\n    <meta name="twitter:title" content="${esc(page.title)}" />\n    <meta name="twitter:description" content="${esc(page.description)}" />\n    <meta name="twitter:image" content="${site}/assets/og.png" />\n    ${graph}`;
+  return `${canonical}\n    ${alt}\n    <meta property="og:url" content="${esc(url)}" />\n    <meta property="og:locale" content="${lang === 'ar' ? 'ar_EG' : 'en_US'}" />\n    <meta property="og:locale:alternate" content="${lang === 'ar' ? 'en_US' : 'ar_EG'}" />\n    <meta name="twitter:title" content="${esc(page.title)}" />\n    <meta name="twitter:description" content="${esc(page.description)}" />\n    <meta name="twitter:image" content="${site}${branding.assets.social}" />\n    ${graph}`;
 }
 
 function documentFor(slug, lang, page, body, noindex = false) {
@@ -43,7 +44,7 @@ function documentFor(slug, lang, page, body, noindex = false) {
     .replace(/(<meta name="robots" content=")[^"]*(" \/>)/, `$1${noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'}$2`)
     .replace(/(<meta property="og:title" content=")[^"]*(" \/>)/, `$1${esc(page.title)}$2`)
     .replace(/(<meta property="og:description" content=")[^"]*(" \/>)/, `$1${esc(page.description)}$2`)
-    .replace('<meta property="og:image" content="/assets/og.png" />', `<meta property="og:image" content="${site}/assets/og.png" />`)
+    .replace(/(<meta property="og:image" content=")[^"]*(" \/>)/, `$1${site}${branding.assets.social}$2`)
     .replace('<!-- SEO_HEAD -->', headFor(slug, lang, page, url, noindex))
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 }
@@ -72,11 +73,11 @@ await writePage('open', documentFor('open', 'en', { title: 'Open AutoLinky in yo
 await writePage('workspace',documentFor('workspace','en',{title:'AutoLinky workspace',description:'Your job search workspace.'},'',true));
 await fs.writeFile(path.join(dist, '404.html'), `<!doctype html>
 <html lang="en" dir="ltr">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#fbfbf9"><meta name="color-scheme" content="light"><title>Page not found | AutoLinky</title><link rel="icon" href="/assets/favicon.svg"><style>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#fbfbf9"><meta name="color-scheme" content="light"><title>Page not found | AutoLinky</title><link rel="icon" href="${branding.assets.favicon}" type="image/svg+xml"><link rel="icon" href="${branding.assets.faviconLight}" type="image/svg+xml" media="(prefers-color-scheme: light)"><link rel="icon" href="${branding.assets.faviconDark}" type="image/svg+xml" media="(prefers-color-scheme: dark)"><link rel="alternate icon" href="${branding.assets.faviconIco}" type="image/x-icon"><link rel="apple-touch-icon" href="${branding.assets.touchIcon}" sizes="180x180"><link rel="manifest" href="${branding.assets.manifest}"><meta property="og:image" content="${site}${branding.assets.social}"><style>
 @font-face{font-family:Manrope;src:url('/assets/workspace-fonts/Manrope-Variable.ttf') format('truetype');font-weight:200 800;font-display:swap}
 :root{color-scheme:light}
-*{box-sizing:border-box}body{margin:0;background:#fbfbf9;color:#252a29;font:400 16px/1.65 Manrope,system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:32px}main{width:100%;max-width:580px}.brand{display:inline-flex;margin-bottom:64px}.brand img{display:block;width:auto;height:34px;max-width:100%}.eyebrow{font-size:11px;letter-spacing:.12em;color:#696f6c}h1{font-size:clamp(32px,7vw,48px);letter-spacing:-.04em;line-height:1.15;font-weight:600;margin:16px 0}p{color:#696f6c;margin:0 0 32px}.home{display:inline-flex;align-items:center;min-height:48px;padding:12px 20px;background:#315bd6;color:#fff;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600}.home:hover{background:#2447b3}a:focus-visible{outline:2px solid #315bd6;outline-offset:5px}
-</style></head><body><main><a class="brand" href="/" aria-label="AutoLinky home"><img src="/assets/logo-full-light.svg" alt="AutoLinky"></a><div class="eyebrow">404 / PAGE NOT FOUND</div><h1>Let’s find your way back.</h1><p>This page may have moved, or the address may be incomplete.</p><a class="home" href="/">Go to the homepage</a></main></body></html>`);
+*{box-sizing:border-box}body{margin:0;background:#fbfbf9;color:#252a29;font:400 16px/1.65 Manrope,system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:32px}main{width:100%;max-width:580px}.brand{display:inline-flex;margin-bottom:64px}.brand img{display:block;width:auto;height:34px;max-width:100%}.eyebrow{font-size:11px;letter-spacing:.12em;color:#696f6c}h1{font-size:clamp(32px,7vw,48px);letter-spacing:-.04em;line-height:1.15;font-weight:600;margin:16px 0}p{color:#696f6c;margin:0 0 32px}.home{display:inline-flex;align-items:center;min-height:48px;padding:12px 20px;background:#171c19;color:#eeeade;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600}.home:hover{background:#29342c}a:focus-visible{outline:2px solid #5f7253;outline-offset:5px}
+</style></head><body><main><a class="brand" href="/" aria-label="AutoLinky home"><img src="${branding.assets.fullLogoLight}" alt="AutoLinky"></a><div class="eyebrow">404 / PAGE NOT FOUND</div><h1>Let’s find your way back.</h1><p>This page may have moved, or the address may be incomplete.</p><a class="home" href="/">Go to the homepage</a></main></body></html>`);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sitemapUrls.map(({ slug, lang }) => `  <url><loc>${site}${pagePath(slug, lang)}</loc><xhtml:link rel="alternate" hreflang="en" href="${site}${pagePath(slug, 'en')}"/><xhtml:link rel="alternate" hreflang="ar" href="${site}${pagePath(slug, 'ar')}"/><xhtml:link rel="alternate" hreflang="x-default" href="${site}${pagePath(slug, 'en')}"/></url>`).join('\n')}\n</urlset>\n`;
 await fs.writeFile(path.join(dist, 'sitemap.xml'), sitemap);

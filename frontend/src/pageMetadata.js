@@ -1,11 +1,12 @@
 import { META } from './content';
 import { PAGES, SITE_URL as site, pagePath } from './pageContent';
 import { DOWNLOAD_URL, DOWNLOAD_ENABLED } from './config';
+import branding from '../brand-assets.json';
 
 export function schemaFor(slug, lang, page, url) {
   const home = site + pagePath('', lang);
   const graph = [
-    { '@type': 'Organization', '@id': `${site}/#organization`, name: 'AutoLinky', url: site + '/', logo: { '@type': 'ImageObject', url: `${site}/assets/logo.svg` } },
+    { '@type': 'Organization', '@id': `${site}/#organization`, name: 'AutoLinky', url: site + '/', logo: { '@type': 'ImageObject', url: site + branding.assets.organizationLogo } },
     { '@type': 'WebSite', '@id': `${site}/#website`, name: 'AutoLinky', url: site + '/', inLanguage: ['en', 'ar'] },
     { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: page.title, description: page.description, inLanguage: lang, isPartOf: { '@id': `${site}/#website` } },
   ];
@@ -35,8 +36,8 @@ export function updatePageHead({ slug, lang }) {
   meta('theme-color', slug ? '#fbfbf9' : '#171c19');
   meta('color-scheme', 'light');
   meta('robots', 'index, follow, max-image-preview:large');
-  for (const [name, content] of Object.entries({ title: page.title, description: page.description, url, image: `${site}/assets/og.png`, locale: lang === 'ar' ? 'ar_EG' : 'en_US', 'locale:alternate': lang === 'ar' ? 'en_US' : 'ar_EG' })) meta(`og:${name}`, content, 'property');
-  for (const [name, content] of Object.entries({ title: page.title, description: page.description, image: `${site}/assets/og.png` })) meta(`twitter:${name}`, content);
+  for (const [name, content] of Object.entries({ title: page.title, description: page.description, url, image: site + branding.assets.social, locale: lang === 'ar' ? 'ar_EG' : 'en_US', 'locale:alternate': lang === 'ar' ? 'en_US' : 'ar_EG' })) meta(`og:${name}`, content, 'property');
+  for (const [name, content] of Object.entries({ title: page.title, description: page.description, image: site + branding.assets.social })) meta(`twitter:${name}`, content);
   setTag('link[rel="canonical"]', 'link', { rel: 'canonical', href: url });
   for (const language of ['en', 'ar', 'x-default']) setTag(`link[rel="alternate"][hreflang="${language}"]`, 'link', { rel: 'alternate', hreflang: language, href: site + pagePath(slug, language === 'ar' ? 'ar' : 'en') });
   const schema = setTag('script[type="application/ld+json"]', 'script', { type: 'application/ld+json' });

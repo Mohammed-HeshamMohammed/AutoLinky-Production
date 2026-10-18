@@ -21,8 +21,7 @@
 .film-copy h2 > span { display: block; }
 .film-copy .film-heading-secondary { color: #a3b59b; }
 .film-description { color: #b4beb2; font-size: 14px; line-height: 1.9; max-width: 395px; margin-top: 27px; min-height: 80px; }
-.film-words { animation: film-copy-in .35s ease-out both; }
-@keyframes film-copy-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+.film-words { opacity: 1; transform: none; animation: none; }
 .film-actions { display: flex; align-items: flex-start; flex-direction: column; gap: 16px; margin-top: 28px; }
 .film-primary { display: inline-flex; align-items: center; gap: 35px; padding: 15px 21px; border: 1px solid #d9e4cc; background: #e5eddd; color: #202b22; border-radius: 3px; min-height: 50px; font-size: 12px; font-weight: 650; }
 .film-primary:hover { background: #cddfbd; }
@@ -102,16 +101,16 @@ html[lang='ar'] .film-primary > span { transform: scaleX(-1); }
   .film-copy { padding: 10px 0 0; margin: 0; }
   .film-scene-label { font-size: 10px; margin-bottom: 12px; }
   .film-copy h2 { font-size: clamp(36px,9.4vw,56px); line-height: 1.1; max-width: 100%; }
-  .film-description { font-size: 11px; line-height: 1.8; max-width: 330px; margin-top: 13px; min-height: 60px; }
+  .film-description { font-size: 12px; line-height: 1.8; max-width: 330px; margin-top: 13px; min-height: 60px; }
   .film-actions { flex-direction: row; align-items: center; margin-top: 15px; gap: 17px; }
   .film-primary { min-height: 44px; padding: 11px 14px; font-size: 10px; gap: 20px; }
-  .film-platforms { font-size: 8px; max-width: 78px; line-height: 1.7; }
+  .film-platforms { font-size: 9px; max-width: 88px; line-height: 1.7; }
   .film-picture { margin: -5px 15px -4px; min-height: 180px; }
   .film-picture video { height: 100%; width: auto; max-width: 100%; object-fit: contain; position: absolute; }
   .film-picture figcaption { bottom: 0; inset-inline-end: -10px; font-size: 7px; }
   .film-bottom { padding-top: 8px; }
-  .film-transport { font-size: 9px; gap: 18px; }
-  .film-time { font-size: 9px; }
+  .film-transport { font-size: 10px; gap: 16px; }
+  .film-time { font-size: 10px; }
   .film-progress { margin: 2px 0 1px; }
   .film-chapters button { min-height: 34px; }
   .film-transcript summary { margin-inline: 22px; }
@@ -145,7 +144,7 @@ html[lang='ar'] .film-primary > span { transform: scaleX(-1); }
   .film-copy h2 { font-size: clamp(30px,8.5vw,40px); }
   .film-copy { padding-top: 6px; }
   .film-scene-label { margin-bottom: 8px; }
-  .film-description { font-size: 10px; margin-top: 9px; min-height: 51px; }
+  .film-description { font-size: 12px; margin-top: 9px; min-height: 51px; }
   .film-actions { margin-top: 9px; }
   .film-primary { min-height: 40px; padding-block: 8px; }
   .film-picture { min-height: 100px; }

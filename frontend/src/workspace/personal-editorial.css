@@ -1,0 +1,191 @@
+/* Personal workspace: the landing identity translated into working pages. */
+.ws-app:not(.ws-admin) .ws-editorial-label{display:flex;align-items:center;gap:12px;margin-bottom:14px;color:var(--ws-muted);font-size:10px;font-weight:500;line-height:1.5;letter-spacing:1.2px;text-transform:uppercase}
+.ws-app:not(.ws-admin) .ws-editorial-label>span:first-child{color:var(--ws-brand);font-variant-numeric:tabular-nums;letter-spacing:0}
+.ws-app:not(.ws-admin)[dir='rtl'] .ws-editorial-label{letter-spacing:0}
+.ws-app:not(.ws-admin) .ws-page-heading{margin-bottom:34px;align-items:flex-end}
+.ws-app:not(.ws-admin) .ws-page-heading p{font-size:14px;max-width:620px}
+.ws-app:not(.ws-admin) .ws-today{font-size:12px;white-space:nowrap;padding-bottom:5px}
+.ws-app:not(.ws-admin) .ws-search-brief{display:flex;align-items:center;justify-content:space-between;gap:32px;background:#171c19;color:#eeeade;border:1px solid #374235;border-radius:8px;padding:30px 32px;margin-bottom:34px}
+.ws-app:not(.ws-admin) .ws-search-brief>div:first-child{min-width:0;max-width:650px}
+.ws-app:not(.ws-admin) .ws-search-brief .ws-eyebrow{color:#bed2a8;font-size:10px;font-weight:500;letter-spacing:1.4px;margin-bottom:12px}
+.ws-app:not(.ws-admin) .ws-search-brief h2{font-size:clamp(23px,2.2vw,32px);font-weight:500;line-height:1.3;letter-spacing:-.8px;color:#eeeade;overflow-wrap:anywhere}
+.ws-app:not(.ws-admin) .ws-search-brief p{margin-top:12px;font-size:12px;line-height:1.8;color:#b0b8aa;max-width:510px}
+.ws-app:not(.ws-admin) .ws-brief-actions{display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;gap:9px;min-width:150px}
+.ws-app:not(.ws-admin) .ws-brief-actions .ws-button.primary{color:#171c19;background:#bed2a8;border-color:#bed2a8;min-height:46px}
+.ws-app:not(.ws-admin) .ws-brief-actions .ws-button.primary:hover{background:#d1dfc2;color:#171c19}
+.ws-app:not(.ws-admin) .ws-brief-actions .ws-text-button{justify-content:center;color:#eeeade;font-size:11px;min-height:38px}
+.ws-app:not(.ws-admin)[dir='rtl'] .ws-search-brief :is(h2,.ws-eyebrow){letter-spacing:0}
+.ws-app:not(.ws-admin) .ws-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:0;border-bottom:1px solid var(--ws-line);padding:0 0 26px;margin-bottom:38px}
+.ws-app:not(.ws-admin) .ws-stat{background:transparent;border:0;border-radius:0;box-shadow:none;min-height:105px;padding:0 24px}
+.ws-app:not(.ws-admin) .ws-stat:first-child{padding-inline-start:0}
+.ws-app:not(.ws-admin) .ws-stat+.ws-stat{border-inline-start:1px solid var(--ws-line)}
+.ws-app:not(.ws-admin) .ws-stat>span{font-size:11px;color:var(--ws-muted);font-weight:400}
+.ws-app:not(.ws-admin) .ws-stat strong{display:block;font-size:32px;line-height:1.25;letter-spacing:-1px;font-weight:500;margin:13px 0 9px;color:var(--ws-text)}
+.ws-app:not(.ws-admin) .ws-stat small{font-size:11px;white-space:normal;line-height:1.7;overflow-wrap:anywhere}
+.ws-app:not(.ws-admin)[dir='rtl'] .ws-stat strong{letter-spacing:0}
+.ws-app:not(.ws-admin) .ws-dashboard-grid{grid-template-columns:minmax(0,1fr) 280px;gap:36px;margin-bottom:40px}
+.ws-app:not(.ws-admin) .ws-matches-section>.ws-section-heading{margin-bottom:16px;align-items:flex-end}
+.ws-app:not(.ws-admin) .ws-section-heading h2{font-size:24px;font-weight:500;line-height:1.35;letter-spacing:-.5px}
+.ws-app:not(.ws-admin) .ws-section-heading p{font-size:13px;margin-top:10px;line-height:1.7}
+.ws-app:not(.ws-admin) .ws-section-heading>a{font-size:11px;min-height:44px;align-items:center;white-space:normal;text-align:end}
+.ws-app:not(.ws-admin) .ws-section-heading .ws-editorial-label{margin-bottom:9px}
+.ws-app:not(.ws-admin) .ws-job-list{gap:0}
+.ws-app:not(.ws-admin) .ws-job-card{border:0;border-top:1px solid var(--ws-line);border-radius:0;background:transparent;box-shadow:none;align-items:center;gap:0}
+.ws-app:not(.ws-admin) .ws-job-card:last-child{border-bottom:1px solid var(--ws-line)}
+.ws-app:not(.ws-admin) .ws-job-card:hover{border-color:var(--ws-line);background:var(--ws-surface);box-shadow:none}
+.ws-app:not(.ws-admin) .ws-job-card.selected{border-color:var(--ws-line);background:var(--ws-soft);border-inline-start:2px solid var(--ws-brand);padding-inline:14px;box-shadow:none}
+.ws-app:not(.ws-admin) .ws-job-main{align-items:center;padding:23px 0;gap:18px;min-width:0;flex:1 1 0}
+.ws-app:not(.ws-admin) .ws-job-company{display:flex;align-items:baseline;justify-content:flex-start;flex-wrap:wrap;gap:7px 14px;margin-bottom:8px;font-size:11px;line-height:1.6;color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-job-company>.ws-job-company-name{font-size:11px;color:var(--ws-muted);white-space:normal;overflow-wrap:anywhere}
+.ws-app:not(.ws-admin) .ws-job-company>time{font-size:10px;color:var(--ws-muted);white-space:nowrap}
+.ws-app:not(.ws-admin) .ws-job-copy h3{font-size:17px;line-height:1.4;font-weight:600;letter-spacing:-.25px;margin:0 0 8px;overflow-wrap:anywhere}
+.ws-app:not(.ws-admin) .ws-job-location{font-size:12px;line-height:1.8;color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-job-card .ws-tags{gap:0;margin-top:10px}
+.ws-app:not(.ws-admin) .ws-job-card .ws-tags>span{background:transparent;color:var(--ws-muted);border:0;border-radius:0;font-size:10px;line-height:1.5;padding:0 10px 0 0}
+.ws-app:not(.ws-admin) .ws-job-card .ws-tags>span+span{padding-inline-start:10px;border-inline-start:1px solid var(--ws-line)}
+.ws-app:not(.ws-admin) .ws-job-fit{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none;min-width:58px;align-self:center}
+.ws-app:not(.ws-admin) .ws-job-fit strong{font-size:28px;line-height:1.15;letter-spacing:-1px;font-weight:500;color:var(--ws-brand);font-variant-numeric:tabular-nums}
+.ws-app:not(.ws-admin) .ws-job-fit small{font-size:10px;color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-job-actions{padding:16px 0 16px 18px;gap:8px;justify-content:center;align-items:stretch}
+.ws-app:not(.ws-admin)[dir='rtl'] .ws-job-actions{padding:16px 18px 16px 0}
+.ws-app:not(.ws-admin) .ws-job-actions .ws-icon-button{min-height:36px;border:0;border-bottom:1px solid var(--ws-line);border-radius:0;min-width:48px;padding:5px 4px;font-size:10px;background:transparent;color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-job-actions .ws-icon-button:is(:hover,.is-saved){color:var(--ws-brand);background:transparent;border-color:var(--ws-brand)}
+.ws-app:not(.ws-admin) .ws-panel{border-radius:8px;background:var(--ws-surface);box-shadow:none;padding:28px}
+.ws-app:not(.ws-admin) .ws-setup{background:transparent;border:0;border-top:1px solid var(--ws-line);border-radius:0;padding:24px 0 0!important;margin:0 0 28px}
+.ws-app:not(.ws-admin) .ws-setup .ws-section-heading{margin-bottom:18px;align-items:baseline}
+.ws-app:not(.ws-admin) .ws-setup h2{font-size:18px;letter-spacing:-.3px}
+.ws-app:not(.ws-admin) .ws-completion{font-size:12px;color:var(--ws-brand)}
+.ws-app:not(.ws-admin) .ws-progress-track{height:2px;border-radius:0}
+.ws-app:not(.ws-admin) .ws-progress-track>span{background:var(--ws-brand)}
+.ws-app:not(.ws-admin) .ws-setup>p{font-size:12px;line-height:1.8;margin-top:14px;color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-setup-list{margin-top:20px}
+.ws-app:not(.ws-admin) .ws-setup-list a{font-size:12px;padding:14px 0;gap:12px}
+.ws-app:not(.ws-admin) .ws-setup-list small{font-size:10px}
+.ws-app:not(.ws-admin) .ws-step-marker{font-size:10px;min-width:18px}
+.ws-app:not(.ws-admin) .ws-auto-summary{padding:22px 0;border:0;border-block:1px solid var(--ws-line);border-radius:0;background:transparent}
+.ws-app:not(.ws-admin) .ws-auto-summary .ws-section-heading{align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:7px}
+.ws-app:not(.ws-admin) .ws-auto-summary .ws-editorial-label{font-size:9px;margin:0;min-height:24px;align-items:center}
+.ws-app:not(.ws-admin) .ws-auto-summary h3{font-size:18px;line-height:1.5;font-weight:500;letter-spacing:-.3px}
+.ws-app:not(.ws-admin) .ws-auto-summary p{font-size:12px;line-height:1.8;margin:12px 0 18px}
+.ws-app:not(.ws-admin) .ws-auto-summary>a{font-size:12px;display:inline-flex;min-height:36px;align-items:center}
+.ws-app:not(.ws-admin) .ws-recent-applications{background:transparent;border:0;border-top:1px solid var(--ws-line);border-radius:0;padding:28px 0 0;margin-top:0}
+.ws-app:not(.ws-admin) .ws-table th{background:transparent;color:var(--ws-muted);font-size:10px;font-weight:500;padding:14px 12px;text-transform:uppercase;letter-spacing:.7px}
+.ws-app:not(.ws-admin) .ws-table td{font-size:12px;padding:20px 12px}
+.ws-app:not(.ws-admin) .ws-table td:first-child,.ws-app:not(.ws-admin) .ws-table th:first-child{padding-inline-start:0}
+.ws-app:not(.ws-admin) .ws-table td b{font-size:13px;font-weight:500}
+.ws-app:not(.ws-admin) .ws-table td small{font-size:11px}
+.ws-app:not(.ws-admin) .ws-status{border:0;border-radius:3px;font-size:10px;padding:4px 7px}
+.ws-app:not(.ws-admin) .ws-filters{border:0;border-block:1px solid var(--ws-line);border-radius:0;background:transparent;padding:22px 0;margin-bottom:24px}
+.ws-app:not(.ws-admin) .ws-filters .ws-search-field{gap:20px}
+.ws-app:not(.ws-admin) .ws-filters .ws-search-field>input{font-size:17px;padding:8px 0;min-height:44px}
+.ws-app:not(.ws-admin) .ws-filter-row{gap:10px;border:0;padding-top:16px;margin-top:8px}
+.ws-app:not(.ws-admin) .ws-filter-row select{background:transparent;border-color:var(--ws-line);font-size:12px;min-height:42px}
+.ws-app:not(.ws-admin) .ws-jobs-grid{grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:32px}
+.ws-app:not(.ws-admin) .ws-list-heading{font-size:11px;margin:0 0 18px;gap:12px}
+.ws-app:not(.ws-admin) .ws-list-heading b{font-weight:500}
+.ws-app:not(.ws-admin) .ws-list-heading select{font-size:11px;min-height:40px}
+.ws-app:not(.ws-admin) .ws-job-detail{padding:28px;border-radius:8px;top:104px;max-height:calc(100vh - 124px)}
+.ws-app:not(.ws-admin) .ws-detail-top{margin-bottom:24px;gap:14px}
+.ws-app:not(.ws-admin) .ws-detail-top .ws-editorial-label{margin:0}
+.ws-app:not(.ws-admin) .ws-job-detail>.ws-eyebrow{font-size:11px;letter-spacing:.8px;font-weight:500;margin-bottom:12px}
+.ws-app:not(.ws-admin) .ws-job-detail>h2{font-size:30px;line-height:1.35;font-weight:500;letter-spacing:-.8px}
+.ws-app:not(.ws-admin) .ws-job-detail>.ws-muted{font-size:12px;line-height:1.8;margin-top:12px}
+.ws-app:not(.ws-admin) .ws-detail-section{padding-top:22px;margin-top:28px}
+.ws-app:not(.ws-admin) .ws-detail-section h3{font-size:13px;font-weight:600;margin-bottom:14px}
+.ws-app:not(.ws-admin) .ws-job-description{font-size:13px;line-height:1.9;color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-contact{font-size:12px;flex-wrap:wrap;gap:4px 16px;line-height:1.8}
+.ws-app:not(.ws-admin) .ws-contact span{direction:ltr;unicode-bidi:plaintext}
+.ws-app:not(.ws-admin) .ws-detail-footer{gap:12px}
+.ws-app:not(.ws-admin) .ws-detail-footer small{font-size:11px;line-height:1.8}
+.ws-app:not(.ws-admin) .ws-profile-form{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px}
+.ws-app:not(.ws-admin) .ws-profile-form>.ws-panel{border:0;border-top:1px solid var(--ws-line);border-radius:0;background:transparent;padding:26px 0}
+.ws-app:not(.ws-admin) .ws-profile-form .ws-section-heading{margin-bottom:28px}
+.ws-app:not(.ws-admin) .ws-account-grid{gap:28px}
+.ws-app:not(.ws-admin) .ws-account-grid>.ws-panel,.ws-app:not(.ws-admin) .ws-account-grid>div>.ws-panel{border:0;border-top:1px solid var(--ws-line);background:transparent;border-radius:0;padding:26px 0;margin-bottom:24px}
+.ws-app:not(.ws-admin) .ws-account-grid .ws-section-heading{align-items:flex-start}
+.ws-app:not(.ws-admin) .ws-field{margin:22px 0;gap:8px}
+.ws-app:not(.ws-admin) .ws-field>span{font-size:12px;font-weight:500}
+.ws-app:not(.ws-admin) .ws-field>small{font-size:11px;line-height:1.8}
+.ws-app:not(.ws-admin) .ws-picker{border-radius:6px;background:var(--ws-surface);padding:10px 12px}
+.ws-app:not(.ws-admin) .ws-picker-options{gap:6px;padding:8px 0 3px}
+.ws-app:not(.ws-admin) .ws-picker-options>button{min-height:32px;padding:6px 9px;font-size:11px;border-radius:4px;background:var(--ws-bg);color:var(--ws-muted)}
+.ws-app:not(.ws-admin) .ws-upload-zone{border:1px dashed var(--ws-line);border-radius:6px;background:var(--ws-surface);padding:42px 24px}
+.ws-app:not(.ws-admin) .ws-upload-zone h2{font-size:25px;font-weight:500;letter-spacing:-.5px}
+.ws-app:not(.ws-admin) .ws-upload-zone>small{font-size:11px;line-height:1.8;max-width:390px}
+.ws-app:not(.ws-admin) .ws-file-type{background:var(--ws-soft);color:var(--ws-brand);border-color:var(--ws-line);border-radius:3px}
+.ws-app:not(.ws-admin) .ws-tip h3{font-size:21px;line-height:1.4;font-weight:500}
+.ws-app:not(.ws-admin) .ws-tip li{font-size:13px;line-height:1.9;padding-bottom:10px}
+.ws-app:not(.ws-admin) .ws-tip>a{font-size:12px;min-height:44px}
+.ws-app:not(.ws-admin) .ws-allowance>div>b{font-size:44px;font-weight:500}
+.ws-app:not(.ws-admin) .ws-setting-row{font-size:12px;padding:22px 0}
+.ws-app:not(.ws-admin) .ws-compose{padding:30px;max-width:900px}
+.ws-app:not(.ws-admin) .ws-compose-meta>div{font-size:13px;padding:16px 0}
+.ws-app:not(.ws-admin) .ws-compose textarea{font-size:14px;line-height:1.9}
+.ws-app:not(.ws-admin)[dir='rtl'] :is(.ws-section-heading h2,.ws-job-copy h3,.ws-job-detail>h2,.ws-upload-zone h2){letter-spacing:0}
+@media(max-width:1180px){
+  .ws-app:not(.ws-admin) .ws-dashboard-grid{grid-template-columns:minmax(0,1fr);gap:30px}
+  .ws-app:not(.ws-admin) .ws-search-aside{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .ws-app:not(.ws-admin) .ws-search-aside .ws-setup{margin:0}
+  .ws-app:not(.ws-admin) .ws-jobs-grid{grid-template-columns:minmax(0,1fr)}
+  .ws-app:not(.ws-admin) .ws-job-detail{position:static;max-height:none;margin-top:12px}
+  .ws-app:not(.ws-admin) .ws-profile-form{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:760px){
+  .ws-app:not(.ws-admin) .ws-page-heading{margin-bottom:27px;gap:16px}
+  .ws-app:not(.ws-admin) .ws-page-heading p{font-size:13px;line-height:1.8}
+  .ws-app:not(.ws-admin) .ws-today{font-size:11px;padding:0}
+  .ws-app:not(.ws-admin) .ws-search-brief{padding:24px;gap:23px;flex-direction:column;align-items:stretch;margin-bottom:28px}
+  .ws-app:not(.ws-admin) .ws-search-brief h2{font-size:27px}
+  .ws-app:not(.ws-admin) .ws-search-brief p{font-size:12px}
+  .ws-app:not(.ws-admin) .ws-brief-actions{min-width:0;flex-direction:row;align-items:center;gap:20px;flex-wrap:wrap}
+  .ws-app:not(.ws-admin) .ws-brief-actions .ws-button{min-width:132px}
+  .ws-app:not(.ws-admin) .ws-stats{grid-template-columns:repeat(2,minmax(0,1fr));padding-bottom:0;margin-bottom:30px}
+  .ws-app:not(.ws-admin) .ws-stat{padding:18px 16px 20px;min-height:128px}
+  .ws-app:not(.ws-admin) .ws-stat:nth-child(odd){padding-inline-start:0;border-inline-start:0}
+  .ws-app:not(.ws-admin) .ws-stat:nth-child(n+3){border-top:1px solid var(--ws-line)}
+  .ws-app:not(.ws-admin) .ws-stat strong{font-size:28px;margin-top:10px}
+  .ws-app:not(.ws-admin) .ws-stat small{font-size:10px;line-height:1.7}
+  .ws-app:not(.ws-admin) .ws-section-heading{flex-wrap:wrap;gap:8px}
+  .ws-app:not(.ws-admin) .ws-section-heading h2{font-size:23px}
+  .ws-app:not(.ws-admin) .ws-section-heading>a{min-height:36px;text-align:start}
+  .ws-app:not(.ws-admin) .ws-dashboard-grid{gap:28px;margin-bottom:30px}
+  .ws-app:not(.ws-admin) .ws-search-aside{grid-template-columns:minmax(0,1fr);gap:24px}
+  .ws-app:not(.ws-admin) .ws-job-card{flex-direction:column;align-items:stretch;flex-wrap:nowrap}
+  .ws-app:not(.ws-admin) .ws-job-main{flex:auto;padding:22px 0 12px;gap:16px}
+  .ws-app:not(.ws-admin) .ws-job-copy h3{font-size:18px}
+  .ws-app:not(.ws-admin) .ws-job-company{gap:3px 10px}
+  .ws-app:not(.ws-admin) .ws-job-fit{min-width:56px;align-self:center}
+  .ws-app:not(.ws-admin) .ws-job-fit strong{font-size:27px}
+  .ws-app:not(.ws-admin) .ws-job-location{font-size:11px}
+  .ws-app:not(.ws-admin) .ws-job-actions,.ws-app:not(.ws-admin)[dir='rtl'] .ws-job-actions{flex-direction:row;justify-content:flex-start;gap:20px;padding:0 0 15px}
+  .ws-app:not(.ws-admin) .ws-job-actions .ws-icon-button{min-height:44px;max-height:56px;min-width:54px;font-size:11px;padding:8px 2px}
+  .ws-app:not(.ws-admin) .ws-panel{padding:22px}
+  .ws-app:not(.ws-admin) .ws-job-detail{padding:24px 20px}
+  .ws-app:not(.ws-admin) .ws-job-detail>h2{font-size:27px}
+  .ws-app:not(.ws-admin) .ws-detail-top .ws-editorial-label{font-size:9px;gap:8px}
+  .ws-app:not(.ws-admin) .ws-filters .ws-search-field{gap:12px}
+  .ws-app:not(.ws-admin) .ws-filters .ws-search-field>input{font-size:14px}
+  .ws-app:not(.ws-admin) .ws-filter-row select{font-size:11px;flex:1 1 130px;max-width:100%;min-height:44px}
+  .ws-app:not(.ws-admin) .ws-filter-row .ws-text-button{margin-inline-start:0;min-height:42px}
+  .ws-app:not(.ws-admin) .ws-list-heading{flex-wrap:wrap;gap:10px}
+  .ws-app:not(.ws-admin) .ws-list-heading select{font-size:11px}
+  .ws-app:not(.ws-admin) .ws-profile-form>.ws-panel,.ws-app:not(.ws-admin) .ws-account-grid>.ws-panel,.ws-app:not(.ws-admin) .ws-account-grid>div>.ws-panel{padding:24px 0}
+  .ws-app:not(.ws-admin) .ws-upload-zone{padding:30px 18px}
+  .ws-app:not(.ws-admin) .ws-upload-zone h2{font-size:23px}
+  .ws-app:not(.ws-admin) .ws-compose{padding:24px 18px}
+  .ws-app:not(.ws-admin) .ws-compose-meta>div{grid-template-columns:54px minmax(0,1fr);gap:12px;font-size:12px}
+  .ws-app:not(.ws-admin) .ws-form-actions{flex-wrap:wrap;gap:14px}
+  .ws-app:not(.ws-admin) .ws-setting-row{flex-wrap:wrap;gap:8px;font-size:12px}
+  .ws-app:not(.ws-admin) .ws-recent-applications{padding:24px 0 0}
+  .ws-app:not(.ws-admin) .ws-table td{font-size:11px;padding:18px 10px}
+}
+@media(max-width:370px){
+  .ws-app:not(.ws-admin) .ws-search-brief{padding:22px 18px}
+  .ws-app:not(.ws-admin) .ws-brief-actions{gap:10px}
+  .ws-app:not(.ws-admin) .ws-brief-actions .ws-button{min-width:112px}
+  .ws-app:not(.ws-admin) .ws-job-main{gap:10px}
+  .ws-app:not(.ws-admin) .ws-job-fit{min-width:50px}
+  .ws-app:not(.ws-admin) .ws-job-fit strong{font-size:24px}
+  .ws-app:not(.ws-admin) .ws-form-grid{grid-template-columns:minmax(0,1fr)}
+  .ws-app:not(.ws-admin) .ws-check-grid{grid-template-columns:minmax(0,1fr)}
+}

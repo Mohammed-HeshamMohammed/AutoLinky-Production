@@ -2,6 +2,8 @@
 
 The production React/Vite landing site was copied into the unified frontend. The previous production frontend is retained at baseline Git commit `52a996c`; the owner authorized canonical `frontend/` to replace both active web folders. Landing and content routes open the independent responsive React workspace under `/login/` and `/dashboard/`; downloads still pass through `/download`. `/api/latest` and statistics remain server-side.
 
+The current landing page opens with an original 24-second motion-graphics film controlled by scrolling. English/Arabic captions, chapter controls, normal playback, a transcript and reduced-motion/media-error fallbacks accompany existing app imagery. The remaining page uses locally hosted typography, warm neutral surfaces, simple plan rows and native FAQ disclosures. See [film source and behavior](BRAND_FILM.md) and [design decisions and validation](WORKSPACE_DESIGN.md).
+
 ```powershell
 Copy-Item .env.example .env
 npm ci

@@ -13,7 +13,7 @@ import { availablePublicSettings } from './public-settings.js';
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8',
   '.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.ico':'image/x-icon',
   '.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf',
-  '.wasm':'application/wasm','.webmanifest':'application/manifest+json'};
+  '.wasm':'application/wasm','.webmanifest':'application/manifest+json','.mp4':'video/mp4','.webm':'video/webm'};
 
 export function createSiteServer({directory=fileURLToPath(new URL('./dist/',import.meta.url)),env=process.env,apiOrigin=env.API_BASE_URL||''}={}) {
   const root=resolve(directory);
@@ -79,8 +79,22 @@ export function createSiteServer({directory=fileURLToPath(new URL('./dist/',impo
       res.setHeader('Content-Type',types[extname(path)]||'application/octet-stream');
       res.setHeader('Content-Length',info.size);
       res.setHeader('Cache-Control',res.statusCode===404?'no-store':extname(path)==='.html'?'public, max-age=0, must-revalidate':'public, max-age=3600');
+      let range;
+      if(res.statusCode===200&&['.mp4','.webm'].includes(extname(path))){
+        res.setHeader('Accept-Ranges','bytes');
+        if(req.headers.range&&req.method==='GET'){
+          const match=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+          if(match&&(match[1]||match[2])){
+            const start=match[1]?Number(match[1]):Math.max(0,info.size-Number(match[2]));
+            const end=match[1]&&match[2]?Math.min(Number(match[2]),info.size-1):info.size-1;
+            if(Number.isSafeInteger(start)&&Number.isSafeInteger(end)&&start<=end&&start<info.size&&(!match[1]?Number(match[2])>0:true))range={start,end};
+          }
+          if(!range){res.writeHead(416,{'Content-Range':`bytes */${info.size}`,'Content-Length':0}).end();return;}
+          res.statusCode=206;res.setHeader('Content-Range',`bytes ${range.start}-${range.end}/${info.size}`);res.setHeader('Content-Length',range.end-range.start+1);
+        }
+      }
       if(req.method==='HEAD'){res.end();return;}
-      createReadStream(path).on('error',()=>res.destroy()).pipe(res);
+      createReadStream(path,range).on('error',()=>res.destroy()).pipe(res);
     } catch {
       if(!res.headersSent)res.writeHead(500,{'Cache-Control':'no-store'}).end('Unavailable');
       else res.destroy();

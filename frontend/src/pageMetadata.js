@@ -5,11 +5,11 @@ import { DOWNLOAD_URL, DOWNLOAD_ENABLED } from './config';
 export function schemaFor(slug, lang, page, url) {
   const home = site + pagePath('', lang);
   const graph = [
-    { '@type': 'Organization', '@id': `${site}/#organization`, name: 'Autolinky', url: site + '/', logo: { '@type': 'ImageObject', url: `${site}/assets/logo.svg` } },
-    { '@type': 'WebSite', '@id': `${site}/#website`, name: 'Autolinky', url: site + '/', inLanguage: ['en', 'ar'] },
+    { '@type': 'Organization', '@id': `${site}/#organization`, name: 'AutoLinky', url: site + '/', logo: { '@type': 'ImageObject', url: `${site}/assets/logo.svg` } },
+    { '@type': 'WebSite', '@id': `${site}/#website`, name: 'AutoLinky', url: site + '/', inLanguage: ['en', 'ar'] },
     { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: page.title, description: page.description, inLanguage: lang, isPartOf: { '@id': `${site}/#website` } },
   ];
-  if (!slug) graph.push({ '@type': 'SoftwareApplication', '@id': `${site}/#app`, name: 'Autolinky', applicationCategory: 'BusinessApplication', operatingSystem: 'Android', url: site + '/', ...(DOWNLOAD_ENABLED ? { downloadUrl: new URL(DOWNLOAD_URL, site).href } : {}), description: page.description, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: lang === 'ar' ? 'تتضمن الخطة المجانية 20 طلب تقديم بالبريد.' : 'The free plan includes 20 email applications.' } });
+  if (!slug) graph.push({ '@type': 'SoftwareApplication', '@id': `${site}/#app`, name: 'AutoLinky', applicationCategory: 'BusinessApplication', operatingSystem: 'Android', url: site + '/', ...(DOWNLOAD_ENABLED ? { downloadUrl: new URL(DOWNLOAD_URL, site).href } : {}), description: page.description, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: lang === 'ar' ? 'تتضمن الخطة المجانية 20 طلب تقديم بالبريد.' : 'The free plan includes 20 email applications.' } });
   if (slug) graph.push({ '@type': 'BreadcrumbList', itemListElement: [
     { '@type': 'ListItem', position: 1, name: lang === 'ar' ? 'الرئيسية' : 'Home', item: home },
     { '@type': 'ListItem', position: 2, name: page.eyebrow, item: url },
@@ -32,6 +32,8 @@ export function updatePageHead({ slug, lang }) {
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   const meta = (name, content, attribute = 'name') => setTag(`meta[${attribute}="${name}"]`, 'meta', { [attribute]: name, content });
   meta('description', page.description);
+  meta('theme-color', slug ? '#fbfbf9' : '#171c19');
+  meta('color-scheme', 'light');
   meta('robots', 'index, follow, max-image-preview:large');
   for (const [name, content] of Object.entries({ title: page.title, description: page.description, url, image: `${site}/assets/og.png`, locale: lang === 'ar' ? 'ar_EG' : 'en_US', 'locale:alternate': lang === 'ar' ? 'en_US' : 'ar_EG' })) meta(`og:${name}`, content, 'property');
   for (const [name, content] of Object.entries({ title: page.title, description: page.description, image: `${site}/assets/og.png` })) meta(`twitter:${name}`, content);

@@ -6,10 +6,12 @@ import { META } from './content';
 import { PAGES } from './pageContent';
 import './styles.css';
 import './experience.css';
-import { useSiteMotion } from './useSiteMotion';
 import { usePageNavigation } from './usePageNavigation';
 import { RELEASE_API_URL, DOWNLOAD_ENABLED, directDownloadUrl } from './config';
 import DesktopApp from './workspace/DesktopApp.jsx';
+import './site-design.css';
+import './brand.css';
+import BrandMark from './BrandMark';
 import { workspaceRoute } from '../workspace-routes.js';
 
 function initialLanguage() {
@@ -44,9 +46,7 @@ function platform() {
 function LandingPage() {
   const lang = location.pathname.startsWith('/ar/') ? 'ar' : 'en';
   const [release, setRelease] = useState(null);
-  const [sticky, setSticky] = useState(false);
   const device = platform();
-  useSiteMotion(lang);
 
   useLayoutEffect(() => {
     document.documentElement.lang = lang;
@@ -64,13 +64,7 @@ function LandingPage() {
 
   useEffect(() => {
     document.documentElement.classList.add(`on-${device}`);
-    const hero = document.querySelector('.hero .btn-download');
-    const stickyObserver = hero && 'IntersectionObserver' in window
-      ? new IntersectionObserver(([entry]) => setSticky(!entry.isIntersecting && entry.boundingClientRect.top < 0))
-      : null;
-    if (stickyObserver) stickyObserver.observe(hero);
     return () => {
-      stickyObserver?.disconnect();
       document.documentElement.classList.remove(`on-${device}`);
     };
   }, [device]);
@@ -91,19 +85,19 @@ function LandingPage() {
     } else setTimeout(() => document.querySelector('[data-modal="started"]')?.showModal(), 350);
   }
 
-  return <PageMarkup lang={lang} release={release} sticky={sticky} onClick={handleClick} />;
+  return <PageMarkup lang={lang} release={release} onClick={handleClick} />;
 }
 
 const OPEN_TEXT = {
   en: {
-    title: 'Open Autolinky in your browser',
+    title: 'Open AutoLinky in your browser',
     body: "The app you are in can't always download files. Open this page in Chrome and the download starts at once.",
     chrome: 'Open in Chrome', copy: 'Copy the download link', anyway: 'Try downloading here',
     steps: [<>Tap the menu (⋮ or ⋯) at the top of this screen.</>, <>Choose <b>Open in browser</b> or <b>Open in Chrome</b>.</>, <>The download starts. Open the file when it finishes and allow the install if Android asks.</>],
     copied: 'Link copied. Paste it in Chrome.', manual: 'Copy this link and paste it in Chrome:',
   },
   ar: {
-    title: 'افتح Autolinky في المتصفح',
+    title: 'افتح AutoLinky في المتصفح',
     body: 'التطبيق اللي انت فيه مش بيحمّل الملفات دايمًا. افتح الصفحة دي في Chrome والتحميل هيبدأ على طول.',
     chrome: 'افتح في Chrome', copy: 'انسخ لينك التحميل', anyway: 'جرّب التحميل من هنا',
     steps: [<>اضغط على القائمة (⋮ أو ⋯) في أعلى الشاشة.</>, <>اختار <b>فتح في المتصفح</b> أو <b>Open in Chrome</b>.</>, <>التحميل هيبدأ. افتح الملف لما يخلص واسمح بالتثبيت لو أندرويد سأل.</>],
@@ -131,7 +125,7 @@ function OpenPage() {
     } catch { setNote(`${t.manual} ${direct}`); }
   }
   return <main className="open"><div className="container"><section className="open-card">
-    <img src="/assets/logo.svg" alt="" width="56" height="56" />
+    <BrandMark size={56}/>
     <h1>{t.title}</h1><p>{t.body}</p>
     <div className="open-actions">
       <a className="btn btn-primary" href={chrome}>{t.chrome}</a>

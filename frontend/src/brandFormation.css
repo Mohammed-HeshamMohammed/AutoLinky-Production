@@ -1,0 +1,8 @@
+/* Generated i-dot motion from brand/formation.json. */
+@keyframes brand-dot-bounce {0% { transform:translateY(-22px);opacity:0;animation-timing-function:linear }1% { transform:translateY(-22px);opacity:1;animation-timing-function:cubic-bezier(.55,0,.9,.5) }38% { transform:translateY(4.107599029541014px);opacity:1;animation-timing-function:linear }42% { transform:translateY(4.107599029541014px);opacity:1;animation-timing-function:cubic-bezier(.15,.55,.35,1) }62% { transform:translateY(-3.2px);opacity:1;animation-timing-function:cubic-bezier(.55,0,.9,.5) }80% { transform:translateY(4.107599029541014px);opacity:1;animation-timing-function:linear }84% { transform:translateY(4.107599029541014px);opacity:1;animation-timing-function:cubic-bezier(.15,.55,.35,1) }93% { transform:translateY(-0.7px);opacity:1;animation-timing-function:ease-in-out }100% { transform:none;opacity:1;animation-timing-function:linear }}
+@keyframes brand-dot-hide { to { visibility:hidden; } }
+@keyframes brand-dot-show { to { visibility:visible; } }
+.brand-form-dot-rest { display:none; }
+.brand-wordmark.is-forming .brand-form-dot { animation:brand-dot-bounce var(--form-duration) linear var(--form-delay) both,brand-dot-hide .001s steps(1,end) 2.45s forwards; }
+.brand-wordmark.is-forming .brand-form-dot-rest { display:block;visibility:hidden;animation:brand-dot-show .001s steps(1,end) 2.45s forwards; }
+@media (prefers-reduced-motion:reduce) { .brand-wordmark .brand-form-dot { transform:none;opacity:1;animation:none!important; } }

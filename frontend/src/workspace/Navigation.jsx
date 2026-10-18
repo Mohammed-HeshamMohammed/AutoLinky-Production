@@ -28,7 +28,7 @@ export function Sidebar({open,onClose,ar,children,footer,label}){
   return <>
     {open&&<button className="ws-sidebar-scrim" tabIndex={-1} aria-label={ar?'إغلاق القائمة':'Close navigation'} onClick={onClose}/>}
     <aside id="workspace-navigation" className={`ws-sidebar ${open?'open':''}`} ref={panel} role={open?'dialog':undefined} aria-modal={open||undefined} aria-label={label}>
-      <div className="ws-sidebar-brand"><Brand/><button className="ws-text-button ws-menu-close" onClick={onClose}>{ar?'إغلاق':'Close'}</button></div>
+      <div className="ws-sidebar-brand"><Brand animate={false}/><button className="ws-text-button ws-menu-close" onClick={onClose}>{ar?'إغلاق':'Close'}</button></div>
       <span className="ws-workspace-name">{label}</span>
       <nav aria-label={label}>{children}</nav>
       <div className="ws-sidebar-bottom">{footer}</div>

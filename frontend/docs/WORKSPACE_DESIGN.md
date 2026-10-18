@@ -42,6 +42,20 @@ settled active-navigation contrast, the ivory rail logo and reduced motion.
 All 19 frontend tests and the 22-page build/prerender checks pass. Evidence and
 actual sample-data captures remain under ignored `output/playwright/`.
 
+## Workspace opening sequence
+
+The initial personal/admin opening screen waits for both authentication and the
+2.55-second logo formation. Fast session responses keep the same logo instance
+mounted through the final frame; slow responses retain the finished static mark.
+The sidebar starts with that completed identity instead of drawing a second time.
+Normal in-app navigation does not repeat the intro. Reduced motion skips its
+waiting period, including a preference change during the drawing. Errors,
+signed-out redirects and non-admin denials respond immediately; retry and later
+role refreshes cannot remain gated behind a previously completed logo. The
+administrator authenticator step remains mandatory.
+The fix passes 21 browser lifecycle checks against both source and the compiled
+Node runtime, plus all 19 frontend tests and the 22-page build checks.
+
 ## Public landing page
 
 The landing page now opens with a charcoal studio-style motion film, restrained sage/ivory typography and existing images from `public/assets/app/`. Screens are labeled as containing sample data. The old glows, decorative icons, feature-card grid, floating contact button and repeated sticky action are removed. Plans use two structured rows and questions use native disclosure elements.

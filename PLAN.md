@@ -9,7 +9,7 @@ The owner reported unwanted horizontal sidebar scrolling on mobile and desktop w
 - [x] Reproduce the navigation's horizontal overhang and inspect personal/admin sidebar sizing and scroll containers.
 - [x] Remove the selected row overhang, scope help-page styling to `main.open` and give navigation a vertical scrollport with a thin sage scrollbar. Preserve the normal header/footer positions; short landscape screens scroll the whole rail so no controls collapse.
 - [x] Pass 239 built-browser checks across both workspaces, EN/AR, nine viewport sizes, wheel/keyboard scrolling, Escape/backdrop/navigation/resize close behavior, long active labels and theme changes. Pass 10 independent checks including the help page and landing page, all 23 frontend tests and the verified 22-page production build.
-- [ ] Publish to main and frontend-production, verify the deployed styles and refresh the source/web packages.
+- [x] Publish source main (`0792ca6`) and frontend-production (`27aacf0`), verify remote tips and exact frontend-tree parity, and confirm the production workspace serves the exact verified CSS bytes. Refresh and independently verify source/web packages: 869 source files, 976/99 payload files, unchanged media, CRC and SHA-256 manifests all pass.
 
 ## Previous: readable print on the film's papers (2026-10-18)
 

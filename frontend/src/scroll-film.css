@@ -1,22 +1,22 @@
 /* A single pinned film: the page remains the timeline in either scroll direction. */
-.landing .site-header.nav,.has-scrolled .landing .site-header.nav { background: #171c19; color: #eeeade; }
-.landing .site-header .nav-inner { border-color: #343d36; }
+.landing .site-header.nav,.has-scrolled .landing .site-header.nav { background: #151a16; color: #eeeade; }
+.landing .site-header .nav-inner { border-color: #3a453c; }
 .landing .site-header :is(.brand,.nav-login,.lang-toggle,.mobile-menu summary) { color: #eeeade; }
 .landing .site-header .nav-links a { color: #b4beb2; }
 .landing .site-header .nav-links a:hover { color: #fff; background: transparent; }
 .landing .site-header .nav-signup { background: #e5eddd; color: #202b22; border-color: #e5eddd; }
 .landing .site-header :is(.nav-login,.lang-toggle) { border: 0; }
-.landing .site-header .mobile-menu summary { background: transparent; border: 1px solid #4e5c4d; }
-.scroll-film { --film-header: 92px; --film-cream: #eeeade; --film-sage: #bed2a8; color: var(--film-cream); background: #171c19; height: 520svh; position: relative; scroll-margin-top: 0; }
+.landing .site-header .mobile-menu summary { background: transparent; border: 1px solid #6d7d6a; }
+.scroll-film { --film-header: 92px; --film-cream: #eeeade; --film-sage: #bed2a8; color: var(--film-cream); background: #151a16; height: 520svh; position: relative; scroll-margin-top: 0; }
 .film-stage { position: sticky; top: var(--film-header); height: calc(100svh - var(--film-header)); min-height: 580px; max-width: 1760px; margin: auto; display: flex; flex-direction: column; padding: 28px 52px 19px; overflow: hidden; }
 .film-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; position: relative; z-index: 2; }
-.film-topline p { color: #b4beb2; font-size: 9px; letter-spacing: .13em; }
-.film-topline p span { color: #748372; margin-inline-start: 15px; }
-.film-topline a { padding: 12px 0; color: #b4beb2; font-size: 10px; text-decoration: underline; text-underline-offset: 5px; }
+.film-topline p { color: #b4beb2; font-size: 11px; letter-spacing: .13em; }
+.film-topline p span { color: #9aa797; margin-inline-start: 15px; }
+.film-topline a { padding: 12px 0; color: #b4beb2; font-size: 11px; text-decoration: underline; text-underline-offset: 5px; }
 .film-composition { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; position: relative; }
 .film-copy { position: relative; z-index: 2; padding-block: 10px 35px; }
-.film-scene-label { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #b4beb2; margin-bottom: 28px; }
-.film-scene-label > span { color: var(--film-sage); font-size: 10px; font-variant-numeric: tabular-nums; }
+.film-scene-label { display: flex; align-items: center; gap: 12px; font-size: 12px; color: #b4beb2; margin-bottom: 28px; }
+.film-scene-label > span { color: var(--film-sage); font-size: 11px; font-variant-numeric: tabular-nums; }
 .film-copy h2 { color: var(--film-cream); font-size: clamp(45px,5.3vw,84px); line-height: 1.08; letter-spacing: -.06em; font-weight: 450; margin: 0; max-width: 630px; }
 .film-copy h2 > span { display: block; }
 .film-copy .film-heading-secondary { color: #a3b59b; }
@@ -28,32 +28,32 @@
 .film-primary { display: inline-flex; align-items: center; gap: 35px; padding: 15px 21px; border: 1px solid #d9e4cc; background: #e5eddd; color: #202b22; border-radius: 3px; min-height: 50px; font-size: 12px; font-weight: 650; }
 .film-primary:hover { background: #cddfbd; }
 .film-primary > span { font-size: 19px; font-weight: 400; }
-.film-platforms { color: #9da997; font-size: 10px; }
+.film-platforms { color: #b0bbaa; font-size: 11px; }
 .film-picture { min-width: 0; min-height: 0; margin: 0 -40px 22px -10px; padding-bottom: 6px; position: relative; align-self: stretch; display: flex; align-items: center; justify-content: center; }
 .film-picture video { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; border-radius: 4px; }
-.film-picture figcaption { position: absolute; bottom: -18px; inset-inline-end: 28px; font-size: 8px; letter-spacing: .03em; color: #8d9b87; }
+.film-picture figcaption { position: absolute; bottom: -18px; inset-inline-end: 28px; font-size: 10px; letter-spacing: .03em; color: #a9b5a3; }
 .film-bottom { position: relative; z-index: 2; padding-top: 15px; }
-.film-transport { display: flex; align-items: center; gap: 25px; color: #b4beb2; font-size: 10px; }
+.film-transport { display: flex; align-items: center; gap: 25px; color: #b4beb2; font-size: 11px; }
 .film-instruction { margin-inline-end: auto; }
-.film-time { font-variant-numeric: tabular-nums; color: #e0e6d8; font-size: 10px; }
-.film-time > span { color: #8d9b87; }
-.film-transport button { border: 0; border-bottom: 1px solid #697961; border-radius: 0; color: #d6dfcc; background: transparent; font: inherit; min-height: 34px; padding: 7px 0; cursor: pointer; }
+.film-time { font-variant-numeric: tabular-nums; color: #e0e6d8; font-size: 11px; }
+.film-time > span { color: #a9b5a3; }
+.film-transport button { border: 0; border-bottom: 1px solid #8c9c86; border-radius: 0; color: #d6dfcc; background: transparent; font: inherit; min-height: 34px; padding: 7px 0; cursor: pointer; }
 .film-progress { --film-progress: 0%; display: block; direction: ltr; -webkit-appearance: none; appearance: none; width: 100%; height: 20px; background: transparent; cursor: pointer; margin: 8px 0 10px; border: 0; padding: 0; border-radius: 0; }
-.film-progress::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(to right,#bed2a8 var(--film-progress),#3c483c var(--film-progress)); }
-.film-progress::-moz-range-track { height: 2px; background: #3c483c; }
+.film-progress::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(to right,#bed2a8 var(--film-progress),#5d6d5b var(--film-progress)); }
+.film-progress::-moz-range-track { height: 2px; background: #5d6d5b; }
 .film-progress::-moz-range-progress { height: 2px; background: #bed2a8; }
 .film-progress::-webkit-slider-thumb { -webkit-appearance: none; width: 8px; height: 8px; border-radius: 50%; background: #e5eddd; margin-top: -3px; }
 .film-progress::-moz-range-thumb { width: 8px; height: 8px; border: 0; border-radius: 50%; background: #e5eddd; }
 .film-chapters { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-.film-chapters button { display: inline-flex; align-items: center; gap: 10px; padding: 10px 0; min-height: 36px; font: inherit; font-size: 10px; color: #9da997; background: transparent; border: 0; cursor: pointer; white-space: nowrap; }
-.film-chapters button > span { font-size: 9px; color: #6d7c66; }
+.film-chapters button { display: inline-flex; align-items: center; gap: 10px; padding: 10px 0; min-height: 36px; font: inherit; font-size: 11px; color: #b0bbaa; background: transparent; border: 0; cursor: pointer; white-space: nowrap; }
+.film-chapters button > span { font-size: 11px; color: #98a692; }
 .film-chapters button[aria-current] { color: #e5eddd; }
 .film-chapters button[aria-current] > span { color: #bed2a8; }
 .scroll-film :is(a,button,input):focus-visible { outline: 2px solid #bed2a8; outline-offset: 5px; }
 .film-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.film-transcript { position: relative; width: 100%; background: #171c19; z-index: 3; font-size: 11px; color: #eeeade; }
+.film-transcript { position: relative; width: 100%; background: #151a16; z-index: 3; font-size: 12px; color: #eeeade; }
 .film-transcript summary { width: fit-content; margin: 0 52px; padding-block: 12px; cursor: pointer; color: #a2af9a; }
-.film-transcript ol { padding: 15px 52px 35px; list-style: none; display: grid; grid-template-columns: repeat(3,1fr); gap: 35px; border-bottom: 1px solid #343d36; }
+.film-transcript ol { padding: 15px 52px 35px; list-style: none; display: grid; grid-template-columns: repeat(3,1fr); gap: 35px; border-bottom: 1px solid #3a453c; }
 .film-transcript h2 { color: #eeeade; font-size: 19px; line-height: 1.4; letter-spacing: -.5px; font-weight: 500; }
 .film-transcript p { color: #b4beb2; line-height: 1.9; font-size: 12px; margin-top: 10px; }
 .film-reduced,.film-error { height: auto; }
@@ -65,7 +65,7 @@
 .landing-film-summary .landing-principles > .container { padding-inline: 0; }
 .landing-film-summary .landing-principles h3 { font-size: 14px; font-weight: 650; line-height: 1.5; letter-spacing: -.3px; }
 .landing-film-summary .landing-download-line { margin: 27px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 25px; }
-.landing-film-summary .landing-download-line small { font-size: 10px; }
+.landing-film-summary .landing-download-line small { font-size: 11px; }
 .landing #after-film { scroll-margin-top: 30px; outline: none; }
 html[lang='ar'] .film-copy h2 { font-size: clamp(40px,4.7vw,70px); line-height: 1.35; letter-spacing: 0; }
 html[lang='ar'] .film-topline p { letter-spacing: 0; }
@@ -78,7 +78,7 @@ html[lang='ar'] .film-primary > span { transform: scaleX(-1); }
   .film-description { max-width: 335px; font-size: 13px; }
   .film-picture { margin-inline: -30px -24px; }
   .film-chapters { gap: 10px; }
-  .film-chapters button { font-size: 9px; gap: 7px; }
+  .film-chapters button { font-size: 11px; gap: 7px; }
   .film-transcript summary { margin-inline: 32px; }
 }
 @media(max-width:940px) {
@@ -90,29 +90,29 @@ html[lang='ar'] .film-primary > span { transform: scaleX(-1); }
   .film-description { max-width: 290px; }
   .film-topline p span { display: none; }
   .film-chapters button { font-size: 0; gap: 0; justify-content: center; flex: 1; }
-  .film-chapters button > span { font-size: 11px; }
-  .film-chapters button[aria-current] { font-size: 10px; gap: 9px; flex: 2.5; }
+  .film-chapters button > span { font-size: 12px; }
+  .film-chapters button[aria-current] { font-size: 11px; gap: 9px; flex: 2.5; }
   html[lang='ar'] .film-copy h2 { font-size: 44px; }
 }
 @media(max-width:650px) {
   .scroll-film { --film-header: 75px; height: 440svh; }
   .film-stage { min-height: 0; padding: 10px 22px 14px; }
-  .film-topline p { font-size: 8px; letter-spacing: .09em; }
-  .film-topline a { font-size: 9px; }
+  .film-topline p { font-size: 10px; letter-spacing: .09em; }
+  .film-topline a { font-size: 11px; }
   .film-composition { grid-template-columns: 1fr; grid-template-rows: auto minmax(0,1fr); align-items: stretch; }
   .film-copy { padding: 10px 0 0; margin: 0; }
-  .film-scene-label { font-size: 10px; margin-bottom: 12px; }
+  .film-scene-label { font-size: 11px; margin-bottom: 12px; }
   .film-copy h2 { font-size: clamp(36px,9.4vw,56px); line-height: 1.1; max-width: 100%; }
   .film-description { font-size: 12px; line-height: 1.8; max-width: 330px; margin-top: 13px; min-height: 60px; }
   .film-actions { flex-direction: row; align-items: center; margin-top: 15px; gap: 17px; }
-  .film-primary { min-height: 44px; padding: 11px 14px; font-size: 10px; gap: 20px; }
-  .film-platforms { font-size: 9px; max-width: 88px; line-height: 1.7; }
+  .film-primary { min-height: 44px; padding: 11px 14px; font-size: 11px; gap: 20px; }
+  .film-platforms { font-size: 11px; max-width: 88px; line-height: 1.7; }
   .film-picture { margin: 0 15px 16px; min-height: 180px; }
   .film-picture video { height: 100%; width: auto; max-width: 100%; object-fit: contain; position: absolute; }
-  .film-picture figcaption { bottom: -14px; inset-inline-end: -10px; font-size: 7px; }
+  .film-picture figcaption { bottom: -14px; inset-inline-end: -10px; font-size: 10px; }
   .film-bottom { padding-top: 8px; }
-  .film-transport { font-size: 10px; gap: 16px; }
-  .film-time { font-size: 10px; }
+  .film-transport { font-size: 11px; gap: 16px; }
+  .film-time { font-size: 11px; }
   .film-progress { margin: 2px 0 1px; }
   .film-chapters button { min-height: 34px; }
   .film-transcript summary { margin-inline: 22px; }
